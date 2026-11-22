@@ -192,7 +192,9 @@ def main():
     if args.install_cron:
         print_cron_instructions()
     elif args.now or args.dry_run:
-        post_next_reel(dry_run=args.dry_run)
+        success = post_next_reel(dry_run=args.dry_run)
+        if not success:
+            sys.exit(1)
     elif args.daemon:
         run_daemon()
     else:

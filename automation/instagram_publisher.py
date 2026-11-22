@@ -49,13 +49,14 @@ class InstagramPublisher:
 
     @staticmethod
     def upload_to_temp_hosting(local_path: Path) -> str:
-        """Upload local MP4 to Catbox / Filebin temporary hosting for Meta ingestion.
+        """Upload local MP4 to temporary public hosting for Meta ingestion.
         
-        Meta Graph API requires a publicly accessible HTTPS URL to ingest video.
+        Meta Graph API requires a publicly accessible HTTPS URL when direct rupload
+        encounters strict ingestion timeouts or ProcessingFailedError.
         """
         logger.info("Uploading %s to temporary public storage for Meta ingestion...", local_path.name)
         
-        # 1. Try Catbox.moe (fast, reliable, free direct mp4 url)
+        # 1. Try Catbox.moe (fast, reliable direct mp4 URL)
         try:
             with open(local_path, "rb") as f:
                 resp = requests.post(
@@ -66,12 +67,30 @@ class InstagramPublisher:
                 )
             if resp.status_code == 200 and resp.text.startswith("http"):
                 public_url = resp.text.strip()
-                logger.info("Temporary public video URL: %s", public_url)
+                logger.info("✅ Staged to Catbox: %s", public_url)
                 return public_url
         except Exception as e:
-            logger.warning("Catbox upload failed: %s. Trying fallback...", e)
+            logger.warning("Catbox upload failed: %s. Trying TmpFiles...", e)
 
-        # 2. Fallback: Transfer.sh
+        # 2. Try TmpFiles.org (direct mp4 link via dl path)
+        try:
+            with open(local_path, "rb") as f:
+                resp = requests.post(
+                    "https://tmpfiles.org/api/v1/upload",
+                    files={"file": (local_path.name, f, "video/mp4")},
+                    timeout=120,
+                )
+            if resp.status_code == 200:
+                data = resp.json()
+                page_url = data.get("data", {}).get("url", "")
+                if page_url:
+                    dl_url = page_url.replace("tmpfiles.org/", "tmpfiles.org/dl/")
+                    logger.info("✅ Staged to TmpFiles: %s", dl_url)
+                    return dl_url
+        except Exception as e:
+            logger.warning("TmpFiles upload failed: %s. Trying Transfer.sh...", e)
+
+        # 3. Fallback: Transfer.sh
         try:
             with open(local_path, "rb") as f:
                 resp = requests.put(
@@ -81,15 +100,60 @@ class InstagramPublisher:
                 )
             if resp.status_code in (200, 201) and resp.text.startswith("http"):
                 public_url = resp.text.strip()
-                logger.info("Fallback public video URL: %s", public_url)
+                logger.info("✅ Staged to Transfer.sh: %s", public_url)
                 return public_url
         except Exception as e:
-            logger.error("Temporary hosting upload failed: %s", e)
+            logger.warning("Transfer.sh upload failed: %s. Trying 0x0.st...", e)
+
+        # 4. Fallback: 0x0.st
+        try:
+            with open(local_path, "rb") as f:
+                resp = requests.post(
+                    "https://0x0.st",
+                    files={"file": (local_path.name, f, "video/mp4")},
+                    timeout=120,
+                )
+            if resp.status_code == 200 and resp.text.startswith("http"):
+                public_url = resp.text.strip()
+                logger.info("✅ Staged to 0x0.st: %s", public_url)
+                return public_url
+        except Exception as e:
+            logger.error("0x0.st upload failed: %s", e)
 
         raise RuntimeError(
-            "Could not stage video to public URL. Please configure a cloud storage bucket "
-            "(AWS S3, Cloudflare R2, or Supabase Storage) in .env."
+            "Could not stage video to public URL for Meta ingestion."
         )
+
+    def create_video_url_container(
+        self,
+        video_url: str,
+        caption: str,
+        share_to_feed: bool = True,
+    ) -> str:
+        """Create media container via public video_url (Meta fetches asynchronously)."""
+        if not self.is_configured():
+            raise ValueError("Instagram credentials missing in .env.")
+
+        url = f"{self.GRAPH_API_BASE}/{self.ig_user_id}/media"
+        payload = {
+            "media_type": "REELS",
+            "video_url": video_url,
+            "caption": caption,
+            "share_to_feed": "true" if share_to_feed else "false",
+            "thumb_offset": "100",  # Flashy cover frame at 100ms
+            "access_token": self.access_token,
+        }
+
+        resp = requests.post(url, data=payload, timeout=30)
+        data = resp.json()
+
+        if "id" not in data:
+            error_msg = data.get("error", {}).get("message", "Unknown error")
+            raise RuntimeError(f"Meta Graph API error creating video_url container: {error_msg} (Response: {data})")
+
+        container_id = data["id"]
+        logger.info("Initialized Meta video_url container: %s", container_id)
+        return container_id
 
     def create_resumable_container(
         self,
@@ -136,11 +200,14 @@ class InstagramPublisher:
             "Authorization": f"OAuth {self.access_token}",
             "offset": "0",
             "file_size": str(file_size),
+            "Content-Length": str(file_size),
             "Content-Type": "application/octet-stream",
         }
 
         with open(video_path, "rb") as f:
-            resp = requests.post(upload_uri, headers=headers, data=f, timeout=300)
+            video_bytes = f.read()
+
+        resp = requests.post(upload_uri, headers=headers, data=video_bytes, timeout=300)
 
         data = resp.json() if resp.text else {}
         if resp.status_code not in (200, 201) or data.get("success") is False:
@@ -230,27 +297,44 @@ class InstagramPublisher:
         caption: str,
         share_to_feed: bool = True,
     ) -> Dict[str, Any]:
-        """Complete direct upload workflow without requiring external hosting."""
+        """Publish a reel using Meta Graph API with resilient dual-upload strategy.
+        
+        Strategy 1: Direct rupload (streams binary directly to Meta).
+        Strategy 2: If rupload encounters ProcessingFailedError / timeout, automatically
+                    stages to fast temporary hosting and ingests via video_url.
+        """
         local_path = Path(video_path_or_url)
         if not local_path.exists():
             raise FileNotFoundError(f"Video file not found: {local_path}")
 
         file_size = local_path.stat().st_size
+        container_id = None
 
-        # 1. Initialize direct resumable session
-        container_id, upload_uri = self.create_resumable_container(
-            file_size=file_size,
-            caption=caption,
-            share_to_feed=share_to_feed,
-        )
-
-        # 2. Upload raw binary directly to Meta
-        self.upload_binary_to_meta(upload_uri, local_path)
+        # ── Strategy 1: Direct Resumable Upload ───────────────────────
+        try:
+            logger.info("Attempting direct resumable upload to Meta rupload servers...")
+            c_id, upload_uri = self.create_resumable_container(
+                file_size=file_size,
+                caption=caption,
+                share_to_feed=share_to_feed,
+            )
+            self.upload_binary_to_meta(upload_uri, local_path)
+            container_id = c_id
+        except Exception as e:
+            logger.warning("⚠️ Direct rupload failed: %s. Falling back to public URL ingestion...", e)
+            
+            # ── Strategy 2: Fallback to video_url Ingestion ─────────────
+            public_url = self.upload_to_temp_hosting(local_path)
+            container_id = self.create_video_url_container(
+                video_url=public_url,
+                caption=caption,
+                share_to_feed=share_to_feed,
+            )
 
         # 3. Wait for Meta processing
         self.wait_for_container_ready(container_id)
 
-        # 4. Publish
+        # 4. Publish container
         media_id = self.publish_container(container_id)
 
         # 5. Get permalink
