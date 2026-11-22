@@ -179,10 +179,10 @@ class AutonomousReelBuilder:
             process.stdin.write(cropped.tobytes())
 
         process.stdin.close()
-        process.wait()
+        _, stderr_data = process.communicate()
 
         if process.returncode != 0:
-            err = process.stderr.read().decode(errors="replace")
+            err = stderr_data.decode(errors="replace") if stderr_data else "Unknown"
             raise RuntimeError(f"FFmpeg render failed: {err}")
 
         logger.info("🎉 Reel successfully built: %s (%.2f MB)", output_mp4.name, output_mp4.stat().st_size / (1024 * 1024))
