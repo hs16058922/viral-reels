@@ -191,6 +191,7 @@ class InstagramPublisher:
         self,
         upload_uri: str,
         video_path: Path,
+        max_retries: int = 3,
     ) -> None:
         """Step 2: Stream raw video bytes directly to Meta's rupload servers."""
         file_size = video_path.stat().st_size
@@ -207,13 +208,19 @@ class InstagramPublisher:
         with open(video_path, "rb") as f:
             video_bytes = f.read()
 
-        resp = requests.post(upload_uri, headers=headers, data=video_bytes, timeout=300)
+        for attempt in range(1, max_retries + 1):
+            logger.info("Uploading binary to Meta rupload servers (attempt %d/%d)...", attempt, max_retries)
+            resp = requests.post(upload_uri, headers=headers, data=video_bytes, timeout=300)
+            data = resp.json() if resp.text else {}
+            if resp.status_code in (200, 201) and data.get("success") is not False:
+                logger.info("✅ Direct binary upload to Meta completed successfully!")
+                return
+            
+            logger.warning("Upload attempt %d returned HTTP %d: %s", attempt, resp.status_code, resp.text)
+            if attempt < max_retries:
+                time.sleep(5)
 
-        data = resp.json() if resp.text else {}
-        if resp.status_code not in (200, 201) or data.get("success") is False:
-            raise RuntimeError(f"Direct video upload to Meta failed (HTTP {resp.status_code}): {resp.text}")
-
-        logger.info("✅ Direct binary upload to Meta completed successfully!")
+        raise RuntimeError(f"Direct video upload to Meta failed after {max_retries} attempts.")
 
     # ── Step 3: Poll Container Status ───────────────────────────────
 
@@ -297,41 +304,25 @@ class InstagramPublisher:
         caption: str,
         share_to_feed: bool = True,
     ) -> Dict[str, Any]:
-        """Publish a reel using Meta Graph API with resilient dual-upload strategy.
-        
-        Strategy 1: Direct rupload (streams binary directly to Meta).
-        Strategy 2: If rupload encounters ProcessingFailedError / timeout, automatically
-                    stages to fast temporary hosting and ingests via video_url.
-        """
+        """Publish a reel using Meta Graph API official direct resumable upload."""
         local_path = Path(video_path_or_url)
         if not local_path.exists():
             raise FileNotFoundError(f"Video file not found: {local_path}")
 
         file_size = local_path.stat().st_size
-        container_id = None
 
-        # ── Strategy 1: Direct Resumable Upload ───────────────────────
-        try:
-            logger.info("Attempting direct resumable upload to Meta rupload servers...")
-            c_id, upload_uri = self.create_resumable_container(
-                file_size=file_size,
-                caption=caption,
-                share_to_feed=share_to_feed,
-            )
-            self.upload_binary_to_meta(upload_uri, local_path)
-            container_id = c_id
-        except Exception as e:
-            logger.warning("⚠️ Direct rupload failed: %s. Falling back to public URL ingestion...", e)
-            
-            # ── Strategy 2: Fallback to video_url Ingestion ─────────────
-            public_url = self.upload_to_temp_hosting(local_path)
-            container_id = self.create_video_url_container(
-                video_url=public_url,
-                caption=caption,
-                share_to_feed=share_to_feed,
-            )
+        # 1. Initialize direct resumable session on Meta
+        logger.info("Initializing direct resumable upload on Meta (file size: %.2f MB)...", file_size / (1024 * 1024))
+        container_id, upload_uri = self.create_resumable_container(
+            file_size=file_size,
+            caption=caption,
+            share_to_feed=share_to_feed,
+        )
 
-        # 3. Wait for Meta processing
+        # 2. Upload raw binary directly to Meta rupload servers
+        self.upload_binary_to_meta(upload_uri, local_path)
+
+        # 3. Wait for Meta encoding pipeline to finish
         self.wait_for_container_ready(container_id)
 
         # 4. Publish container
