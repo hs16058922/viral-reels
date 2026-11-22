@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 from typing import Optional, Tuple
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
+from engine.fonts import load_headline_font, load_sub_font
 
 # Canvas Dimensions
 WIDTH = 1080
@@ -93,7 +94,7 @@ class ReelCoverGenerator:
         draw = ImageDraw.Draw(base)
 
         # 3. Top Category Pill: "// ENGINEERING EXPLAINED //"
-        font_cat = ImageFont.truetype(FONT_BADGE, 36)
+        font_cat = load_headline_font(36)
         cat_text = f"// {category_tag.upper()} //"
         bbox_cat = draw.textbbox((0, 0), cat_text, font=font_cat)
         cat_w = bbox_cat[2] - bbox_cat[0]
@@ -127,7 +128,7 @@ class ReelCoverGenerator:
         )
 
         # 4. Curiosity Sticker: "[ ZERO AIR MOLECULES ]"
-        font_sticker = ImageFont.truetype(FONT_BADGE, 42)
+        font_sticker = load_headline_font(42)
         stk_text = f"[ {curiosity_sticker.upper()} ]"
         bbox_stk = draw.textbbox((0, 0), stk_text, font=font_sticker)
         stk_w = bbox_stk[2] - bbox_stk[0]
@@ -152,8 +153,8 @@ class ReelCoverGenerator:
         # 5. Dual-Tone Giant Headline (1:1 Instagram profile grid safe zone)
         # Line 1: Pure White with deep shadow
         # Line 2: Neon Electric Yellow with black stroke
-        font_h1 = ImageFont.truetype(FONT_HEADLINE_LARGE, 92)
-        font_h2 = ImageFont.truetype(FONT_HEADLINE_LARGE, 102)
+        font_h1 = load_headline_font(92)
+        font_h2 = load_headline_font(102)
 
         # Measure Line 1
         bbox_1 = draw.textbbox((0, 0), hook_line_1, font=font_h1)
@@ -161,7 +162,7 @@ class ReelCoverGenerator:
         # Auto-scale Line 1 if exceeds safe 920px
         if w1 > 920:
             scale1 = 920 / w1
-            font_h1 = ImageFont.truetype(FONT_HEADLINE_LARGE, int(92 * scale1))
+            font_h1 = load_headline_font(int(92 * scale1))
             bbox_1 = draw.textbbox((0, 0), hook_line_1, font=font_h1)
             w1 = bbox_1[2] - bbox_1[0]
         x1 = (WIDTH - w1) // 2
@@ -173,7 +174,7 @@ class ReelCoverGenerator:
         # Auto-scale Line 2 if exceeds safe 940px
         if w2 > 940:
             scale2 = 940 / w2
-            font_h2 = ImageFont.truetype(FONT_HEADLINE_LARGE, int(102 * scale2))
+            font_h2 = load_headline_font(int(102 * scale2))
             bbox_2 = draw.textbbox((0, 0), hook_line_2, font=font_h2)
             w2 = bbox_2[2] - bbox_2[0]
         x2 = (WIDTH - w2) // 2
@@ -206,7 +207,7 @@ class ReelCoverGenerator:
         )
 
         # 6. Click Magnet Callout Pill: "HOW DOES IT WORK? >>"
-        font_sub = ImageFont.truetype(FONT_BADGE, 44)
+        font_sub = load_headline_font(44)
         cta_text = "HOW DOES IT WORK? >>"
         bbox_cta = draw.textbbox((0, 0), cta_text, font=font_sub)
         cta_w = bbox_cta[2] - bbox_cta[0]
@@ -229,7 +230,7 @@ class ReelCoverGenerator:
         )
 
         # 7. Bottom Branding Pill: "@curio__motion"
-        font_brand = ImageFont.truetype(FONT_SUB, 32)
+        font_brand = load_sub_font(32)
         brand_text = "@curio__motion"
         bbox_br = draw.textbbox((0, 0), brand_text, font=font_brand)
         br_w = bbox_br[2] - bbox_br[0]

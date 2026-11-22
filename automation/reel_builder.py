@@ -23,6 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from engine.cover_generator import ReelCoverGenerator
 from engine.edge_voice import VoiceEngine
+from engine.fonts import load_headline_font, load_sub_font
 from engine.whisper_captions import CaptionGenerator
 
 logger = logging.getLogger("viral_reels.reel_builder")
@@ -118,8 +119,8 @@ class AutonomousReelBuilder:
         # Pre-render top badge
         badge = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
         d_b = ImageDraw.Draw(badge)
-        font_title = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", 46)
-        font_sub = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 26)
+        font_title = load_headline_font(46)
+        font_sub = load_sub_font(26)
 
         b_w, b_h = 920, 130
         b_x = (WIDTH - b_w) // 2
@@ -130,7 +131,7 @@ class AutonomousReelBuilder:
         t_box = d_b.textbbox((0, 0), topic["title"].upper(), font=font_title)
         tw = t_box[2] - t_box[0]
         if tw > (b_w - 60):
-            font_title = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", max(26, int(46 * (b_w - 60) / tw)))
+            font_title = load_headline_font(max(26, int(46 * (b_w - 60) / tw)))
             t_box = d_b.textbbox((0, 0), topic["title"].upper(), font=font_title)
             tw = t_box[2] - t_box[0]
         d_b.text(((WIDTH - tw) // 2, b_y + 18), topic["title"].upper(), font=font_title, fill=(255, 255, 255))
@@ -202,8 +203,8 @@ class AutonomousReelBuilder:
         spacing = 22
         max_safe_w = 820
         base_normal_sz, base_active_sz = 64, 72
-        font_normal = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", base_normal_sz)
-        font_active = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", base_active_sz)
+        font_normal = load_headline_font(base_normal_sz)
+        font_active = load_headline_font(base_active_sz)
 
         def measure(fn, fa):
             boxes = []
@@ -223,8 +224,8 @@ class AutonomousReelBuilder:
         word_boxes, total_w, max_h = measure(font_normal, font_active)
         if total_w > max_safe_w:
             scale = max_safe_w / total_w
-            font_normal = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", max(34, int(base_normal_sz * scale)))
-            font_active = ImageFont.truetype("/System/Library/Fonts/Supplemental/Impact.ttf", max(38, int(base_active_sz * scale)))
+            font_normal = load_headline_font(max(34, int(base_normal_sz * scale)))
+            font_active = load_headline_font(max(38, int(base_active_sz * scale)))
             word_boxes, total_w, max_h = measure(font_normal, font_active)
 
         center_y = 1380
