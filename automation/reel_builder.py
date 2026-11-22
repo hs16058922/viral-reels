@@ -11,6 +11,7 @@ Generates complete 1080x1920 30fps vertical reels from any topic in topics.json:
 
 import asyncio
 import logging
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -64,7 +65,16 @@ class AutonomousReelBuilder:
         cap_gen = CaptionGenerator(model_size="base")
         txn = cap_gen.transcribe(audio_path)
         words = txn.words
-        total_duration = txn.duration or 35.0
+        total_duration = 35.0
+        if words:
+            total_duration = words[-1].end + 0.8
+        try:
+            ffprobe_bin = shutil.which("ffprobe") or "ffprobe"
+            cmd = [ffprobe_bin, "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(audio_path)]
+            out = subprocess.check_output(cmd, text=True).strip()
+            total_duration = float(out)
+        except Exception:
+            pass
 
         # 3. Generate Flashy Cover Card
         logger.info("Generating high-CTR flashy cover...")
@@ -86,8 +96,9 @@ class AutonomousReelBuilder:
         total_frames = int(total_duration * FPS)
         logger.info("Rendering %d frames (%.1fs) to %s...", total_frames, total_duration, output_mp4.name)
 
+        ffmpeg_bin = shutil.which("ffmpeg") or "ffmpeg"
         ffmpeg_cmd = [
-            "/opt/homebrew/bin/ffmpeg", "-y",
+            ffmpeg_bin, "-y",
             "-f", "rawvideo",
             "-vcodec", "rawvideo",
             "-s", f"{WIDTH}x{HEIGHT}",

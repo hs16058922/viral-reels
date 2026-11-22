@@ -12,6 +12,7 @@ directly into FFmpeg's rawvideo stdin. Combines:
 """
 
 import math
+import shutil
 import subprocess
 import sys
 import time
@@ -318,8 +319,9 @@ def main():
     total_frames = int(total_duration * FPS)
     print(f"  Target: 1080x1920 @ {FPS}fps, Total Frames: {total_frames} ({total_duration:.1f}s)")
     
+    ffmpeg_bin = shutil.which("ffmpeg") or "ffmpeg"
     ffmpeg_cmd = [
-        "/opt/homebrew/bin/ffmpeg", "-y",
+        ffmpeg_bin, "-y",
         "-f", "rawvideo",
         "-vcodec", "rawvideo",
         "-s", f"{WIDTH}x{HEIGHT}",
@@ -420,8 +422,9 @@ def main():
     print("=" * 60)
     
     # Probe file
+    ffprobe_bin = shutil.which("ffprobe") or "ffprobe"
     probe = subprocess.run([
-        "/opt/homebrew/bin/ffprobe", "-v", "error",
+        ffprobe_bin, "-v", "error",
         "-show_entries", "format=duration,size,bit_rate",
         "-show_entries", "stream=width,height,codec_name,r_frame_rate",
         "-of", "json",
