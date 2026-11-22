@@ -55,14 +55,23 @@ def post_next_reel(dry_run: bool = False) -> bool:
         logger.critical("🛑 DUPLICATE BLOCKED: Topic ID '%s' has already been published. Aborting.", topic["id"])
         return False
 
-    # 2. Locate or Build Video File
+    # 2. Locate or Build Video File (Reuse existing render if upload failed previously)
     video_path_str = topic.get("video_path")
     video_path = (PROJECT_ROOT / video_path_str) if video_path_str else None
+    standard_export = PROJECT_ROOT / "export" / f"{topic['id']}_reel.mp4"
+
+    if (not video_path or not video_path.exists()) and standard_export.exists() and standard_export.stat().st_size > 1024 * 1024:
+        video_path = standard_export
+        logger.info("🎬 Found existing rendered video at '%s' (%.1f MB). Skipping re-render!",
+                    video_path.name, standard_export.stat().st_size / (1024 * 1024))
+        topic["video_path"] = str(video_path.relative_to(PROJECT_ROOT))
+        topic["status"] = "ready"
+        queue.save_topics(queue.load_topics())
 
     if not video_path or not video_path.exists():
         if dry_run:
             logger.info("🔍 DRY-RUN: Video for '%s' would be generated on the fly via AutonomousReelBuilder.", topic["id"])
-            video_path = PROJECT_ROOT / "export" / f"{topic['id']}_reel.mp4"
+            video_path = standard_export
         else:
             logger.info("Video for topic '%s' not found. Launching AutonomousReelBuilder...", topic["id"])
             video_path = AutonomousReelBuilder.build_reel_for_topic(topic)
@@ -107,6 +116,7 @@ def post_next_reel(dry_run: bool = False) -> bool:
             logger.info("🎉 Reel successfully published!")
             logger.info("🔗 Link: %s", result["permalink"])
             queue.mark_published(topic["id"], result["permalink"], video_path=video_path)
+            AutonomousReelBuilder.cleanup_export_directory(keep_topic_id=topic["id"])
             return True
         except Exception as exc:
             logger.exception("Failed to publish reel via Meta Graph API: %s", exc)
@@ -126,6 +136,7 @@ def post_next_reel(dry_run: bool = False) -> bool:
             logger.info("🎉 Reel successfully published!")
             logger.info("🔗 Link: %s", result["permalink"])
             queue.mark_published(topic["id"], result["permalink"], video_path=video_path)
+            AutonomousReelBuilder.cleanup_export_directory(keep_topic_id=topic["id"])
             return True
         except Exception as exc:
             logger.exception("Failed to publish reel via direct login: %s", exc)

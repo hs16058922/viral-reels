@@ -13,8 +13,9 @@ venv/
 # Temp working directory
 tmp/
 
-# Exported videos
-export/*.mp4
+# Exported videos and scratch frames
+export/*
+!export/.gitkeep
 
 # macOS
 .DS_Store
