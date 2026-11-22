@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "viral-reels-studio"
+version = "0.1.0"
+description = "Production-grade Python video engine for creating viral short-form reels"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Viral Reels Studio"},
+]
+dependencies = [
+    "openai-whisper>=20231117",
+    "edge-tts>=6.1.9",
+    "Pillow>=10.0.0",
+    "pydantic-settings>=2.0.0",
+    "rich>=13.0.0",
+    "numpy>=1.24.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+generate-reel = "scripts.generate_reel:main"
+
+[tool.setuptools.packages.find]
+include = ["config*", "engine*", "scripts*", "templates*"]

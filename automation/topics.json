@@ -1,0 +1,237 @@
+[
+  {
+    "id": "thermal_bottle",
+    "title": "How Does a Thermal Water Bottle Work?",
+    "hook": "Your thermal flask doesn't keep drinks hot by heating them. It does it by using outer space.",
+    "script": "Your thermal flask doesn't keep drinks hot by heating them. It does it by surrounding them with outer space.\nInside, it's not just one bottle. It's two steel bottles, with every single air molecule sucked out between them.\nHeat needs atoms to travel by conduction. But in a vacuum? There are zero atoms. Heat literally has nowhere to go.\nAnd to stop radiant heat, the inner wall is polished like a mirror, bouncing infrared rays right back into your drink.\nThe outside stays room temperature, while the inside stays trapped in time.",
+    "bullets": [
+      "Double-wall welded stainless steel casing",
+      "Zero air molecules in vacuum void = no conduction",
+      "Mirror electro-polished lining reflects infrared radiation",
+      "Airtight silicone seal stops convection escape"
+    ],
+    "niche_tags": [
+      "#ThermalBottle",
+      "#HydroFlask",
+      "#Thermodynamics",
+      "#VacuumInsulation",
+      "#PhysicsFacts"
+    ],
+    "cover_hook_1": "YOUR THERMAL FLASK",
+    "cover_hook_2": "USES OUTER SPACE?!",
+    "cover_tag": "PHYSICS SECRETS",
+    "cover_sticker": "ZERO AIR MOLECULES",
+    "status": "published",
+    "video_path": "export/thermal_bottle_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgCzcZykX8l/"
+  },
+  {
+    "id": "bladeless_fan",
+    "title": "How Does a Bladeless Fan Actually Work?",
+    "hook": "You can stick your entire arm straight through a bladeless fan. So where is the hurricane actually coming from?",
+    "script": "You can stick your entire arm through a bladeless fan. So where is the hurricane actually coming from?\nThe blades aren't missing. They're hidden inside the base, spinning a high-pressure impeller that sucks in thirty-three liters of air every single second.\nThe motor forces this air up into the hollow aerodynamic ring, firing it out through a razor-thin 1.3-millimeter slit around the inner rim.\nAs this high-speed jet shoots out, it hugs the 16-degree curved aerofoil ramp\u2014a fluid dynamics principle called the Coand\u0103 effect.\nThis rapid jet drops the air pressure inside the loop, creating a massive vacuum that pulls in fifteen times more surrounding air from behind and around the ring.\nOne liter of push becomes fifteen liters of smooth, buffeting-free wind.\nEngineering magic, hidden in plain sight. Tap follow on @CurioMotion for daily 3D breakdowns. What should we cut open next?",
+    "bullets": [
+      "Hidden base impeller forces 33L of air per second",
+      "1.3mm precision slit shoots high-velocity air jet",
+      "The Coand\u0103 Effect bends airflow along a 16-degree aerofoil ramp",
+      "Low pressure vacuum multiplies surrounding airflow by 15x",
+      "Zero choppy blades for completely silent laminar wind"
+    ],
+    "niche_tags": [
+      "#BladelessFan",
+      "#FluidDynamics",
+      "#Aerodynamics",
+      "#EngineeringExplained",
+      "#DysonTech",
+      "#PhysicsInRealLife"
+    ],
+    "cover_hook_1": "BLADELESS FAN SECRET",
+    "cover_hook_2": "WHERE DOES AIR COME FROM?!",
+    "cover_tag": "FLUID DYNAMICS",
+    "cover_sticker": "THE 1.3mm JET SLIT",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "washing_machine_concrete",
+    "title": "Why Your Washing Machine Hides a Giant Concrete Block",
+    "hook": "Your washing machine is secretly hiding a massive 70-pound block of solid concrete inside. Here's why.",
+    "script": "Your washing machine is hiding a massive seventy-pound block of solid concrete bolted right above the drum.\nNo, it's not a manufacturing mistake. It's the only thing stopping your washer from literally walking through your drywall.\nWhen wet jeans and heavy towels spin at 1,400 RPM, the off-center load generates thousands of Newtons of violent centrifugal force.\nWithout extreme mass to anchor the chassis, destructive resonance frequencies would make the entire machine bounce across the room and rip out its own water hoses.\nThe dense concrete block acts as an inertial counterweight, absorbing those violent harmonic oscillations so the suspension springs can safely dissipate the energy.\nA brute-force civil engineering solution, hiding inside your home appliances.\nHit follow on @CurioMotion for your daily dose of mechanical secrets. What appliance should we dissect next?",
+    "bullets": [
+      "Spin cycles reach 1,400 RPM generating violent centrifugal imbalance",
+      "Destructive harmonic resonance could rip water and drainage hoses",
+      "70-pound high-density concrete slab acts as an inertial damper",
+      "Suspension struts absorb dissipated energy for whisper-quiet spin"
+    ],
+    "niche_tags": [
+      "#WashingMachine",
+      "#MechanicalEngineering",
+      "#CentrifugalForce",
+      "#PhysicsDemo",
+      "#ApplianceRepair",
+      "#EngineeringSecrets"
+    ],
+    "cover_hook_1": "WASHING MACHINE SECRET",
+    "cover_hook_2": "70-POUND CONCRETE BLOCK?!",
+    "cover_tag": "MECHANICAL SECRETS",
+    "cover_sticker": "1400 RPM DANGER",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "noise_cancelling_headphones",
+    "title": "How Noise-Cancelling Headphones Delete Sound Waves",
+    "hook": "Active noise-cancelling headphones don't block background noise. They fight sound with MORE sound.",
+    "script": "Noise-cancelling headphones don't block sound waves. They fight incoming noise by blasting MORE sound into your ears.\nTiny outward-facing microphones constantly listen to the low-frequency rumble of jet engines or subway tracks.\nIn less than five milliseconds, an onboard digital signal processor measures the incoming soundwave and creates an exact mirror-image waveform inverted by 180 degrees.\nWhen the external noise wave hits this synthetic inverted wave inside your ear canal, the positive pressure peaks collide with the negative pressure troughs.\nThey cancel each other out to absolute physical zero through destructive wave interference.\nThe noise didn't bounce away. It literally destroyed itself in thin air.\nTap follow on @CurioMotion for daily 3D physics breakdowns. What technology should we explain next?",
+    "bullets": [
+      "Ultra-low latency microphones sample ambient noise in real-time",
+      "DSP computes inverted anti-noise wave in under 5 milliseconds",
+      "Destructive phase interference cancels acoustic wave amplitude to zero",
+      "Leaves pristine acoustic silence for high-fidelity music"
+    ],
+    "niche_tags": [
+      "#NoiseCancelling",
+      "#AcousticPhysics",
+      "#WaveInterference",
+      "#AudioTech",
+      "#PhysicsFacts",
+      "#HeadphoneTech"
+    ],
+    "cover_hook_1": "NOISE-CANCELLING TRICK",
+    "cover_hook_2": "HOW IT DELETES SOUND?!",
+    "cover_tag": "ACOUSTIC PHYSICS",
+    "cover_sticker": "180 DEGREE ANTI-WAVE",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "induction_stove",
+    "title": "Why Induction Stoves Cook Without Ever Getting Hot",
+    "hook": "You can put a dry paper towel under a boiling pan on an induction stove, and the paper will never burn.",
+    "script": "You can place a dry paper towel under a boiling pot on an induction stove, and it won't even scorch.\nUnderneath the smooth ceramic glass sits a tightly wound coil of pure copper wire running high-frequency alternating current.\nThis generates an intense oscillating magnetic field that passes straight through the glass cooktop without generating a single degree of heat.\nBut the moment a magnetic iron or steel pan enters this field, the magnetic flux forces electrons inside the iron base to swirl in violent microscopic whirlpools called eddy currents.\nThe natural electrical resistance of the iron turns that friction directly into blistering thermal energy.\nThe stove never heats the pan. The pan heats itself from the inside out.\nFollow @CurioMotion for your daily dose of everyday physics. What should we test next?",
+    "bullets": [
+      "Copper coil produces 25 kHz oscillating magnetic field",
+      "Glass surface is non-magnetic so magnetic flux passes through cold",
+      "Induces violent eddy currents inside ferromagnetic steel base",
+      "Joule electrical resistance heats the cookware directly with 90% efficiency"
+    ],
+    "niche_tags": [
+      "#InductionCooktop",
+      "#Electromagnetism",
+      "#EddyCurrents",
+      "#PhysicsExperiment",
+      "#KitchenTech",
+      "#ScienceExplained"
+    ],
+    "cover_hook_1": "INDUCTION STOVE SECRET",
+    "cover_hook_2": "COLD GLASS, BOILING WATER?!",
+    "cover_tag": "ELECTROMAGNETISM",
+    "cover_sticker": "EDDY CURRENTS 90% EFFICIENCY",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "ballpoint_pen",
+    "title": "The Microscopic Engineering Inside a Ballpoint Pen",
+    "hook": "Why does a ballpoint pen never leak a single drop in your pocket, but flows instantly the second you write?",
+    "script": "Why does a ballpoint pen never leak in your pocket, but rolls out ink instantly the moment you write?\nAt the tip sits a microscopic sphere made of tungsten carbide\u2014a material almost as hard as diamond\u2014polished to a tolerance of less than one micron.\nIt sits inside a brass socket crimped so precisely that surface tension alone forms a hermetic seal, preventing ink from leaking out.\nEven more fascinating: the ink inside is not a liquid. It is a thixotropic gel.\nAt rest, it behaves like a solid plug. But when the ball rolls across paper, the mechanical shear force instantly drops the ink's viscosity, rolling a paper-thin microscopic line onto the fibers.\nThe second you lift the pen, the ink instantly reverts to a solid seal.\nHit follow on @CurioMotion for daily precision engineering breakdowns. What everyday object should we inspect next?",
+    "bullets": [
+      "Tungsten carbide micro-sphere polished to 1-micron tolerance",
+      "Precision crimped socket creates capillary surface tension seal",
+      "Thixotropic gel behaves as a solid at rest and liquefies under shear stress",
+      "Gravity and atmospheric pressure keep ink column continuous"
+    ],
+    "niche_tags": [
+      "#BallpointPen",
+      "#PrecisionEngineering",
+      "#MaterialsScience",
+      "#FluidMechanics",
+      "#NonNewtonian",
+      "#EverydayScience"
+    ],
+    "cover_hook_1": "BALLPOINT PEN SECRET",
+    "cover_hook_2": "WHY DOES IT NEVER LEAK?!",
+    "cover_tag": "PRECISION ENGINEERING",
+    "cover_sticker": "1-MICRON CLEARANCE",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "airplane_pressurization",
+    "title": "How Airplane Cabins Breathe at 35,000 Feet",
+    "hook": "At cruising altitude, the air outside your plane is -60 degrees and has almost zero oxygen. So where does the air you breathe come from?",
+    "script": "At thirty-five thousand feet, the air outside your airplane is negative sixty degrees and thin enough to make you pass out in seconds. So where does your cabin air actually come from?\nIt comes straight out of the roaring jet engines.\nHigh-pressure compressor stages squeeze freezing outside air, compressing it until it reaches over four hundred degrees Fahrenheit.\nThis scorching bleed air is completely sterilized. Air conditioning packs then cool it through heat exchangers down to comfortable room temperature.\nAn outflow valve at the back of the fuselage constantly cracks open and closed by millimeters, balancing cabin pressure so you breathe like you're standing on an eight-thousand-foot mountain.\nYou aren't trapped in a sealed can. You are breathing engine-pressurized air that refreshes completely every three minutes.\nTap follow on @CurioMotion for your daily dose of hidden engineering. What aircraft mystery should we tackle next?",
+    "bullets": [
+      "Engine compressor stages compress freezing -60\u00b0F thin atmospheric air",
+      "Compression generates 400\u00b0F heat that sterilizes ambient air",
+      "Air cycle machines cool bleed air to room temperature",
+      "Fuselage outflow valve meters cabin pressure to an equivalent 8,000ft altitude",
+      "Full cabin air volume refreshes every 2 to 3 minutes"
+    ],
+    "niche_tags": [
+      "#AviationEngineering",
+      "#JetEngine",
+      "#Aerodynamics",
+      "#AviationFacts",
+      "#HowPlanesWork"
+    ],
+    "cover_hook_1": "AIRPLANE CABIN SECRET",
+    "cover_hook_2": "HOW YOU BREATHE AT 35,000FT?!",
+    "cover_tag": "AVIATION PHYSICS",
+    "cover_sticker": "ENGINE BLEED AIR",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "car_airbag_explosion",
+    "title": "Why Car Airbags Don't Use Compressed Air",
+    "hook": "Your car's airbag doesn't inflate with compressed gas. It inflates using a literal rocket explosion.",
+    "script": "Your car's airbag doesn't inflate using compressed air. It inflates with a controlled rocket chemical explosion.\nCompressed air tanks are far too slow to save your life. In a forty-mile-per-hour crash, your skull will strike the steering wheel in under fifty milliseconds.\nWhen crash sensors detect sudden deceleration, an electrical squib ignites a solid chemical propellant called sodium azide or guanidine nitrate.\nIn less than thirty milliseconds, the solid pellets burn violently, producing a massive cloud of harmless nitrogen gas.\nThis expands the nylon bag at over two hundred miles per hour\u2014faster than the blink of a human eye\u2014catching your head right before the impact.\nVents behind the bag immediately release the gas so your chest doesn't bounce back.\nA literal rocket engine, built into your steering wheel to save your life in a fraction of a second.\nHit follow on @CurioMotion for daily 3D mechanical breakdowns. What automotive secret should we unpack next?",
+    "bullets": [
+      "Compressed air is too slow; crash impact requires sub-30ms inflation",
+      "MEMS accelerometers trigger an electrical igniter upon deceleration",
+      "Solid propellant pellets combust rapidly into non-toxic nitrogen gas",
+      "Nylon airbag deploys at over 200 mph to cushion occupant deceleration",
+      "Exhaust vents immediately deflate bag to prevent rebound injury"
+    ],
+    "niche_tags": [
+      "#AutomotiveEngineering",
+      "#CarSafety",
+      "#ChemicalReactions",
+      "#PhysicsInRealLife",
+      "#EverydayScience"
+    ],
+    "cover_hook_1": "CAR AIRBAG SECRET",
+    "cover_hook_2": "IT'S A ROCKET EXPLOSION?!",
+    "cover_tag": "AUTOMOTIVE PHYSICS",
+    "cover_sticker": "30-MILLISECOND BLAST",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "microwave_magnetron",
+    "title": "Why Microwaves Heat Soup But Never the Bowl",
+    "hook": "A microwave oven doesn't heat food from the outside in. It heats it from the molecular inside out.",
+    "script": "A microwave oven doesn't heat food from the outside in. It targets water molecules directly using electromagnetic resonance.\nInside the wall sits a vacuum tube called a magnetron, firing waves at 2.45 gigahertz\u2014two point four five billion cycles per second.\nWater molecules are electric dipoles: positively charged on the hydrogen side, negatively charged on the oxygen side.\nAs the microwave's electric field flips back and forth billions of times a second, water molecules desperately try to align with the field, twisting and rotating at astronomical speed.\nThis violent molecular friction turns kinetic movement directly into boiling heat.\nGlass and ceramic bowls have no free dipoles, so the radiation passes straight through without warming them.\nThe oven doesn't cook your food. It forces the water inside your food to boil itself.\nHit follow on @CurioMotion for daily physics explained simply. What household device should we cut open next?",
+    "bullets": [
+      "Magnetron vacuum tube produces 2.45 GHz electromagnetic radiation",
+      "Water molecules act as microscopic electrical dipoles",
+      "Electric field flips polarity 2.45 billion times per second",
+      "Molecular friction converts kinetic oscillation into thermal heat",
+      "Dry ceramics and glass lack dipoles, allowing waves to pass through cold"
+    ],
+    "niche_tags": [
+      "#MicrowaveOven",
+      "#Electromagnetism",
+      "#MolecularPhysics",
+      "#KitchenScience",
+      "#PhysicsExplained"
+    ],
+    "cover_hook_1": "MICROWAVE SECRET",
+    "cover_hook_2": "WHY THE BOWL STAYS COLD?!",
+    "cover_tag": "ELECTROMAGNETISM",
+    "cover_sticker": "2.45 BILLION CYCLES/SEC",
+    "status": "pending",
+    "video_path": null
+  }
+]

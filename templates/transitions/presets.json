@@ -1,0 +1,77 @@
+{
+  "fade": {
+    "filter": "fade",
+    "duration": 0.5,
+    "description": "Simple crossfade between clips"
+  },
+  "wipeleft": {
+    "filter": "wipeleft",
+    "duration": 0.4,
+    "description": "Wipe transition from right to left"
+  },
+  "wiperight": {
+    "filter": "wiperight",
+    "duration": 0.4,
+    "description": "Wipe transition from left to right"
+  },
+  "slideup": {
+    "filter": "slideup",
+    "duration": 0.3,
+    "description": "Second clip slides up over the first"
+  },
+  "slidedown": {
+    "filter": "slidedown",
+    "duration": 0.3,
+    "description": "Second clip slides down over the first"
+  },
+  "circleopen": {
+    "filter": "circleopen",
+    "duration": 0.6,
+    "description": "Circle iris open reveal"
+  },
+  "circleclose": {
+    "filter": "circleclose",
+    "duration": 0.6,
+    "description": "Circle iris close transition"
+  },
+  "radial": {
+    "filter": "radial",
+    "duration": 0.5,
+    "description": "Radial wipe transition"
+  },
+  "smoothleft": {
+    "filter": "smoothleft",
+    "duration": 0.4,
+    "description": "Smooth slide from right to left"
+  },
+  "smoothright": {
+    "filter": "smoothright",
+    "duration": 0.4,
+    "description": "Smooth slide from left to right"
+  },
+  "dissolve": {
+    "filter": "dissolve",
+    "duration": 0.8,
+    "description": "Film-style dissolve between clips"
+  },
+  "pixelize": {
+    "filter": "pixelize",
+    "duration": 0.5,
+    "description": "Pixelation transition effect"
+  },
+  "diagtl": {
+    "filter": "diagtl",
+    "duration": 0.4,
+    "description": "Diagonal wipe from top-left"
+  },
+  "diagbr": {
+    "filter": "diagbr",
+    "duration": 0.4,
+    "description": "Diagonal wipe from bottom-right"
+  },
+  "hlslice": {
+    "filter": "hlslice",
+    "duration": 0.5,
+    "description": "Horizontal line slice transition"
+  }
+}

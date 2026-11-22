@@ -1,0 +1,54 @@
+name: 3x Daily Instagram Reels Publisher
+
+on:
+  schedule:
+    # 3x Daily at peak viral discovery hours (UTC times shown, converted to IST):
+    # 04:00 UTC = 09:30 AM IST (Morning slot)
+    # 08:30 UTC = 02:00 PM IST (Afternoon slot)
+    # 14:00 UTC = 07:30 PM IST (Evening slot)
+    - cron: '0 4 * * *'
+    - cron: '30 8 * * *'
+    - cron: '0 14 * * *'
+  workflow_dispatch: # Allows manual trigger anytime from GitHub Web UI
+
+jobs:
+  publish_reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-impact
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Publish Next Reel to Instagram
+        env:
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python automation/scheduler.py --now
+
+      - name: Commit and Push Updated Topic Queue and History
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add automation/topics.json automation/published_history.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(automation): sync topics and history after scheduled publish [skip ci]" && git push)
