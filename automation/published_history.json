@@ -7,5 +7,14 @@
     "video_path": "export/thermal_bottle_reel.mp4",
     "video_hash": "e98f367b77776f4d9b808cf201b47608",
     "account": "curio__motion"
+  },
+  {
+    "id": "bladeless_fan",
+    "title": "How Does a Bladeless Fan Actually Work?",
+    "permalink": "https://www.instagram.com/reel/DgDcEkvlRTw/",
+    "published_at": "2026-11-22T18:23:07.571577",
+    "video_path": "/home/runner/work/viral-reels/viral-reels/export/bladeless_fan_reel.mp4",
+    "video_hash": "0ced0e541579252c9eb02884e2f01b26",
+    "account": "curio__motion"
   }
 ]
