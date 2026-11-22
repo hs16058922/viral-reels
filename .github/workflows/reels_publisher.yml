@@ -46,9 +46,9 @@ jobs:
         run: |
           python automation/scheduler.py --now
 
-      - name: Commit and Push Updated Topic Queue and History
+      - name: Commit and Push Updated Topic Queue, History and Analytics
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          git add automation/topics.json automation/published_history.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(automation): sync topics and history after scheduled publish [skip ci]" && git push)
+          git add automation/topics.json automation/published_history.json data/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git push)

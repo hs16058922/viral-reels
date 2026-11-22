@@ -16,6 +16,7 @@ tmp/
 # Exported videos and scratch frames
 export/*
 !export/.gitkeep
+references/*.mp4
 
 # macOS
 .DS_Store

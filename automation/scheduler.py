@@ -27,6 +27,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from automation.instagram_direct import DirectInstagramPublisher
 from automation.instagram_publisher import InstagramPublisher
+from automation.reel_analytics import ReelAnalyticsEngine
 from automation.reel_builder import AutonomousReelBuilder
 from automation.topic_queue import TopicQueue
 from automation.viral_captions import ViralCaptionGenerator
@@ -117,6 +118,11 @@ def post_next_reel(dry_run: bool = False) -> bool:
             logger.info("🔗 Link: %s", result["permalink"])
             queue.mark_published(topic["id"], result["permalink"], video_path=video_path)
             AutonomousReelBuilder.cleanup_export_directory(keep_topic_id=topic["id"])
+            try:
+                logger.info("📊 Running automated post-publish Reels Analytics Audit...")
+                ReelAnalyticsEngine().analyze_all_reels()
+            except Exception as e:
+                logger.warning("Post-publish analytics note: %s", e)
             return True
         except Exception as exc:
             logger.exception("Failed to publish reel via Meta Graph API: %s", exc)
@@ -137,6 +143,11 @@ def post_next_reel(dry_run: bool = False) -> bool:
             logger.info("🔗 Link: %s", result["permalink"])
             queue.mark_published(topic["id"], result["permalink"], video_path=video_path)
             AutonomousReelBuilder.cleanup_export_directory(keep_topic_id=topic["id"])
+            try:
+                logger.info("📊 Running automated post-publish Reels Analytics Audit...")
+                ReelAnalyticsEngine().analyze_all_reels()
+            except Exception as e:
+                logger.warning("Post-publish analytics note: %s", e)
             return True
         except Exception as exc:
             logger.exception("Failed to publish reel via direct login: %s", exc)

@@ -32,6 +32,7 @@ from engine.cover_generator import ReelCoverGenerator
 from engine.edge_voice import VoiceEngine
 from engine.fonts import load_headline_font, load_sub_font
 from engine.hud_graphics import HUDGraphicsEngine
+from engine.isometric_animator import IsometricMotionEngine
 from engine.whisper_captions import CaptionGenerator
 
 logger = logging.getLogger("viral_reels.reel_builder")
@@ -164,67 +165,41 @@ class AutonomousReelBuilder:
         except Exception:
             pass
 
-        # ── 3. Load Topic-Specific 3D Visual Scenes ────────────────────
-        raw_scenes = cls.load_or_generate_scenes(topic)
-        base_w, base_h = int(WIDTH * 1.3), int(HEIGHT * 1.3)
-        prepared_scenes = [s.resize((base_w, base_h), Image.Resampling.LANCZOS) for s in raw_scenes]
+        # ── 3. Select Dynamic Caption Style for this Topic ─────────────
+        theme = CaptionStyleRotator.get_theme_for_topic(topic)
+        logger.info("Selected caption aesthetic theme: %s", theme.name)
+        accent_color = theme.active_color if theme.name != "MINIMAL_DROP_SHADOW" else (0, 229, 255)
 
-        # ── 4. Generate Topic Cover Card ──────────────────────────────
+        # ── 4. Load Topic-Specific 3D Visual Scenes ────────────────────
+        raw_scenes = cls.load_or_generate_scenes(topic)
+        logger.info("Preparing 3D rounded cutaway cards with wireframe edge lighting...")
+        framed_scenes = [
+            IsometricMotionEngine.prepare_framed_subject(
+                raw_scene=s,
+                target_w=780,
+                target_h=1000,
+                radius=36,
+                accent_color=accent_color,
+            )
+            for s in raw_scenes
+        ]
+
+        # ── 5. Generate Topic Cover Card ──────────────────────────────
         logger.info("Generating high-CTR flashy cover card...")
         cover_base = raw_scenes[0] if raw_scenes else None
         cover_img = ReelCoverGenerator.generate_cover(
-            base_image_path=None,  # Pass raw PIL base directly
+            base_image_path=None,
             hook_line_1=topic.get("cover_hook_1") or topic["title"][:22].upper(),
             hook_line_2=topic.get("cover_hook_2") or "HOW IT WORKS?!",
             category_tag=topic.get("cover_tag") or "ENGINEERING EXPLAINED",
             curiosity_sticker=topic.get("cover_sticker") or "SECRET REVEALED",
             output_path=cover_path,
         )
-        if cover_base:
-            # Composite cover text over the topic's own scene
-            cover_img = ReelCoverGenerator.generate_cover(
-                base_image_path=None,
-                hook_line_1=topic.get("cover_hook_1") or topic["title"][:22].upper(),
-                hook_line_2=topic.get("cover_hook_2") or "HOW IT WORKS?!",
-                category_tag=topic.get("cover_tag") or "ENGINEERING EXPLAINED",
-                curiosity_sticker=topic.get("cover_sticker") or "SECRET REVEALED",
-                output_path=cover_path,
-            )
 
-        # ── 5. Select Dynamic Caption Style for this Topic ─────────────
-        theme = CaptionStyleRotator.get_theme_for_topic(topic)
-        logger.info("Selected caption aesthetic theme: %s", theme.name)
-
-        # ── 6. Setup Pre-rendered Scientific Header Badge ─────────────
-        badge = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
-        d_b = ImageDraw.Draw(badge)
-        font_title = load_headline_font(44)
-        font_sub = load_sub_font(26)
-
-        b_w, b_h = 920, 130
-        b_x = (WIDTH - b_w) // 2
-        b_y = 170
-
-        badge_outline = theme.active_color if theme.name != "MINIMAL_DROP_SHADOW" else (255, 215, 0)
-        d_b.rounded_rectangle([b_x, b_y, b_x + b_w, b_y + b_h], radius=22, fill=(10, 14, 24, 225), outline=badge_outline, width=3)
-
-        t_box = d_b.textbbox((0, 0), topic["title"].upper(), font=font_title)
-        tw = t_box[2] - t_box[0]
-        if tw > (b_w - 60):
-            font_title = load_headline_font(max(26, int(44 * (b_w - 60) / tw)))
-            t_box = d_b.textbbox((0, 0), topic["title"].upper(), font=font_title)
-            tw = t_box[2] - t_box[0]
-        d_b.text(((WIDTH - tw) // 2, b_y + 18), topic["title"].upper(), font=font_title, fill=(255, 255, 255))
-
-        sub_text = topic.get("cover_tag") or "3D MECHANICAL BREAKDOWN"
-        s_box = d_b.textbbox((0, 0), sub_text, font=font_sub)
-        sw = s_box[2] - s_box[0]
-        d_b.text(((WIDTH - sw) // 2, b_y + 82), sub_text, font=font_sub, fill=badge_outline)
-
-        # ── 7. Render Video with FFmpeg Pipe ───────────────────────────
+        # ── 5. Setup Rendering Pipe ───────────────────────────────────
         total_frames = int(total_duration * FPS)
-        logger.info("Rendering %d frames (%.1fs) with %d cinematic cuts to %s...",
-                    total_frames, total_duration, len(prepared_scenes), output_mp4.name)
+        logger.info("Rendering %d frames (%.1fs) with %d 3D animated isometric scenes to %s...",
+                    total_frames, total_duration, len(framed_scenes), output_mp4.name)
 
         ffmpeg_bin = shutil.which("ffmpeg") or "ffmpeg"
         ffmpeg_cmd = [
@@ -262,19 +237,13 @@ class AutonomousReelBuilder:
             stderr=subprocess.PIPE,
         )
 
-        num_scenes = max(1, len(prepared_scenes))
+        num_scenes = max(1, len(framed_scenes))
         scene_duration = total_duration / num_scenes
+        bullets = topic.get("bullets", [])
 
-        # Camera motions per scene
-        camera_moves = [
-            {"zoom_start": 1.0, "zoom_end": 1.18, "pan_x": 0.0, "pan_y": 0.0},
-            {"zoom_start": 1.12, "zoom_end": 1.12, "pan_x": 0.0, "pan_y": 0.12},
-            {"zoom_start": 1.20, "zoom_end": 1.04, "pan_x": 0.0, "pan_y": 0.0},
-            {"zoom_start": 1.14, "zoom_end": 1.14, "pan_x": 0.08, "pan_y": -0.06},
-            {"zoom_start": 1.0, "zoom_end": 1.14, "pan_x": 0.0, "pan_y": 0.0},
-        ]
+        bg_theme = "OBSIDIAN" if theme.name == "MATRIX_HUD" else ("CRIMSON" if theme.name == "CRIMSON_PULSE" else "BLUEPRINT")
 
-        # Main frame-by-frame compositing loop
+        # Main frame-by-frame multi-layer compositing loop
         for frame_idx in range(total_frames):
             t = frame_idx / FPS
 
@@ -284,52 +253,81 @@ class AutonomousReelBuilder:
                 process.stdin.write(frame_img.tobytes())
                 continue
 
-            # Determine active scene index and scene progress
+            # Active scene index
             scene_idx = min(num_scenes - 1, int(t / scene_duration))
-            scene_t = t - (scene_idx * scene_duration)
-            scene_progress = min(1.0, max(0.0, scene_t / max(0.1, scene_duration)))
+            cur_framed_scene = framed_scenes[scene_idx]
 
-            move = camera_moves[scene_idx % len(camera_moves)]
-            zoom = move["zoom_start"] + (move["zoom_end"] - move["zoom_start"]) * scene_progress
-            pan_y_val = move["pan_y"] * scene_progress
-            pan_x_val = move["pan_x"] * scene_progress
+            # Layer 0 & 1: 3D Blueprint Background & Drift Grid
+            bg = IsometricMotionEngine.render_blueprint_background(
+                width=WIDTH,
+                height=HEIGHT,
+                t=t,
+                theme_name=bg_theme,
+            )
+            d_bg = ImageDraw.Draw(bg)
 
-            cur_scene_img = prepared_scenes[scene_idx]
-            bw, bh = cur_scene_img.size
+            # Layer 2: 3D Extruded Isometric Podium
+            IsometricMotionEngine.draw_isometric_podium(
+                d_bg,
+                cx=WIDTH // 2,
+                cy=1440,
+                radius_x=440,
+                radius_y=220,
+                height_extrude=54,
+                t=t,
+                accent_color=accent_color,
+            )
 
-            cw, ch = int(WIDTH / zoom), int(HEIGHT / zoom)
-            cx = int((bw - cw) // 2 + pan_x_val * (bw - cw))
-            cy = int((bh - ch) // 2 + pan_y_val * (bh - ch))
-            cx = max(0, min(bw - cw, cx))
-            cy = max(0, min(bh - ch, cy))
+            # Layer 3: Animated Energy/Airflow Stream along Grid Tracks
+            IsometricMotionEngine.render_energy_stream(
+                d_bg,
+                t=t,
+                accent_color=(255, 90, 31) if theme.name != "CRIMSON_PULSE" else (0, 229, 255),
+            )
 
-            cropped = cur_scene_img.crop((cx, cy, cx + cw, cy + ch)).resize((WIDTH, HEIGHT), Image.Resampling.BILINEAR).convert("RGB")
+            # Layer 4: Floating 3D Subject with Harmonic Levitation & Dynamic Shadow
+            IsometricMotionEngine.composite_floating_subject(
+                canvas=bg,
+                framed_subject=cur_framed_scene,
+                cx=WIDTH // 2,
+                base_cy=1020,
+                t=t,
+                float_amp=16.0,
+                float_freq=2.4,
+            )
 
-            # 1. Overlay Animated 3D HUD Graphics (Viewfinder, reticle, laser scanline)
+            # Layer 5: Floating 3D Callout Cards with Laser Pointers & Reticles
+            IsometricMotionEngine.render_floating_callouts(
+                img=bg,
+                t=t,
+                bullets=bullets,
+                scene_idx=scene_idx,
+                accent_color=accent_color,
+            )
+
+            # Layer 6: Technical HUD Viewfinder & Rotating Angle Reticle
             HUDGraphicsEngine.draw_hud_overlay(
-                img=cropped,
+                img=bg,
                 t=t,
                 total_duration=total_duration,
                 scene_idx=scene_idx,
-                accent_color=theme.active_color if theme.name != "MINIMAL_DROP_SHADOW" else (0, 229, 255),
+                accent_color=accent_color,
             )
 
-            # 2. Paste Pre-rendered Top Badge
-            cropped.paste(badge, (0, 0), badge)
-
-            # 3. Dynamic Word-Highlighted Captions with Active Theme
+            # Layer 7: Upper-Third Kinetic Viral Captions
             c_words, active_idx = cls.get_active_caption(t, words)
             if c_words:
-                CaptionStyleRotator.render_caption_to_frame(
-                    img=cropped,
+                IsometricMotionEngine.render_upper_third_captions(
+                    img=bg,
                     words=c_words,
                     active_idx=active_idx,
                     theme=theme,
-                    center_y=1400,
+                    center_y=360,
                 )
 
-            process.stdin.write(cropped.tobytes())
+            process.stdin.write(bg.convert("RGB").tobytes())
 
+        process.stdin.close()
         _, stderr_data = process.communicate()
 
         if process.returncode != 0:
