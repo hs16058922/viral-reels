@@ -33,6 +33,8 @@ from engine.edge_voice import VoiceEngine
 from engine.fonts import load_headline_font, load_sub_font
 from engine.hud_graphics import HUDGraphicsEngine
 from engine.isometric_animator import IsometricMotionEngine
+from engine.sfx_manager import SFXManager
+from engine.video_formats import FormatCompositor, ReelVideoFormat, VideoFormatRotator
 from engine.whisper_captions import CaptionGenerator
 
 logger = logging.getLogger("viral_reels.reel_builder")
@@ -165,10 +167,12 @@ class AutonomousReelBuilder:
         except Exception:
             pass
 
-        # ── 3. Select Dynamic Caption Style for this Topic ─────────────
+        # ── 3. Select Dynamic Presentation Format & Caption Style ──────
+        video_format = VideoFormatRotator.get_format_for_topic(topic)
         theme = CaptionStyleRotator.get_theme_for_topic(topic)
-        logger.info("Selected caption aesthetic theme: %s", theme.name)
         accent_color = theme.active_color if theme.name != "MINIMAL_DROP_SHADOW" else (0, 229, 255)
+        logger.info("Selected unique presentation format for '%s': %s (Caption Theme: %s)",
+                    topic["id"], video_format.value, theme.name)
 
         # ── 4. Load Topic-Specific 3D Visual Scenes ────────────────────
         raw_scenes = cls.load_or_generate_scenes(topic)
@@ -196,10 +200,26 @@ class AutonomousReelBuilder:
             output_path=cover_path,
         )
 
-        # ── 5. Setup Rendering Pipe ───────────────────────────────────
+        # ── 6. Master Multi-Track Soundtrack with SFX (Impacts, Swooshes, UI Pops, Drone) ───
+        master_audio_path = TMP_DIR / f"{topic_id}_master_soundtrack.aac"
+        num_scenes = max(1, len(raw_scenes))
+        scene_duration = total_duration / num_scenes
+        scene_cut_times = [i * scene_duration for i in range(1, num_scenes)]
+        callout_times = [(i + 0.3) * scene_duration for i in range(num_scenes)]
+
+        logger.info("Mastering multi-track audio soundtrack with SFX (Whooshes, Pops, Sub Impact)...")
+        SFXManager.build_mixed_soundtrack(
+            voice_path=audio_path,
+            scene_cut_times=scene_cut_times,
+            callout_times=callout_times,
+            total_duration=total_duration,
+            output_path=master_audio_path,
+        )
+
+        # ── 7. Setup Rendering Pipe ───────────────────────────────────
         total_frames = int(total_duration * FPS)
-        logger.info("Rendering %d frames (%.1fs) with %d 3D animated isometric scenes to %s...",
-                    total_frames, total_duration, len(framed_scenes), output_mp4.name)
+        logger.info("Rendering %d frames (%.1fs) with %s format and %d 3D scenes to %s...",
+                    total_frames, total_duration, video_format.value, len(raw_scenes), output_mp4.name)
 
         ffmpeg_bin = shutil.which("ffmpeg") or "ffmpeg"
         ffmpeg_cmd = [
@@ -210,7 +230,7 @@ class AutonomousReelBuilder:
             "-pix_fmt", "rgb24",
             "-r", str(FPS),
             "-i", "-",
-            "-i", str(audio_path),
+            "-i", str(master_audio_path),
             "-c:v", "libx264",
             "-profile:v", "main",
             "-level", "3.1",
@@ -222,7 +242,7 @@ class AutonomousReelBuilder:
             "-preset", "fast",
             "-crf", "18",
             "-c:a", "aac",
-            "-b:a", "128k",
+            "-b:a", "192k",
             "-ar", "48000",
             "-ac", "2",
             "-movflags", "+faststart",
@@ -237,11 +257,7 @@ class AutonomousReelBuilder:
             stderr=subprocess.PIPE,
         )
 
-        num_scenes = max(1, len(framed_scenes))
-        scene_duration = total_duration / num_scenes
         bullets = topic.get("bullets", [])
-
-        bg_theme = "OBSIDIAN" if theme.name == "MATRIX_HUD" else ("CRIMSON" if theme.name == "CRIMSON_PULSE" else "BLUEPRINT")
 
         # Main frame-by-frame multi-layer compositing loop
         for frame_idx in range(total_frames):
@@ -253,79 +269,30 @@ class AutonomousReelBuilder:
                 process.stdin.write(frame_img.tobytes())
                 continue
 
-            # Active scene index
+            # Active scene index & progress
             scene_idx = min(num_scenes - 1, int(t / scene_duration))
-            cur_framed_scene = framed_scenes[scene_idx]
+            scene_t = t - (scene_idx * scene_duration)
 
-            # Layer 0 & 1: 3D Blueprint Background & Drift Grid
-            bg = IsometricMotionEngine.render_blueprint_background(
-                width=WIDTH,
-                height=HEIGHT,
-                t=t,
-                theme_name=bg_theme,
-            )
-            d_bg = ImageDraw.Draw(bg)
+            c_words, active_idx = cls.get_active_caption(t, words)
 
-            # Layer 2: 3D Extruded Isometric Podium
-            IsometricMotionEngine.draw_isometric_podium(
-                d_bg,
-                cx=WIDTH // 2,
-                cy=1440,
-                radius_x=440,
-                radius_y=220,
-                height_extrude=54,
-                t=t,
-                accent_color=accent_color,
-            )
-
-            # Layer 3: Animated Energy/Airflow Stream along Grid Tracks
-            IsometricMotionEngine.render_energy_stream(
-                d_bg,
-                t=t,
-                accent_color=(255, 90, 31) if theme.name != "CRIMSON_PULSE" else (0, 229, 255),
-            )
-
-            # Layer 4: Floating 3D Subject with Harmonic Levitation & Dynamic Shadow
-            IsometricMotionEngine.composite_floating_subject(
-                canvas=bg,
-                framed_subject=cur_framed_scene,
-                cx=WIDTH // 2,
-                base_cy=1020,
-                t=t,
-                float_amp=16.0,
-                float_freq=2.4,
-            )
-
-            # Layer 5: Floating 3D Callout Cards with Laser Pointers & Reticles
-            IsometricMotionEngine.render_floating_callouts(
-                img=bg,
-                t=t,
-                bullets=bullets,
-                scene_idx=scene_idx,
-                accent_color=accent_color,
-            )
-
-            # Layer 6: Technical HUD Viewfinder & Rotating Angle Reticle
-            HUDGraphicsEngine.draw_hud_overlay(
-                img=bg,
+            # Render frame using the topic's unique presentation format
+            frame_img = FormatCompositor.render_format_frame(
+                video_format=video_format,
                 t=t,
                 total_duration=total_duration,
                 scene_idx=scene_idx,
+                scene_t=scene_t,
+                scene_duration=scene_duration,
+                raw_scene_img=raw_scenes[scene_idx],
+                framed_scene_img=framed_scenes[scene_idx],
+                theme=theme,
                 accent_color=accent_color,
+                bullets=bullets,
+                active_words=c_words,
+                active_word_idx=active_idx,
             )
 
-            # Layer 7: Upper-Third Kinetic Viral Captions
-            c_words, active_idx = cls.get_active_caption(t, words)
-            if c_words:
-                IsometricMotionEngine.render_upper_third_captions(
-                    img=bg,
-                    words=c_words,
-                    active_idx=active_idx,
-                    theme=theme,
-                    center_y=360,
-                )
-
-            process.stdin.write(bg.convert("RGB").tobytes())
+            process.stdin.write(frame_img.convert("RGB").tobytes())
 
         process.stdin.close()
         _, stderr_data = process.communicate()

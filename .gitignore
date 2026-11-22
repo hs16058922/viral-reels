@@ -18,6 +18,9 @@ export/*
 !export/.gitkeep
 references/*.mp4
 
+# Large generated audio beds
+assets/sfx/ambient_drone.wav
+
 # macOS
 .DS_Store
 

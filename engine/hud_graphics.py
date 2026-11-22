@@ -82,20 +82,7 @@ class HUDGraphicsEngine:
         # Center dot
         draw.ellipse([reticle_cx - 3, reticle_cy - 3, reticle_cx + 3, reticle_cy + 3], fill=accent_color)
 
-        # ── 3. Subtle Laser Analysis Scanline ─────────────────────────────
-        # Sweeps down from top to bottom every 3.5 seconds
-        scan_period = 3.5
-        cycle_progress = (t % scan_period) / scan_period
-        scan_y = int(cycle_progress * height)
-
-        if 0 <= scan_y < height:
-            # Main laser scanline
-            draw.line([(0, scan_y), (width, scan_y)], fill=(*accent_color, 90), width=2)
-            # Soft trailing glow line
-            if scan_y - 2 >= 0:
-                draw.line([(0, scan_y - 2), (width, scan_y - 2)], fill=(*accent_color, 40), width=2)
-
-        # ── 4. Technical Telemetry Labels ─────────────────────────────────
+        # ── 3. Technical Telemetry Labels ─────────────────────────────────
         font_hud = load_sub_font(20)
         hud_text_left = f"ISO_CAD // CAM_0{scene_idx + 1}"
         draw.text((corner_pad + 12, corner_pad + 8), hud_text_left, font=font_hud, fill=(*accent_color, 200))

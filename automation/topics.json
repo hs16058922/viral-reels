@@ -105,6 +105,7 @@
     "cover_hook_2": "HOW IT DELETES SOUND?!",
     "cover_tag": "ACOUSTIC PHYSICS",
     "cover_sticker": "180 DEGREE ANTI-WAVE",
+    "video_format": "SPLIT_DIAGNOSTIC",
     "status": "pending",
     "video_path": null
   },
@@ -131,6 +132,7 @@
     "cover_hook_2": "COLD GLASS, BOILING WATER?!",
     "cover_tag": "ELECTROMAGNETISM",
     "cover_sticker": "EDDY CURRENTS 90% EFFICIENCY",
+    "video_format": "CINEMATIC_FULLSCREEN",
     "status": "pending",
     "video_path": null
   },
