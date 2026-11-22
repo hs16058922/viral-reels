@@ -178,7 +178,6 @@ class AutonomousReelBuilder:
 
             process.stdin.write(cropped.tobytes())
 
-        process.stdin.close()
         _, stderr_data = process.communicate()
 
         if process.returncode != 0:
