@@ -1,17 +1,18 @@
 # 📊 CurioMotion Reel Analytics Intelligence Report
-**Audit Timestamp:** 2026-11-23T09:28:01.061376  
-**Channel:** `@curio__motion` | **Total Published Reels:** 5
+**Audit Timestamp:** 2026-11-23T11:56:07.847394  
+**Channel:** `@curio__motion` | **Total Published Reels:** 6
 
 ---
 ## 📈 Published Reels Performance Matrix
 
 | Topic | Tier | Likes | Comments | Saves | Shares | Virality Score | Link |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **How Does a Thermal Water Bottle ** | `B-Tier` | 4 | 1 | 1 | 0 | **53.2/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
+| **How Does a Thermal Water Bottle ** | `B-Tier` | 4 | 1 | 1 | 0 | **52.9/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
 | **How Does a Bladeless Fan Actuall** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDcEkvlRTw/) |
 | **Why Your Washing Machine Hides a** | `A-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
 | **How Noise-Cancelling Headphones ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgE3kNRDw4E/) |
-| **Why Induction Stoves Cook Withou** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
+| **Why Induction Stoves Cook Withou** | `B-Tier` | 1 | 0 | 0 | 1 | **40.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
+| **How a Mechanical Watch Works Wit** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFUj7_DA6R/) |
 
 ---
 ## 💡 Strategic Intelligence & Optimization Recommendations

@@ -294,8 +294,10 @@
     "cover_tag": "HOROLOGY SECRETS",
     "cover_sticker": "28,800 VPH ESCAPEMENT",
     "video_format": "CINEMATIC_FULLSCREEN",
-    "status": "ready",
-    "video_path": "export/mechanical_watch_reel.mp4"
+    "status": "published",
+    "video_path": "export/mechanical_watch_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgFUj7_DA6R/",
+    "published_at": "2026-11-23T11:56:05.516278"
   },
   {
     "id": "jet_engine",
