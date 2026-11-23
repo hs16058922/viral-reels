@@ -13,7 +13,7 @@ Generates 1080x1920 vertical cover images optimized for maximum clickability:
 import math
 import re
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
 from engine.fonts import load_headline_font, load_sub_font
 
@@ -41,9 +41,9 @@ class ReelCoverGenerator:
 
     @staticmethod
     def generate_cover(
-        base_image_path: Path,
-        hook_line_1: str,
-        hook_line_2: str,
+        base_image_path: Optional[Union[str, Path, Image.Image]] = None,
+        hook_line_1: str = "",
+        hook_line_2: str = "",
         category_tag: str = "ENGINEERING EXPLAINED",
         curiosity_sticker: str = "SECRET REVEALED",
         accent_color: Tuple[int, int, int] = (255, 230, 0),  # Neon Yellow
@@ -56,9 +56,16 @@ class ReelCoverGenerator:
         category_tag = sanitize_font_text(category_tag)
         curiosity_sticker = sanitize_font_text(curiosity_sticker)
 
-        # 1. Base Image Processing (Enhance saturation, contrast, and depth)
-        if base_image_path and Path(base_image_path).exists():
-            base = Image.open(base_image_path).convert("RGBA")
+        # 1. Base Image Processing (Accepts Image.Image, Path, or str)
+        base = None
+        if isinstance(base_image_path, Image.Image):
+            base = base_image_path.copy().convert("RGBA")
+        elif base_image_path and isinstance(base_image_path, (str, Path)):
+            p = Path(base_image_path)
+            if p.exists():
+                base = Image.open(p).convert("RGBA")
+
+        if base is not None:
             base = base.resize((WIDTH, HEIGHT), Image.Resampling.LANCZOS)
             
             # Boost saturation and contrast for scroll-stopping visual impact
