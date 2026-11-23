@@ -187,15 +187,36 @@ class InstagramPublisher:
         logger.info("Initialized Meta direct upload: container=%s, uri=%s", container_id, upload_uri)
         return container_id, upload_uri
 
+    def get_container_status(self, container_id: str) -> Tuple[str, str]:
+        """Fetch (status_code, status_detail) from Meta Graph API."""
+        url = f"{self.GRAPH_API_BASE}/{container_id}"
+        params = {
+            "fields": "status_code,status",
+            "access_token": self.access_token,
+        }
+        try:
+            resp = requests.get(url, params=params, timeout=15)
+            data = resp.json()
+            return data.get("status_code", "UNKNOWN"), data.get("status", "")
+        except Exception as e:
+            logger.warning("Failed to query container %s status: %s", container_id, e)
+            return "UNKNOWN", str(e)
+
     def upload_binary_to_meta(
         self,
         upload_uri: str,
         video_path: Path,
         max_retries: int = 3,
     ) -> None:
-        """Step 2: Stream raw video bytes directly to Meta's rupload servers."""
+        """Step 2: Stream raw video bytes directly to Meta's rupload servers.
+        
+        Handles Meta's resumable offset protocol and handles cases where Meta
+        transitions the container to IN_PROGRESS/FINISHED despite HTTP timeout.
+        """
         file_size = video_path.stat().st_size
-        logger.info("Streaming %s (%.2f MB) directly to Meta rupload servers...", video_path.name, file_size / (1024 * 1024))
+        container_id = upload_uri.rstrip("/").split("/")[-1]
+        logger.info("Streaming %s (%.2f MB) directly to Meta rupload servers (container=%s)...",
+                    video_path.name, file_size / (1024 * 1024), container_id)
 
         headers = {
             "Authorization": f"OAuth {self.access_token}",
@@ -208,15 +229,60 @@ class InstagramPublisher:
         with open(video_path, "rb") as f:
             video_bytes = f.read()
 
+        current_offset = 0
+
         for attempt in range(1, max_retries + 1):
-            logger.info("Uploading binary to Meta rupload servers (attempt %d/%d)...", attempt, max_retries)
-            resp = requests.post(upload_uri, headers=headers, data=video_bytes, timeout=300)
+            logger.info("Uploading binary to Meta rupload servers (attempt %d/%d, offset=%d)...",
+                        attempt, max_retries, current_offset)
+            
+            headers["offset"] = str(current_offset)
+            headers["Content-Length"] = str(file_size - current_offset)
+            data_to_send = video_bytes[current_offset:]
+
+            resp = requests.post(upload_uri, headers=headers, data=data_to_send, timeout=300)
             data = resp.json() if resp.text else {}
             if resp.status_code in (200, 201) and data.get("success") is not False:
                 logger.info("✅ Direct binary upload to Meta completed successfully!")
                 return
             
             logger.warning("Upload attempt %d returned HTTP %d: %s", attempt, resp.status_code, resp.text)
+
+            # Check if Meta already accepted and transitioned the container to IN_PROGRESS / FINISHED
+            time.sleep(3)
+            status_code, status_detail = self.get_container_status(container_id)
+            logger.info("Container %s status on Meta: %s (%s)", container_id, status_code, status_detail)
+
+            if status_code in ("IN_PROGRESS", "FINISHED"):
+                logger.info("🎉 Container %s is already %s on Meta! Video was accepted.", container_id, status_code)
+                return
+
+            if status_code == "ERROR":
+                logger.error("❌ Container %s failed on Meta: %s", container_id, status_detail)
+                raise RuntimeError(f"Meta rejected video in container {container_id}: {status_detail}")
+
+            # Query rupload offset to see how many bytes were safely received
+            try:
+                offset_resp = requests.get(
+                    upload_uri,
+                    headers={"Authorization": f"OAuth {self.access_token}"},
+                    timeout=15,
+                )
+                if offset_resp.status_code == 200:
+                    offset_data = offset_resp.json() if offset_resp.text else {}
+                    server_offset = offset_data.get("offset")
+                    if server_offset is None and "offset" in offset_resp.headers:
+                        server_offset = int(offset_resp.headers["offset"])
+                    
+                    if server_offset is not None and server_offset > current_offset:
+                        current_offset = server_offset
+                        logger.info("Meta acknowledged %d / %d bytes. Resuming remaining %d bytes...",
+                                    current_offset, file_size, file_size - current_offset)
+                        if current_offset >= file_size:
+                            logger.info("✅ All bytes (%d) acknowledged by Meta!", file_size)
+                            return
+            except Exception as e:
+                logger.warning("Could not query rupload offset: %s", e)
+
             if attempt < max_retries:
                 time.sleep(5)
 
@@ -304,23 +370,36 @@ class InstagramPublisher:
         caption: str,
         share_to_feed: bool = True,
     ) -> Dict[str, Any]:
-        """Publish a reel using Meta Graph API official direct resumable upload."""
+        """Publish a reel using Meta Graph API official direct resumable upload with session renewal."""
         local_path = Path(video_path_or_url)
         if not local_path.exists():
             raise FileNotFoundError(f"Video file not found: {local_path}")
 
         file_size = local_path.stat().st_size
+        max_container_attempts = 2
+        container_id = None
 
-        # 1. Initialize direct resumable session on Meta
-        logger.info("Initializing direct resumable upload on Meta (file size: %.2f MB)...", file_size / (1024 * 1024))
-        container_id, upload_uri = self.create_resumable_container(
-            file_size=file_size,
-            caption=caption,
-            share_to_feed=share_to_feed,
-        )
+        for c_attempt in range(1, max_container_attempts + 1):
+            try:
+                # 1. Initialize direct resumable session on Meta
+                logger.info("Initializing direct resumable upload on Meta (attempt %d/%d, file size: %.2f MB)...",
+                            c_attempt, max_container_attempts, file_size / (1024 * 1024))
+                c_id, upload_uri = self.create_resumable_container(
+                    file_size=file_size,
+                    caption=caption,
+                    share_to_feed=share_to_feed,
+                )
+                container_id = c_id
 
-        # 2. Upload raw binary directly to Meta rupload servers
-        self.upload_binary_to_meta(upload_uri, local_path)
+                # 2. Upload raw binary directly to Meta rupload servers
+                self.upload_binary_to_meta(upload_uri, local_path)
+                break
+            except Exception as e:
+                logger.warning("Resumable container attempt %d failed: %s", c_attempt, e)
+                if c_attempt == max_container_attempts:
+                    raise
+                logger.info("Retrying with a fresh Meta container session in 5s...")
+                time.sleep(5)
 
         # 3. Wait for Meta encoding pipeline to finish
         self.wait_for_container_ready(container_id)

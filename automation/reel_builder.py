@@ -246,7 +246,7 @@ class AutonomousReelBuilder:
             "-ar", "48000",
             "-ac", "2",
             "-movflags", "+faststart",
-            "-shortest",
+            "-t", f"{total_duration:.3f}",
             str(output_mp4),
         ]
 
