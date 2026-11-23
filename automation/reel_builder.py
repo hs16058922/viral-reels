@@ -251,57 +251,67 @@ class AutonomousReelBuilder:
             str(output_mp4),
         ]
 
-        process = subprocess.Popen(
-            ffmpeg_cmd,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.PIPE,
-        )
-
-        bullets = topic.get("bullets", [])
-
-        # Main frame-by-frame multi-layer compositing loop
-        for frame_idx in range(total_frames):
-            t = frame_idx / FPS
-
-            # First 0.4s (frames 0-11): Flashy high-CTR Cover Card hook & thumbnail anchor
-            if frame_idx < 12:
-                frame_img = cover_img.copy()
-                process.stdin.write(frame_img.tobytes())
-                continue
-
-            # Active scene index & progress
-            scene_idx = min(num_scenes - 1, int(t / scene_duration))
-            scene_t = t - (scene_idx * scene_duration)
-
-            c_words, active_idx = cls.get_active_caption(t, words)
-
-            # Render frame using the topic's unique presentation format
-            frame_img = FormatCompositor.render_format_frame(
-                video_format=video_format,
-                t=t,
-                total_duration=total_duration,
-                scene_idx=scene_idx,
-                scene_t=scene_t,
-                scene_duration=scene_duration,
-                raw_scene_img=raw_scenes[scene_idx],
-                framed_scene_img=framed_scenes[scene_idx],
-                theme=theme,
-                accent_color=accent_color,
-                bullets=bullets,
-                active_words=c_words,
-                active_word_idx=active_idx,
+        ffmpeg_err_log = TMP_DIR / f"{topic_id}_ffmpeg_render.log"
+        with open(ffmpeg_err_log, "w+") as err_file:
+            process = subprocess.Popen(
+                ffmpeg_cmd,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
+                stderr=err_file,
             )
 
-            process.stdin.write(frame_img.convert("RGB").tobytes())
+            bullets = topic.get("bullets", [])
 
-        process.stdin.close()
-        stderr_data = process.stderr.read() if process.stderr else b""
-        process.wait()
+            # Main frame-by-frame multi-layer compositing loop
+            try:
+                for frame_idx in range(total_frames):
+                    t = frame_idx / FPS
 
-        if process.returncode != 0:
-            err = stderr_data.decode(errors="replace") if stderr_data else "Unknown"
-            raise RuntimeError(f"FFmpeg render failed: {err}")
+                    # First 0.4s (frames 0-11): Flashy high-CTR Cover Card hook & thumbnail anchor
+                    if frame_idx < 12:
+                        frame_img = cover_img.copy()
+                        process.stdin.write(frame_img.convert("RGB").tobytes())
+                        continue
+
+                    # Active scene index & progress
+                    scene_idx = min(num_scenes - 1, int(t / scene_duration))
+                    scene_t = t - (scene_idx * scene_duration)
+
+                    c_words, active_idx = cls.get_active_caption(t, words)
+
+                    # Render frame using the topic's unique presentation format
+                    frame_img = FormatCompositor.render_format_frame(
+                        video_format=video_format,
+                        t=t,
+                        total_duration=total_duration,
+                        scene_idx=scene_idx,
+                        scene_t=scene_t,
+                        scene_duration=scene_duration,
+                        raw_scene_img=raw_scenes[scene_idx],
+                        framed_scene_img=framed_scenes[scene_idx],
+                        theme=theme,
+                        accent_color=accent_color,
+                        bullets=bullets,
+                        active_words=c_words,
+                        active_word_idx=active_idx,
+                    )
+
+                    process.stdin.write(frame_img.convert("RGB").tobytes())
+
+                process.stdin.close()
+                process.wait()
+            except BrokenPipeError:
+                process.stdin.close()
+                process.wait()
+                err_file.seek(0)
+                err_text = err_file.read()
+                logger.error("FFmpeg BrokenPipeError: %s", err_text[-1000:])
+                raise RuntimeError(f"FFmpeg pipeline crashed: {err_text[-1000:]}")
+
+            if process.returncode != 0:
+                err_file.seek(0)
+                err_text = err_file.read()
+                raise RuntimeError(f"FFmpeg render failed (code {process.returncode}): {err_text[-1000:]}")
 
         logger.info("🎉 Reel successfully built: %s (%.2f MB)", output_mp4.name, output_mp4.stat().st_size / (1024 * 1024))
 
