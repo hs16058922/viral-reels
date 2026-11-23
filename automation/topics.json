@@ -106,8 +106,10 @@
     "cover_tag": "ACOUSTIC PHYSICS",
     "cover_sticker": "180 DEGREE ANTI-WAVE",
     "video_format": "SPLIT_DIAGNOSTIC",
-    "status": "pending",
-    "video_path": null
+    "status": "published",
+    "video_path": null,
+    "permalink": "https://www.instagram.com/reel/DgE3kNRDw4E/",
+    "published_at": "2026-11-23T07:42:18.089097"
   },
   {
     "id": "induction_stove",

@@ -1,14 +1,16 @@
 # 📊 CurioMotion Reel Analytics Intelligence Report
-**Audit Timestamp:** 2026-11-23T00:25:32.203507  
-**Channel:** `@curio__motion` | **Total Published Reels:** 2
+**Audit Timestamp:** 2026-11-23T07:42:19.198696  
+**Channel:** `@curio__motion` | **Total Published Reels:** 4
 
 ---
 ## 📈 Published Reels Performance Matrix
 
 | Topic | Tier | Likes | Comments | Saves | Shares | Virality Score | Link |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **How Does a Thermal Water Bottle ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
+| **How Does a Thermal Water Bottle ** | `B-Tier` | 3 | 1 | 1 | 0 | **46.8/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
 | **How Does a Bladeless Fan Actuall** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDcEkvlRTw/) |
+| **Why Your Washing Machine Hides a** | `A-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
+| **How Noise-Cancelling Headphones ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgE3kNRDw4E/) |
 
 ---
 ## 💡 Strategic Intelligence & Optimization Recommendations
