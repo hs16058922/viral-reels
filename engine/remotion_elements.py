@@ -45,9 +45,6 @@ class RemotionHTMLElements:
         # 2. Audio Waveform Activity Visualizer (Top-Right, next to timer)
         cls._draw_audio_visualizer(draw, t, accent_color)
 
-        # 3. Interactive Technical Callout Pointer (Transient: appears for only 2.5s per component)
-        cls._draw_interactive_callout(draw, scene_t, scene_duration, scene_idx, total_scenes, topic, accent_color)
-
         # Composite overlay onto main image
         img.paste(Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB"), (0, 0))
 
@@ -120,123 +117,6 @@ class RemotionHTMLElements:
 
             alpha = int(140 + 100 * (i / num_bars))
             draw.rounded_rectangle([bx, by1, bx + bar_w, by2], radius=2, fill=(*accent_color, alpha))
-
-    @classmethod
-    def _draw_interactive_callout(
-        cls,
-        draw: ImageDraw.ImageDraw,
-        scene_t: float,
-        scene_duration: float,
-        scene_idx: int,
-        total_scenes: int,
-        topic: Dict[str, Any],
-        accent_color: Tuple[int, int, int],
-    ) -> None:
-        """
-        Interactive Remotion-style technical callout pointer:
-        - Transient: Appears ONLY for 2.5 seconds (from 1.2s to 3.7s of each component scene).
-        - Disappears completely for the rest of the scene so visuals remain 100% clean and unobstructed.
-        - Never displays in the final outro / call-to-action scene.
-        """
-        # Skip callout on final outro scene
-        if scene_idx >= max(1, total_scenes - 1):
-            return
-
-        # Transient visibility window: 1.2s to 3.7s (2.5 seconds total)
-        callout_start = 1.2
-        callout_end = 3.7
-        if scene_t < callout_start or scene_t > callout_end:
-            return
-
-        # Smooth fade-in (0.35s) and fade-out (0.35s)
-        fade_time = 0.35
-        if scene_t < (callout_start + fade_time):
-            alpha_ratio = (scene_t - callout_start) / fade_time
-        elif scene_t > (callout_end - fade_time):
-            alpha_ratio = (callout_end - scene_t) / fade_time
-        else:
-            alpha_ratio = 1.0
-
-        spring = max(0.0, min(1.0, alpha_ratio))
-        if spring <= 0.05:
-            return
-
-        bullets = topic.get("bullets", [])
-        if not bullets or scene_idx >= len(bullets):
-            return
-
-        raw_bullet = bullets[scene_idx]
-
-        # Clean concise component name (no long truncated sentences)
-        clean_text = raw_bullet
-        for sep in [",", " - ", " – ", " polished", " creates", " behaves", " keep", " to "]:
-            if sep in clean_text:
-                clean_text = clean_text.split(sep)[0]
-        clean_text = clean_text.strip().upper()[:32]
-
-        # Target position on the interactive cutaway image
-        is_left_side = (scene_idx % 2 == 0)
-        target_x = 360 if is_left_side else 720
-        target_y = 960 + int(math.sin(scene_t * 1.8) * 12.0)
-
-        # Pulsing target rings
-        pulse = 0.5 + 0.5 * math.sin(scene_t * 5.0)
-        ring_r = int(12 + pulse * 5)
-        draw.ellipse(
-            [target_x - ring_r, target_y - ring_r, target_x + ring_r, target_y + ring_r],
-            outline=(*accent_color, int(180 * spring)),
-            width=2,
-        )
-        draw.ellipse(
-            [target_x - 4, target_y - 4, target_x + 4, target_y + 4],
-            fill=(*accent_color, int(255 * spring)),
-        )
-
-        # Elbow leader line coordinates
-        elbow_x = target_x - 60 if is_left_side else target_x + 60
-        elbow_y = target_y - 70
-
-        badge_w = 420
-        badge_h = 68
-        badge_x = elbow_x - badge_w if is_left_side else elbow_x
-        badge_y = elbow_y - (badge_h // 2)
-
-        # Clamp safely inside frame
-        badge_x = max(36, min(WIDTH - badge_w - 36, badge_x))
-
-        # Draw leader lines
-        line_color = (*accent_color, int(200 * spring))
-        draw.line([(target_x, target_y), (elbow_x, elbow_y)], fill=line_color, width=2)
-        shelf_end_x = badge_x + badge_w if is_left_side else badge_x
-        draw.line([(elbow_x, elbow_y), (shelf_end_x, elbow_y)], fill=line_color, width=2)
-
-        # Frosted Glassmorphism Spec Card
-        draw.rounded_rectangle(
-            [badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
-            radius=14,
-            fill=(8, 14, 24, int(225 * spring)),
-            outline=(*accent_color, int(160 * spring)),
-            width=2,
-        )
-
-        # Micro technical header inside card
-        font_micro = load_sub_font(13)
-        tech_header = f"FEATURE_0{scene_idx + 1} // CUTAWAY ANALYSIS"
-        draw.text(
-            (badge_x + 18, badge_y + 10),
-            tech_header,
-            font=font_micro,
-            fill=(*accent_color, int(220 * spring)),
-        )
-
-        # Main component label text
-        font_body = load_sub_font(18)
-        draw.text(
-            (badge_x + 18, badge_y + 32),
-            clean_text,
-            font=font_body,
-            fill=(255, 255, 255, int(245 * spring)),
-        )
 
     @classmethod
     def _draw_telemetry_gauge(
