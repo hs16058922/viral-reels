@@ -3,12 +3,12 @@ name: 3x Daily Instagram Reels Publisher
 on:
   schedule:
     # 3x Daily at peak viral discovery hours (UTC times shown, converted to IST):
-    # 04:00 UTC = 09:30 AM IST (Morning slot)
-    # 08:30 UTC = 02:00 PM IST (Afternoon slot)
-    # 14:00 UTC = 07:30 PM IST (Evening slot)
-    - cron: '0 4 * * *'
-    - cron: '30 8 * * *'
-    - cron: '0 14 * * *'
+    # 04:05 UTC = 09:35 AM IST (Morning slot - offset 5m to avoid GitHub Actions top-of-hour queue congestion)
+    # 08:35 UTC = 02:05 PM IST (Afternoon slot)
+    # 14:05 UTC = 07:35 PM IST (Evening prime slot)
+    - cron: '5 4 * * *'
+    - cron: '35 8 * * *'
+    - cron: '5 14 * * *'
   workflow_dispatch: # Allows manual trigger anytime from GitHub Web UI
 
 jobs:

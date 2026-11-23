@@ -295,7 +295,8 @@ class AutonomousReelBuilder:
             process.stdin.write(frame_img.convert("RGB").tobytes())
 
         process.stdin.close()
-        _, stderr_data = process.communicate()
+        stderr_data = process.stderr.read() if process.stderr else b""
+        process.wait()
 
         if process.returncode != 0:
             err = stderr_data.decode(errors="replace") if stderr_data else "Unknown"
