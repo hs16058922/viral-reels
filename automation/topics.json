@@ -270,5 +270,83 @@
     "cover_sticker": "20 PULSES PER SECOND",
     "status": "pending",
     "video_path": null
+  },
+  {
+    "id": "mechanical_watch",
+    "title": "How a Mechanical Watch Works Without Any Batteries",
+    "hook": "Inside a luxury mechanical watch, there is zero electricity and zero computer chips. Here is how it keeps perfect time.",
+    "script": "Inside a mechanical watch, there is zero electricity and zero batteries. It runs entirely on a curled ribbon of spring steel called the mainspring. As it uncoils, it turns a train of interlocking brass gears that step up rotational speed. To prevent the power from releasing all at once, the Swiss lever escapement catches and releases the escape wheel five times every single second using synthetic ruby jewel pallets. This pulses the balance wheel harmonic hairspring, giving the watch its signature ticking heartbeat.",
+    "bullets": [
+      "Coiled spring steel stores pure mechanical potential energy",
+      "4-stage gear train multiplies rotational speed to 28,800 VPH",
+      "Synthetic ruby pallets lock and release escape wheel teeth",
+      "Harmonic hairspring resonates at exact physical frequency"
+    ],
+    "niche_tags": [
+      "#MechanicalWatch",
+      "#Horology",
+      "#Watchmaking",
+      "#EngineeringExplained",
+      "#PhysicsInMotion"
+    ],
+    "cover_hook_1": "ZERO BATTERIES?!",
+    "cover_hook_2": "MECHANICAL WATCH SECRETS",
+    "cover_tag": "HOROLOGY SECRETS",
+    "cover_sticker": "28,800 VPH ESCAPEMENT",
+    "video_format": "CINEMATIC_FULLSCREEN",
+    "status": "ready",
+    "video_path": "export/mechanical_watch_reel.mp4"
+  },
+  {
+    "id": "jet_engine",
+    "title": "How Jet Engines Produce 100,000 Pounds of Thrust",
+    "hook": "A commercial jet engine swallows twenty tons of air every single minute. Here is the violent physics happening inside.",
+    "script": "A commercial jet engine doesn't just push air backward. It swallows twenty tons of atmosphere every minute. First, the wide-chord titanium fan directs massive bypass airflow around the core for eighty percent of total thrust. Inside the core, alternating stages of spinning compressor blades squeeze the air to over forty times atmospheric pressure. Fuel sprays into the annular combustion chamber, exploding into a glowing three-thousand-degree plasma jet. This roaring inferno spins high-pressure turbine discs that extract thousands of horsepower to drive the front fan.",
+    "bullets": [
+      "Wide-chord titanium fan provides 80% bypass thrust",
+      "Multi-stage axial compressors squeeze air by 40 to 1",
+      "Annular combustion chamber ignites 3000 degree plasma",
+      "High-pressure turbine discs drive central power shaft"
+    ],
+    "niche_tags": [
+      "#JetEngine",
+      "#AviationTech",
+      "#AerospaceEngineering",
+      "#FluidDynamics",
+      "#Turbofan"
+    ],
+    "cover_hook_1": "JET ENGINE INFERNO",
+    "cover_hook_2": "HOW 100,000 LBS THRUST WORKS",
+    "cover_tag": "AEROSPACE SECRETS",
+    "cover_sticker": "3000 DEGREE PLASMA",
+    "video_format": "CINEMATIC_FULLSCREEN",
+    "status": "ready",
+    "video_path": "export/jet_engine_reel.mp4"
+  },
+  {
+    "id": "human_heart",
+    "title": "How the Human Heart Pumps 2,000 Gallons of Blood Daily",
+    "hook": "Your heart beats over one hundred thousand times every day without ever taking a rest. Here is the dual-chamber hydraulics at work.",
+    "script": "Your heart is a dual-stage muscular fluid pump that beats over one hundred thousand times every day. Oxygen-poor blood enters the right atrium and drops into the right ventricle, which fires it into the pulmonary arteries. Once refreshed with oxygen from your lungs, the arterial blood rushes into the left atrium and fills the thick muscular left ventricle. During ventricular systole, a massive squeeze forces high-pressure blood through the aortic valve and up into the aortic arch, delivering life to trillions of cells across your body.",
+    "bullets": [
+      "Right ventricle pumps deoxygenated blood to lung capillaries",
+      "Oxygenated blood returns to thick-walled left ventricle",
+      "Systolic contraction exerts 120 mmHg arterial pressure",
+      "Aortic arch distributes blood flow across arterial branches"
+    ],
+    "niche_tags": [
+      "#HumanHeart",
+      "#Cardiology",
+      "#HumanAnatomy",
+      "#BiologyFacts",
+      "#ScienceAnimation"
+    ],
+    "cover_hook_1": "YOUR HUMAN HEART",
+    "cover_hook_2": "HOW 2,000 GALLONS FLOW",
+    "cover_tag": "BIOLOGY SECRETS",
+    "cover_sticker": "100,000 BEATS A DAY",
+    "video_format": "CINEMATIC_FULLSCREEN",
+    "status": "ready",
+    "video_path": "export/human_heart_reel.mp4"
   }
 ]

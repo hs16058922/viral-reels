@@ -79,7 +79,15 @@ class BlenderMechanismRunner:
             logger.warning("Blender binary not found. Falling back to procedural 2.5D engine.")
             return []
 
-        script_path = PROJECT_ROOT / "scripts" / "blender_render_mechanism.py"
+        # Route advanced technical studio topics to blender_advanced_engine.py
+        adv_topics = ["watch", "escapement", "jet", "heart", "cardiac", "engine", "gear"]
+        use_advanced = any(k in topic_id.lower() for k in adv_topics)
+
+        if use_advanced:
+            script_path = PROJECT_ROOT / "scripts" / "blender_advanced_engine.py"
+        else:
+            script_path = PROJECT_ROOT / "scripts" / "blender_render_mechanism.py"
+
         out_dir = PROJECT_ROOT / "tmp" / "blender_renders" / topic_id
         out_dir.mkdir(parents=True, exist_ok=True)
 
