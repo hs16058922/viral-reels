@@ -33,9 +33,9 @@ class VideoFormatRotator:
     """Selects and cycles distinct video presentation formats per topic."""
 
     FORMAT_CYCLE = [
+        ReelVideoFormat.CINEMATIC_FULLSCREEN,
         ReelVideoFormat.ISOMETRIC_STAGE,
         ReelVideoFormat.CINEMATIC_FULLSCREEN,
-        ReelVideoFormat.SPLIT_DIAGNOSTIC,
         ReelVideoFormat.DARK_CARBON_LAB,
     ]
 
@@ -74,6 +74,7 @@ class FormatCompositor:
         bullets: List[str],
         active_words: Optional[List[str]],
         active_word_idx: int,
+        blender_frame: Optional[Image.Image] = None,
     ) -> Image.Image:
         """Dispatch to format-specific multi-layer renderer."""
         if video_format == ReelVideoFormat.CINEMATIC_FULLSCREEN:
@@ -89,6 +90,7 @@ class FormatCompositor:
                 bullets=bullets,
                 words=active_words,
                 active_idx=active_word_idx,
+                blender_frame=blender_frame,
             )
         elif video_format == ReelVideoFormat.SPLIT_DIAGNOSTIC:
             return cls._render_split_diagnostic(
@@ -103,6 +105,7 @@ class FormatCompositor:
                 bullets=bullets,
                 words=active_words,
                 active_idx=active_word_idx,
+                blender_frame=blender_frame,
             )
         elif video_format == ReelVideoFormat.DARK_CARBON_LAB:
             return cls._render_dark_carbon_lab(
@@ -115,6 +118,7 @@ class FormatCompositor:
                 bullets=bullets,
                 words=active_words,
                 active_idx=active_word_idx,
+                blender_frame=blender_frame,
             )
         else:  # ISOMETRIC_STAGE (Default)
             return cls._render_isometric_stage(
@@ -127,6 +131,7 @@ class FormatCompositor:
                 bullets=bullets,
                 words=active_words,
                 active_idx=active_word_idx,
+                blender_frame=blender_frame,
             )
 
     # ── Format 1: 3D Isometric Stage ──────────────────────────────────
@@ -143,6 +148,7 @@ class FormatCompositor:
         bullets: List[str],
         words: Optional[List[str]],
         active_idx: int,
+        blender_frame: Optional[Image.Image] = None,
     ) -> Image.Image:
         bg = IsometricMotionEngine.render_blueprint_background(
             width=WIDTH,
@@ -170,15 +176,21 @@ class FormatCompositor:
         )
 
         subject_cy = int(1020 + math.sin(t * 2.4) * 16.0)
-        IsometricMotionEngine.composite_floating_subject(
-            canvas=bg,
-            framed_subject=framed_scene,
-            cx=WIDTH // 2,
-            base_cy=1020,
-            t=t,
-            float_amp=16.0,
-            float_freq=2.4,
-        )
+        if blender_frame:
+            # Composite true 3D Blender mechanism directly above the podium
+            bx = (WIDTH - blender_frame.width) // 2
+            by = int(520 + math.sin(t * 2.4) * 16.0)
+            bg.paste(blender_frame, (bx, by), blender_frame)
+        else:
+            IsometricMotionEngine.composite_floating_subject(
+                canvas=bg,
+                framed_subject=framed_scene,
+                cx=WIDTH // 2,
+                base_cy=1020,
+                t=t,
+                float_amp=16.0,
+                float_freq=2.4,
+            )
 
         # 3D Gyroscopic calibration ring rotating around the floating subject
         d_kinetic = ImageDraw.Draw(bg)
@@ -234,6 +246,7 @@ class FormatCompositor:
         bullets: List[str],
         words: Optional[List[str]],
         active_idx: int,
+        blender_frame: Optional[Image.Image] = None,
     ) -> Image.Image:
         """Edge-to-edge cinematic frame with dynamic continuous Ken Burns drift and Vox typography."""
         bw, bh = raw_scene.size
@@ -243,13 +256,15 @@ class FormatCompositor:
         zoom = 1.05 + 0.12 * math.sin(progress * math.pi)
         pan_y = 0.04 * math.sin(progress * math.pi)
 
-        cw, ch = int(WIDTH / zoom), int(HEIGHT / zoom)
-        cx = int((bw - cw) // 2)
-        cy = int((bh - ch) // 2 + pan_y * bh)
-        cx = max(0, min(bw - cw, cx))
-        cy = max(0, min(bh - ch, cy))
+        # Scale raw_scene to fully cover 1080x1920 without any black side margins
+        cov_scale = max(WIDTH / bw, HEIGHT / bh) * zoom
+        sw, sh = int(bw * cov_scale), int(bh * cov_scale)
+        scaled_scene = raw_scene.resize((sw, sh), Image.Resampling.BILINEAR)
 
-        cropped = raw_scene.crop((cx, cy, cx + cw, cy + ch)).resize((WIDTH, HEIGHT), Image.Resampling.BILINEAR).convert("RGBA")
+        cx = max(0, min(sw - WIDTH, (sw - WIDTH) // 2))
+        cy = max(0, min(sh - HEIGHT, int((sh - HEIGHT) // 2 + pan_y * sh)))
+
+        cropped = scaled_scene.crop((cx, cy, cx + WIDTH, cy + HEIGHT)).convert("RGBA")
         draw = ImageDraw.Draw(cropped)
 
         # 1. Subtle Cinematic Letterbox Top & Bottom Mattes (Sleek dark gradient vignette)
@@ -260,14 +275,7 @@ class FormatCompositor:
             alpha = int(240 * ((y - (HEIGHT - 220)) / 220))
             draw.rectangle([0, y, WIDTH, y + 4], fill=(0, 0, 0, alpha))
 
-        # 2. Sweeping Holographic X-Ray Laser Beam across macro view
-        scan_progress = (t * 0.35) % 1.0
-        scan_x = int(WIDTH * 0.15 + (WIDTH * 0.70) * (0.5 - 0.5 * math.cos(scan_progress * 2 * math.pi)))
-        for gw in [10, 4, 1]:
-            alpha = 35 if gw == 10 else (90 if gw == 4 else 220)
-            draw.line([(scan_x, 180), (scan_x, HEIGHT - 220)], fill=(*accent_color, alpha), width=gw)
-
-        # 3. Modern Floating Viewfinder HUD
+        # 2. Modern Floating Viewfinder HUD (Minimal top progress bar and timestamp)
         HUDGraphicsEngine.draw_hud_overlay(
             img=cropped,
             t=t,
@@ -283,12 +291,12 @@ class FormatCompositor:
             tag_w, tag_h = 440, 56
             tag_x = (WIDTH - tag_w) // 2
             tag_y = 1260
-            draw.rounded_rectangle([tag_x, tag_y, tag_x + tag_w, tag_y + tag_h], radius=16, fill=(10, 14, 22, 220), outline=accent_color, width=2)
+            draw.rounded_rectangle([tag_x, tag_y, tag_x + tag_w, tag_y + tag_h], radius=16, fill=(10, 14, 22, 220), outline=(255, 255, 255, 40), width=1)
             tb = draw.textbbox((0, 0), b_text, font=font_sub)
             tw = tb[2] - tb[0]
             draw.text((tag_x + (tag_w - tw) // 2, tag_y + 16), b_text, font=font_sub, fill=(255, 255, 255))
 
-        # 4. Centered Vox-Style Bold Captions with Heavy 3D Drop Shadow
+        # 5. Centered Vox-Style Bold Captions with Heavy 3D Drop Shadow
         if words:
             IsometricMotionEngine.render_upper_third_captions(
                 img=cropped,
@@ -316,6 +324,7 @@ class FormatCompositor:
         bullets: List[str],
         words: Optional[List[str]],
         active_idx: int,
+        blender_frame: Optional[Image.Image] = None,
     ) -> Image.Image:
         """Top 58% 3D cutaway + Bottom 42% live oscilloscope telemetry dashboard."""
         frame = Image.new("RGBA", (WIDTH, HEIGHT), (8, 12, 20, 255))
@@ -334,17 +343,26 @@ class FormatCompositor:
         )
         frame.paste(kinetic_top, (0, 0))
 
+        # Overlay 3D Blender mechanism in top viewport if available
+        if blender_frame:
+            bw = int(blender_frame.width * 0.85)
+            bh = int(blender_frame.height * 0.85)
+            scaled_b = blender_frame.resize((bw, bh), Image.Resampling.LANCZOS)
+            bx = (WIDTH - bw) // 2
+            by = int(140 + math.sin(t * 2.2) * 10.0)
+            frame.paste(scaled_b, (bx, by), scaled_b)
+
         draw = ImageDraw.Draw(frame)
 
-        # 2. Middle Divider: Glowing Status Bar
-        draw.rectangle([0, top_h - 4, WIDTH, top_h + 4], fill=accent_color)
+        # 2. Middle Divider: Clean Dark Separation Line (No harsh colored bar)
+        draw.line([(0, top_h), (WIDTH, top_h)], fill=(40, 50, 70, 180), width=2)
         font_div = load_sub_font(20)
         div_text = f"REALTIME_TELEMETRY // SENSOR_ARRAY_0{scene_idx + 1}"
-        draw.text((40, top_h - 38), div_text, font=font_div, fill=(255, 255, 255))
+        draw.text((40, top_h - 38), div_text, font=font_div, fill=(255, 255, 255, 220))
 
         # 3. Bottom Dashboard (y: 1100 to 1920)
         # Background dark carbon
-        draw.rectangle([0, top_h + 4, WIDTH, HEIGHT], fill=(10, 15, 26, 255))
+        draw.rectangle([0, top_h + 2, WIDTH, HEIGHT], fill=(10, 15, 26, 255))
 
         # Animated Oscilloscope Waveform
         wave_cy = 1320
@@ -355,7 +373,7 @@ class FormatCompositor:
             wave_points.append((gx, gy))
 
         # Draw grid lines in waveform box
-        draw.rectangle([60, 1240, WIDTH - 60, 1400], fill=(14, 22, 38, 220), outline=(*accent_color, 120), width=1)
+        draw.rectangle([60, 1240, WIDTH - 60, 1400], fill=(14, 22, 38, 220), outline=(255, 255, 255, 40), width=1)
         for gy in range(1260, 1400, 35):
             draw.line([(60, gy), (WIDTH - 60, gy)], fill=(*accent_color, 45), width=1)
 
@@ -385,12 +403,12 @@ class FormatCompositor:
                         line2_words.append(w)
                 line1 = " ".join(line1_words)
                 line2 = " ".join(line2_words)[:42]
-                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1540], radius=18, fill=(18, 28, 48, 240), outline=accent_color, width=2)
+                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1540], radius=18, fill=(18, 28, 48, 240), outline=(255, 255, 255, 40), width=1)
                 draw.text((90, 1446), line1, font=font_data, fill=(255, 255, 255))
                 draw.text((90, 1476), line2, font=font_data, fill=(255, 255, 255))
                 draw.text((90, 1506), "DYNAMIC CAD TELEMETRY ACTIVE", font=load_sub_font(16), fill=(*accent_color, 210))
             else:
-                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1530], radius=18, fill=(18, 28, 48, 240), outline=accent_color, width=2)
+                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1530], radius=18, fill=(18, 28, 48, 240), outline=(255, 255, 255, 40), width=1)
                 draw.text((90, 1450), b_text, font=font_data, fill=(255, 255, 255))
                 draw.text((90, 1484), "DYNAMIC INERTIAL ABSORPTION ACTIVE", font=load_sub_font(18), fill=(*accent_color, 210))
 
@@ -429,6 +447,7 @@ class FormatCompositor:
         bullets: List[str],
         words: Optional[List[str]],
         active_idx: int,
+        blender_frame: Optional[Image.Image] = None,
     ) -> Image.Image:
         """Stealth obsidian lab with dual measurement columns and neon rim lighting."""
         frame = Image.new("RGBA", (WIDTH, HEIGHT), (6, 9, 14, 255))
@@ -438,30 +457,22 @@ class FormatCompositor:
         for y in range(-WIDTH, HEIGHT + WIDTH, 60):
             draw.line([(0, y), (WIDTH, y + WIDTH)], fill=(16, 24, 38, 55), width=1)
 
-        # Dual Measurement Columns on Left and Right borders
-        col_w = 48
-        # Left column
-        draw.line([(col_w, 200), (col_w, HEIGHT - 200)], fill=(*accent_color, 120), width=2)
-        for my in range(200, HEIGHT - 200, 40):
-            tick_len = 16 if (my % 120 == 0) else 8
-            draw.line([(col_w - tick_len, my), (col_w, my)], fill=(*accent_color, 160), width=1)
-
-        # Right column
-        draw.line([(WIDTH - col_w, 200), (WIDTH - col_w, HEIGHT - 200)], fill=(*accent_color, 120), width=2)
-        for my in range(200, HEIGHT - 200, 40):
-            tick_len = 16 if (my % 120 == 0) else 8
-            draw.line([(WIDTH - col_w, my), (WIDTH - col_w + tick_len, my)], fill=(*accent_color, 160), width=1)
-
+        # Clean obsidian carbon background (No harsh outer border frames)
         # Floating 3D Subject Cutaway
-        IsometricMotionEngine.composite_floating_subject(
-            canvas=frame,
-            framed_subject=framed_scene,
-            cx=WIDTH // 2,
-            base_cy=1000,
-            t=t,
-            float_amp=14.0,
-            float_freq=2.2,
-        )
+        if blender_frame:
+            bx = (WIDTH - blender_frame.width) // 2
+            by = int(500 + math.sin(t * 2.2) * 14.0)
+            frame.paste(blender_frame, (bx, by), blender_frame)
+        else:
+            IsometricMotionEngine.composite_floating_subject(
+                canvas=frame,
+                framed_subject=framed_scene,
+                cx=WIDTH // 2,
+                base_cy=1000,
+                t=t,
+                float_amp=14.0,
+                float_freq=2.2,
+            )
 
         # Floating Callout Cards with Laser Pointers
         IsometricMotionEngine.render_floating_callouts(

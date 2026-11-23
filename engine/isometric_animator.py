@@ -182,10 +182,7 @@ class IsometricMotionEngine:
         subj_rgba.putalpha(mask)
         framed.paste(subj_rgba, (pad, pad), subj_rgba)
 
-        # Draw technical glowing wireframe border
-        d_f = ImageDraw.Draw(framed)
-        d_f.rounded_rectangle([pad, pad, pad + target_w, pad + target_h], radius=radius, outline=(*accent_color, 240), width=3)
-
+        # Clean edge: No harsh outer border frame
         return framed
 
     @classmethod
@@ -333,9 +330,9 @@ class IsometricMotionEngine:
         d_cov.rounded_rectangle(
             [card_x, card_y, card_x + card_w, card_y + card_h],
             radius=18,
-            fill=(10, 18, 32, 235),
-            outline=accent_color,
-            width=2,
+            fill=(10, 16, 26, 215),
+            outline=(255, 255, 255, 40),
+            width=1,
         )
         img.paste(Image.alpha_composite(img.convert("RGBA"), card_overlay), (0, 0))
 
@@ -364,14 +361,14 @@ class IsometricMotionEngine:
             return
 
         draw = ImageDraw.Draw(img)
-        font_lead = load_headline_font(52)
-        font_active = load_headline_font(56)
+        font_family = getattr(theme, "font_family", "IMPACT")
+        font_lead = load_headline_font(54, font_family=font_family)
+        font_active = load_headline_font(62, font_family=font_family)
 
-        lead_color = (235, 240, 250)
+        lead_color = (255, 255, 255)
         active_accent = theme.active_color
-        use_tag_box = (theme.name in ("CRIMSON_PULSE", "MINIMAL_DROP_SHADOW"))
 
-        spacing = 16
+        spacing = 18
         measured_words = []
         total_w = 0
         max_h = 0
@@ -392,21 +389,13 @@ class IsometricMotionEngine:
         for w, f, is_active, w_w, w_h in measured_words:
             y_pos = center_y - (w_h // 2)
 
-            if is_active and use_tag_box:
-                pad_x, pad_y = 22, 12
-                bx1 = cur_x - pad_x
-                by1 = y_pos - pad_y
-                bx2 = cur_x + w_w + pad_x
-                by2 = y_pos + w_h + pad_y + 4
-
-                draw.rounded_rectangle([bx1 + 4, by1 + 6, bx2 + 4, by2 + 6], radius=14, fill=(0, 0, 0, 160))
-                draw.rounded_rectangle([bx1, by1, bx2, by2], radius=14, fill=active_accent)
-                draw.text((cur_x, y_pos), w, font=f, fill=(255, 255, 255))
-            elif is_active:
-                draw.text((cur_x + 3, y_pos + 4), w, font=f, fill=(0, 0, 0, 220))
-                draw.text((cur_x, y_pos), w, font=f, fill=active_accent, stroke_width=4, stroke_fill=(0, 0, 0))
+            if is_active:
+                # Active word: Punchy dynamic accent with 3D drop shadow and thick stroke
+                draw.text((cur_x + 5, y_pos + 6), w, font=f, fill=(0, 0, 0, 240))
+                draw.text((cur_x, y_pos), w, font=f, fill=active_accent, stroke_width=6, stroke_fill=(0, 0, 0))
             else:
-                draw.text((cur_x + 3, y_pos + 3), w, font=f, fill=(0, 0, 0, 180))
-                draw.text((cur_x, y_pos), w, font=f, fill=lead_color)
+                # Inactive words: Bold white with clean drop shadow
+                draw.text((cur_x + 4, y_pos + 5), w, font=f, fill=(0, 0, 0, 220))
+                draw.text((cur_x, y_pos), w, font=f, fill=lead_color, stroke_width=4, stroke_fill=(0, 0, 0))
 
             cur_x += w_w + spacing

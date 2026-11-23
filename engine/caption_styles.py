@@ -36,93 +36,98 @@ class CaptionTheme:
     shadow_offset: Tuple[int, int]
     shadow_color: Tuple[int, int, int, int]
     active_bracket: bool = False
+    font_family: str = "IMPACT"
 
 
 THEMES: Dict[str, CaptionTheme] = {
-    "CYBER_GOLD": CaptionTheme(
-        name="CYBER_GOLD",
-        has_pill=True,
-        pill_bg=(10, 14, 24, 215),
-        pill_border=(255, 215, 0, 180),
-        pill_radius=22,
-        normal_color=(255, 255, 255),
-        normal_stroke_color=(0, 0, 0),
-        normal_stroke_width=5,
-        active_color=(255, 215, 0),  # Gold
-        active_stroke_color=(0, 0, 0),
-        active_stroke_width=6,
-        drop_shadow=True,
-        shadow_offset=(3, 4),
-        shadow_color=(0, 0, 0, 220),
-    ),
-    "MINIMAL_DROP_SHADOW": CaptionTheme(
-        name="MINIMAL_DROP_SHADOW",
+    "HORMOZI_NEON_YELLOW": CaptionTheme(
+        name="HORMOZI_NEON_YELLOW",
         has_pill=False,
         pill_bg=(0, 0, 0, 0),
         pill_border=(0, 0, 0, 0),
         pill_radius=0,
         normal_color=(255, 255, 255),
         normal_stroke_color=(0, 0, 0),
-        normal_stroke_width=6,
-        active_color=(255, 235, 59),  # Vibrant Electric Yellow
+        normal_stroke_width=8,
+        active_color=(255, 238, 0),  # Electric Neon Yellow
         active_stroke_color=(0, 0, 0),
-        active_stroke_width=8,
+        active_stroke_width=10,
         drop_shadow=True,
-        shadow_offset=(5, 6),
+        shadow_offset=(6, 8),
         shadow_color=(0, 0, 0, 245),
+        font_family="IMPACT",
     ),
-    "CRIMSON_PULSE": CaptionTheme(
-        name="CRIMSON_PULSE",
-        has_pill=True,
-        pill_bg=(28, 8, 12, 225),
-        pill_border=(255, 65, 85, 200),
-        pill_radius=20,
+    "VOX_ELECTRIC_CYAN": CaptionTheme(
+        name="VOX_ELECTRIC_CYAN",
+        has_pill=False,
+        pill_bg=(0, 0, 0, 0),
+        pill_border=(0, 0, 0, 0),
+        pill_radius=0,
         normal_color=(255, 255, 255),
-        normal_stroke_color=(15, 0, 0),
-        normal_stroke_width=5,
-        active_color=(255, 75, 43),  # Fire Coral Orange
+        normal_stroke_color=(0, 0, 0),
+        normal_stroke_width=8,
+        active_color=(0, 240, 255),  # Diamond Electric Cyan
         active_stroke_color=(0, 0, 0),
-        active_stroke_width=7,
+        active_stroke_width=10,
         drop_shadow=True,
-        shadow_offset=(3, 4),
-        shadow_color=(0, 0, 0, 230),
+        shadow_offset=(6, 8),
+        shadow_color=(0, 0, 0, 245),
+        font_family="FUTURA",
     ),
-    "MATRIX_HUD": CaptionTheme(
-        name="MATRIX_HUD",
-        has_pill=True,
-        pill_bg=(8, 18, 14, 230),
-        pill_border=(0, 255, 136, 190),
-        pill_radius=16,
-        normal_color=(230, 245, 235),
-        normal_stroke_color=(0, 10, 5),
-        normal_stroke_width=5,
-        active_color=(0, 255, 136),  # Electric Lime
-        active_stroke_color=(0, 0, 0),
-        active_stroke_width=7,
-        drop_shadow=True,
-        shadow_offset=(2, 3),
-        shadow_color=(0, 0, 0, 230),
-        active_bracket=True,
-    ),
-    "DEEP_VIOLET": CaptionTheme(
-        name="DEEP_VIOLET",
-        has_pill=True,
-        pill_bg=(22, 10, 36, 225),
-        pill_border=(180, 80, 255, 200),
-        pill_radius=24,
+    "SUNSET_FIRE_ORANGE": CaptionTheme(
+        name="SUNSET_FIRE_ORANGE",
+        has_pill=False,
+        pill_bg=(0, 0, 0, 0),
+        pill_border=(0, 0, 0, 0),
+        pill_radius=0,
         normal_color=(255, 255, 255),
-        normal_stroke_color=(10, 0, 20),
-        normal_stroke_width=5,
-        active_color=(255, 40, 160),  # Hot Neon Magenta
+        normal_stroke_color=(0, 0, 0),
+        normal_stroke_width=8,
+        active_color=(255, 95, 25),  # High-energy Fire Orange
         active_stroke_color=(0, 0, 0),
-        active_stroke_width=7,
+        active_stroke_width=10,
         drop_shadow=True,
-        shadow_offset=(3, 4),
-        shadow_color=(0, 0, 0, 230),
+        shadow_offset=(6, 8),
+        shadow_color=(0, 0, 0, 245),
+        font_family="ARIAL_BLACK",
+    ),
+    "RADIANT_GOLD": CaptionTheme(
+        name="RADIANT_GOLD",
+        has_pill=False,
+        pill_bg=(0, 0, 0, 0),
+        pill_border=(0, 0, 0, 0),
+        pill_radius=0,
+        normal_color=(255, 255, 255),
+        normal_stroke_color=(0, 0, 0),
+        normal_stroke_width=8,
+        active_color=(255, 215, 0),  # Metallic Radiant Gold
+        active_stroke_color=(0, 0, 0),
+        active_stroke_width=10,
+        drop_shadow=True,
+        shadow_offset=(6, 8),
+        shadow_color=(0, 0, 0, 245),
+        font_family="DIN_ALTERNATE",
+    ),
+    "HOT_MAGENTA": CaptionTheme(
+        name="HOT_MAGENTA",
+        has_pill=False,
+        pill_bg=(0, 0, 0, 0),
+        pill_border=(0, 0, 0, 0),
+        pill_radius=0,
+        normal_color=(255, 255, 255),
+        normal_stroke_color=(0, 0, 0),
+        normal_stroke_width=8,
+        active_color=(255, 45, 145),  # Cyberpunk Hot Magenta
+        active_stroke_color=(0, 0, 0),
+        active_stroke_width=10,
+        drop_shadow=True,
+        shadow_offset=(6, 8),
+        shadow_color=(0, 0, 0, 245),
+        font_family="IMPACT",
     ),
 }
 
-THEME_ORDER = ["CYBER_GOLD", "MINIMAL_DROP_SHADOW", "CRIMSON_PULSE", "MATRIX_HUD", "DEEP_VIOLET"]
+THEME_ORDER = ["HORMOZI_NEON_YELLOW", "VOX_ELECTRIC_CYAN", "SUNSET_FIRE_ORANGE", "RADIANT_GOLD", "HOT_MAGENTA"]
 
 
 class CaptionStyleRotator:
@@ -160,8 +165,9 @@ class CaptionStyleRotator:
         base_normal_sz = 64
         base_active_sz = 72
 
-        font_normal = load_headline_font(base_normal_sz)
-        font_active = load_headline_font(base_active_sz)
+        font_family = getattr(theme, "font_family", "IMPACT")
+        font_normal = load_headline_font(base_normal_sz, font_family=font_family)
+        font_active = load_headline_font(base_active_sz, font_family=font_family)
 
         draw_temp = ImageDraw.Draw(img)
 

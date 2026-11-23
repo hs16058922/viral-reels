@@ -30,65 +30,19 @@ class HUDGraphicsEngine:
         width, height = img.size
         draw = ImageDraw.Draw(img)
 
-        # ── 1. Corner Framing Brackets (Cinematic Viewfinder) ─────────────
-        corner_len = 40
-        corner_pad = 48
-        bracket_color = (*accent_color, 160)
+        # ── 1. Clean Sleek Top Progress Bar (No clunky corner brackets) ──
+        # Subtle 2px glowing progress bar at the very top edge
+        progress_ratio = min(1.0, max(0.0, t / max(0.1, total_duration)))
+        bar_w = int(width * progress_ratio)
+        if bar_w > 0:
+            draw.line([(0, 2), (bar_w, 2)], fill=accent_color, width=3)
 
-        # Top-Left
-        draw.line([(corner_pad, corner_pad), (corner_pad + corner_len, corner_pad)], fill=accent_color, width=3)
-        draw.line([(corner_pad, corner_pad), (corner_pad, corner_pad + corner_len)], fill=accent_color, width=3)
-
-        # Top-Right
-        draw.line([(width - corner_pad, corner_pad), (width - corner_pad - corner_len, corner_pad)], fill=accent_color, width=3)
-        draw.line([(width - corner_pad, corner_pad), (width - corner_pad, corner_pad + corner_len)], fill=accent_color, width=3)
-
-        # Bottom-Left
-        draw.line([(corner_pad, height - corner_pad), (corner_pad + corner_len, height - corner_pad)], fill=accent_color, width=3)
-        draw.line([(corner_pad, height - corner_pad), (corner_pad, height - corner_pad - corner_len)], fill=accent_color, width=3)
-
-        # Bottom-Right
-        draw.line([(width - corner_pad, height - corner_pad), (width - corner_pad - corner_len, height - corner_pad)], fill=accent_color, width=3)
-        draw.line([(width - corner_pad, height - corner_pad), (width - corner_pad, height - corner_pad - corner_len)], fill=accent_color, width=3)
-
-        # ── 2. Rotating Telemetry Reticle (Top-Right HUD) ─────────────────
-        reticle_cx = width - 110
-        reticle_cy = 100
-        radius = 28
-
-        # Static outer ring
-        draw.ellipse(
-            [reticle_cx - radius, reticle_cy - radius, reticle_cx + radius, reticle_cy + radius],
-            outline=(*accent_color, 120),
-            width=2,
-        )
-
-        # Rotating crosshair ticks
-        angle_rad = math.radians((t * 70.0) % 360)
-        cos_a = math.cos(angle_rad)
-        sin_a = math.sin(angle_rad)
-
-        tick_inner = 14
-        tick_outer = 26
-        p1 = (reticle_cx + cos_a * tick_inner, reticle_cy + sin_a * tick_inner)
-        p2 = (reticle_cx + cos_a * tick_outer, reticle_cy + sin_a * tick_outer)
-        draw.line([p1, p2], fill=accent_color, width=2)
-
-        # Opposite tick
-        p3 = (reticle_cx - cos_a * tick_inner, reticle_cy - sin_a * tick_inner)
-        p4 = (reticle_cx - cos_a * tick_outer, reticle_cy - sin_a * tick_outer)
-        draw.line([p3, p4], fill=accent_color, width=2)
-
-        # Center dot
-        draw.ellipse([reticle_cx - 3, reticle_cy - 3, reticle_cx + 3, reticle_cy + 3], fill=accent_color)
-
-        # ── 3. Technical Telemetry Labels ─────────────────────────────────
-        font_hud = load_sub_font(20)
-        hud_text_left = f"ISO_CAD // CAM_0{scene_idx + 1}"
-        draw.text((corner_pad + 12, corner_pad + 8), hud_text_left, font=font_hud, fill=(*accent_color, 200))
-
-        progress_pct = int((t / max(0.1, total_duration)) * 100)
-        hud_text_right = f"T+{t:.1f}s // {progress_pct}%"
-        rb = draw.textbbox((0, 0), hud_text_right, font=font_hud)
-        rw = rb[2] - rb[0]
-        draw.text((width - corner_pad - rw - 80, corner_pad + 8), hud_text_right, font=font_hud, fill=(200, 220, 240, 180))
+        # ── 2. Minimalist Floating Header Indicator ───────────────────────
+        font_hud = load_sub_font(18)
+        # Format time e.g. 0:04 / 0:52
+        cur_min, cur_sec = divmod(int(t), 60)
+        tot_min, tot_sec = divmod(int(total_duration), 60)
+        time_text = f"{cur_min:02d}:{cur_sec:02d} / {tot_min:02d}:{tot_sec:02d}"
+        
+        # Micro pill in top right corner (very subtle, 18px text, 140 alpha)
+        draw.text((width - 180, 48), time_text, font=font_hud, fill=(255, 255, 255, 160))

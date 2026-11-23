@@ -122,31 +122,6 @@ class KineticMechanismRenderer:
                 accent_color=accent_color,
             )
 
-        # ── 6. Sweeping Holographic X-Ray Laser Inspection Beam ───────
-        scan_progress = (t * 0.35) % 1.0
-        # Laser moves left to right across cutaway
-        scan_x = int(width * 0.12 + (width * 0.76) * (0.5 - 0.5 * math.cos(scan_progress * 2 * math.pi)))
-        
-        # Subtle glowing vertical laser line
-        for glow_w in [12, 6, 2]:
-            alpha = 40 if glow_w == 12 else (110 if glow_w == 6 else 230)
-            draw.line(
-                [(scan_x, int(height * 0.18)), (scan_x, int(height * 0.88))],
-                fill=(*accent_color, alpha),
-                width=glow_w,
-            )
-        # Laser head indicator
-        draw.polygon(
-            [(scan_x - 6, int(height * 0.18)), (scan_x + 6, int(height * 0.18)), (scan_x, int(height * 0.18) + 12)],
-            fill=(255, 255, 255, 240),
-        )
-        draw.text(
-            (scan_x + 10, int(height * 0.19)),
-            "X-RAY CAD INSPECTION",
-            font=load_sub_font(16),
-            fill=(*accent_color, 210),
-        )
-
         # Composite overlay
         return Image.alpha_composite(viewport, overlay)
 

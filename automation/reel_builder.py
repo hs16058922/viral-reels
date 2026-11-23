@@ -28,6 +28,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from engine.caption_styles import CaptionStyleRotator, CaptionTheme
+from engine.blender_runner import BlenderMechanismRunner
 from engine.cover_generator import ReelCoverGenerator
 from engine.edge_voice import VoiceEngine
 from engine.fonts import load_headline_font, load_sub_font
@@ -217,6 +218,19 @@ class AutonomousReelBuilder:
             output_path=master_audio_path,
         )
 
+        # ── 6b. Pre-render 3D Blender Headless Mechanism Sequence ──────
+        blender_frames = []
+        if BlenderMechanismRunner.is_available():
+            logger.info("🎬 Pre-rendering true 3D Blender mechanism for '%s'...", topic_id)
+            blender_frames = BlenderMechanismRunner.render_mechanism_sequence(
+                topic_id=topic_id,
+                frames=75,
+                width=720,
+                height=1000,
+            )
+        else:
+            logger.info("Blender not detected; falling back to 2.5D kinetic motion graphics.")
+
         # ── 7. Setup Rendering Pipe ───────────────────────────────────
         total_frames = int(total_duration * FPS)
         logger.info("Rendering %d frames (%.1fs) with %s format and %d 3D scenes to %s...",
@@ -279,6 +293,12 @@ class AutonomousReelBuilder:
 
                     c_words, active_idx = cls.get_active_caption(t, words)
 
+                    # 3D Blender frame (looping continuously at 25 fps)
+                    b_frame = None
+                    if blender_frames:
+                        b_idx = int((t * 25.0) % len(blender_frames))
+                        b_frame = blender_frames[b_idx]
+
                     # Render frame using the topic's unique presentation format
                     frame_img = FormatCompositor.render_format_frame(
                         video_format=video_format,
@@ -294,6 +314,7 @@ class AutonomousReelBuilder:
                         bullets=bullets,
                         active_words=c_words,
                         active_word_idx=active_idx,
+                        blender_frame=b_frame,
                     )
 
                     process.stdin.write(frame_img.convert("RGB").tobytes())

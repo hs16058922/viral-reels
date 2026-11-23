@@ -163,6 +163,7 @@
     "cover_hook_2": "WHY DOES IT NEVER LEAK?!",
     "cover_tag": "PRECISION ENGINEERING",
     "cover_sticker": "1-MICRON CLEARANCE",
+    "video_format": "CINEMATIC_FULLSCREEN",
     "status": "pending",
     "video_path": null
   },
@@ -241,6 +242,32 @@
     "cover_hook_2": "WHY THE BOWL STAYS COLD?!",
     "cover_tag": "ELECTROMAGNETISM",
     "cover_sticker": "2.45 BILLION CYCLES/SEC",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "abs_braking_system",
+    "title": "Why Stomping Your Brakes Used to Cause Crashes",
+    "hook": "Why does stomping on your brakes at full force make a car skidding harder, until ABS intervenes?",
+    "script": "When you slam your brakes in an emergency, your tires don't stop you faster by locking up. They completely lose control.\nPhysics dictates that static friction\u2014where tire rubber grips the pavement\u2014is up to thirty percent stronger than kinetic friction, which occurs when a locked tire skids like a hockey puck.\nOnce your wheels lock, you lose one hundred percent of your steering.\nThis is where ABS takes over. Magnetic wheel speed sensors detect a tire locking up in milliseconds.\nThe ABS hydraulic modulator pulses the brake fluid pressure up to twenty times per second\u2014rapidly releasing and reapplying the brake pad.\nThis keeps the tire right on the threshold of maximum static friction, letting you steer around obstacles while stopping in the shortest physical distance possible.\nThe rapid shutter in your pedal isn't a malfunction; it's physics saving your life.\nFollow @CurioMotion for daily engineering breakdowns. What should we explore next?",
+    "bullets": [
+      "Static friction between rubber and road is ~30% stronger than kinetic sliding friction",
+      "Locked wheels lose directional steering control completely",
+      "Hall-effect speed sensors detect impending wheel lockup in real-time",
+      "Hydraulic actuator pulses brake line pressure up to 20 times per second",
+      "Maintains maximum braking grip while allowing full evasive steering"
+    ],
+    "niche_tags": [
+      "#ABSBrakes",
+      "#AutomotiveTech",
+      "#FrictionPhysics",
+      "#CarSafety",
+      "#EngineeringExplained"
+    ],
+    "cover_hook_1": "ABS BRAKES SECRET",
+    "cover_hook_2": "WHY LOCKED TIRES SKID?!",
+    "cover_tag": "MECHANICAL PHYSICS",
+    "cover_sticker": "20 PULSES PER SECOND",
     "status": "pending",
     "video_path": null
   }
