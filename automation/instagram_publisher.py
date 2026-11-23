@@ -187,7 +187,7 @@ class InstagramPublisher:
         logger.info("Initialized Meta direct upload: container=%s, uri=%s", container_id, upload_uri)
         return container_id, upload_uri
 
-    def get_container_status(self, container_id: str) -> Tuple[str, str]:
+    def get_container_status(self, container_id: str) -> Tuple[str, Any]:
         """Fetch (status_code, status_detail) from Meta Graph API."""
         url = f"{self.GRAPH_API_BASE}/{container_id}"
         params = {
@@ -197,10 +197,10 @@ class InstagramPublisher:
         try:
             resp = requests.get(url, params=params, timeout=15)
             data = resp.json()
-            return data.get("status_code", "UNKNOWN"), data.get("status", "")
+            return data.get("status_code", "UNKNOWN"), data.get("status", {})
         except Exception as e:
             logger.warning("Failed to query container %s status: %s", container_id, e)
-            return "UNKNOWN", str(e)
+            return "UNKNOWN", {}
 
     def upload_binary_to_meta(
         self,
@@ -210,12 +210,12 @@ class InstagramPublisher:
     ) -> None:
         """Step 2: Stream raw video bytes directly to Meta's rupload servers.
         
-        Handles Meta's resumable offset protocol and handles cases where Meta
-        transitions the container to IN_PROGRESS/FINISHED despite HTTP timeout.
+        Uses Meta's official resumable upload protocol: queries uploading_phase
+        bytes_transfered to resume partial transfers instead of aborting or restarting from 0.
         """
         file_size = video_path.stat().st_size
         container_id = upload_uri.rstrip("/").split("/")[-1]
-        logger.info("Streaming %s (%.2f MB) directly to Meta rupload servers (container=%s)...",
+        logger.info("Streaming %s (%.2f MB) to Meta rupload servers (container=%s)...",
                     video_path.name, file_size / (1024 * 1024), container_id)
 
         headers = {
@@ -232,8 +232,8 @@ class InstagramPublisher:
         current_offset = 0
 
         for attempt in range(1, max_retries + 1):
-            logger.info("Uploading binary to Meta rupload servers (attempt %d/%d, offset=%d)...",
-                        attempt, max_retries, current_offset)
+            logger.info("Uploading binary to Meta rupload servers (attempt %d/%d, offset=%d, size=%d)...",
+                        attempt, max_retries, current_offset, file_size - current_offset)
             
             headers["offset"] = str(current_offset)
             headers["Content-Length"] = str(file_size - current_offset)
@@ -247,20 +247,40 @@ class InstagramPublisher:
             
             logger.warning("Upload attempt %d returned HTTP %d: %s", attempt, resp.status_code, resp.text)
 
-            # Check if Meta already accepted and transitioned the container to IN_PROGRESS / FINISHED
+            # Query Meta Graph API for exact container status & uploading_phase bytes_transfered
             time.sleep(3)
-            status_code, status_detail = self.get_container_status(container_id)
-            logger.info("Container %s status on Meta: %s (%s)", container_id, status_code, status_detail)
+            status_code, status_info = self.get_container_status(container_id)
+            logger.info("Container %s status on Meta: %s | detail: %s", container_id, status_code, status_info)
 
-            if status_code in ("IN_PROGRESS", "FINISHED"):
-                logger.info("🎉 Container %s is already %s on Meta! Video was accepted.", container_id, status_code)
+            if status_code == "FINISHED":
+                logger.info("🎉 Container %s is already FINISHED on Meta!", container_id)
                 return
 
             if status_code == "ERROR":
-                logger.error("❌ Container %s failed on Meta: %s", container_id, status_detail)
-                raise RuntimeError(f"Meta rejected video in container {container_id}: {status_detail}")
+                err_detail = status_info if isinstance(status_info, str) else json.dumps(status_info)
+                logger.error("❌ Container %s failed on Meta: %s", container_id, err_detail)
+                raise RuntimeError(f"Meta rejected video in container {container_id}: {err_detail}")
 
-            # Query rupload offset to see how many bytes were safely received
+            # If Meta has started processing_phase, upload is complete!
+            if isinstance(status_info, dict):
+                proc_phase = status_info.get("processing_phase", {}).get("status", "")
+                if proc_phase in ("in_progress", "complete"):
+                    logger.info("🎉 Meta processing_phase is '%s' — upload is fully complete!", proc_phase)
+                    return
+
+                # Check uploading_phase bytes_transfered to resume remaining bytes
+                upload_phase = status_info.get("uploading_phase", {})
+                bytes_done = upload_phase.get("bytes_transfered")
+                if bytes_done is not None and bytes_done > current_offset:
+                    current_offset = bytes_done
+                    logger.info("Meta confirmed %d / %d bytes transferred (%.1f%%). Resuming...",
+                                current_offset, file_size, (current_offset / file_size) * 100)
+                    if current_offset >= file_size:
+                        logger.info("✅ All bytes (%d) acknowledged by Meta!", file_size)
+                        return
+                    continue
+
+            # Query rupload endpoint directly as fallback for offset
             try:
                 offset_resp = requests.get(
                     upload_uri,
@@ -275,13 +295,19 @@ class InstagramPublisher:
                     
                     if server_offset is not None and server_offset > current_offset:
                         current_offset = server_offset
-                        logger.info("Meta acknowledged %d / %d bytes. Resuming remaining %d bytes...",
-                                    current_offset, file_size, file_size - current_offset)
+                        logger.info("rupload confirmed %d / %d bytes transferred. Resuming...",
+                                    current_offset, file_size)
                         if current_offset >= file_size:
-                            logger.info("✅ All bytes (%d) acknowledged by Meta!", file_size)
+                            logger.info("✅ All bytes acknowledged by rupload!")
                             return
+                        continue
             except Exception as e:
                 logger.warning("Could not query rupload offset: %s", e)
+
+            # If Meta returned offset conflict error, break to create fresh session
+            if "The ig container is not in the status to upload a video" in resp.text:
+                logger.warning("Container %s rejected further chunks. Renewing container session...", container_id)
+                raise RuntimeError(f"Container {container_id} rejected chunks. Needs fresh session.")
 
             if attempt < max_retries:
                 time.sleep(5)
@@ -293,8 +319,8 @@ class InstagramPublisher:
     def wait_for_container_ready(
         self,
         container_id: str,
-        max_wait_seconds: int = 480,
-        poll_interval: int = 10,
+        max_wait_seconds: int = 240,
+        poll_interval: int = 5,
     ) -> None:
         """Poll the container until Meta finishes processing the video."""
         url = f"{self.GRAPH_API_BASE}/{container_id}"
@@ -304,7 +330,7 @@ class InstagramPublisher:
         }
 
         start_time = time.time()
-        logger.info("Waiting for Meta to process Reel container %s (timeout: %ds)...", container_id, max_wait_seconds)
+        logger.info("Waiting for Meta to process Reel container %s (max %ds)...", container_id, max_wait_seconds)
 
         while time.time() - start_time < max_wait_seconds:
             resp = requests.get(url, params=params, timeout=20)
