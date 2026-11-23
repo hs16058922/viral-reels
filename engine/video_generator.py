@@ -438,3 +438,44 @@ def _get_default_bullets_for_topic(topic: str) -> List[str]:
             "Engineered tolerances maintain kinetic equilibrium",
             "Internal cutaway reveals moving physical mechanisms",
         ]
+
+
+def generate_gemini_video(
+    topic: str,
+    script: Optional[str] = None,
+    output_path: Optional[Path] = None,
+    bullets: Optional[List[str]] = None,
+) -> VideoResult:
+    """Generate complete educational reel using Gemini Veo video base and synchronized audio/captions."""
+    from engine.gemini_video_engine import GeminiVideoStudio
+    topic_clean = topic.lower().replace(" ", "_")
+    topic_data = {
+        "id": topic_clean,
+        "title": topic.replace("_", " ").title(),
+        "script": script or _get_default_script_for_topic(topic_clean),
+        "bullets": bullets or _get_default_bullets_for_topic(topic_clean),
+        "engine": "gemini",
+    }
+    out_file = output_path or (EXPORT_DIR / f"{topic_clean}_gemini_reel.mp4")
+    final_mp4 = GeminiVideoStudio.build_gemini_reel(topic_data, output_mp4=out_file, mock_if_no_key=True)
+
+    # Run Quality Control
+    qc = QualityControlPipeline.inspect_rendered_video(final_mp4)
+    qc_path = final_mp4.parent / f"{topic_clean}_qc_report.json"
+    with open(qc_path, "w", encoding="utf-8") as f:
+        f.write(qc.to_json())
+
+    return VideoResult(
+        video_path=final_mp4,
+        spec_path=final_mp4.parent / f"{topic_clean}_scenespec.json",
+        blend_path=None,
+        subtitles_path=final_mp4.parent / f"{topic_clean}_subtitles.srt",
+        cover_path=TMP_DIR / f"{topic_clean}_cover.jpg",
+        qc_report_path=qc_path,
+        duration_seconds=qc.duration_seconds,
+        total_frames=qc.total_frames_checked,
+        render_time_seconds=0.0,
+        fps=30,
+        qc_passed=qc.passed,
+        metrics=qc.metrics,
+    )

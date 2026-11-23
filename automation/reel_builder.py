@@ -143,6 +143,11 @@ class AutonomousReelBuilder:
             logger.info("Reel already built at %s (%.2f MB). Reusing.", output_mp4.name, output_mp4.stat().st_size / (1024 * 1024))
             return output_mp4
 
+        # Route to Gemini Video Base Studio if specified
+        if topic.get("engine") == "gemini" or topic.get("video_format") == "GEMINI_VEO":
+            from engine.gemini_video_engine import GeminiVideoStudio
+            return GeminiVideoStudio.build_gemini_reel(topic, output_mp4=output_mp4)
+
         logger.info("🎬 Building automated 3D cinematic reel for topic '%s'...", topic["title"])
 
         # ── 1. Synthesize Neural Voiceover ─────────────────────────────

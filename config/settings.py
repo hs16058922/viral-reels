@@ -9,7 +9,7 @@ standard 9:16 reel workflow.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -47,6 +47,10 @@ class Settings(BaseSettings):
 
     # ── Captions ────────────────────────────────────────────────────
     CAPTION_STYLE: str = "bold_pop"
+
+    # ── Gemini / Veo Video Generation ──────────────────────────────
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_VIDEO_MODEL: str = "veo-2.0-generate-001"
 
     # ── Derived helpers ─────────────────────────────────────────────
     @property
