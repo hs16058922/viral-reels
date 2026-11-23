@@ -164,8 +164,10 @@
     "cover_tag": "PRECISION ENGINEERING",
     "cover_sticker": "1-MICRON CLEARANCE",
     "video_format": "CINEMATIC_FULLSCREEN",
-    "status": "ready",
-    "video_path": "export/ballpoint_pen_reel.mp4"
+    "status": "published",
+    "video_path": "export/ballpoint_pen_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgFbykXgDQt/",
+    "published_at": "2026-11-23T12:59:12.443612"
   },
   {
     "id": "airplane_pressurization",
