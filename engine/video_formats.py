@@ -17,6 +17,7 @@ from engine.caption_styles import CaptionTheme
 from engine.fonts import load_headline_font, load_sub_font
 from engine.hud_graphics import HUDGraphicsEngine
 from engine.isometric_animator import IsometricMotionEngine
+from engine.kinetic_mechanism import KineticMechanismRenderer
 
 WIDTH, HEIGHT = 1080, 1920
 
@@ -168,6 +169,7 @@ class FormatCompositor:
             accent_color=(255, 90, 31) if theme.name != "CRIMSON_PULSE" else (0, 229, 255),
         )
 
+        subject_cy = int(1020 + math.sin(t * 2.4) * 16.0)
         IsometricMotionEngine.composite_floating_subject(
             canvas=bg,
             framed_subject=framed_scene,
@@ -176,6 +178,17 @@ class FormatCompositor:
             t=t,
             float_amp=16.0,
             float_freq=2.4,
+        )
+
+        # 3D Gyroscopic calibration ring rotating around the floating subject
+        d_kinetic = ImageDraw.Draw(bg)
+        KineticMechanismRenderer.draw_rotating_gyro_ring(
+            draw=d_kinetic,
+            cx=WIDTH // 2,
+            cy=subject_cy,
+            radius=380,
+            t=t,
+            accent_color=accent_color,
         )
 
         IsometricMotionEngine.render_floating_callouts(
@@ -247,7 +260,14 @@ class FormatCompositor:
             alpha = int(240 * ((y - (HEIGHT - 220)) / 220))
             draw.rectangle([0, y, WIDTH, y + 4], fill=(0, 0, 0, alpha))
 
-        # 2. Modern Floating Viewfinder HUD
+        # 2. Sweeping Holographic X-Ray Laser Beam across macro view
+        scan_progress = (t * 0.35) % 1.0
+        scan_x = int(WIDTH * 0.15 + (WIDTH * 0.70) * (0.5 - 0.5 * math.cos(scan_progress * 2 * math.pi)))
+        for gw in [10, 4, 1]:
+            alpha = 35 if gw == 10 else (90 if gw == 4 else 220)
+            draw.line([(scan_x, 180), (scan_x, HEIGHT - 220)], fill=(*accent_color, alpha), width=gw)
+
+        # 3. Modern Floating Viewfinder HUD
         HUDGraphicsEngine.draw_hud_overlay(
             img=cropped,
             t=t,
@@ -256,7 +276,7 @@ class FormatCompositor:
             accent_color=accent_color,
         )
 
-        # 3. Floating Micro Tag Card in lower-third
+        # 4. Floating Micro Tag Card in lower-third
         if bullets:
             b_text = bullets[scene_idx % len(bullets)].upper()[:28]
             font_sub = load_sub_font(20)
@@ -300,12 +320,19 @@ class FormatCompositor:
         """Top 58% 3D cutaway + Bottom 42% live oscilloscope telemetry dashboard."""
         frame = Image.new("RGBA", (WIDTH, HEIGHT), (8, 12, 20, 255))
 
-        # 1. Top Viewport: 3D Scene (y: 0 to 1100)
+        # 1. Top Viewport: Kinetic 3D Scene with Active Mechanisms (y: 0 to 1100)
         top_h = 1100
-        bw, bh = raw_scene.size
-        crop_h = int(bh * 0.62)
-        top_crop = raw_scene.crop((0, 0, bw, crop_h)).resize((WIDTH, top_h), Image.Resampling.LANCZOS)
-        frame.paste(top_crop, (0, 0))
+        scene_progress = min(1.0, max(0.0, scene_t / max(0.1, scene_duration)))
+        kinetic_top = KineticMechanismRenderer.render_kinetic_exploded_cutaway(
+            base_scene=raw_scene,
+            t=t,
+            scene_progress=scene_progress,
+            width=WIDTH,
+            height=top_h,
+            accent_color=accent_color,
+            show_phase_cancellation=True,
+        )
+        frame.paste(kinetic_top, (0, 0))
 
         draw = ImageDraw.Draw(frame)
 
@@ -345,9 +372,27 @@ class FormatCompositor:
         # Active Specification Pill
         if bullets:
             b_text = bullets[scene_idx % len(bullets)].upper()
-            draw.rounded_rectangle([60, 1430, WIDTH - 60, 1530], radius=18, fill=(18, 28, 48, 240), outline=accent_color, width=2)
-            draw.text((90, 1450), b_text[:34], font=font_data, fill=(255, 255, 255))
-            draw.text((90, 1484), "DYNAMIC INERTIAL ABSORPTION ACTIVE", font=load_sub_font(18), fill=(*accent_color, 210))
+            if len(b_text) > 42:
+                # Wrap cleanly at word boundary
+                words_list = b_text.split()
+                line1_words, line2_words = [], []
+                cur_len = 0
+                for w in words_list:
+                    if cur_len + len(w) + 1 <= 38 and not line2_words:
+                        line1_words.append(w)
+                        cur_len += len(w) + 1
+                    else:
+                        line2_words.append(w)
+                line1 = " ".join(line1_words)
+                line2 = " ".join(line2_words)[:42]
+                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1540], radius=18, fill=(18, 28, 48, 240), outline=accent_color, width=2)
+                draw.text((90, 1446), line1, font=font_data, fill=(255, 255, 255))
+                draw.text((90, 1476), line2, font=font_data, fill=(255, 255, 255))
+                draw.text((90, 1506), "DYNAMIC CAD TELEMETRY ACTIVE", font=load_sub_font(16), fill=(*accent_color, 210))
+            else:
+                draw.rounded_rectangle([60, 1430, WIDTH - 60, 1530], radius=18, fill=(18, 28, 48, 240), outline=accent_color, width=2)
+                draw.text((90, 1450), b_text, font=font_data, fill=(255, 255, 255))
+                draw.text((90, 1484), "DYNAMIC INERTIAL ABSORPTION ACTIVE", font=load_sub_font(18), fill=(*accent_color, 210))
 
         # Upper-Third Captions (Placed in top viewport over 3D cutaway)
         if words:

@@ -192,11 +192,12 @@ class AutonomousReelBuilder:
         logger.info("Generating high-CTR flashy cover card...")
         cover_base = raw_scenes[0] if raw_scenes else None
         cover_img = ReelCoverGenerator.generate_cover(
-            base_image_path=None,
+            base_image_path=cover_base,
             hook_line_1=topic.get("cover_hook_1") or topic["title"][:22].upper(),
             hook_line_2=topic.get("cover_hook_2") or "HOW IT WORKS?!",
             category_tag=topic.get("cover_tag") or "ENGINEERING EXPLAINED",
             curiosity_sticker=topic.get("cover_sticker") or "SECRET REVEALED",
+            accent_color=accent_color,
             output_path=cover_path,
         )
 

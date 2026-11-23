@@ -69,56 +69,55 @@ class ReelCoverGenerator:
         else:
             base = Image.new("RGBA", (WIDTH, HEIGHT), (12, 16, 26, 255))
 
-        # 2. Add cinematic dark radial vignette & top/bottom gradients
-        vignette = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
-        d_vig = ImageDraw.Draw(vignette)
-        
-        # Top gradient (for header bar)
-        for y in range(0, 360):
-            alpha = int(210 * (1.0 - (y / 360) ** 1.3))
-            d_vig.line([(0, y), (WIDTH, y)], fill=(0, 0, 0, alpha))
-            
-        # Center-lower gradient (under headline in 1:1 grid safe zone)
-        for y in range(700, 1600):
-            dist = abs(y - 1100) / 450.0
-            factor = max(0.0, 1.0 - dist)
-            alpha = int(190 * factor)
-            d_vig.line([(0, y), (WIDTH, y)], fill=(0, 0, 0, alpha))
+        # 2. Add cinematic radial glow behind subject and clean edge vignette (no center mud)
+        glow_layer = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+        d_glow = ImageDraw.Draw(glow_layer)
 
-        # Bottom gradient (for branding & UI safe zone)
-        for y in range(1600, HEIGHT):
-            alpha = int(220 * ((y - 1600) / 320.0))
-            d_vig.line([(0, y), (WIDTH, y)], fill=(0, 0, 0, alpha))
+        # Subtle neon radial backlight behind the 3D hero object (centered at x=540, y=1100)
+        center_x, center_y = WIDTH // 2, 1100
+        for r in range(480, 0, -20):
+            alpha = int(45 * (1.0 - r / 480.0))
+            d_glow.ellipse(
+                [center_x - r, center_y - int(r * 0.9), center_x + r, center_y + int(r * 0.9)],
+                fill=(*accent_color, alpha),
+            )
 
-        base = Image.alpha_composite(base, vignette)
+        # Soft top and bottom edge vignettes only (leaves center 3D cutaway vibrant and clear)
+        for y in range(0, 320):
+            alpha = int(200 * (1.0 - (y / 320.0) ** 1.4))
+            d_glow.line([(0, y), (WIDTH, y)], fill=(4, 8, 16, alpha))
+
+        for y in range(1580, HEIGHT):
+            alpha = int(220 * ((y - 1580) / 340.0) ** 1.2)
+            d_glow.line([(0, y), (WIDTH, y)], fill=(4, 8, 16, alpha))
+
+        base = Image.alpha_composite(base, glow_layer)
         draw = ImageDraw.Draw(base)
 
         # 3. Top Category Pill: "// ENGINEERING EXPLAINED //"
-        font_cat = load_headline_font(36)
+        font_cat = load_headline_font(34)
         cat_text = f"// {category_tag.upper()} //"
         bbox_cat = draw.textbbox((0, 0), cat_text, font=font_cat)
         cat_w = bbox_cat[2] - bbox_cat[0]
         cat_h = bbox_cat[3] - bbox_cat[1]
-        
-        pill_pad_x, pill_pad_y = 32, 14
+
+        pill_pad_x, pill_pad_y = 30, 12
         cat_box_w = cat_w + pill_pad_x * 2
         cat_box_h = cat_h + pill_pad_y * 2
         cat_box_x = (WIDTH - cat_box_w) // 2
-        cat_box_y = 220
-        
-        # Outer neon glow outline
+        cat_box_y = 200
+
         draw.rounded_rectangle(
-            [cat_box_x - 3, cat_box_y - 3, cat_box_x + cat_box_w + 3, cat_box_y + cat_box_h + 3],
-            radius=20,
-            fill=(*accent_color, 60),
+            [cat_box_x - 2, cat_box_y - 2, cat_box_x + cat_box_w + 2, cat_box_y + cat_box_h + 2],
+            radius=18,
+            fill=(*accent_color, 70),
         )
-        # Main dark glassmorphic pill
         draw.rounded_rectangle(
             [cat_box_x, cat_box_y, cat_box_x + cat_box_w, cat_box_y + cat_box_h],
-            radius=18,
-            fill=(12, 16, 26, 240),
+            radius=16,
+            fill=(10, 14, 24, 240),
             outline=accent_color,
-            width=3,
+            width=2,
         )
         draw.text(
             (cat_box_x + pill_pad_x, cat_box_y + pill_pad_y - 2),
@@ -127,100 +126,94 @@ class ReelCoverGenerator:
             fill=accent_color,
         )
 
-        # 4. Curiosity Sticker: "[ ZERO AIR MOLECULES ]"
-        font_sticker = load_headline_font(42)
+        # 4. Curiosity Sticker: "[ ZERO AIR MOLECULES ]" (upper-third, safe from center mechanism)
+        font_sticker = load_headline_font(36)
         stk_text = f"[ {curiosity_sticker.upper()} ]"
         bbox_stk = draw.textbbox((0, 0), stk_text, font=font_sticker)
         stk_w = bbox_stk[2] - bbox_stk[0]
-        stk_box_x = (WIDTH - stk_w - 60) // 2
-        stk_box_y = 860
-        
-        # Sticker appearance with white outline
+        stk_box_x = (WIDTH - stk_w - 56) // 2
+        stk_box_y = 390
+
+        # Sticker appearance with white outline and red/amber fill
         draw.rounded_rectangle(
-            [stk_box_x, stk_box_y, stk_box_x + stk_w + 60, stk_box_y + 68],
+            [stk_box_x, stk_box_y, stk_box_x + stk_w + 56, stk_box_y + 60],
             radius=12,
-            fill=(255, 30, 60, 245),  # High-alert red
-            outline=(255, 255, 255, 220),
+            fill=(235, 30, 55, 250),
+            outline=(255, 255, 255, 230),
             width=3,
         )
         draw.text(
-            (stk_box_x + 30, stk_box_y + 12),
+            (stk_box_x + 28, stk_box_y + 10),
             stk_text,
             font=font_sticker,
             fill=(255, 255, 255),
         )
 
-        # 5. Dual-Tone Giant Headline (1:1 Instagram profile grid safe zone)
-        # Line 1: Pure White with deep shadow
-        # Line 2: Neon Electric Yellow with black stroke
-        font_h1 = load_headline_font(92)
-        font_h2 = load_headline_font(102)
+        # 5. Dual-Tone Headline (Framed cleanly in upper-third y=480..720)
+        # Keeps the entire central 3D mechanical cutaway (y=750..1450) completely unobstructed!
+        font_h1 = load_headline_font(84)
+        font_h2 = load_headline_font(92)
 
         # Measure Line 1
         bbox_1 = draw.textbbox((0, 0), hook_line_1, font=font_h1)
         w1 = bbox_1[2] - bbox_1[0]
-        # Auto-scale Line 1 if exceeds safe 920px
-        if w1 > 920:
-            scale1 = 920 / w1
-            font_h1 = load_headline_font(int(92 * scale1))
+        if w1 > 940:
+            scale1 = 940 / w1
+            font_h1 = load_headline_font(int(84 * scale1))
             bbox_1 = draw.textbbox((0, 0), hook_line_1, font=font_h1)
             w1 = bbox_1[2] - bbox_1[0]
         x1 = (WIDTH - w1) // 2
-        y1 = 960
+        y1 = 480
 
         # Measure Line 2
         bbox_2 = draw.textbbox((0, 0), hook_line_2, font=font_h2)
         w2 = bbox_2[2] - bbox_2[0]
-        # Auto-scale Line 2 if exceeds safe 940px
-        if w2 > 940:
-            scale2 = 940 / w2
-            font_h2 = load_headline_font(int(102 * scale2))
+        if w2 > 960:
+            scale2 = 960 / w2
+            font_h2 = load_headline_font(int(92 * scale2))
             bbox_2 = draw.textbbox((0, 0), hook_line_2, font=font_h2)
             w2 = bbox_2[2] - bbox_2[0]
         x2 = (WIDTH - w2) // 2
-        y2 = y1 + (bbox_1[3] - bbox_1[1]) + 26
+        y2 = y1 + (bbox_1[3] - bbox_1[1]) + 20
 
-        # Draw 3D shadow for Line 1
+        # Draw deep 3D drop-shadows
         for offset_x, offset_y in [(6, 8), (4, 6), (2, 4)]:
-            draw.text((x1 + offset_x, y1 + offset_y), hook_line_1, font=font_h1, fill=(0, 0, 0, 220))
-        # Draw Line 1 with bold stroke
+            draw.text((x1 + offset_x, y1 + offset_y), hook_line_1, font=font_h1, fill=(0, 0, 0, 240))
         draw.text(
             (x1, y1),
             hook_line_1,
             font=font_h1,
             fill=(255, 255, 255),
-            stroke_width=10,
+            stroke_width=9,
             stroke_fill=(0, 0, 0),
         )
 
-        # Draw 3D shadow for Line 2
-        for offset_x, offset_y in [(8, 10), (6, 8), (3, 5)]:
-            draw.text((x2 + offset_x, y2 + offset_y), hook_line_2, font=font_h2, fill=(0, 0, 0, 230))
-        # Draw Line 2 with Neon Accent & bold stroke
+        for offset_x, offset_y in [(8, 10), (5, 7), (2, 4)]:
+            draw.text((x2 + offset_x, y2 + offset_y), hook_line_2, font=font_h2, fill=(0, 0, 0, 240))
         draw.text(
             (x2, y2),
             hook_line_2,
             font=font_h2,
             fill=accent_color,
-            stroke_width=12,
+            stroke_width=10,
             stroke_fill=(0, 0, 0),
         )
 
-        # 6. Click Magnet Callout Pill: "HOW DOES IT WORK? >>"
-        font_sub = load_headline_font(44)
+        # 6. Click Magnet Callout Pill: "HOW DOES IT WORK? >>" (y=1500, bottom of 1:1 square)
+        font_sub = load_headline_font(42)
         cta_text = "HOW DOES IT WORK? >>"
         bbox_cta = draw.textbbox((0, 0), cta_text, font=font_sub)
         cta_w = bbox_cta[2] - bbox_cta[0]
         cta_box_w = cta_w + 64
         cta_box_x = (WIDTH - cta_box_w) // 2
-        cta_box_y = y2 + (bbox_2[3] - bbox_2[1]) + 40
+        cta_box_y = 1500
 
         draw.rounded_rectangle(
-            [cta_box_x, cta_box_y, cta_box_x + cta_box_w, cta_box_y + 68],
-            radius=18,
-            fill=(0, 0, 0, 220),
-            outline=(255, 255, 255, 180),
-            width=3,
+            [cta_box_x, cta_box_y, cta_box_x + cta_box_w, cta_box_y + 64],
+            radius=16,
+            fill=(8, 12, 22, 235),
+            outline=(255, 255, 255, 200),
+            width=2,
         )
         draw.text(
             (cta_box_x + 32, cta_box_y + 10),
