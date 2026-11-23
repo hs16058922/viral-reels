@@ -109,13 +109,20 @@ class TopicQueue:
         topics = self.load_topics()
         published_ids = self.get_published_ids()
 
+        # Prioritize pre-rendered 'ready' topics first
         for t in topics:
             t_id = t.get("id", "").lower()
-            status = t.get("status", "")
-            # Skip if already published or in history
-            if t_id in published_ids or status == "published":
+            if t_id in published_ids or t.get("status") == "published":
                 continue
-            if status in ("ready", "pending"):
+            if t.get("status") == "ready":
+                return t
+
+        # Fallback to 'pending' topics that need on-the-fly rendering
+        for t in topics:
+            t_id = t.get("id", "").lower()
+            if t_id in published_ids or t.get("status") == "published":
+                continue
+            if t.get("status") == "pending":
                 return t
 
         return None
