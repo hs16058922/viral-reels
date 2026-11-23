@@ -293,8 +293,8 @@ class InstagramPublisher:
     def wait_for_container_ready(
         self,
         container_id: str,
-        max_wait_seconds: int = 180,
-        poll_interval: int = 5,
+        max_wait_seconds: int = 480,
+        poll_interval: int = 10,
     ) -> None:
         """Poll the container until Meta finishes processing the video."""
         url = f"{self.GRAPH_API_BASE}/{container_id}"
@@ -304,7 +304,7 @@ class InstagramPublisher:
         }
 
         start_time = time.time()
-        logger.info("Waiting for Meta to process Reel container %s...", container_id)
+        logger.info("Waiting for Meta to process Reel container %s (timeout: %ds)...", container_id, max_wait_seconds)
 
         while time.time() - start_time < max_wait_seconds:
             resp = requests.get(url, params=params, timeout=20)
@@ -320,7 +320,9 @@ class InstagramPublisher:
             elif status_code == "EXPIRED":
                 raise TimeoutError(f"Container {container_id} expired before publishing.")
 
-            logger.info("Status: %s... waiting %ds", status_code, poll_interval)
+            elapsed = int(time.time() - start_time)
+            logger.info("Status: %s (elapsed %ds / max %ds)... waiting %ds",
+                        status_code, elapsed, max_wait_seconds, poll_interval)
             time.sleep(poll_interval)
 
         raise TimeoutError(f"Timed out after {max_wait_seconds}s waiting for container {container_id}.")

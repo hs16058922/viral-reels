@@ -240,7 +240,7 @@ class AutonomousReelBuilder:
             "-keyint_min", "60",
             "-sc_threshold", "0",
             "-preset", "fast",
-            "-crf", "18",
+            "-crf", "20",
             "-c:a", "aac",
             "-b:a", "192k",
             "-ar", "48000",
