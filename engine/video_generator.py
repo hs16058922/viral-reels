@@ -23,7 +23,7 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from config.settings import settings
 from engine.scene_spec import (
@@ -272,7 +272,12 @@ def generate_video(
     logger.info("🎥 Compositing final 1080x1920 30fps reel to: %s...", final_mp4.name)
     proc = subprocess.Popen(ffmpeg_cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    raw_dummy = cover_img.convert("RGB")
+    # Clean cinematic studio backdrop (NO cover text baked into background)
+    raw_dummy = Image.new("RGB", (1080, 1920), (8, 12, 20))
+    d_raw = ImageDraw.Draw(raw_dummy)
+    for r in range(1100, 200, -30):
+        d_raw.ellipse([(540 - r, 960 - r), (540 + r, 960 + r)], fill=(14, 22, 36))
+
     framed_dummy = IsometricMotionEngine.prepare_framed_subject(
         raw_scene=raw_dummy,
         target_w=780,
