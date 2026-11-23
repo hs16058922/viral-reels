@@ -408,8 +408,23 @@ class GeminiVideoStudio:
             output_path=cover_path,
         )
 
-        # 7. Final Composite (Base Video + Synchronized Captions + Audio)
-        logger.info("Compositing final reel with synchronized captions and mastered audio...")
+        # 6b. Pre-render true 3D Blender mechanism sequence
+        blender_frames = []
+        try:
+            from engine.blender_runner import BlenderMechanismRunner
+            if BlenderMechanismRunner.is_available():
+                logger.info("🎬 Pre-rendering true 3D Blender mechanism for '%s'...", topic_id)
+                blender_frames = BlenderMechanismRunner.render_mechanism_sequence(
+                    topic_id=topic_id,
+                    frames=75,
+                    width=720,
+                    height=1280,
+                )
+        except Exception as e:
+            logger.warning("Could not pre-render Blender mechanism: %s", e)
+
+        # 7. Final Composite (Base Video + 3D Blender Mechanism + Synchronized Captions + Audio)
+        logger.info("Compositing final reel with 3D mechanisms, synchronized captions, and mastered audio...")
         cls._composite_final_reel(
             topic=topic,
             base_video=base_video,
@@ -418,6 +433,7 @@ class GeminiVideoStudio:
             words=words,
             total_duration=total_duration,
             output_mp4=output_mp4,
+            blender_frames=blender_frames,
         )
 
         logger.info("✨ Successfully built Gemini AI Reel: %s (%.1f MB)",
@@ -453,6 +469,7 @@ class GeminiVideoStudio:
         words: List[WordTiming],
         total_duration: float,
         output_mp4: Path,
+        blender_frames: Optional[List[Image.Image]] = None,
     ):
         """Pipes base video frames through PIL for dynamic captions and writes final audio."""
         ffmpeg_bin = shutil.which("ffmpeg") or "ffmpeg"
@@ -522,6 +539,17 @@ class GeminiVideoStudio:
                     frame_img = Image.new("RGB", (width, height), (10, 16, 26))
                 else:
                     frame_img = Image.frombytes("RGB", (width, height), raw_bytes)
+
+                # Hero 3D Moving Mechanism Overlay (Rotating assembly, gears, turbines)
+                if blender_frames:
+                    b_idx = int((t * 25.0) % len(blender_frames))
+                    b_frame = blender_frames[b_idx]
+                    target_w = int(width * 0.98)
+                    target_h = int(target_w * (b_frame.height / b_frame.width))
+                    scaled_b = b_frame.resize((target_w, target_h), Image.Resampling.LANCZOS)
+                    bx = (width - target_w) // 2
+                    by = (height - target_h) // 2 + int(math.sin(t * 2.2) * 12.0)
+                    frame_img.paste(scaled_b, (bx, by), scaled_b)
 
                 # Overlay Sleek Progress Reticle
                 HUDGraphicsEngine.draw_hud_overlay(
