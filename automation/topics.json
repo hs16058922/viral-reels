@@ -324,8 +324,10 @@
     "cover_tag": "AEROSPACE SECRETS",
     "cover_sticker": "3000 DEGREE PLASMA",
     "video_format": "CINEMATIC_FULLSCREEN",
-    "status": "ready",
-    "video_path": "export/jet_engine_reel.mp4"
+    "status": "published",
+    "video_path": "export/jet_engine_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgFg3yYAN8Y/",
+    "published_at": "2026-11-23T13:43:14.225880"
   },
   {
     "id": "human_heart",
