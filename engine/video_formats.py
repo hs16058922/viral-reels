@@ -276,14 +276,19 @@ class FormatCompositor:
             alpha = int(240 * ((y - (HEIGHT - 220)) / 220))
             draw.rectangle([0, y, WIDTH, y + 4], fill=(0, 0, 0, alpha))
 
-        # 2. Composite True 3D Blender Mechanism (Hero Visual)
-        if blender_frame:
-            target_w = int(WIDTH * 0.98)
-            target_h = int(target_w * (blender_frame.height / blender_frame.width))
-            scaled_b = blender_frame.resize((target_w, target_h), Image.Resampling.LANCZOS)
-            bx = (WIDTH - target_w) // 2
-            by = (HEIGHT - target_h) // 2 + int(math.sin(t * 2.2) * 12.0)
-            cropped.paste(scaled_b, (bx, by), scaled_b)
+        # 2. Remotion-Inspired HTML/CSS Motion Graphics (Callouts, Visualizer, Telemetry)
+        from engine.remotion_elements import RemotionHTMLElements
+        RemotionHTMLElements.draw_all_overlays(
+            img=cropped,
+            t=t,
+            scene_t=scene_t,
+            scene_duration=scene_duration,
+            scene_idx=scene_idx,
+            total_scenes=max(1, len(bullets) if bullets else 4),
+            total_duration=total_duration,
+            topic={"bullets": bullets},
+            accent_color=accent_color,
+        )
 
         # 3. Modern Floating Viewfinder HUD (Minimal top progress bar and timestamp)
         HUDGraphicsEngine.draw_hud_overlay(

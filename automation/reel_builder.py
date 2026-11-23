@@ -143,12 +143,7 @@ class AutonomousReelBuilder:
             logger.info("Reel already built at %s (%.2f MB). Reusing.", output_mp4.name, output_mp4.stat().st_size / (1024 * 1024))
             return output_mp4
 
-        # Route to Gemini Video Base Studio if specified
-        if topic.get("engine") == "gemini" or topic.get("video_format") == "GEMINI_VEO":
-            from engine.gemini_video_engine import GeminiVideoStudio
-            return GeminiVideoStudio.build_gemini_reel(topic, output_mp4=output_mp4)
-
-        logger.info("🎬 Building automated 3D cinematic reel for topic '%s'...", topic["title"])
+        logger.info("🎬 Building interactive 3D cutaway reel with Remotion HTML overlays for topic '%s'...", topic["title"])
 
         # ── 1. Synthesize Neural Voiceover ─────────────────────────────
         audio_path = TMP_DIR / f"{topic_id}_voice.mp3"
@@ -223,18 +218,8 @@ class AutonomousReelBuilder:
             output_path=master_audio_path,
         )
 
-        # ── 6b. Pre-render 3D Blender Headless Mechanism Sequence ──────
+        # ── 6b. Interactive Image & Remotion Overlay Composition ───
         blender_frames = []
-        if BlenderMechanismRunner.is_available():
-            logger.info("🎬 Pre-rendering true 3D Blender mechanism for '%s'...", topic_id)
-            blender_frames = BlenderMechanismRunner.render_mechanism_sequence(
-                topic_id=topic_id,
-                frames=75,
-                width=720,
-                height=1000,
-            )
-        else:
-            logger.info("Blender not detected; falling back to 2.5D kinetic motion graphics.")
 
         # ── 7. Setup Rendering Pipe ───────────────────────────────────
         total_frames = int(total_duration * FPS)
