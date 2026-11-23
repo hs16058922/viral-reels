@@ -146,7 +146,7 @@ class GeminiVideoStudio:
                     f"Return a JSON array of strings, where each string is a 40-word photorealistic 3D cutaway prompt."
                 )
                 resp = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3-flash-preview",
                     contents=prompt_req,
                     config={"response_mime_type": "application/json"},
                 )
