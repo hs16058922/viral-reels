@@ -299,19 +299,7 @@ class FormatCompositor:
             accent_color=accent_color,
         )
 
-        # 4. Floating Micro Tag Card in lower-third
-        if bullets:
-            b_text = bullets[scene_idx % len(bullets)].upper()[:28]
-            font_sub = load_sub_font(20)
-            tag_w, tag_h = 440, 56
-            tag_x = (WIDTH - tag_w) // 2
-            tag_y = 1260
-            draw.rounded_rectangle([tag_x, tag_y, tag_x + tag_w, tag_y + tag_h], radius=16, fill=(10, 14, 22, 220), outline=(255, 255, 255, 40), width=1)
-            tb = draw.textbbox((0, 0), b_text, font=font_sub)
-            tw = tb[2] - tb[0]
-            draw.text((tag_x + (tag_w - tw) // 2, tag_y + 16), b_text, font=font_sub, fill=(255, 255, 255))
-
-        # 5. Centered Vox-Style Bold Captions with Heavy 3D Drop Shadow
+        # 4. Centered Vox-Style Bold Captions with Heavy 3D Drop Shadow
         if words:
             IsometricMotionEngine.render_upper_third_captions(
                 img=cropped,

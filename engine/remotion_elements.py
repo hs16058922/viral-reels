@@ -45,11 +45,8 @@ class RemotionHTMLElements:
         # 2. Audio Waveform Activity Visualizer (Top-Right, next to timer)
         cls._draw_audio_visualizer(draw, t, accent_color)
 
-        # 3. Interactive Technical Callout Pointer with Leader Line & Spec Badge
-        cls._draw_interactive_callout(draw, scene_t, scene_duration, scene_idx, topic, accent_color)
-
-        # 4. Animated Live Telemetry Metric Widget (Lower Right)
-        cls._draw_telemetry_gauge(draw, t, scene_idx, topic, accent_color)
+        # 3. Interactive Technical Callout Pointer (Transient: appears for only 2.5s per component)
+        cls._draw_interactive_callout(draw, scene_t, scene_duration, scene_idx, total_scenes, topic, accent_color)
 
         # Composite overlay onto main image
         img.paste(Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB"), (0, 0))
@@ -131,37 +128,60 @@ class RemotionHTMLElements:
         scene_t: float,
         scene_duration: float,
         scene_idx: int,
+        total_scenes: int,
         topic: Dict[str, Any],
         accent_color: Tuple[int, int, int],
     ) -> None:
         """
         Interactive Remotion-style technical callout pointer:
-        1. Pulsing target dot over the mechanism
-        2. Leader line with 45-degree angled elbow
-        3. Frosted spec card with glowing border and bullet text
+        - Transient: Appears ONLY for 2.5 seconds (from 1.2s to 3.7s of each component scene).
+        - Disappears completely for the rest of the scene so visuals remain 100% clean and unobstructed.
+        - Never displays in the final outro / call-to-action scene.
         """
-        # Animate entrance: spring scale in from 0.0 to 1.0 during first 0.6s of scene
-        enter_progress = min(1.0, max(0.0, scene_t / 0.6))
-        # Spring-like ease out
-        spring = math.sin(enter_progress * (math.pi / 2))
+        # Skip callout on final outro scene
+        if scene_idx >= max(1, total_scenes - 1):
+            return
+
+        # Transient visibility window: 1.2s to 3.7s (2.5 seconds total)
+        callout_start = 1.2
+        callout_end = 3.7
+        if scene_t < callout_start or scene_t > callout_end:
+            return
+
+        # Smooth fade-in (0.35s) and fade-out (0.35s)
+        fade_time = 0.35
+        if scene_t < (callout_start + fade_time):
+            alpha_ratio = (scene_t - callout_start) / fade_time
+        elif scene_t > (callout_end - fade_time):
+            alpha_ratio = (callout_end - scene_t) / fade_time
+        else:
+            alpha_ratio = 1.0
+
+        spring = max(0.0, min(1.0, alpha_ratio))
         if spring <= 0.05:
             return
 
         bullets = topic.get("bullets", [])
-        if not bullets:
+        if not bullets or scene_idx >= len(bullets):
             return
 
-        callout_text = bullets[scene_idx % len(bullets)]
-        # Target position on the interactive cutaway image (alternates left/right per scene)
-        is_left_side = (scene_idx % 2 == 0)
+        raw_bullet = bullets[scene_idx]
 
-        # Target center
+        # Clean concise component name (no long truncated sentences)
+        clean_text = raw_bullet
+        for sep in [",", " - ", " – ", " polished", " creates", " behaves", " keep", " to "]:
+            if sep in clean_text:
+                clean_text = clean_text.split(sep)[0]
+        clean_text = clean_text.strip().upper()[:32]
+
+        # Target position on the interactive cutaway image
+        is_left_side = (scene_idx % 2 == 0)
         target_x = 360 if is_left_side else 720
-        target_y = 920 + int(math.sin(scene_t * 1.8) * 15.0)
+        target_y = 960 + int(math.sin(scene_t * 1.8) * 12.0)
 
         # Pulsing target rings
         pulse = 0.5 + 0.5 * math.sin(scene_t * 5.0)
-        ring_r = int(14 + pulse * 6)
+        ring_r = int(12 + pulse * 5)
         draw.ellipse(
             [target_x - ring_r, target_y - ring_r, target_x + ring_r, target_y + ring_r],
             outline=(*accent_color, int(180 * spring)),
@@ -174,14 +194,14 @@ class RemotionHTMLElements:
 
         # Elbow leader line coordinates
         elbow_x = target_x - 60 if is_left_side else target_x + 60
-        elbow_y = target_y - 80
+        elbow_y = target_y - 70
 
-        badge_w = 460
-        badge_h = 76
+        badge_w = 420
+        badge_h = 68
         badge_x = elbow_x - badge_w if is_left_side else elbow_x
         badge_y = elbow_y - (badge_h // 2)
 
-        # Clamp inside frame
+        # Clamp safely inside frame
         badge_x = max(36, min(WIDTH - badge_w - 36, badge_x))
 
         # Draw leader lines
@@ -193,27 +213,26 @@ class RemotionHTMLElements:
         # Frosted Glassmorphism Spec Card
         draw.rounded_rectangle(
             [badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
-            radius=16,
-            fill=(8, 14, 24, int(230 * spring)),
+            radius=14,
+            fill=(8, 14, 24, int(225 * spring)),
             outline=(*accent_color, int(160 * spring)),
             width=2,
         )
 
         # Micro technical header inside card
-        font_micro = load_sub_font(14)
-        tech_header = f"SPEC_ID // COMPONENT_0{scene_idx + 1}"
+        font_micro = load_sub_font(13)
+        tech_header = f"FEATURE_0{scene_idx + 1} // CUTAWAY ANALYSIS"
         draw.text(
-            (badge_x + 18, badge_y + 12),
+            (badge_x + 18, badge_y + 10),
             tech_header,
             font=font_micro,
             fill=(*accent_color, int(220 * spring)),
         )
 
-        # Main bullet label text (truncated to fit)
+        # Main component label text
         font_body = load_sub_font(18)
-        clean_text = callout_text[:38] + ("..." if len(callout_text) > 38 else "")
         draw.text(
-            (badge_x + 18, badge_y + 36),
+            (badge_x + 18, badge_y + 32),
             clean_text,
             font=font_body,
             fill=(255, 255, 255, int(245 * spring)),
