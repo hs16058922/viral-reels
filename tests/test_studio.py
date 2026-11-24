@@ -1,0 +1,194 @@
+"""Unit tests for SceneSpec v2: schema strictness, narration alignment,
+gear-train meshing, timing resolution, asset license gate, captions."""
+
+import json
+import math
+import tempfile
+import unittest
+from pathlib import Path
+
+from pydantic import ValidationError
+
+from engine.studio import pipeline
+from engine.studio.spec import VideoSpec, align, resolve, resolve_gear_trains, tokens
+
+SPECS = Path(__file__).resolve().parents[1] / "engine" / "studio" / "specs"
+
+
+def tiny_spec(**scene_overrides) -> dict:
+    scene = {
+        "id": "s1", "narration": "The gear turns fast.",
+        "objects": [{"id": "g", "kind": "gear", "params": {"teeth": 20}}],
+        "actions": [{"target": "g", "do": "spin", "at": "turns"}],
+        "shots": [{"target": "g"}],
+    }
+    scene.update(scene_overrides)
+    return {"title": "t", "scenes": [scene]}
+
+
+def fake_heard(spec: VideoSpec, wps: float = 2.5):
+    return [(t, i / wps, i / wps + 0.3) for i, t in enumerate(tokens(spec.script))]
+
+
+class TestSchema(unittest.TestCase):
+    def test_shipped_specs_validate(self):
+        for p in SPECS.glob("*.json"):
+            with self.subTest(spec=p.name):
+                spec = VideoSpec.model_validate_json(p.read_text())
+                self.assertGreaterEqual(len(spec.scenes), 3)
+
+    def test_rejects_unknown_param(self):
+        bad = tiny_spec(objects=[{"id": "g", "kind": "gear", "params": {"teeth": 20, "teef": 3}}])
+        with self.assertRaisesRegex(ValidationError, "teef"):
+            VideoSpec.model_validate(bad)
+
+    def test_rejects_unknown_target_and_missing_phrase(self):
+        with self.assertRaisesRegex(ValidationError, "unknown 'nope'"):
+            VideoSpec.model_validate(tiny_spec(actions=[{"target": "nope", "do": "spin"}]))
+        with self.assertRaisesRegex(ValidationError, "not in narration"):
+            VideoSpec.model_validate(tiny_spec(actions=[{"target": "g", "do": "spin", "at": "explodes"}]))
+
+    def test_rejects_code_like_fields(self):
+        with self.assertRaises(ValidationError):
+            VideoSpec.model_validate(tiny_spec(objects=[{"id": "g", "kind": "python", "params": {}}]))
+
+    def test_prefab_scene_object_overrides(self):
+        d = tiny_spec(use=["kit"], objects=[{"id": "g", "kind": "gear", "material": "brass", "params": {"teeth": 30}}])
+        d["prefabs"] = {"kit": [{"id": "g", "kind": "gear", "params": {"teeth": 10}}, {"id": "h", "kind": "sphere"}]}
+        sc = VideoSpec.model_validate(d).scenes[0]
+        self.assertEqual({o.id: o.params.get("teeth") for o in sc.objects}, {"h": None, "g": 30})
+
+
+class TestAlignment(unittest.TestCase):
+    def test_misheard_words_are_interpolated(self):
+        script = tokens("the escapement locks the wheel")
+        heard = [("the", 0.0, 0.2), ("escape", 0.2, 0.5), ("mint", 0.5, 0.8), ("locks", 0.8, 1.0),
+                 ("the", 1.0, 1.1), ("wheel", 1.1, 1.5)]
+        t = align(script, heard)
+        self.assertEqual(len(t), 5)
+        self.assertAlmostEqual(t[2][0], 0.8)  # "locks" matched exactly
+        self.assertTrue(0.2 <= t[1][0] < t[2][0])  # "escapement" interpolated between neighbours
+        self.assertEqual([x[0] for x in t], sorted(x[0] for x in t))
+
+    def test_no_overlap_raises(self):
+        with self.assertRaises(ValueError):
+            align(["a", "b"], [("zzz", 0, 1)])
+
+
+class TestGearTrain(unittest.TestCase):
+    def objs(self):
+        g = lambda i, t, mw=None, a=0.0, p=None: {"id": i, "kind": "gear", "position": (0, 0, 0), "rotation": (0, 0, 0),
+                                                  "params": {k: v for k, v in dict(teeth=t, module=0.1, pinion_teeth=p,
+                                                                                   mesh_with=mw, angle=a).items() if v is not None}}
+        return [g("a", 40), g("b", 30, "a", 35.0, 10), g("c", 24, "b", 100.0)]
+
+    def test_positions_ratios_and_tooth_phase(self):
+        o = self.objs()
+        resolve_gear_trains(o)
+        a, b, c = o
+        self.assertAlmostEqual(math.dist(a["position"][:2], b["position"][:2]), 0.1 * (40 + 10) / 2)
+        self.assertAlmostEqual(math.dist(b["position"][:2], c["position"][:2]), 0.1 * (30 + 24) / 2)
+        self.assertAlmostEqual(b["driver"]["ratio"], -40 / 10)
+        self.assertAlmostEqual(c["driver"]["ratio"], (-40 / 10) * (-30 / 24))
+        # Mesh condition: parent tooth phase + child tooth phase on the line of centres ≡ 1/2 (mod 1).
+        for par, ch, tp, tc, ang in ((a, b, 40, 10, 35.0), (b, c, 30, 24, 100.0)):
+            s = (ang - par["rotation"][2]) / (360 / tp) + (ang + 180 - ch["rotation"][2]) / (360 / tc)
+            self.assertAlmostEqual(s % 1.0, 0.5, places=6)
+
+    def test_module_mismatch_rejected(self):
+        o = self.objs()
+        o[1]["params"]["module"] = 0.2
+        with self.assertRaisesRegex(ValueError, "module"):
+            resolve_gear_trains(o)
+
+
+class TestResolve(unittest.TestCase):
+    def test_scene_frames_tile_the_timeline_and_anchors_land_on_words(self):
+        spec = VideoSpec.model_validate_json((SPECS / "mechanical_watch.json").read_text())
+        heard = fake_heard(spec)
+        plan = resolve(spec, heard, heard[-1][2])
+        self.assertEqual(sum(s["frames"] for s in plan["scenes"]), round(plan["duration"] * plan["fps"]))
+        for a, b in zip(plan["scenes"], plan["scenes"][1:]):
+            self.assertEqual(a["frame_offset"] + a["frames"], b["frame_offset"])
+        hook = plan["scenes"][0]
+        pop = next(a for a in hook["actions"] if a["target"] == "battery" and a["do"] == "pop_in")
+        k = next(i for i, w in enumerate(plan["words"]) if w["token"] == "battery")
+        word = plan["words"][k - 1]  # anchor phrase is "no battery"
+        self.assertEqual(word["token"], "no")
+        self.assertEqual(pop["f0"], round(word["start"] * 30))
+        spin = next(a for a in hook["actions"] if a["do"] == "spin")
+        self.assertIsNone(spin["f1"])  # continuous actions run to scene end inside Blender
+
+    def test_slower_narration_stretches_scenes(self):
+        spec = VideoSpec.model_validate_json((SPECS / "jet_engine.json").read_text())
+        fast, slow = fake_heard(spec, 3.0), fake_heard(spec, 2.0)
+        p1, p2 = resolve(spec, fast, fast[-1][2]), resolve(spec, slow, slow[-1][2])
+        self.assertTrue(all(b["frames"] > a["frames"] for a, b in zip(p1["scenes"], p2["scenes"])))
+
+
+class TestPipelineHelpers(unittest.TestCase):
+    def test_find_spec(self):
+        self.assertEqual(pipeline.find_spec("How does a mechanical watch work?").stem, "mechanical_watch")
+        self.assertEqual(pipeline.find_spec("How a jet engine works").stem, "jet_engine")
+        self.assertEqual(pipeline.find_spec("How the human heart pumps blood").stem, "human_heart")
+        with self.assertRaises(LookupError):
+            pipeline.find_spec("How do volcanoes erupt?")
+
+    def test_asset_license_gate(self):
+        d = tiny_spec(objects=[{"id": "m", "kind": "asset", "params": {"asset_id": "teapot"}}],
+                      actions=[], shots=[{"target": "m"}])
+        with tempfile.TemporaryDirectory() as tmp:
+            old, pipeline.ASSETS = pipeline.ASSETS, Path(tmp)
+            try:
+                (Path(tmp) / "manifest.json").write_text(json.dumps(
+                    {"teapot": {"file": "teapot.glb", "license": "CC-BY-NC-4.0", "source": "example"}}))
+                with self.assertRaises(PermissionError):
+                    pipeline.resolve_assets(VideoSpec.model_validate(d))
+                (Path(tmp) / "manifest.json").write_text(json.dumps(
+                    {"teapot": {"file": "teapot.glb", "license": "CC0-1.0", "source": "example"}}))
+                rows = pipeline.resolve_assets(spec := VideoSpec.model_validate(d))
+                self.assertEqual(rows[0]["license"], "CC0-1.0")
+                self.assertTrue(spec.scenes[0].objects[0].params["_path"].endswith("teapot.glb"))
+            finally:
+                pipeline.ASSETS = old
+
+    def test_caption_groups_stay_inside_scenes(self):
+        spec = VideoSpec.model_validate_json((SPECS / "human_heart.json").read_text())
+        heard = fake_heard(spec)
+        words = resolve(spec, heard, heard[-1][2])["words"]
+        for g in pipeline.caption_groups(words):
+            self.assertEqual(len({words[i]["scene"] for i in g}), 1)
+            self.assertLessEqual(len(g), 6)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+class TestStudioCI(unittest.TestCase):
+    def test_shard_list_covers_every_frame_once(self):
+        plan = {"scenes": [{"index": 0, "frames": 150}, {"index": 1, "frames": 61}, {"index": 2, "frames": 20}]}
+        shards = pipeline.shard_list(plan, 60)
+        for sc in plan["scenes"]:
+            mine = [s for s in shards if s["scene"] == sc["index"]]
+            frames = [f for s in mine for f in range(s["start"], s["end"] + 1)]
+            self.assertEqual(frames, list(range(sc["frames"])))
+            self.assertTrue(all(s["end"] - s["start"] + 1 <= 60 for s in mine))
+
+    def test_pick_prefers_ready_then_spec_then_director(self):
+        from automation import studio_ci
+        from automation.topic_queue import TopicQueue
+        with tempfile.TemporaryDirectory() as tmp:
+            q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
+            q.save_topics([
+                {"id": "old", "status": "published"},
+                {"id": "no_spec", "status": "pending"},
+                {"id": "jet", "status": "pending", "spec": "jet_engine"},
+                {"id": "parked", "status": "needs_spec", "spec": "jet_engine"},
+            ])
+            self.assertEqual([x for x in studio_ci.pick(q)][1], "render")
+            self.assertEqual(studio_ci.pick(q)[0]["id"], "jet")
+            q.save_topics([{"id": "no_spec", "status": "pending"}])
+            self.assertEqual(studio_ci.pick(q)[1], "direct")
+            q.save_topics([])
+            self.assertEqual(studio_ci.pick(q), (None, "none"))

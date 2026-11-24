@@ -15,7 +15,7 @@ import shutil
 import struct
 import subprocess
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 import numpy as np
 
 logger = logging.getLogger("viral_reels.sfx")
@@ -202,6 +202,7 @@ class SFXManager:
         callout_times: List[float],
         total_duration: float,
         output_path: Path,
+        events: Optional[List[Tuple[float, str]]] = None,
     ) -> Path:
         """Composite voiceover, hook impact, scene swooshes, UI pops, and ambient bed into master audio."""
         cls.ensure_sfx_library()
@@ -225,6 +226,7 @@ class SFXManager:
             "-i", str(whoosh_impact),
             "-i", str(scene_swoosh),
             "-i", str(ui_pop),
+            "-i", str(SFX_DIR / "mechanical_click.wav"),
         ]
 
         filter_parts = []
@@ -253,9 +255,19 @@ class SFXManager:
             filter_parts.append(f"[4:a]adelay={delay_ms}|{delay_ms},volume=0.40{label}")
             mix_inputs.append(label)
 
-        # Mix all tracks together
+        # 5. Typed animation events: (seconds, "pop" | "click" | "swoosh" | "impact")
+        event_input = {"pop": 4, "click": 5, "swoosh": 3, "impact": 2}
+        for idx, (ev_t, kind) in enumerate(events or []):
+            delay_ms = max(0, int(ev_t * 1000))
+            label = f"[sfx_ev_{idx}]"
+            filter_parts.append(f"[{event_input[kind]}:a]adelay={delay_ms}|{delay_ms},volume=0.45{label}")
+            mix_inputs.append(label)
+
+        # Mix all tracks together. normalize=0 keeps the voice at full level
+        # (amix otherwise divides every input by the input count); the limiter
+        # catches peaks where SFX overlap speech.
         mix_count = len(mix_inputs)
-        mix_chain = "".join(mix_inputs) + f"amix=inputs={mix_count}:duration=first:dropout_transition=2[outa]"
+        mix_chain = "".join(mix_inputs) + f"amix=inputs={mix_count}:duration=first:dropout_transition=2:normalize=0,alimiter=limit=0.95[outa]"
         filter_parts.append(mix_chain)
 
         filter_str = ";".join(filter_parts)

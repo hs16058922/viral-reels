@@ -17,6 +17,7 @@ import argparse
 import datetime
 import logging
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -39,10 +40,13 @@ logging.basicConfig(
 logger = logging.getLogger("viral_reels.scheduler")
 
 
-def post_next_reel(dry_run: bool = False) -> bool:
-    """Select the next topic, construct the viral caption, and post to Instagram."""
+def post_next_reel(dry_run: bool = False, topic_id: str = "") -> bool:
+    """Select the next topic (or `topic_id`), construct the viral caption, and post to Instagram."""
     queue = TopicQueue()
-    topic = queue.get_next_ready_topic(auto_replenish=True)
+    if topic_id:
+        topic = next((t for t in queue.load_topics() if t.get("id") == topic_id), None)
+    else:
+        topic = queue.get_next_ready_topic(auto_replenish=True)
 
     if not topic:
         logger.warning("No pending topics found in queue even after auto-replenishment.")
@@ -133,7 +137,9 @@ def post_next_reel(dry_run: bool = False) -> bool:
     if direct_pub.is_configured():
         logger.info("🚀 Publishing Reel via Direct Instagram Mobile API (@%s)...", direct_pub.username)
         try:
-            thumb_path = PROJECT_ROOT / "export" / "sample_frames" / "frame_02s.jpg"
+            thumb_path = PROJECT_ROOT / "export" / f"{topic['id']}_cover.jpg"
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "1.5", "-i", str(video_path), "-frames:v", "1",
+                            str(thumb_path)], check=False)
             result = direct_pub.publish_reel(
                 video_path=video_path,
                 caption=caption,
@@ -208,13 +214,14 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Test execution without publishing to Instagram")
     parser.add_argument("--daemon", action="store_true", help="Run background daemon polling for schedule slots")
     parser.add_argument("--install-cron", action="store_true", help="Print crontab commands for macOS")
+    parser.add_argument("--topic", default="", help="Publish this topic id (CI passes the reel it just built)")
 
     args = parser.parse_args()
 
     if args.install_cron:
         print_cron_instructions()
     elif args.now or args.dry_run:
-        success = post_next_reel(dry_run=args.dry_run)
+        success = post_next_reel(dry_run=args.dry_run, topic_id=args.topic)
         if not success:
             sys.exit(1)
     elif args.daemon:

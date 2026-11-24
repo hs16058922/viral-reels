@@ -109,32 +109,24 @@ class TopicQueue:
         topics = self.load_topics()
         published_ids = self.get_published_ids()
 
-        def has_assets(t: Dict[str, Any]) -> bool:
-            t_id = t.get("id", "")
-            s_dir = Path("assets/scenes") / t_id
-            if s_dir.exists() and list(s_dir.glob("scene_*.jpg")):
-                return True
-            v_path = Path(t.get("video_path", "")) if t.get("video_path") else None
-            if v_path and v_path.exists():
-                return True
-            return False
+        from automation.studio_ci import spec_for  # studio reels only
 
-        # Prioritize pre-rendered 'ready' topics first
-        for t in topics:
-            t_id = t.get("id", "").lower()
-            if t_id in published_ids or t.get("status") == "published":
-                continue
-            if t.get("status") == "ready" and has_assets(t):
+        live = [t for t in topics
+                if t.get("id", "").lower() not in published_ids and t.get("status") not in ("published", "needs_spec", "failed_qc")]
+
+        # 1. Already-rendered reels first
+        for t in live:
+            vp = t.get("video_path")
+            if t.get("status") == "ready" and vp and (PROJECT_ROOT / vp).exists():
                 return t
-
-        # Fallback to 'pending' topics that have scene assets ready
-        for t in topics:
-            t_id = t.get("id", "").lower()
-            if t_id in published_ids or t.get("status") == "published":
-                continue
-            if t.get("status") == "pending" and has_assets(t):
+        # 2. Topics with an approved SceneSpec (hand-authored or AI draft that passed visual review)
+        for t in live:
+            if spec_for(t):
                 return t
-
+        # 3. Anything pending: the build will ask the AI director for a spec
+        for t in live:
+            if t.get("status") == "pending":
+                return t
         return None
 
     def mark_published(self, topic_id: str, permalink: str, video_path: Optional[Path] = None):

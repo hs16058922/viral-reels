@@ -125,6 +125,53 @@ All settings are defined in `config/settings.py` and can be overridden via `.env
 
 Defined in `templates/transitions/presets.json`. Available: `fade`, `wipeleft`, `slideup`, `circleopen`, `radial`, `dissolve`, `pixelize`, and more.
 
+## 3D Animation Studio (SceneSpec v2)
+
+`engine/studio/` turns a topic into a narrated, captioned **real 3D** vertical reel:
+independently animated procedural parts (meshing gear trains, rotors, cutaway shells,
+flow particles, valves), narration-synced timing, and an auto-framing camera.
+
+```bash
+make studio TOPIC="How does a mechanical watch work?" QUALITY=preview     # 540x960, ~10 min
+make studio TOPIC="How does a jet engine work?" QUALITY=production        # 1080x1920 + motion blur
+python -m engine.studio --schema                                          # SceneSpec JSON schema
+```
+
+```python
+from engine.studio import generate_video
+result = generate_video(topic="How does a mechanical watch work?", quality="preview")
+```
+
+How it works:
+
+1. **SceneSpec** (`engine/studio/specs/*.json`, schema in `spec.py`) — pure data. Objects are
+   whitelisted procedural kinds; actions (`spin`, `tick`, `cycle`, `explode`, `pop_in`, `highlight`,
+   `fade`, …) are anchored to **narration phrases** (`"at": "escape wheel"`), not frames.
+   No spec ever executes code in Blender — that is the sandbox for AI-authored specs.
+2. **Narration** — EdgeTTS voice, Whisper word timings, `difflib` alignment back to the script.
+   Phrase anchors become frames, so scenes re-time automatically when the voice changes.
+3. **Blender** (`blender_scene.py`, headless, `--factory-startup --disable-autoexec`) builds and
+   keyframes each scene. Meshing gears are placed and coupled by drivers with exact tooth ratios.
+   The camera auto-fits each shot's subjects into the Instagram safe area and repairs overflow
+   before rendering.
+4. **Cache/resume** — each scene is keyed by a hash of its resolved plan + quality + renderer
+   source under `tmp/studio_cache/`; interrupted renders resume frame-by-frame.
+5. **Assembly + QC** — word-synced captions (Pillow overlay), SFX at animation events,
+   FFmpeg mux, then `qc_report.json` (dimensions, duration, audio, alignment coverage, framing,
+   empty/frozen scenes, caption overflow, render budget) and a `contact_sheet.jpg` for visual review.
+
+Artifacts land in `export/studio/<topic>_<quality>/`: final MP4, `scenespec.json`, resolved
+`plan.json`, `narration.txt`, `voice.mp3`, `audio_master.aac`, `captions.srt`, per-scene `.blend`
+files, `logs/`, `qc_report.json`, `contact_sheet.jpg`.
+
+Requires Blender 4.2+ (tested on 5.3, Eevee on Apple Metal). The GitHub Actions publisher has no
+Blender/GPU, so render studio reels locally and publish the MP4.
+
+New topics: write a SceneSpec JSON (any LLM can target `--schema`; validation rejects unknown kinds,
+params, targets and phrases that are not in the narration). Imported models go in
+`assets/models/` with a `manifest.json` entry (`file`, `license`, `source`); only open licenses
+(CC0, CC-BY, MIT, Apache-2.0, self-made) are accepted.
+
 ## License
 
 MIT

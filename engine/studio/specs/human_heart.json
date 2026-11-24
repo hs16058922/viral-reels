@@ -1,0 +1,172 @@
+{
+  "title": "How Your Heart Pumps Blood",
+  "prefabs": {
+    "heart": [
+      {"id": "ra", "kind": "sphere", "material": "tissue_glass", "position": [-0.75, 0, 0.75], "scale": [1.0, 0.9, 0.85], "params": {"radius": 0.55}},
+      {"id": "la", "kind": "sphere", "material": "tissue_glass", "position": [0.75, 0.15, 0.8], "scale": [1.0, 0.9, 0.85], "params": {"radius": 0.5}},
+      {"id": "rv", "kind": "sphere", "material": "tissue_glass", "position": [-0.45, -0.15, -0.38], "scale": [1.0, 0.8, 1.15], "params": {"radius": 0.75}},
+      {"id": "lv", "kind": "sphere", "material": "tissue_glass", "position": [0.45, 0.05, -0.48], "scale": [0.95, 0.85, 1.3], "params": {"radius": 0.8}},
+      {"id": "septum", "kind": "box", "material": "tissue", "position": [0.02, -0.02, -0.15], "params": {"size": [0.07, 0.8, 1.9]}},
+      {"id": "aorta", "kind": "tube", "material": "tissue_glass", "params": {"points": [[0.23, 0.3, 0.5], [0.18, 0.32, 1.4], [0.02, 0.6, 1.95], [0.6, 0.9, 1.95], [0.9, 1.0, 1.2], [0.95, 1.0, -0.8]], "radius": 0.15}},
+      {"id": "pulm_trunk", "kind": "tube", "material": "tissue_glass", "params": {"points": [[-0.15, -0.4, 0.55], [-0.08, -0.45, 1.3], [0.3, -0.25, 1.62], [1.35, 0.2, 1.62]], "radius": 0.14}},
+      {"id": "svc", "kind": "tube", "material": "tissue_glass", "params": {"points": [[-0.85, 0.1, 2.15], [-0.82, 0.06, 1.05]], "radius": 0.14}},
+      {"id": "pulm_vein", "kind": "tube", "material": "tissue_glass", "params": {"points": [[1.95, 0.4, 0.92], [1.12, 0.3, 0.86]], "radius": 0.11}}
+    ],
+    "valves": [
+      {"id": "tl", "kind": "box", "material": "clay", "position": [-0.89, -0.05, 0.22], "params": {"size": [0.24, 0.3, 0.025], "pivot": [-0.12, 0, 0]}},
+      {"id": "tr", "kind": "box", "material": "clay", "position": [-0.41, -0.05, 0.22], "params": {"size": [0.24, 0.3, 0.025], "pivot": [0.12, 0, 0]}},
+      {"id": "ml", "kind": "box", "material": "clay", "position": [0.46, 0.05, 0.28], "params": {"size": [0.24, 0.3, 0.025], "pivot": [-0.12, 0, 0]}},
+      {"id": "mr", "kind": "box", "material": "clay", "position": [0.94, 0.05, 0.28], "params": {"size": [0.24, 0.3, 0.025], "pivot": [0.12, 0, 0]}},
+      {"id": "pl", "kind": "box", "material": "clay", "position": [-0.3, -0.4, 0.55], "params": {"size": [0.15, 0.22, 0.02], "pivot": [-0.075, 0, 0]}},
+      {"id": "pr", "kind": "box", "material": "clay", "position": [0.0, -0.4, 0.55], "params": {"size": [0.15, 0.22, 0.02], "pivot": [0.075, 0, 0]}},
+      {"id": "al", "kind": "box", "material": "clay", "position": [0.08, 0.3, 0.5], "params": {"size": [0.15, 0.22, 0.02], "pivot": [-0.075, 0, 0]}},
+      {"id": "ar", "kind": "box", "material": "clay", "position": [0.38, 0.3, 0.5], "params": {"size": [0.15, 0.22, 0.02], "pivot": [0.075, 0, 0]}}
+    ],
+    "venous": [
+      {"id": "venous", "kind": "flow", "material": "blood_blue", "params": {"points": [[-0.85, 0.1, 2.3], [-0.8, 0.05, 1.0], [-0.7, 0.0, 0.55], [-0.65, -0.05, 0.22], [-0.55, -0.15, -0.3], [-0.4, -0.25, -0.65], [-0.2, -0.3, -0.2], [-0.15, -0.38, 0.55], [-0.08, -0.45, 1.3], [0.3, -0.25, 1.62], [1.5, 0.2, 1.62]], "count": 22, "radius": 0.055, "speed": 1.1}}
+    ],
+    "arterial": [
+      {"id": "arterial", "kind": "flow", "material": "blood_red", "params": {"points": [[2.1, 0.4, 0.92], [1.12, 0.3, 0.86], [0.75, 0.15, 0.6], [0.7, 0.05, 0.28], [0.6, 0.0, -0.4], [0.4, 0.05, -0.75], [0.25, 0.2, -0.1], [0.23, 0.3, 0.5], [0.18, 0.32, 1.4], [0.02, 0.6, 1.95], [0.6, 0.9, 1.95], [0.9, 1.0, 1.2], [0.95, 1.0, -0.9]], "count": 26, "radius": 0.055, "speed": 1.1}}
+    ]
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "narration": "Your heart beats about a hundred thousand times a day, and it never takes a break.",
+      "objective": "Hook: a beating heart and the daily beat count",
+      "background": "light",
+      "keywords": ["hundred thousand", "never takes a break"],
+      "use": ["heart"],
+      "objects": [
+        {"id": "count", "kind": "label", "material": "accent", "position": [0.1, -0.8, 2.35], "params": {"text": "100,000 beats / day", "size": 0.22}}
+      ],
+      "actions": [
+        {"target": ["ra", "la", "rv", "lv", "aorta", "pulm_trunk", "svc", "pulm_vein"], "do": "fade", "duration": 0.05, "params": {"to": 1.0}},
+        {"target": ["ra", "la"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.9, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.9, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": "count", "do": "pop_in", "at": "hundred thousand", "sfx": "pop"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": [0.2, 0.0, 0.45], "frame": ["ra", "la", "rv", "lv", "aorta", "svc"], "azimuth": -30, "elevation": 8, "orbit": 40, "lens": 55}
+      ]
+    },
+    {
+      "id": "two_pumps",
+      "narration": "It's really two pumps, side by side. The right side sends blood to your lungs. The left side sends it to your body.",
+      "objective": "Right heart (lungs) vs left heart (body)",
+      "background": "blue",
+      "keywords": ["two pumps", "lungs", "body"],
+      "note": "Illustrative model - slowed ~2.5x",
+      "use": ["heart", "valves"],
+      "objects": [
+        {"id": "right_tag", "kind": "label", "material": "blue", "position": [-1.25, -0.9, -1.45], "params": {"text": "RIGHT", "size": 0.2}},
+        {"id": "left_tag", "kind": "label", "material": "accent", "position": [1.15, -0.9, -1.55], "params": {"text": "LEFT", "size": 0.2}}
+      ],
+      "actions": [
+        {"target": ["ra", "la"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": ["ra", "rv"], "do": "highlight", "at": "right side", "params": {"color": "#3B5BDB", "strength": 1.2, "hold": true}},
+        {"target": "right_tag", "do": "pop_in", "at": "right side", "sfx": "pop"},
+        {"target": ["la", "lv"], "do": "highlight", "at": "left side", "params": {"color": "#E0222E", "strength": 1.2, "hold": true}},
+        {"target": "left_tag", "do": "pop_in", "at": "left side", "sfx": "pop"}
+      ],
+      "shots": [
+        {"type": "static", "target": [0.15, 0.0, 0.2], "frame": ["ra", "la", "rv", "lv", "right_tag", "left_tag"], "azimuth": -5, "elevation": 8, "lens": 55}
+      ]
+    },
+    {
+      "id": "right_heart",
+      "narration": "Blood coming back from the body fills the right atrium, then drops through the tricuspid valve into the right ventricle.",
+      "objective": "Venous return: RA → tricuspid → RV",
+      "background": "light",
+      "keywords": ["right atrium", "tricuspid valve", "right ventricle"],
+      "note": "Illustrative model - slowed ~2.5x",
+      "use": ["heart", "valves", "venous"],
+      "objects": [],
+      "actions": [
+        {"target": ["ra", "la"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": ["tl", "ml"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, 70], [0.18, 70], [0.23, 0], [0.6, 0], [0.66, 70], [1, 70]]}},
+        {"target": ["tr", "mr"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, -70], [0.18, -70], [0.23, 0], [0.6, 0], [0.66, -70], [1, -70]]}},
+        {"target": "ra", "do": "highlight", "at": "right atrium", "params": {"color": "#3B5BDB"}},
+        {"target": ["tl", "tr"], "do": "highlight", "at": "tricuspid valve", "sfx": "click"},
+        {"target": "rv", "do": "highlight", "at": "right ventricle", "params": {"color": "#3B5BDB"}}
+      ],
+      "shots": [
+        {"type": "push_in", "target": "rv", "frame": ["ra", "rv", "svc"], "azimuth": -30, "elevation": 10, "lens": 55}
+      ]
+    },
+    {
+      "id": "to_lungs",
+      "narration": "When the ventricle squeezes, that valve snaps shut, and blood is pushed out to the lungs.",
+      "objective": "Systole: tricuspid closes, pulmonary valve opens, blood leaves for the lungs",
+      "background": "blue",
+      "keywords": ["snaps shut", "lungs"],
+      "note": "Illustrative model - slowed ~2.5x",
+      "use": ["heart", "valves", "venous"],
+      "objects": [],
+      "actions": [
+        {"target": ["ra", "la"], "do": "cycle", "at": "squeezes", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "phase": 0.18, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "at": "squeezes", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "phase": 0.18, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": ["tl", "ml"], "do": "cycle", "at": "squeezes", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.18, "keys": [[0, 70], [0.18, 70], [0.23, 0], [0.6, 0], [0.66, 70], [1, 70]]}},
+        {"target": ["tr", "mr"], "do": "cycle", "at": "squeezes", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.18, "keys": [[0, -70], [0.18, -70], [0.23, 0], [0.6, 0], [0.66, -70], [1, -70]]}},
+        {"target": ["pl", "al"], "do": "cycle", "at": "squeezes", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.18, "keys": [[0, 0], [0.26, 0], [0.31, -70], [0.55, -70], [0.61, 0], [1, 0]]}},
+        {"target": ["pr", "ar"], "do": "cycle", "at": "squeezes", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.18, "keys": [[0, 0], [0.26, 0], [0.31, 70], [0.55, 70], [0.61, 0], [1, 0]]}},
+        {"target": "rv", "do": "highlight", "at": "squeezes", "params": {"color": "#3B5BDB", "strength": 0.8}},
+        {"target": ["tl", "tr"], "do": "highlight", "at": "snaps shut", "sfx": "click"},
+        {"target": ["pl", "pr"], "do": "highlight", "at": "pushed out"},
+        {"target": "pulm_trunk", "do": "highlight", "at": "lungs", "params": {"color": "#3B5BDB", "strength": 1.5}}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "rv", "frame": ["rv", "pulm_trunk", "ra"], "azimuth": -20, "elevation": 12, "orbit": 20, "lens": 55}
+      ]
+    },
+    {
+      "id": "left_heart",
+      "narration": "Oxygen-rich blood returns to the left side, and the thick left ventricle fires it into the aorta.",
+      "objective": "Pulmonary veins → LA → mitral → LV → aortic valve → aorta",
+      "background": "light",
+      "keywords": ["oxygen rich", "left ventricle", "aorta"],
+      "note": "Illustrative model - slowed ~2.5x",
+      "use": ["heart", "valves", "arterial"],
+      "objects": [],
+      "actions": [
+        {"target": ["ra", "la"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": ["tl", "ml"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, 70], [0.18, 70], [0.23, 0], [0.6, 0], [0.66, 70], [1, 70]]}},
+        {"target": ["tr", "mr"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, -70], [0.18, -70], [0.23, 0], [0.6, 0], [0.66, -70], [1, -70]]}},
+        {"target": ["pl", "al"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, 0], [0.26, 0], [0.31, -70], [0.55, -70], [0.61, 0], [1, 0]]}},
+        {"target": ["pr", "ar"], "do": "cycle", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "keys": [[0, 0], [0.26, 0], [0.31, 70], [0.55, 70], [0.61, 0], [1, 0]]}},
+        {"target": "la", "do": "highlight", "at": "left side", "params": {"color": "#E0222E"}},
+        {"target": "lv", "do": "highlight", "at": "thick left ventricle", "params": {"color": "#E0222E", "strength": 1.2}},
+        {"target": "aorta", "do": "highlight", "at": "aorta", "params": {"color": "#E0222E", "strength": 1.5}, "sfx": "swoosh"}
+      ],
+      "shots": [
+        {"type": "push_in", "target": "lv", "frame": ["la", "lv", "aorta"], "azimuth": 22, "elevation": 10, "lens": 55}
+      ]
+    },
+    {
+      "id": "lub_dub",
+      "narration": "Those valves closing are the lub-dub you hear through a stethoscope.",
+      "objective": "Heart sounds = valve closures (AV then semilunar)",
+      "background": "blue",
+      "keywords": ["lub dub"],
+      "note": "Illustrative model - slowed ~2.5x",
+      "use": ["heart", "valves", "venous", "arterial"],
+      "objects": [],
+      "actions": [
+        {"target": ["ra", "la"], "do": "cycle", "at": "lub", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "phase": 0.2, "keys": [[0, 1], [0.08, 0.9], [0.2, 1], [1, 1]]}},
+        {"target": ["rv", "lv"], "do": "cycle", "at": "lub", "params": {"prop": "scale", "axis": "all", "hz": 0.5, "phase": 0.2, "keys": [[0, 1], [0.2, 1], [0.32, 0.87], [0.55, 0.87], [0.66, 1], [1, 1]]}},
+        {"target": ["tl", "ml"], "do": "cycle", "at": "lub", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.2, "keys": [[0, 70], [0.18, 70], [0.23, 0], [0.6, 0], [0.66, 70], [1, 70]]}},
+        {"target": ["tr", "mr"], "do": "cycle", "at": "lub", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.2, "keys": [[0, -70], [0.18, -70], [0.23, 0], [0.6, 0], [0.66, -70], [1, -70]]}},
+        {"target": ["pl", "al"], "do": "cycle", "at": "lub", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.2, "keys": [[0, 0], [0.26, 0], [0.31, -70], [0.55, -70], [0.61, 0], [1, 0]]}},
+        {"target": ["pr", "ar"], "do": "cycle", "at": "lub", "params": {"prop": "rotation", "axis": "y", "hz": 0.5, "phase": 0.2, "keys": [[0, 0], [0.26, 0], [0.31, 70], [0.55, 70], [0.61, 0], [1, 0]]}},
+        {"target": ["tl", "tr", "ml", "mr"], "do": "highlight", "at": "lub", "params": {"color": "#FFFFFF", "strength": 1.5}, "sfx": "click"},
+        {"target": ["pl", "pr", "al", "ar"], "do": "highlight", "at": "dub", "params": {"color": "#FFFFFF", "strength": 1.5}, "sfx": "click"}
+      ],
+      "shots": [
+        {"type": "pull_out", "target": [0.2, 0.1, 0.4], "frame": ["ra", "la", "rv", "lv", "aorta", "svc", "pulm_trunk"], "azimuth": -15, "elevation": 10, "lens": 55}
+      ]
+    }
+  ]
+}

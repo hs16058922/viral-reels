@@ -1,0 +1,168 @@
+{
+  "title": "How a Jet Engine Works",
+  "prefabs": {
+    "rig": [
+      {"id": "rig", "kind": "empty", "rotation": [0, -55, 0]}
+    ],
+    "shell": [
+      {"id": "nacelle", "kind": "lathe", "material": "clay", "params": {"profile": [[1.62, 3.1], [1.74, 2.85], [1.72, 1.6], [1.6, 0.2], [1.42, -0.9]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.06, "cut_material": "accent"}, "parent": "rig"},
+      {"id": "core_case", "kind": "lathe", "material": "steel", "params": {"profile": [[0.98, 2.1], [0.9, 1.0], [0.82, 0.1], [0.88, -0.9], [0.78, -1.5]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.035, "cut_material": "accent"}, "parent": "rig"},
+      {"id": "nozzle", "kind": "lathe", "material": "dark_steel", "params": {"profile": [[0.8, -1.4], [0.66, -2.5]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.035, "cut_material": "accent"}, "parent": "rig"},
+      {"id": "plug", "kind": "lathe", "material": "dark_steel", "params": {"profile": [[0.34, -1.3], [0.3, -1.9], [0.02, -2.6]], "axis": "x", "thickness": 0.02}, "parent": "rig"}
+    ],
+    "rotors": [
+      {"id": "shaft", "kind": "cylinder", "material": "chrome", "position": [0.2, 0, 0], "params": {"radius": 0.09, "depth": 4.4, "axis": "x"}, "parent": "rig"},
+      {"id": "fan", "kind": "rotor", "material": "steel", "position": [2.45, 0, 0], "params": {"blades": 22, "r_in": 0.36, "r_out": 1.5, "chord": 0.38, "pitch": 40, "twist": 18, "thickness": 0.03, "axis": "x", "nose": true}, "parent": "rig"},
+      {"id": "c1", "kind": "rotor", "material": "steel", "position": [1.75, 0, 0], "params": {"blades": 28, "r_in": 0.4, "r_out": 0.86, "chord": 0.15, "pitch": 45, "twist": 10, "axis": "x"}, "parent": "rig"},
+      {"id": "s1", "kind": "rotor", "material": "dark_steel", "position": [1.55, 0, 0], "params": {"blades": 30, "r_in": 0.42, "r_out": 0.84, "chord": 0.12, "pitch": -45, "twist": 0, "axis": "x"}, "parent": "rig"},
+      {"id": "c2", "kind": "rotor", "material": "steel", "position": [1.35, 0, 0], "params": {"blades": 28, "r_in": 0.41, "r_out": 0.8, "chord": 0.14, "pitch": 45, "twist": 10, "axis": "x"}, "parent": "rig"},
+      {"id": "s2", "kind": "rotor", "material": "dark_steel", "position": [1.15, 0, 0], "params": {"blades": 30, "r_in": 0.42, "r_out": 0.78, "chord": 0.11, "pitch": -45, "twist": 0, "axis": "x"}, "parent": "rig"},
+      {"id": "c3", "kind": "rotor", "material": "steel", "position": [0.95, 0, 0], "params": {"blades": 30, "r_in": 0.42, "r_out": 0.74, "chord": 0.13, "pitch": 45, "twist": 10, "axis": "x"}, "parent": "rig"},
+      {"id": "s3", "kind": "rotor", "material": "dark_steel", "position": [0.78, 0, 0], "params": {"blades": 32, "r_in": 0.43, "r_out": 0.72, "chord": 0.1, "pitch": -45, "twist": 0, "axis": "x"}, "parent": "rig"},
+      {"id": "c4", "kind": "rotor", "material": "steel", "position": [0.62, 0, 0], "params": {"blades": 32, "r_in": 0.43, "r_out": 0.68, "chord": 0.12, "pitch": 45, "twist": 10, "axis": "x"}, "parent": "rig"},
+      {"id": "combustor", "kind": "lathe", "material": "dark_steel", "params": {"profile": [[0.44, 0.42], [0.62, 0.28], [0.66, -0.3], [0.52, -0.52]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.03, "cut_material": "accent2"}, "parent": "rig"},
+      {"id": "t1", "kind": "rotor", "material": "dark_steel", "position": [-0.75, 0, 0], "params": {"blades": 36, "r_in": 0.38, "r_out": 0.74, "chord": 0.12, "pitch": -40, "twist": 8, "axis": "x"}, "parent": "rig"},
+      {"id": "t2", "kind": "rotor", "material": "dark_steel", "position": [-1.05, 0, 0], "params": {"blades": 36, "r_in": 0.38, "r_out": 0.8, "chord": 0.12, "pitch": -40, "twist": 8, "axis": "x"}, "parent": "rig"}
+    ],
+    "flame": [
+      {"id": "flame", "kind": "lathe", "material": "flame", "params": {"profile": [[0.46, 0.25], [0.56, 0.0], [0.56, -0.25], [0.48, -0.42]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.05, "cut_material": "flame"}, "parent": "rig"}
+    ],
+    "air": [
+      {"id": "bypass", "kind": "flow", "material": "air", "params": {"points": [[5.0, 0, 1.3], [3.0, 0, 1.3], [1.5, 0, 1.28], [0.0, 0, 1.22], [-1.5, 0, 1.15], [-4.0, 0, 1.1]], "count": 9, "radius": 0.045, "speed": 3.2, "radial_copies": 6, "axis": "x"}, "parent": "rig"},
+      {"id": "core_cold", "kind": "flow", "material": "air", "params": {"points": [[5.0, 0, 0.6], [2.4, 0, 0.62], [1.75, 0, 0.66], [1.0, 0, 0.58], [0.5, 0, 0.53]], "count": 8, "radius": 0.04, "speed": 2.2, "radial_copies": 5, "axis": "x"}, "parent": "rig"}
+    ],
+    "hot": [
+      {"id": "core_hot", "kind": "flow", "material": "flame", "params": {"points": [[0.45, 0, 0.54], [-0.3, 0, 0.58], [-0.9, 0, 0.58], [-2.2, 0, 0.5], [-4.5, 0, 0.45]], "count": 10, "radius": 0.045, "speed": 4.5, "radial_copies": 5, "axis": "x"}, "parent": "rig"}
+    ]
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "narration": "A jet engine is basically a giant fan, spinning inside a controlled explosion.",
+      "objective": "Hook: fan spins up, then the cutaway reveals fire inside",
+      "background": "blue",
+      "keywords": ["giant fan", "controlled explosion"],
+      "use": ["rig", "shell", "rotors", "flame"],
+      "objects": [],
+      "actions": [
+        {"target": ["fan", "c1", "s1", "c2", "s2", "c3", "s3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 1.2}},
+        {"target": "flame", "do": "hide", "at": 0},
+        {"target": "flame", "do": "show", "at": "explosion", "sfx": "impact"},
+        {"target": "flame", "do": "pulse", "at": "explosion", "params": {"amount": 0.05, "hz": 4}},
+        {"target": "fan", "do": "highlight", "at": "giant fan", "params": {"color": "#FFFFFF", "strength": 0.6}}
+      ],
+      "shots": [
+        {"type": "push_in", "target": "fan", "frame": ["nacelle"], "azimuth": 62, "elevation": 14, "lens": 50},
+        {"at": "controlled explosion", "offset": -0.4, "type": "orbit", "target": "core_case", "frame": ["nacelle"], "azimuth": -28, "elevation": 22, "orbit": 20, "lens": 50}
+      ]
+    },
+    {
+      "id": "bypass",
+      "narration": "The big fan at the front pulls in air. Most of it flows around the core, and that bypass air makes most of the thrust.",
+      "objective": "Airflow split: bypass stream around the core vs. core stream",
+      "background": "light",
+      "keywords": ["pulls in air", "bypass air"],
+      "use": ["rig", "shell", "rotors", "air"],
+      "objects": [],
+      "actions": [
+        {"target": ["fan", "c1", "c2", "c3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 0}},
+        {"target": ["bypass", "core_cold"], "do": "hide", "at": 0},
+        {"target": "core_cold", "do": "show", "at": "pulls in air", "sfx": "swoosh"},
+        {"target": "bypass", "do": "show", "at": "flows around"},
+        {"target": "bypass", "do": "highlight", "at": "bypass air", "params": {"color": "#2F5BD3", "strength": 3.0, "hold": true}},
+        {"target": "core_case", "do": "highlight", "at": "core", "params": {"strength": 0.5}}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "nacelle", "frame": ["nacelle"], "azimuth": -30, "elevation": 22, "orbit": 30, "lens": 50}
+      ]
+    },
+    {
+      "id": "compressor",
+      "narration": "The rest enters the compressor, where rows of spinning blades squeeze it smaller and smaller.",
+      "objective": "Compressor stages: rotors spin between fixed stators; flow channel narrows",
+      "background": "blue",
+      "keywords": ["compressor", "smaller and smaller"],
+      "use": ["rig", "rotors", "air"],
+      "objects": [
+        {"id": "core_case", "kind": "lathe", "material": "steel", "params": {"profile": [[0.98, 2.1], [0.9, 1.0], [0.82, 0.1]], "axis": "x", "sweep": 225, "start_angle": 315, "thickness": 0.035, "cut_material": "accent"}, "parent": "rig"}
+      ],
+      "actions": [
+        {"target": ["fan", "c1", "c2", "c3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 0}},
+        {"target": ["bypass", "fan", "t1", "t2", "combustor"], "do": "hide", "at": 0},
+        {"target": ["c1", "c2", "c3", "c4"], "do": "highlight", "at": "rows of spinning blades", "stagger": 0.18, "params": {"strength": 0.9}, "sfx": "click"},
+        {"target": ["s1", "s2", "s3"], "do": "highlight", "at": "squeeze", "stagger": 0.15, "params": {"color": "#FFFFFF", "strength": 0.5}}
+      ],
+      "shots": [
+        {"type": "macro", "target": "c2", "frame": ["c1", "c4"], "azimuth": -40, "elevation": 20, "lens": 60},
+        {"at": "squeeze", "type": "orbit", "target": "c3", "frame": ["c1", "c4"], "azimuth": -60, "elevation": 12, "orbit": 25, "lens": 70}
+      ]
+    },
+    {
+      "id": "combustion",
+      "narration": "Fuel sprays in and burns, and the hot gas expands with enormous force.",
+      "objective": "Combustion chamber ignites; hot flow accelerates toward the turbine",
+      "background": "dark",
+      "keywords": ["burns", "enormous force"],
+      "use": ["rig", "rotors", "flame", "hot"],
+      "objects": [],
+      "actions": [
+        {"target": ["fan", "c1", "c2", "c3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 0}},
+        {"target": ["fan", "c1", "s1", "c2", "s2"], "do": "hide", "at": 0},
+        {"target": ["flame", "core_hot"], "do": "hide", "at": 0},
+        {"target": "flame", "do": "show", "at": "burns", "sfx": "impact"},
+        {"target": "flame", "do": "pulse", "at": "burns", "params": {"amount": 0.06, "hz": 5}},
+        {"target": "core_hot", "do": "show", "at": "hot gas", "sfx": "swoosh"},
+        {"target": "combustor", "do": "highlight", "at": "fuel", "params": {"color": "#F28C28", "strength": 0.8}}
+      ],
+      "shots": [
+        {"type": "push_in", "target": "combustor", "frame": ["combustor", "c4", "t2"], "azimuth": -35, "elevation": 24, "lens": 60}
+      ]
+    },
+    {
+      "id": "turbine",
+      "narration": "That gas spins the turbine. The turbine turns a shaft, which drives the compressor and the fan.",
+      "objective": "Power path: turbine → shaft → compressor + fan (one shaft, same speed)",
+      "background": "light",
+      "keywords": ["turbine", "shaft"],
+      "note": "Simplified single-shaft engine",
+      "use": ["rig", "shell", "rotors", "flame", "hot"],
+      "objects": [],
+      "actions": [
+        {"target": ["fan", "c1", "c2", "c3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 0}},
+        {"target": "flame", "do": "pulse", "params": {"amount": 0.05, "hz": 5}},
+        {"target": ["nacelle", "core_case"], "do": "fade", "at": 0, "duration": 0.8, "params": {"to": 0.18}},
+        {"target": ["t1", "t2"], "do": "highlight", "at": "spins the turbine", "params": {"hold": true, "strength": 1.2}},
+        {"target": "shaft", "do": "highlight", "at": "a shaft", "params": {"hold": true, "strength": 1.5}, "sfx": "click"},
+        {"target": ["c1", "c2", "c3", "c4"], "do": "highlight", "at": "compressor", "params": {"hold": true}},
+        {"target": "fan", "do": "highlight", "at": "and the fan", "params": {"hold": true}}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "t1", "frame": ["t1", "t2", "combustor"], "azimuth": -40, "elevation": 22, "orbit": 15, "lens": 60},
+        {"at": "turns a shaft", "type": "pull_out", "target": "shaft", "frame": ["fan", "t2", "plug"], "azimuth": -25, "elevation": 26, "lens": 50}
+      ]
+    },
+    {
+      "id": "thrust",
+      "narration": "Then it blasts out of the nozzle. Fan air plus exhaust: that's thrust.",
+      "objective": "Exhaust + bypass streams leave the engine; reaction force pushes it forward",
+      "background": "blue",
+      "keywords": ["nozzle", "thrust"],
+      "use": ["rig", "shell", "rotors", "flame", "air", "hot"],
+      "objects": [
+        {"id": "thrust_arrow", "kind": "arrow", "material": "accent", "position": [-0.4, 0, 2.35], "params": {"to": [2.6, 0, 2.35], "radius": 0.08}, "parent": "rig"},
+        {"id": "thrust_label", "kind": "label", "material": "accent", "position": [1.0, 0, 2.9], "params": {"text": "THRUST", "size": 0.32}, "parent": "rig"}
+      ],
+      "actions": [
+        {"target": ["fan", "c1", "c2", "c3", "c4", "t1", "t2"], "do": "spin", "params": {"rate": 150, "ramp": 0}},
+        {"target": "flame", "do": "pulse", "params": {"amount": 0.05, "hz": 5}},
+        {"target": "nozzle", "do": "highlight", "at": "nozzle"},
+        {"target": "bypass", "do": "highlight", "at": "fan air", "params": {"color": "#FFFFFF", "strength": 3.0, "hold": true}},
+        {"target": ["thrust_arrow", "thrust_label"], "do": "pop_in", "at": "thrust", "offset": -0.3, "stagger": 0.15, "sfx": "pop"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "nozzle", "frame": ["nozzle", "plug", "t2"], "azimuth": -55, "elevation": 18, "orbit": 15, "lens": 55},
+        {"at": "fan air", "type": "pull_out", "target": "nacelle", "frame": ["nacelle", "nozzle", "thrust_label"], "azimuth": -25, "elevation": 22, "lens": 50}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+"""AI Scene Director: topic → validated SceneSpec JSON via a free-tier LLM.
+
+Uses the Gemini API free tier (GEMINI_API_KEY; keep billing disabled on that
+Google project so it can never charge). Output is never trusted: every draft
+is validated against the strict SceneSpec schema and timing-resolved; errors
+are sent back for repair, up to `attempts` rounds. Specs are data only — the
+Blender interpreter executes no code from them.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+import os
+import re
+import time
+from pathlib import Path
+
+import requests
+from pydantic import ValidationError
+
+from engine.studio.spec import KIND_PARAMS, VideoSpec, resolve, tokens
+
+log = logging.getLogger("viral_reels.director")
+SPECS = Path(__file__).parent / "specs"
+MODELS = [m.strip() for m in os.getenv("GEMINI_DIRECTOR_MODELS", "gemini-3.8-flash,gemini-3-flash-preview,gemini-2.5-flash").split(",") if m.strip()]
+
+REFERENCE = """
+OBJECT KINDS (params) — units are scene units (~1 = a large part), angles in degrees:
+- gear: teeth, module (tooth size, e.g. 0.06), thickness, bore, pinion_teeth (+ pinion_length) for a compound
+  wheel, arms (spokes, 0 = solid disc), jewel (true = ruby bearing). mesh_with: <gear id>, angle: <deg> places this
+  gear so it truly meshes the parent and drives it at the exact tooth ratio (only spin the root gear!). Meshing
+  gears must share `module`. Gears lie in the XY plane, axis Z.
+- rotor: blades, r_in, r_out, chord, twist, pitch, hub_length, thickness, axis ("x"|"y"|"z"), nose (true = spinner).
+  Fans, propellers, turbines, impellers, compressor stages.
+- lathe: profile [[radius, axial], ...] revolved around axis; sweep < 360 makes a CUTAWAY shell (start_angle picks
+  which part is open), thickness, cut_material (colour of the cut rim). Housings, casings, pipes, nozzles, pots,
+  bottles, chambers, cylinders of engines, bulbs.
+- spring: coils, radius, wire, height; flat: true (+ inner_radius) makes a flat spiral (hairspring/mainspring).
+- tube: points [[x,y,z],...] (smooth curve), radius. Pipes, wires, vessels, hoses.
+- flow: points path, count, radius, speed (units/s), radial_copies + axis. Moving particles showing air, fluid,
+  blood, electrons, heat. They loop forever along the path.
+- box: size [x,y,z], bevel, pivot [x,y,z] (rotation origin offset, e.g. hinge at an edge).
+- cylinder: radius, depth, axis, segments, bevel, pivot. sphere: radius, segments. torus: major, minor, axis.
+- blob: elements [[x,y,z,radius],...] merged organic shape (organs, cells, droplets, dough). resolution.
+- label: text, size (3D tag that always faces camera; use few, short, UPPERCASE or numbers).
+- arrow: to [x,y,z] (from = position), radius.
+- stage: nx, ny, tile, gap, height (tiled display floor). empty: group/pivot for children.
+Every object: id, kind, params, material, position, rotation, scale, parent (children move/rotate with parent),
+cut [nx,ny,nz] = SECTION CUT (removes the half of the object the normal points into, showing the inside with
+a coloured cut face; e.g. [0,-1,0] removes the half facing the default camera), cut_offset, cut_material.
+MATERIALS: clay, clay_dark, accent, accent2, blue, brass, steel, chrome, dark_steel, ruby, glass, tissue,
+tissue_glass, blood_red, blood_blue, flame, air, ink, white.
+
+ACTIONS (target can be a list; stagger = seconds between list items). at = seconds OR an exact phrase copied from
+THAT scene's narration (the action starts when the narrator says it). duration null = continuous actions run to
+scene end, others use a short default. ease: linear|smooth|back|bounce|elastic|expo. sfx: pop|click|swoosh|impact.
+- spin: rate (deg/s, negative = clockwise), ramp (s), axis. Keep visible speeds <= 150 deg/s.
+- tick: rate (steps/s), step (deg), axis. Stepping motion (escapements, counters).
+- oscillate: amplitude, hz, axis. pulse: amount (negative = contract), hz, duty, axis ("all").
+- cycle: prop ("rotation"|"location"|"scale"), axis, hz, phase, keys [[u 0..1, value], ...] first u=0 last u=1.
+  Values are degrees / units added to the rest pose, or scale multipliers. Valves, pistons, pumps, cams.
+- move: to [x,y,z] or by [dx,dy,dz]. rotate: to/by [deg x,y,z]. scale: to (number or [x,y,z]).
+- explode: by [dx,dy,dz] — list item i moves (i+1)*by (exploded assembly views; reverse sign to assemble).
+- pop_in / pop_out (appear/disappear with overshoot), show / hide (instant), fade (to alpha 0..1),
+  highlight (color "#RRGGBB", strength, hold true = stay lit).
+
+SHOTS (camera): at, type orbit|push_in|pull_out|top_down|static|macro, target (object id or [x,y,z]),
+frame [ids that must stay fully visible — the camera auto-fits them in the 9:16 safe area], azimuth (0 = camera
+on -Y), elevation, orbit (deg swept), lens (mm, 50-85), blend (s).
+
+SCENE: id, narration (1-3 sentences), objective, background light|blue|dark (alternate them), keywords (exact
+phrases from the narration to highlight in captions), note (on-screen disclaimer like "Illustrative - slowed 4x"
+whenever speed/scale/simplification is not literal), use [prefab names], objects, actions, shots.
+"""
+
+RULES = """
+You are the scene director of a premium 3D educational Reels channel. Write ONE SceneSpec JSON for the topic.
+Hard rules:
+1. 5-7 scenes, 100-135 narration words total (about 40-50 s). Scene 1 is a strong 3-second hook.
+   Plain spoken English, no emojis, no hashtags, no "follow us".
+2. SHOW THE REAL MECHANISM, DISSECTED: build the actual internal parts at realistic relative proportions and
+   positions; open housings with lathe sweep < 360 or `cut` section planes; use exploded views to reveal layers;
+   make the parts the narration mentions move exactly as they do in reality (correct directions, sequence,
+   couplings). Prefer many simple accurate parts over one vague blob. No flat diagrams, no text-heavy scenes.
+3. Every scene needs visible motion from its first second, and each important phrase triggers an action.
+4. Anchors (`at`) and keywords must be phrases copied verbatim from that scene's narration.
+5. Reuse parts across scenes with `prefabs` + `use`; ids are unique per scene, letters/digits/underscore only.
+6. Keep the main subject within roughly a 4 x 7 unit volume, taller than wide when possible (vertical video).
+7. Physically faithful directions and ratios; when you exaggerate speed or simplify, add a scene `note`.
+8. Build every recognisable object from several parts, the way a 3D artist would block it out: e.g. an
+   aircraft = lathe fuselage with tapered nose/tail + box wings + fin; a valve = lathe housing + cylinder disc +
+   stem + handle; a phone = beveled box body + glass screen + camera bump. 6-20 solid parts per scene.
+9. Every shot lists the ids it must keep visible in `frame`. Never put the camera inside a large object;
+   use cutaways (lathe sweep / `cut`) to look inside things.
+10. Output ONLY the JSON object. No markdown fences, no comments.
+"""
+
+
+def _call_gemini(prompt: str, model: str, key: str) -> str:
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    for attempt in range(4):  # free tier rate limits: back off on 429/5xx
+        r = requests.post(url, headers={"x-goog-api-key": key}, timeout=300, json={
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {"response_mime_type": "application/json", "temperature": 0.6,
+                                 "maxOutputTokens": 32768}})
+        if r.status_code in (429, 500, 503) and attempt < 3:
+            time.sleep(20 * (attempt + 1))
+            continue
+        r.raise_for_status()
+        parts = r.json()["candidates"][0]["content"]["parts"]
+        return "".join(p.get("text", "") for p in parts)
+    raise RuntimeError("unreachable")
+
+
+def _check(text: str) -> tuple[VideoSpec | None, str]:
+    """Validate a draft; returns (spec, "") or (None, error message for the repair round)."""
+    text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
+    try:
+        spec = VideoSpec.model_validate_json(text)
+    except ValidationError as e:
+        return None, "Schema validation errors:\n" + "\n".join(
+            f"- {'.'.join(map(str, er['loc']))}: {er['msg']}" for er in e.errors()[:25])
+    words = len(tokens(spec.script))
+    if not 70 <= words <= 170 or not 4 <= len(spec.scenes) <= 8:
+        return None, f"Need 5-7 scenes and 100-135 words; got {len(spec.scenes)} scenes, {words} words."
+    toks = tokens(spec.script)
+    try:  # simulate narration at 2.6 words/s to catch too-short scenes / bad anchors
+        resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
+    except ValueError as e:
+        return None, f"Timing error: {e}"
+    return spec, ""
+
+
+LINT_MIN_OBJECTS, LINT_MIN_ACTIONS = 6, 3
+PASS_MIN, PASS_AVG = 5, 6.5
+
+
+def _lint(spec: VideoSpec) -> str:
+    """Density rules the schema can't express: thin scenes look like slideshows."""
+    probs = []
+    for sc in spec.scenes:
+        solid = [o for o in sc.objects if o.kind not in ("label", "empty", "flow")]
+        if len(solid) < LINT_MIN_OBJECTS:
+            probs.append(f"scene {sc.id}: only {len(solid)} solid parts; build the real mechanism from >= {LINT_MIN_OBJECTS}")
+        if len(sc.actions) < LINT_MIN_ACTIONS:
+            probs.append(f"scene {sc.id}: only {len(sc.actions)} actions; animate what the narration describes")
+        for sh in sc.shots:
+            if not sh.frame:
+                probs.append(f"scene {sc.id}: every shot needs `frame` ids so the camera can fit the subject")
+    return "\n".join(probs)
+
+
+def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], str]:
+    """Free-tier Gemini vision review of one still per scene. Returns (scores, feedback)."""
+    import base64
+    import io
+    from PIL import Image
+
+    parts = [{"text": (
+        "You are a strict art director for a premium 3D educational Reels channel. For each still (one per scene, "
+        "in order) score 1-10 how clearly and REALISTICALLY it depicts the scene's objective: recognisable, "
+        "correctly built objects/mechanism, well framed (subject fully visible, not cropped or tiny), not a "
+        "vague arrangement of boxes. Be harsh: 9-10 = looks like a professional 3D explainer, 5 = understandable "
+        "but crude, 1-3 = unrecognisable or broken. Return JSON: {\"scenes\": [{\"id\": str, \"score\": int, "
+        "\"problems\": str, \"fix\": str}]}. Scenes:\n" +
+        "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(spec.scenes)))}]
+    for png in stills:
+        buf = io.BytesIO()
+        Image.open(png).convert("RGB").save(buf, "JPEG", quality=85)
+        parts.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}})
+    for model in MODELS:
+        try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+            r = requests.post(url, headers={"x-goog-api-key": key}, timeout=300, json={
+                "contents": [{"role": "user", "parts": parts}],
+                "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}})
+            r.raise_for_status()
+            text = "".join(p.get("text", "") for p in r.json()["candidates"][0]["content"]["parts"])
+            scores = json.loads(text)["scenes"]
+            break
+        except Exception as e:  # noqa: BLE001 — try the next model
+            log.warning("review: model %s failed (%s)", model, e)
+    else:
+        raise RuntimeError("visual review unavailable")
+    feedback = "\n".join(f"- scene {s.get('id')}: score {s.get('score')}/10. Problems: {s.get('problems')}. "
+                          f"Fix: {s.get('fix')}" for s in scores)
+    return scores, feedback
+
+
+def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 2) -> dict:
+    """Draft → validate → render stills → vision review → revise. Raises if it never looks good enough."""
+    from engine.studio.pipeline import render_stills
+
+    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    feedback, history = "", []
+    for rnd in range(visual_rounds + 1):
+        draft_spec(topic, out_path, feedback=feedback)
+        spec = VideoSpec.model_validate_json(out_path.read_text())
+        toks = tokens(spec.script)
+        plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
+        stills = render_stills(plan, work / f"review_{rnd}")
+        scores, fb = _review(spec, stills, key)
+        vals = [int(s.get("score", 0)) for s in scores] or [0]
+        avg = sum(vals) / len(vals)
+        history.append({"round": rnd, "scores": vals, "avg": round(avg, 2), "feedback": fb,
+                        "stills": [str(p) for p in stills]})
+        log.info("director: visual round %d scores %s (avg %.1f)", rnd, vals, avg)
+        if min(vals) >= PASS_MIN and avg >= PASS_AVG:
+            return {"spec": str(out_path), "passed": True, "history": history}
+        feedback = ("A render of your previous spec was reviewed. Improve modelling detail, realism and framing "
+                    "where it scored low (keep what scored well):\n" + fb + "\nPREVIOUS SPEC:\n" + out_path.read_text())
+    return {"spec": str(out_path), "passed": False, "history": history}
+
+
+def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "") -> Path:
+    """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
+    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if not key:
+        raise RuntimeError("AI director needs GEMINI_API_KEY (free tier) to draft specs for new topics")
+    examples = "\n\n".join(f"EXAMPLE SPEC ({p.stem}):\n{p.read_text()}" for p in
+                           (SPECS / "mechanical_watch.json", SPECS / "jet_engine.json"))
+    schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
+    brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
+    base = (f"{RULES}\n{REFERENCE}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
+            f"{json.dumps({k: sorted(v) for k, v in KIND_PARAMS.items()})}\n\n{examples}\n\n"
+            f"TOPIC BRIEF (facts to cover; rewrite the narration for the scenes):\n{json.dumps(brief, indent=1)}\n"
+            + (f"\nREVIEW OF YOUR LAST VERSION:\n{feedback}\n" if feedback else ""))
+    prompt, last_err = base, ""
+    for i in range(attempts):
+        for model in MODELS:
+            try:
+                text = _call_gemini(prompt, model, key)
+                break
+            except requests.HTTPError as e:
+                log.warning("director: model %s failed (%s), trying next", model, e)
+        else:
+            raise RuntimeError("AI director: no Gemini model available")
+        spec, err = _check(text)
+        if spec and (lint := _lint(spec)):
+            spec, err = None, "Quality rules failed:\n" + lint
+        if spec:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(spec.model_dump_json(indent=1, exclude_defaults=True))
+            log.info("director: spec for %r accepted on round %d", topic.get("id"), i + 1)
+            return out_path
+        last_err = err
+        log.warning("director round %d rejected: %s", i + 1, err[:500])
+        prompt = f"{base}\nYOUR PREVIOUS DRAFT:\n{text[:60000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected full JSON."
+    raise RuntimeError(f"AI director could not produce a valid spec for {topic.get('id')}: {last_err[:300]}")

@@ -1,0 +1,193 @@
+{
+  "title": "How a Mechanical Watch Works",
+  "scenes": [
+    {
+      "id": "hook",
+      "narration": "A mechanical watch has no battery. So what keeps it ticking for days?",
+      "objective": "Hook: a battery-free watch; open it to reveal moving gears",
+      "background": "light",
+      "keywords": ["no battery", "ticking"],
+      "objects": [
+        {"id": "case", "kind": "lathe", "material": "steel", "params": {"profile": [[1.62, -0.25], [1.8, -0.2], [1.86, 0.0], [1.8, 0.2], [1.62, 0.26]], "thickness": 0.06, "cut_material": "steel"}},
+        {"id": "back", "kind": "cylinder", "material": "dark_steel", "position": [0, 0, -0.22], "params": {"radius": 1.63, "depth": 0.06}},
+        {"id": "dial", "kind": "cylinder", "material": "clay", "position": [0, 0, 0.16], "params": {"radius": 1.6, "depth": 0.05}},
+        {"id": "m12", "kind": "box", "material": "ink", "parent": "dial", "position": [0, 1.3, 0.03], "params": {"size": [0.08, 0.3, 0.02]}},
+        {"id": "m3", "kind": "box", "material": "ink", "parent": "dial", "position": [1.3, 0, 0.03], "params": {"size": [0.3, 0.08, 0.02]}},
+        {"id": "m6", "kind": "box", "material": "ink", "parent": "dial", "position": [0, -1.3, 0.03], "params": {"size": [0.08, 0.3, 0.02]}},
+        {"id": "m9", "kind": "box", "material": "ink", "parent": "dial", "position": [-1.3, 0, 0.03], "params": {"size": [0.3, 0.08, 0.02]}},
+        {"id": "hour", "kind": "box", "material": "ink", "parent": "dial", "position": [0, 0, 0.05], "rotation": [0, 0, -60], "params": {"size": [0.1, 0.75, 0.025], "pivot": [0, -0.32, 0]}},
+        {"id": "minute", "kind": "box", "material": "ink", "parent": "dial", "position": [0, 0, 0.08], "rotation": [0, 0, 40], "params": {"size": [0.07, 1.15, 0.02], "pivot": [0, -0.52, 0]}},
+        {"id": "second", "kind": "box", "material": "accent", "parent": "dial", "position": [0, 0, 0.11], "params": {"size": [0.03, 1.3, 0.015], "pivot": [0, -0.55, 0]}},
+        {"id": "cap", "kind": "cylinder", "material": "accent", "parent": "dial", "position": [0, 0, 0.12], "params": {"radius": 0.07, "depth": 0.05}},
+        {"id": "movement", "kind": "empty", "position": [-0.25, -1.0, -0.15], "scale": 0.58},
+        {"id": "barrel", "kind": "gear", "material": "brass", "parent": "movement", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12}},
+        {"id": "center", "kind": "gear", "material": "brass", "parent": "movement", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "barrel", "angle": 60, "arms": 4, "jewel": true}},
+        {"id": "third", "kind": "gear", "material": "brass", "parent": "movement", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "center", "angle": 120, "arms": 4, "jewel": true}},
+        {"id": "fourth", "kind": "gear", "material": "steel", "parent": "movement", "params": {"teeth": 30, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "third", "angle": 60, "arms": 5, "jewel": true}},
+        {"id": "battery", "kind": "cylinder", "material": "accent2", "position": [2.6, -0.6, 0.3], "params": {"radius": 0.32, "depth": 1.0, "axis": "x"}},
+        {"id": "no_battery", "kind": "label", "material": "accent", "position": [2.6, -0.6, 1.0], "params": {"text": "0 batteries", "size": 0.2}}
+      ],
+      "actions": [
+        {"target": "second", "do": "tick", "params": {"rate": 1, "step": -6, "axis": "z"}},
+        {"target": "minute", "do": "spin", "params": {"rate": -4, "ramp": 0}},
+        {"target": "battery", "do": "pop_in", "at": "no battery", "sfx": "pop"},
+        {"target": "no_battery", "do": "pop_in", "at": "no battery", "offset": 0.15},
+        {"target": ["battery", "no_battery"], "do": "pop_out", "at": "so what"},
+        {"target": "barrel", "do": "spin", "at": "so what", "params": {"rate": -5}},
+        {"target": "dial", "do": "move", "at": "ticking", "offset": -0.3, "duration": 1.2, "params": {"by": [0, 0, 1.6]}, "sfx": "swoosh"},
+        {"target": "dial", "do": "fade", "at": "ticking", "duration": 1.0, "params": {"to": 0.0}}
+      ],
+      "shots": [
+        {"type": "push_in", "target": "case", "frame": ["case", "battery", "no_battery"], "elevation": 52, "azimuth": -18, "lens": 60},
+        {"at": "ticking", "offset": -0.3, "type": "orbit", "target": "case", "frame": ["case"], "elevation": 62, "azimuth": -10, "orbit": 25, "lens": 60}
+      ]
+    },
+    {
+      "id": "mainspring",
+      "narration": "Power starts in the mainspring, a ribbon of steel coiled tight inside a barrel.",
+      "objective": "Show where energy is stored: winding the mainspring",
+      "background": "blue",
+      "keywords": ["mainspring", "barrel"],
+      "objects": [
+        {"id": "barrel", "kind": "gear", "material": "brass", "params": {"teeth": 48, "module": 0.06, "thickness": 0.3}},
+        {"id": "spring", "kind": "spring", "material": "chrome", "position": [0, 0, 0.2], "params": {"flat": true, "radius": 1.25, "inner_radius": 0.22, "coils": 9, "wire": 0.03}},
+        {"id": "spring_label", "kind": "label", "material": "ink", "position": [0, 1.95, 0.9], "params": {"text": "MAINSPRING", "size": 0.2}}
+      ],
+      "actions": [
+        {"target": "barrel", "do": "pop_in", "sfx": "pop"},
+        {"target": "spring", "do": "pop_in", "at": "mainspring", "sfx": "pop"},
+        {"target": "spring_label", "do": "pop_in", "at": "mainspring", "offset": 0.2},
+        {"target": "spring", "do": "rotate", "at": "coiled tight", "duration": 2.2, "params": {"by": [0, 0, -540]}},
+        {"target": "spring", "do": "scale", "at": "coiled tight", "duration": 2.2, "params": {"to": 0.8}, "sfx": "click"},
+        {"target": "barrel", "do": "highlight", "at": "barrel"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "barrel", "frame": ["barrel", "spring"], "elevation": 55, "azimuth": -25, "orbit": 35, "lens": 55}
+      ]
+    },
+    {
+      "id": "gear_train",
+      "narration": "As it unwinds, a train of gears turns that slow, strong pull into faster and faster rotation.",
+      "objective": "Gear train: each stage multiplies speed (ratios exact for the drawn tooth counts)",
+      "background": "light",
+      "keywords": ["train of gears", "faster and faster"],
+      "note": "Simplified gear ratios",
+      "objects": [
+        {"id": "mainplate", "kind": "cylinder", "material": "steel", "position": [0.3, 1.85, -0.62], "params": {"radius": 3.4, "depth": 0.14, "segments": 96}},
+        {"id": "barrel", "kind": "gear", "material": "brass", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12}},
+        {"id": "center", "kind": "gear", "material": "brass", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "barrel", "angle": 60, "arms": 4, "jewel": true}},
+        {"id": "third", "kind": "gear", "material": "brass", "params": {"teeth": 36, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "center", "angle": 120, "arms": 4, "jewel": true}},
+        {"id": "fourth", "kind": "gear", "material": "steel", "params": {"teeth": 30, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "pinion_length": 0.25, "mesh_with": "third", "angle": 60, "arms": 5, "jewel": true}},
+        {"id": "x1", "kind": "label", "material": "ink", "position": [-1.45, -0.3, 0.5], "params": {"text": "1x", "size": 0.22}},
+        {"id": "x3", "kind": "label", "material": "ink", "position": [2.05, 1.25, 0.7], "params": {"text": "3x", "size": 0.22}},
+        {"id": "x9", "kind": "label", "material": "ink", "position": [-1.35, 2.5, 0.9], "params": {"text": "9x", "size": 0.22}},
+        {"id": "x27", "kind": "label", "material": "accent", "position": [1.95, 3.75, 1.1], "params": {"text": "27x", "size": 0.22}}
+      ],
+      "actions": [
+        {"target": ["barrel", "center", "third", "fourth"], "do": "pop_in", "stagger": 0.12, "sfx": "pop"},
+        {"target": "barrel", "do": "spin", "at": "unwinds", "params": {"rate": -5, "ramp": 0.8}},
+        {"target": ["x1", "x3", "x9", "x27"], "do": "pop_in", "at": "faster and faster", "offset": -0.4, "stagger": 0.3, "sfx": "pop"},
+        {"target": "fourth", "do": "highlight", "at": "rotation"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "third", "frame": ["barrel", "center", "third", "fourth"], "elevation": 58, "azimuth": -12, "orbit": 30, "lens": 50}
+      ]
+    },
+    {
+      "id": "escapement",
+      "narration": "Left alone, the gears would spin out in seconds. So the escapement steps in. A pallet fork locks the escape wheel, then releases it one tooth at a time.",
+      "objective": "Escapement: free spin vs. locked, stepwise release",
+      "background": "blue",
+      "keywords": ["spin out", "escapement", "one tooth at a time"],
+      "note": "Illustrative - slowed down",
+      "objects": [
+        {"id": "escape", "kind": "gear", "material": "steel", "params": {"teeth": 15, "module": 0.12, "thickness": 0.1, "arms": 4, "jewel": true}},
+        {"id": "fork", "kind": "empty", "position": [0, 1.4, 0.0]},
+        {"id": "arm_l", "kind": "box", "material": "steel", "parent": "fork", "position": [-0.28, -0.25, 0], "rotation": [0, 0, 42.3], "params": {"size": [0.75, 0.1, 0.08]}},
+        {"id": "arm_r", "kind": "box", "material": "steel", "parent": "fork", "position": [0.28, -0.25, 0], "rotation": [0, 0, -42.3], "params": {"size": [0.75, 0.1, 0.08]}},
+        {"id": "pallet_l", "kind": "box", "material": "ruby", "parent": "fork", "position": [-0.55, -0.52, 0], "rotation": [0, 0, -20], "params": {"size": [0.09, 0.24, 0.1]}},
+        {"id": "pallet_r", "kind": "box", "material": "ruby", "parent": "fork", "position": [0.55, -0.52, 0], "rotation": [0, 0, 20], "params": {"size": [0.09, 0.24, 0.1]}},
+        {"id": "lever", "kind": "box", "material": "steel", "parent": "fork", "position": [0, 0.5, 0], "params": {"size": [0.09, 1.0, 0.07]}},
+        {"id": "horn", "kind": "box", "material": "steel", "parent": "fork", "position": [0, 1.0, 0], "params": {"size": [0.3, 0.08, 0.07]}},
+        {"id": "jewel", "kind": "cylinder", "material": "ruby", "parent": "fork", "params": {"radius": 0.09, "depth": 0.14}}
+      ],
+      "actions": [
+        {"target": "escape", "do": "spin", "at": "left alone", "duration": 1.8, "params": {"rate": 900, "ramp": 0.4}, "sfx": "swoosh"},
+        {"target": "fork", "do": "pop_in", "at": "escapement", "sfx": "impact"},
+        {"target": "escape", "do": "tick", "at": "locks", "params": {"rate": 2, "step": 12}, "sfx": "click"},
+        {"target": "fork", "do": "cycle", "at": "locks", "params": {"prop": "rotation", "axis": "z", "hz": 1, "keys": [[0, -8], [0.08, 8], [0.5, 8], [0.58, -8], [1, -8]]}},
+        {"target": ["pallet_l", "pallet_r"], "do": "highlight", "at": "pallet fork", "params": {"color": "#FFFFFF", "strength": 0.8}},
+        {"target": "escape", "do": "highlight", "at": "escape wheel"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "escape", "frame": ["escape"], "elevation": 55, "azimuth": -20, "orbit": 20, "lens": 60},
+        {"at": "escapement", "type": "macro", "target": "fork", "frame": ["escape", "fork"], "elevation": 60, "azimuth": -8, "lens": 70}
+      ]
+    },
+    {
+      "id": "balance",
+      "narration": "The fork is rocked by the balance wheel and its hairspring, swinging back and forth at a steady beat.",
+      "objective": "Balance wheel + hairspring oscillator drives the fork; fork releases escape wheel",
+      "background": "light",
+      "keywords": ["balance wheel", "hairspring", "steady beat"],
+      "note": "Illustrative - slowed 8x",
+      "objects": [
+        {"id": "escape", "kind": "gear", "material": "steel", "params": {"teeth": 15, "module": 0.12, "thickness": 0.1, "arms": 4, "jewel": true}},
+        {"id": "fork", "kind": "empty", "position": [0, 1.4, 0.0]},
+        {"id": "arm_l", "kind": "box", "material": "steel", "parent": "fork", "position": [-0.28, -0.25, 0], "rotation": [0, 0, 42.3], "params": {"size": [0.75, 0.1, 0.08]}},
+        {"id": "arm_r", "kind": "box", "material": "steel", "parent": "fork", "position": [0.28, -0.25, 0], "rotation": [0, 0, -42.3], "params": {"size": [0.75, 0.1, 0.08]}},
+        {"id": "pallet_l", "kind": "box", "material": "ruby", "parent": "fork", "position": [-0.55, -0.52, 0], "rotation": [0, 0, -20], "params": {"size": [0.09, 0.24, 0.1]}},
+        {"id": "pallet_r", "kind": "box", "material": "ruby", "parent": "fork", "position": [0.55, -0.52, 0], "rotation": [0, 0, 20], "params": {"size": [0.09, 0.24, 0.1]}},
+        {"id": "lever", "kind": "box", "material": "steel", "parent": "fork", "position": [0, 0.5, 0], "params": {"size": [0.09, 1.0, 0.07]}},
+        {"id": "horn", "kind": "box", "material": "steel", "parent": "fork", "position": [0, 1.0, 0], "params": {"size": [0.3, 0.08, 0.07]}},
+        {"id": "balance", "kind": "empty", "position": [0, 2.75, 0.3]},
+        {"id": "rim", "kind": "torus", "material": "brass", "parent": "balance", "params": {"major": 0.95, "minor": 0.07}},
+        {"id": "spoke_a", "kind": "box", "material": "brass", "parent": "balance", "params": {"size": [1.9, 0.08, 0.05]}},
+        {"id": "spoke_b", "kind": "box", "material": "brass", "parent": "balance", "params": {"size": [0.08, 1.9, 0.05]}},
+        {"id": "impulse_pin", "kind": "cylinder", "material": "ruby", "parent": "balance", "position": [0, -0.33, -0.15], "params": {"radius": 0.04, "depth": 0.22}},
+        {"id": "hairspring", "kind": "spring", "material": "chrome", "parent": "balance", "position": [0, 0, 0.1], "params": {"flat": true, "radius": 0.62, "inner_radius": 0.1, "coils": 8, "wire": 0.013}}
+      ],
+      "actions": [
+        {"target": "balance", "do": "oscillate", "params": {"amplitude": 200, "hz": 0.5, "axis": "z"}},
+        {"target": "fork", "do": "cycle", "params": {"prop": "rotation", "axis": "z", "hz": 0.5, "keys": [[0, -8], [0.08, 8], [0.5, 8], [0.58, -8], [1, -8]]}},
+        {"target": "escape", "do": "tick", "params": {"rate": 1, "step": 12}},
+        {"target": "hairspring", "do": "pulse", "params": {"amount": 0.08, "hz": 1, "axis": "all"}},
+        {"target": "balance", "do": "highlight", "at": "balance wheel"},
+        {"target": "hairspring", "do": "highlight", "at": "hairspring", "params": {"color": "#2F5BD3"}}
+      ],
+      "shots": [
+        {"type": "orbit", "target": "balance", "frame": ["balance", "fork", "escape"], "elevation": 50, "azimuth": -25, "orbit": 30, "lens": 55},
+        {"at": "back and forth", "type": "push_in", "target": "balance", "frame": ["balance"], "elevation": 65, "azimuth": -5, "lens": 65}
+      ]
+    },
+    {
+      "id": "assembly",
+      "narration": "Each swing releases one tiny, measured burst of energy. Put every part together, and you get the tick, eight times a second.",
+      "objective": "Exploded view collapsing into the assembled movement",
+      "background": "blue",
+      "keywords": ["every part together", "eight times a second"],
+      "objects": [
+        {"id": "plate", "kind": "cylinder", "material": "steel", "position": [0, 0, 0.84], "params": {"radius": 1.9, "depth": 0.14}},
+        {"id": "barrel", "kind": "gear", "material": "brass", "position": [-0.55, -0.6, 1.88], "params": {"teeth": 36, "module": 0.06, "thickness": 0.2}},
+        {"id": "center", "kind": "gear", "material": "brass", "position": [0.5, 0.15, 2.88], "params": {"teeth": 36, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "arms": 4, "jewel": true}},
+        {"id": "third", "kind": "gear", "material": "brass", "position": [-0.3, 0.95, 3.88], "params": {"teeth": 30, "module": 0.06, "thickness": 0.12, "pinion_teeth": 12, "arms": 4, "jewel": true}},
+        {"id": "escape", "kind": "gear", "material": "steel", "position": [0.85, -0.55, 4.86], "params": {"teeth": 15, "module": 0.08, "thickness": 0.1, "arms": 4, "jewel": true}},
+        {"id": "bridge", "kind": "box", "material": "dark_steel", "position": [0, 0.2, 5.84], "rotation": [0, 0, 25], "params": {"size": [3.0, 0.5, 0.12]}},
+        {"id": "balance", "kind": "torus", "material": "brass", "position": [0.4, 0.9, 6.82], "params": {"major": 0.7, "minor": 0.06}},
+        {"id": "dial", "kind": "cylinder", "material": "clay", "position": [0, 0, 7.8], "params": {"radius": 1.85, "depth": 0.06}},
+        {"id": "beat_label", "kind": "label", "material": "accent", "position": [0, -0.6, 2.2], "params": {"text": "8 beats / second", "size": 0.24}}
+      ],
+      "actions": [
+        {"target": ["barrel", "center", "third", "escape"], "do": "spin", "params": {"rate": 25, "ramp": 0.3}, "at": 0, "duration": 3.0},
+        {"target": "balance", "do": "oscillate", "params": {"amplitude": 120, "hz": 0.7}},
+        {"target": ["plate", "barrel", "center", "third", "escape", "bridge", "balance", "dial"], "do": "explode", "at": "every part together", "offset": -0.3, "duration": 0.9, "stagger": 0.1, "params": {"by": [0, 0, -0.84]}, "sfx": "click"},
+        {"target": "dial", "do": "fade", "at": "tick", "duration": 0.6, "params": {"to": 0.15}},
+        {"target": "beat_label", "do": "pop_in", "at": "eight times", "sfx": "pop"}
+      ],
+      "shots": [
+        {"type": "orbit", "target": [0, 0, 4.2], "frame": ["plate", "dial"], "elevation": 18, "azimuth": -35, "orbit": 40, "lens": 55},
+        {"at": "you get the tick", "type": "push_in", "target": "plate", "frame": ["plate", "beat_label"], "elevation": 40, "azimuth": -20, "lens": 55}
+      ]
+    }
+  ]
+}

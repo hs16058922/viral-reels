@@ -170,6 +170,27 @@
     "published_at": "2026-11-23T12:59:12.443612"
   },
   {
+    "id": "jet_engine_3d",
+    "title": "Inside a Jet Engine: Fan, Fire and Thrust in 3D",
+    "spec": "jet_engine",
+    "hook": "A jet engine is basically a giant fan spinning inside a controlled explosion.",
+    "bullets": [
+      "The front fan moves most of the air around the core: that bypass air makes most of the thrust",
+      "Rows of compressor blades squeeze the core air before fuel is added",
+      "Burning fuel expands the gas, which spins the turbine",
+      "The turbine drives the shaft that turns the compressor and the fan"
+    ],
+    "niche_tags": [
+      "#JetEngine",
+      "#Aviation",
+      "#Engineering",
+      "#3DAnimation",
+      "#HowItWorks"
+    ],
+    "status": "pending",
+    "video_path": null
+  },
+  {
     "id": "airplane_pressurization",
     "title": "How Airplane Cabins Breathe at 35,000 Feet",
     "hook": "At cruising altitude, the air outside your plane is -60 degrees and has almost zero oxygen. So where does the air you breathe come from?",

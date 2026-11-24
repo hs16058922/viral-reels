@@ -1,54 +1,184 @@
-name: 3x Daily Instagram Reels Publisher
+name: 3D Reels Studio — render & publish
 
+# 3x daily: pick the next topic, render a realistic 3D reel (Cycles, CPU) fanned out across
+# parallel runners, QC it, then publish through automation/scheduler.py.
+# Free: public-repo Actions minutes, Blender/FFmpeg/Whisper, EdgeTTS, Gemini free tier (director only).
 on:
   schedule:
-    # 3x Daily at peak viral discovery hours (UTC times shown, converted to IST):
-    # 04:05 UTC = 09:35 AM IST (Morning slot - offset 5m to avoid GitHub Actions top-of-hour queue congestion)
-    # 08:35 UTC = 02:05 PM IST (Afternoon slot)
-    # 14:05 UTC = 07:35 PM IST (Evening prime slot)
-    - cron: '5 4 * * *'
-    - cron: '35 8 * * *'
-    - cron: '5 14 * * *'
-  workflow_dispatch: # Allows manual trigger anytime from GitHub Web UI
+    # Each run renders for ~1-2 h before posting; slots are 1 h earlier than the old 09:35/14:05/19:35 IST.
+    - cron: '5 3 * * *'
+    - cron: '35 7 * * *'
+    - cron: '5 13 * * *'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Post the finished reel to Instagram
+        type: boolean
+        default: true
+      topic:
+        description: Topic id to build (blank = next in queue)
+        type: string
+        default: ''
+  push:
+    branches: [studio-ci]   # CI test branch: renders and assembles, never posts or commits
+
+concurrency:
+  group: reels-studio
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  STUDIO_QUALITY: realistic
+  STUDIO_SAMPLES: '24'
+  STUDIO_CPU: '1'
+  STUDIO_SHARD_FRAMES: '60'
+  PYTHONUNBUFFERED: '1'
 
 jobs:
-  publish_reel:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    outputs:
+      topic: ${{ steps.prep.outputs.topic }}
+      mode: ${{ steps.prep.outputs.mode }}
+      matrix: ${{ steps.prep.outputs.matrix }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
-
-      - name: Install System Dependencies (FFmpeg & Fonts)
+          cache: pip
+      - name: System packages
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+      - name: Python packages (CPU-only torch for Whisper)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-freefont-ttf fonts-liberation
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r requirements.txt
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/whisper
+          key: whisper-base-v1
+      - uses: ./.github/actions/setup-blender
+      - name: Pick topic, spec, narration, shard plan
+        id: prep
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python -m automation.studio_ci prepare --build build --topic "${{ inputs.topic || (github.event_name == 'push' && 'jet_engine_3d') || '' }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queue-state
+          path: |
+            automation/topics.json
+            engine/studio/specs/generated
+          retention-days: 7
 
-      - name: Install Dependencies
+  render:
+    needs: prepare
+    if: needs.prepare.outputs.mode == 'render'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Light Python deps (no Whisper/torch on render runners)
+        run: pip install -q pydantic pydantic-settings numpy pillow rich python-dotenv requests
+      - name: System packages
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+      - uses: ./.github/actions/setup-blender
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+      - name: Reuse this shard if a previous run already rendered it
+        uses: actions/cache@v4
+        with:
+          path: tmp/studio_cache/${{ matrix.shard.key }}
+          key: shard-${{ matrix.shard.key }}
+      - name: Render shard ${{ matrix.shard.index }}
+        run: python -m automation.studio_ci render --build build --index ${{ matrix.shard.index }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seg-${{ matrix.shard.index }}
+          path: |
+            build/segments
+            build/logs
+          retention-days: 7
+
+  publish:
+    needs: [prepare, render]
+    if: >-
+      always() && needs.prepare.result == 'success' && needs.prepare.outputs.mode != '' &&
+      (needs.render.result == 'success' || needs.render.result == 'skipped')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: pip
+      - name: System packages
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+      - name: Python packages
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Publish Next Reel to Instagram
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+      - uses: actions/download-artifact@v4
+        with:
+          name: queue-state
+          path: .
+      - uses: actions/download-artifact@v4
+        if: needs.prepare.outputs.mode == 'render'
+        with:
+          pattern: seg-*
+          path: build
+          merge-multiple: true
+      - name: Assemble reel + QC
+        id: asm
+        if: needs.prepare.outputs.mode == 'render'
+        run: python -m automation.studio_ci assemble --build build
+      - uses: actions/upload-artifact@v4
+        if: always() && needs.prepare.outputs.mode == 'render'
+        with:
+          name: reel-${{ needs.prepare.outputs.topic }}
+          path: |
+            export/*_reel.mp4
+            build/qc_report.json
+            build/contact_sheet.jpg
+            build/plan.json
+          retention-days: 30
+      - name: Publish to Instagram (existing scheduler route)
+        if: >-
+          (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publish)) &&
+          (needs.prepare.outputs.mode == 'ready' || steps.asm.outputs.ready == 'true')
         env:
           INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python automation/scheduler.py --now
-
-      - name: Commit and Push Updated Topic Queue, History and Analytics
+        run: python automation/scheduler.py --now --topic "${{ needs.prepare.outputs.topic }}"
+      - name: Commit queue, history, analytics, generated specs
+        if: always() && github.event_name != 'push'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          git add automation/topics.json automation/published_history.json data/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git push)
+          git add automation/topics.json automation/published_history.json data/ engine/studio/specs/generated || true
+          git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git pull --rebase && git push)

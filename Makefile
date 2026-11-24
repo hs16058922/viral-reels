@@ -1,4 +1,4 @@
-.PHONY: install test generate clean help
+.PHONY: install test generate studio studio-test clean help
 
 PYTHON ?= python3
 VENV   := .venv
@@ -20,6 +20,12 @@ test: ## Run smoke tests for each engine module
 
 generate: ## Run the full reel generation pipeline
 	$(VENV)/bin/python scripts/generate_reel.py $(ARGS)
+
+studio: ## 3D studio reel, e.g. make studio TOPIC="How does a jet engine work?" QUALITY=preview
+	$(VENV)/bin/python -m engine.studio "$(TOPIC)" --quality $(or $(QUALITY),preview)
+
+studio-test: ## Unit tests for SceneSpec v2 / studio pipeline
+	$(VENV)/bin/python -m unittest tests.test_studio -v
 
 clean: ## Remove tmp/ working directory
 	rm -rf tmp/*

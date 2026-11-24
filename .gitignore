@@ -29,3 +29,6 @@ assets/sfx/ambient_drone.wav
 .vscode/
 *.swp
 *.swo
+
+# Studio CI build dir
+build/

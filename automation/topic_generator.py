@@ -323,9 +323,9 @@ Return strictly JSON array:
   }}
 ]
 """
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
         try:
-            resp = requests.post(url, json={
+            resp = requests.post(url, headers={"x-goog-api-key": api_key}, json={
                 "contents": [{"parts": [{"text": prompt}]}],
                 "generationConfig": {"response_mime_type": "application/json"}
             }, timeout=30)
