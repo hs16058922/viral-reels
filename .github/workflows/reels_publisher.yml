@@ -19,8 +19,6 @@ on:
         description: Topic id to build (blank = next in queue)
         type: string
         default: ''
-  push:
-    branches: [studio-ci]   # CI test branch: renders and assembles, never posts or commits
 
 concurrency:
   group: reels-studio
@@ -65,7 +63,7 @@ jobs:
         id: prep
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python -m automation.studio_ci prepare --build build --topic "${{ inputs.topic || (github.event_name == 'push' && 'jet_engine_3d') || '' }}"
+        run: python -m automation.studio_ci prepare --build build --topic "${{ inputs.topic }}"
       - uses: actions/upload-artifact@v4
         with:
           name: build
@@ -176,7 +174,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python automation/scheduler.py --now --topic "${{ needs.prepare.outputs.topic }}"
       - name: Commit queue, history, analytics, generated specs
-        if: always() && github.event_name != 'push'
+        if: always()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"

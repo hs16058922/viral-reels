@@ -164,8 +164,28 @@ Artifacts land in `export/studio/<topic>_<quality>/`: final MP4, `scenespec.json
 `plan.json`, `narration.txt`, `voice.mp3`, `audio_master.aac`, `captions.srt`, per-scene `.blend`
 files, `logs/`, `qc_report.json`, `contact_sheet.jpg`.
 
-Requires Blender 4.2+ (tested on 5.3, Eevee on Apple Metal). The GitHub Actions publisher has no
-Blender/GPU, so render studio reels locally and publish the MP4.
+Quality presets: `preview` (540x960 Eevee), `production` (1080x1920 Eevee, motion blur, DOF),
+`realistic` (1080x1920 Cycles path tracing, CC0 studio HDRI, surface micro-detail, SSS tissue, DOF).
+Requires Blender 4.2+ (tested on 5.3).
+
+### Automated publishing (GitHub Actions, free)
+
+`.github/workflows/reels_publisher.yml` runs 3x daily and only ever posts studio reels:
+
+1. **prepare** — `automation/studio_ci.py` picks the next topic: a pre-rendered `ready` video, else a topic
+   with an approved SceneSpec (`"spec": "<name>"` in `topics.json`, or an AI draft in
+   `engine/studio/specs/generated/` whose `.review.json` passed). Otherwise the **AI director**
+   (Gemini free tier) drafts one: schema validation → density lint → still renders → vision review →
+   revision. Drafts that never score well enough are parked as `needs_spec` instead of posted.
+2. **render** — the reel is split into ~60-frame shards rendered with Cycles on up to 20 CPU runners in
+   parallel (~1 h wall time). Each shard is cached by content hash, so a re-run resumes.
+3. **publish** — segments are assembled, captioned, mixed and QC'd. Only a QC pass is posted, through the
+   existing `automation/scheduler.py --now --topic <id>` route; queue/history are committed back.
+
+Costs: public-repo Actions minutes are free; Blender, FFmpeg, Whisper and the HDRI are free/open; EdgeTTS
+is free. The only external API is Gemini (director/reviewer) — keep billing **disabled** on that Google
+Cloud project so the free tier can never charge. Pushing to the `studio-ci` branch runs the whole
+render+assemble pipeline without posting.
 
 New topics: write a SceneSpec JSON (any LLM can target `--schema`; validation rejects unknown kinds,
 params, targets and phrases that are not in the narration). Imported models go in
