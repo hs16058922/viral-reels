@@ -109,20 +109,30 @@ class TopicQueue:
         topics = self.load_topics()
         published_ids = self.get_published_ids()
 
+        def has_assets(t: Dict[str, Any]) -> bool:
+            t_id = t.get("id", "")
+            s_dir = Path("assets/scenes") / t_id
+            if s_dir.exists() and list(s_dir.glob("scene_*.jpg")):
+                return True
+            v_path = Path(t.get("video_path", "")) if t.get("video_path") else None
+            if v_path and v_path.exists():
+                return True
+            return False
+
         # Prioritize pre-rendered 'ready' topics first
         for t in topics:
             t_id = t.get("id", "").lower()
             if t_id in published_ids or t.get("status") == "published":
                 continue
-            if t.get("status") == "ready":
+            if t.get("status") == "ready" and has_assets(t):
                 return t
 
-        # Fallback to 'pending' topics that need on-the-fly rendering
+        # Fallback to 'pending' topics that have scene assets ready
         for t in topics:
             t_id = t.get("id", "").lower()
             if t_id in published_ids or t.get("status") == "published":
                 continue
-            if t.get("status") == "pending":
+            if t.get("status") == "pending" and has_assets(t):
                 return t
 
         return None

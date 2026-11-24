@@ -42,18 +42,8 @@ class VideoFormatRotator:
 
     @classmethod
     def get_format_for_topic(cls, topic: Dict[str, Any]) -> ReelVideoFormat:
-        """Deterministically assign a unique format to each topic."""
-        # Check explicit override
-        if "video_format" in topic and topic["video_format"]:
-            fmt_str = topic["video_format"].upper()
-            for f in ReelVideoFormat:
-                if f.value == fmt_str:
-                    return f
-
-        # Deterministic rotation by topic ID hash
-        t_id = topic.get("id", "")
-        idx = abs(hash(t_id)) % len(cls.FORMAT_CYCLE)
-        return cls.FORMAT_CYCLE[idx]
+        """Always return CINEMATIC_FULLSCREEN for immersive, edge-to-edge 3D visuals."""
+        return ReelVideoFormat.CINEMATIC_FULLSCREEN
 
 
 class FormatCompositor:

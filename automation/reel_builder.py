@@ -88,9 +88,11 @@ class AutonomousReelBuilder:
             if scenes:
                 return scenes
 
-        # 3. Procedural 3D CAD Blueprint Generator (Fallback that never shows wrong imagery)
-        logger.info("Generating procedural 3D technical blueprint scenes for '%s'...", topic_id)
-        return cls._generate_procedural_scenes(topic)
+        # 3. Fail fast if no photorealistic 3D cutaways exist for this topic
+        raise FileNotFoundError(
+            f"No dedicated 3D visual scenes found for topic '{topic_id}' in {topic_scene_dir}. "
+            "Please ensure assets/scenes/{topic_id}/scene_1.jpg to scene_5.jpg are committed before building the reel."
+        )
 
     @classmethod
     def _generate_procedural_scenes(cls, topic: Dict[str, Any], count: int = 5) -> List[Image.Image]:
