@@ -193,6 +193,21 @@ class TestStudioCI(unittest.TestCase):
             q.save_topics([])
             self.assertEqual(studio_ci.pick(q), (None, "none"))
 
+    def test_gemini_outage_keeps_topic_pending(self):
+        from unittest import mock
+        from automation import studio_ci
+        from automation.topic_queue import TopicQueue
+        from engine.studio.director import GeminiUnavailable
+        with tempfile.TemporaryDirectory() as tmp:
+            q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
+            q.replenish_if_needed = lambda **k: None
+            q.save_topics([{"id": "airbag", "status": "pending"}])
+            with mock.patch.object(studio_ci, "TopicQueue", lambda: q), \
+                 mock.patch.object(studio_ci, "direct_spec", side_effect=GeminiUnavailable("503")):
+                studio_ci.cmd_prepare(Path(tmp) / "build")
+            self.assertEqual(q.load_topics()[0]["status"], "pending")
+            self.assertEqual(json.loads((Path(tmp) / "build" / "ci.json").read_text())["mode"], "none")
+
 
 class TestBranding(unittest.TestCase):
     def test_finalize_adds_cover_and_follow_outro(self):

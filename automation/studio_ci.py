@@ -53,11 +53,14 @@ def spec_for(topic: dict) -> Optional[Path]:
 
 def direct_spec(topic: dict, work: Path) -> Optional[Path]:
     """Ask the free AI director for a spec; record the review either way. None if it isn't good enough."""
-    from engine.studio.director import direct
+    from engine.studio.director import GeminiUnavailable, direct
 
     out = GENERATED / f"{topic['id']}.json"
     try:
         res = direct(topic, out, work)
+    except GeminiUnavailable as e:  # Gemini overloaded/down: not the topic's fault, retry next run
+        log.warning("director skipped for %s (Gemini unavailable: %s); topic stays pending", topic["id"], e)
+        raise
     except Exception as e:  # noqa: BLE001 — a bad draft must never crash the run
         res = {"passed": False, "error": str(e)[:500]}
         log.warning("director failed for %s: %s", topic["id"], e)
@@ -117,12 +120,17 @@ def cmd_prepare(build: Path, topic_id: str = "") -> None:
         log.warning("replenish skipped: %s", e)
     topic, mode = pick(queue, topic_id)
     if mode == "direct":
-        spec = direct_spec(topic, build / "director")
-        if not spec:
-            set_topic(topic["id"], status="needs_spec")
-            log.warning("topic %s parked as needs_spec (see %s)", topic["id"], GENERATED)
-            topic, mode = pick(queue, topic_id)
-            mode = "none" if mode == "direct" else mode
+        from engine.studio.director import GeminiUnavailable
+        try:
+            spec = direct_spec(topic, build / "director")
+        except GeminiUnavailable:
+            topic, mode = None, "none"  # leave it pending; this slot just skips
+        else:
+            if not spec:
+                set_topic(topic["id"], status="needs_spec")
+                log.warning("topic %s parked as needs_spec (see %s)", topic["id"], GENERATED)
+                topic, mode = pick(queue, topic_id)
+                mode = "none" if mode == "direct" else mode
     meta = {"topic": topic["id"] if topic else "", "mode": mode, "quality": QUALITY, "shards": []}
     if mode == "render":
         spec_path = spec_for(topic)

@@ -23,7 +23,7 @@ from engine.studio.spec import KIND_PARAMS, VideoSpec, resolve, tokens
 
 log = logging.getLogger("viral_reels.director")
 SPECS = Path(__file__).parent / "specs"
-MODELS = [m.strip() for m in os.getenv("GEMINI_DIRECTOR_MODELS", "gemini-3.8-flash,gemini-3-flash-preview,gemini-2.5-flash").split(",") if m.strip()]
+MODELS = [m.strip() for m in os.getenv("GEMINI_DIRECTOR_MODELS", "gemini-3.8-flash,gemini-3.5-flash,gemini-flash-latest,gemini-3-flash-preview").split(",") if m.strip()]
 
 REFERENCE = """
 OBJECT KINDS (params) — units are scene units (~1 = a large part), angles in degrees:
@@ -97,19 +97,24 @@ Hard rules:
 """
 
 
-def _call_gemini(prompt: str, model: str, key: str) -> str:
+class GeminiUnavailable(RuntimeError):
+    """Every model was overloaded/unreachable: retry next run instead of judging the topic."""
+
+
+def _call_gemini(prompt: str | list, model: str, key: str, temperature: float = 0.6) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-    for attempt in range(4):  # free tier rate limits: back off on 429/5xx
+    parts = [{"text": prompt}] if isinstance(prompt, str) else prompt
+    for attempt in range(5):  # free tier: back off on 429 (rate limit) and 5xx (overloaded)
         r = requests.post(url, headers={"x-goog-api-key": key}, timeout=300, json={
-            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"response_mime_type": "application/json", "temperature": 0.6,
+            "contents": [{"role": "user", "parts": parts}],
+            "generationConfig": {"response_mime_type": "application/json", "temperature": temperature,
                                  "maxOutputTokens": 32768}})
-        if r.status_code in (429, 500, 503) and attempt < 3:
-            time.sleep(20 * (attempt + 1))
+        if (r.status_code == 429 or r.status_code >= 500) and attempt < 4:
+            time.sleep(30 * (attempt + 1))
             continue
         r.raise_for_status()
-        parts = r.json()["candidates"][0]["content"]["parts"]
-        return "".join(p.get("text", "") for p in parts)
+        parts_out = r.json()["candidates"][0]["content"]["parts"]
+        return "".join(p.get("text", "") for p in parts_out)
     raise RuntimeError("unreachable")
 
 
@@ -171,18 +176,12 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
         parts.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}})
     for model in MODELS:
         try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-            r = requests.post(url, headers={"x-goog-api-key": key}, timeout=300, json={
-                "contents": [{"role": "user", "parts": parts}],
-                "generationConfig": {"response_mime_type": "application/json", "temperature": 0.2}})
-            r.raise_for_status()
-            text = "".join(p.get("text", "") for p in r.json()["candidates"][0]["content"]["parts"])
-            scores = json.loads(text)["scenes"]
+            scores = json.loads(_call_gemini(parts, model, key, temperature=0.2))["scenes"]
             break
         except Exception as e:  # noqa: BLE001 — try the next model
             log.warning("review: model %s failed (%s)", model, e)
     else:
-        raise RuntimeError("visual review unavailable")
+        raise GeminiUnavailable("visual review unavailable")
     feedback = "\n".join(f"- scene {s.get('id')}: score {s.get('score')}/10. Problems: {s.get('problems')}. "
                           f"Fix: {s.get('fix')}" for s in scores)
     return scores, feedback
@@ -232,10 +231,10 @@ def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "
             try:
                 text = _call_gemini(prompt, model, key)
                 break
-            except requests.HTTPError as e:
+            except requests.RequestException as e:
                 log.warning("director: model %s failed (%s), trying next", model, e)
         else:
-            raise RuntimeError("AI director: no Gemini model available")
+            raise GeminiUnavailable("AI director: no Gemini model available")
         spec, err = _check(text)
         if spec and (lint := _lint(spec)):
             spec, err = None, "Quality rules failed:\n" + lint
