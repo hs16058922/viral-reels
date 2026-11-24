@@ -88,5 +88,14 @@
     "video_path": "/home/runner/work/viral-reels/viral-reels/export/airplane_pressurization_reel.mp4",
     "video_hash": "017538f8df0513e57e78fcd0c041879e",
     "account": "curio__motion"
+  },
+  {
+    "id": "mechanical_watch_3d",
+    "title": "Inside a Mechanical Watch: The 3D Teardown",
+    "permalink": "https://www.instagram.com/reel/DgIJV1nofr3/",
+    "published_at": "2026-11-24T19:53:51.067693",
+    "video_path": "export/studio/mechanical_watch_realistic/mechanical_watch.mp4",
+    "video_hash": "6ab4469257a661486726ed01538d97e1",
+    "account": "curio__motion"
   }
 ]

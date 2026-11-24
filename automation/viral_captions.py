@@ -65,7 +65,7 @@ Ever wondered what's REALLY happening inside? Here is the exact physics breakdow
 
 {call_to_action}
 
-Follow @daily_howitworks for your daily dose of visual engineering! 🔔
+Follow @curio__motion for your daily dose of visual engineering! 🔔
 
 .
 .

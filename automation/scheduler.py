@@ -137,9 +137,10 @@ def post_next_reel(dry_run: bool = False, topic_id: str = "") -> bool:
     if direct_pub.is_configured():
         logger.info("🚀 Publishing Reel via Direct Instagram Mobile API (@%s)...", direct_pub.username)
         try:
-            thumb_path = PROJECT_ROOT / "export" / f"{topic['id']}_cover.jpg"
-            subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "1.5", "-i", str(video_path), "-frames:v", "1",
-                            str(thumb_path)], check=False)
+            thumb_path = video_path.with_name(video_path.stem.replace("_reel", "") + "_cover.jpg")
+            if not thumb_path.exists():  # studio reels ship their cover; it is also baked into the first 0.4 s
+                subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "0.1", "-i", str(video_path), "-frames:v", "1",
+                                str(thumb_path)], check=False)
             result = direct_pub.publish_reel(
                 video_path=video_path,
                 caption=caption,

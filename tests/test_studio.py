@@ -192,3 +192,19 @@ class TestStudioCI(unittest.TestCase):
             self.assertEqual(studio_ci.pick(q)[1], "direct")
             q.save_topics([])
             self.assertEqual(studio_ci.pick(q), (None, "none"))
+
+
+class TestBranding(unittest.TestCase):
+    def test_finalize_adds_cover_and_follow_outro(self):
+        import subprocess
+        from engine.studio import branding
+        with tempfile.TemporaryDirectory() as tmp:
+            src, dst = Path(tmp) / "raw.mp4", Path(tmp) / "t_reel.mp4"
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "color=c=blue:s=270x480:r=30:d=2",
+                            "-f", "lavfi", "-i", "sine=d=2", "-shortest", "-pix_fmt", "yuv420p", str(src)], check=True)
+            branding.finalize(src, dst, {"id": "t", "title": "Inside X: How it works"})
+            cta = branding._probe(branding.CTA_AUDIO)["dur"]
+            self.assertAlmostEqual(branding._probe(dst)["dur"], 2 + cta + 0.5, delta=0.2)
+            self.assertTrue((Path(tmp) / "t_cover.jpg").exists())
+            first = branding._frame(dst, "0.05", Path(tmp) / "f.png")
+            self.assertNotEqual(first.getpixel((135, 20)), (0, 0, 255))  # cover, not the raw blue frame

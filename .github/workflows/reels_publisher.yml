@@ -160,6 +160,7 @@ jobs:
           name: reel-${{ needs.prepare.outputs.topic }}
           path: |
             export/*_reel.mp4
+            export/*_cover.jpg
             build/qc_report.json
             build/contact_sheet.jpg
             build/plan.json
@@ -178,5 +179,5 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          git add automation/topics.json automation/published_history.json data/ engine/studio/specs/generated || true
+          for p in automation/topics.json automation/published_history.json data engine/studio/specs/generated; do if [ -e "$p" ]; then git add "$p"; fi; done
           git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git pull --rebase && git push)

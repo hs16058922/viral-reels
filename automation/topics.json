@@ -29,11 +29,11 @@
     "id": "bladeless_fan",
     "title": "How Does a Bladeless Fan Actually Work?",
     "hook": "You can stick your entire arm straight through a bladeless fan. So where is the hurricane actually coming from?",
-    "script": "You can stick your entire arm through a bladeless fan. So where is the hurricane actually coming from?\nThe blades aren't missing. They're hidden inside the base, spinning a high-pressure impeller that sucks in thirty-three liters of air every single second.\nThe motor forces this air up into the hollow aerodynamic ring, firing it out through a razor-thin 1.3-millimeter slit around the inner rim.\nAs this high-speed jet shoots out, it hugs the 16-degree curved aerofoil ramp—a fluid dynamics principle called the Coandă effect.\nThis rapid jet drops the air pressure inside the loop, creating a massive vacuum that pulls in fifteen times more surrounding air from behind and around the ring.\nOne liter of push becomes fifteen liters of smooth, buffeting-free wind.\nEngineering magic, hidden in plain sight. Tap follow on @CurioMotion for daily 3D breakdowns. What should we cut open next?",
+    "script": "You can stick your entire arm through a bladeless fan. So where is the hurricane actually coming from?\nThe blades aren't missing. They're hidden inside the base, spinning a high-pressure impeller that sucks in thirty-three liters of air every single second.\nThe motor forces this air up into the hollow aerodynamic ring, firing it out through a razor-thin 1.3-millimeter slit around the inner rim.\nAs this high-speed jet shoots out, it hugs the 16-degree curved aerofoil ramp\u2014a fluid dynamics principle called the Coand\u0103 effect.\nThis rapid jet drops the air pressure inside the loop, creating a massive vacuum that pulls in fifteen times more surrounding air from behind and around the ring.\nOne liter of push becomes fifteen liters of smooth, buffeting-free wind.\nEngineering magic, hidden in plain sight. Tap follow on @CurioMotion for daily 3D breakdowns. What should we cut open next?",
     "bullets": [
       "Hidden base impeller forces 33L of air per second",
       "1.3mm precision slit shoots high-velocity air jet",
-      "The Coandă Effect bends airflow along a 16-degree aerofoil ramp",
+      "The Coand\u0103 Effect bends airflow along a 16-degree aerofoil ramp",
       "Low pressure vacuum multiplies surrounding airflow by 15x",
       "Zero choppy blades for completely silent laminar wind"
     ],
@@ -144,7 +144,7 @@
     "id": "ballpoint_pen",
     "title": "The Microscopic Engineering Inside a Ballpoint Pen",
     "hook": "Why does a ballpoint pen never leak a single drop in your pocket, but flows instantly the second you write?",
-    "script": "Why does a ballpoint pen never leak in your pocket, but rolls out ink instantly the moment you write?\nAt the tip sits a microscopic sphere made of tungsten carbide—a material almost as hard as diamond—polished to a tolerance of less than one micron.\nIt sits inside a brass socket crimped so precisely that surface tension alone forms a hermetic seal, preventing ink from leaking out.\nEven more fascinating: the ink inside is not a liquid. It is a thixotropic gel.\nAt rest, it behaves like a solid plug. But when the ball rolls across paper, the mechanical shear force instantly drops the ink's viscosity, rolling a paper-thin microscopic line onto the fibers.\nThe second you lift the pen, the ink instantly reverts to a solid seal.\nHit follow on @CurioMotion for daily precision engineering breakdowns. What everyday object should we inspect next?",
+    "script": "Why does a ballpoint pen never leak in your pocket, but rolls out ink instantly the moment you write?\nAt the tip sits a microscopic sphere made of tungsten carbide\u2014a material almost as hard as diamond\u2014polished to a tolerance of less than one micron.\nIt sits inside a brass socket crimped so precisely that surface tension alone forms a hermetic seal, preventing ink from leaking out.\nEven more fascinating: the ink inside is not a liquid. It is a thixotropic gel.\nAt rest, it behaves like a solid plug. But when the ball rolls across paper, the mechanical shear force instantly drops the ink's viscosity, rolling a paper-thin microscopic line onto the fibers.\nThe second you lift the pen, the ink instantly reverts to a solid seal.\nHit follow on @CurioMotion for daily precision engineering breakdowns. What everyday object should we inspect next?",
     "bullets": [
       "Tungsten carbide micro-sphere polished to 1-micron tolerance",
       "Precision crimped socket creates capillary surface tension seal",
@@ -187,8 +187,14 @@
       "#3DAnimation",
       "#HowItWorks"
     ],
-    "status": "ready",
-    "video_path": "ready_reels/mechanical_watch_3d_reel.mp4"
+    "status": "published",
+    "video_path": "ready_reels/mechanical_watch_3d_reel.mp4",
+    "cover_hook_1": "NO BATTERY?!",
+    "cover_hook_2": "HOW A WATCH TICKS FOR DAYS",
+    "cover_tag": "HOROLOGY",
+    "cover_sticker": "3D CUTAWAY",
+    "permalink": "https://www.instagram.com/reel/DgIJV1nofr3/",
+    "published_at": "2026-11-24T19:53:51.067693"
   },
   {
     "id": "jet_engine_3d",
@@ -209,7 +215,11 @@
       "#HowItWorks"
     ],
     "status": "ready",
-    "video_path": "ready_reels/jet_engine_3d_reel.mp4"
+    "video_path": "ready_reels/jet_engine_3d_reel.mp4",
+    "cover_hook_1": "FAN + FIRE = THRUST",
+    "cover_hook_2": "INSIDE A JET ENGINE",
+    "cover_tag": "AVIATION",
+    "cover_sticker": "3D CUTAWAY"
   },
   {
     "id": "airplane_pressurization",
@@ -217,8 +227,8 @@
     "hook": "At cruising altitude, the air outside your plane is -60 degrees and has almost zero oxygen. So where does the air you breathe come from?",
     "script": "At thirty-five thousand feet, the air outside your airplane is negative sixty degrees and thin enough to make you pass out in seconds. So where does your cabin air actually come from?\nIt comes straight out of the roaring jet engines.\nHigh-pressure compressor stages squeeze freezing outside air, compressing it until it reaches over four hundred degrees Fahrenheit.\nThis scorching bleed air is completely sterilized. Air conditioning packs then cool it through heat exchangers down to comfortable room temperature.\nAn outflow valve at the back of the fuselage constantly cracks open and closed by millimeters, balancing cabin pressure so you breathe like you're standing on an eight-thousand-foot mountain.\nYou aren't trapped in a sealed can. You are breathing engine-pressurized air that refreshes completely every three minutes.\nTap follow on @CurioMotion for your daily dose of hidden engineering. What aircraft mystery should we tackle next?",
     "bullets": [
-      "Engine compressor stages compress freezing -60°F thin atmospheric air",
-      "Compression generates 400°F heat that sterilizes ambient air",
+      "Engine compressor stages compress freezing -60\u00b0F thin atmospheric air",
+      "Compression generates 400\u00b0F heat that sterilizes ambient air",
       "Air cycle machines cool bleed air to room temperature",
       "Fuselage outflow valve meters cabin pressure to an equivalent 8,000ft altitude",
       "Full cabin air volume refreshes every 2 to 3 minutes"
@@ -243,7 +253,7 @@
     "id": "car_airbag_explosion",
     "title": "Why Car Airbags Don't Use Compressed Air",
     "hook": "Your car's airbag doesn't inflate with compressed gas. It inflates using a literal rocket explosion.",
-    "script": "Your car's airbag doesn't inflate using compressed air. It inflates with a controlled rocket chemical explosion.\nCompressed air tanks are far too slow to save your life. In a forty-mile-per-hour crash, your skull will strike the steering wheel in under fifty milliseconds.\nWhen crash sensors detect sudden deceleration, an electrical squib ignites a solid chemical propellant called sodium azide or guanidine nitrate.\nIn less than thirty milliseconds, the solid pellets burn violently, producing a massive cloud of harmless nitrogen gas.\nThis expands the nylon bag at over two hundred miles per hour—faster than the blink of a human eye—catching your head right before the impact.\nVents behind the bag immediately release the gas so your chest doesn't bounce back.\nA literal rocket engine, built into your steering wheel to save your life in a fraction of a second.\nHit follow on @CurioMotion for daily 3D mechanical breakdowns. What automotive secret should we unpack next?",
+    "script": "Your car's airbag doesn't inflate using compressed air. It inflates with a controlled rocket chemical explosion.\nCompressed air tanks are far too slow to save your life. In a forty-mile-per-hour crash, your skull will strike the steering wheel in under fifty milliseconds.\nWhen crash sensors detect sudden deceleration, an electrical squib ignites a solid chemical propellant called sodium azide or guanidine nitrate.\nIn less than thirty milliseconds, the solid pellets burn violently, producing a massive cloud of harmless nitrogen gas.\nThis expands the nylon bag at over two hundred miles per hour\u2014faster than the blink of a human eye\u2014catching your head right before the impact.\nVents behind the bag immediately release the gas so your chest doesn't bounce back.\nA literal rocket engine, built into your steering wheel to save your life in a fraction of a second.\nHit follow on @CurioMotion for daily 3D mechanical breakdowns. What automotive secret should we unpack next?",
     "bullets": [
       "Compressed air is too slow; crash impact requires sub-30ms inflation",
       "MEMS accelerometers trigger an electrical igniter upon deceleration",
@@ -269,7 +279,7 @@
     "id": "microwave_magnetron",
     "title": "Why Microwaves Heat Soup But Never the Bowl",
     "hook": "A microwave oven doesn't heat food from the outside in. It heats it from the molecular inside out.",
-    "script": "A microwave oven doesn't heat food from the outside in. It targets water molecules directly using electromagnetic resonance.\nInside the wall sits a vacuum tube called a magnetron, firing waves at 2.45 gigahertz—two point four five billion cycles per second.\nWater molecules are electric dipoles: positively charged on the hydrogen side, negatively charged on the oxygen side.\nAs the microwave's electric field flips back and forth billions of times a second, water molecules desperately try to align with the field, twisting and rotating at astronomical speed.\nThis violent molecular friction turns kinetic movement directly into boiling heat.\nGlass and ceramic bowls have no free dipoles, so the radiation passes straight through without warming them.\nThe oven doesn't cook your food. It forces the water inside your food to boil itself.\nHit follow on @CurioMotion for daily physics explained simply. What household device should we cut open next?",
+    "script": "A microwave oven doesn't heat food from the outside in. It targets water molecules directly using electromagnetic resonance.\nInside the wall sits a vacuum tube called a magnetron, firing waves at 2.45 gigahertz\u2014two point four five billion cycles per second.\nWater molecules are electric dipoles: positively charged on the hydrogen side, negatively charged on the oxygen side.\nAs the microwave's electric field flips back and forth billions of times a second, water molecules desperately try to align with the field, twisting and rotating at astronomical speed.\nThis violent molecular friction turns kinetic movement directly into boiling heat.\nGlass and ceramic bowls have no free dipoles, so the radiation passes straight through without warming them.\nThe oven doesn't cook your food. It forces the water inside your food to boil itself.\nHit follow on @CurioMotion for daily physics explained simply. What household device should we cut open next?",
     "bullets": [
       "Magnetron vacuum tube produces 2.45 GHz electromagnetic radiation",
       "Water molecules act as microscopic electrical dipoles",
@@ -295,7 +305,7 @@
     "id": "abs_braking_system",
     "title": "Why Stomping Your Brakes Used to Cause Crashes",
     "hook": "Why does stomping on your brakes at full force make a car skidding harder, until ABS intervenes?",
-    "script": "When you slam your brakes in an emergency, your tires don't stop you faster by locking up. They completely lose control.\nPhysics dictates that static friction—where tire rubber grips the pavement—is up to thirty percent stronger than kinetic friction, which occurs when a locked tire skids like a hockey puck.\nOnce your wheels lock, you lose one hundred percent of your steering.\nThis is where ABS takes over. Magnetic wheel speed sensors detect a tire locking up in milliseconds.\nThe ABS hydraulic modulator pulses the brake fluid pressure up to twenty times per second—rapidly releasing and reapplying the brake pad.\nThis keeps the tire right on the threshold of maximum static friction, letting you steer around obstacles while stopping in the shortest physical distance possible.\nThe rapid shutter in your pedal isn't a malfunction; it's physics saving your life.\nFollow @CurioMotion for daily engineering breakdowns. What should we explore next?",
+    "script": "When you slam your brakes in an emergency, your tires don't stop you faster by locking up. They completely lose control.\nPhysics dictates that static friction\u2014where tire rubber grips the pavement\u2014is up to thirty percent stronger than kinetic friction, which occurs when a locked tire skids like a hockey puck.\nOnce your wheels lock, you lose one hundred percent of your steering.\nThis is where ABS takes over. Magnetic wheel speed sensors detect a tire locking up in milliseconds.\nThe ABS hydraulic modulator pulses the brake fluid pressure up to twenty times per second\u2014rapidly releasing and reapplying the brake pad.\nThis keeps the tire right on the threshold of maximum static friction, letting you steer around obstacles while stopping in the shortest physical distance possible.\nThe rapid shutter in your pedal isn't a malfunction; it's physics saving your life.\nFollow @CurioMotion for daily engineering breakdowns. What should we explore next?",
     "bullets": [
       "Static friction between rubber and road is ~30% stronger than kinetic sliding friction",
       "Locked wheels lose directional steering control completely",

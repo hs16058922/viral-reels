@@ -29,7 +29,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from automation.topic_queue import TopicQueue  # noqa: E402
-from engine.studio import pipeline  # noqa: E402
+from engine.studio import branding, pipeline  # noqa: E402
 from engine.studio.spec import VideoSpec  # noqa: E402
 
 log = logging.getLogger("viral_reels.studio_ci")
@@ -162,13 +162,15 @@ def cmd_assemble(build: Path) -> bool:
     for i, s in enumerate(segs):  # artifact paths differ between jobs
         s["mp4"] = str(build / "segments" / f"{i:03d}.mp4")
     final = ROOT / "export" / f"{tid}_reel.mp4"
-    res = pipeline.assemble(spec, plan, segs, meta["quality"], build, final)
+    res = pipeline.assemble(spec, plan, segs, meta["quality"], build, build / "raw_reel.mp4")
     errors = [i for i in res["issues"] if i.startswith("ERROR")]
     if errors:
         set_topic(tid, status="failed_qc", qc_issues=errors[:10])
         log.error("QC failed for %s — NOT publishing: %s", tid, errors)
         _out(ready="false")
         return False
+    topic = next(t for t in TopicQueue().load_topics() if t["id"] == tid)
+    branding.finalize(build / "raw_reel.mp4", final, topic)
     set_topic(tid, status="ready", video_path=str(final.relative_to(ROOT)))
     _out(ready="true")
     return True
@@ -180,11 +182,12 @@ def build_local(topic: dict) -> Path:
     if not spec:
         raise RuntimeError(f"no approved SceneSpec for topic {topic['id']}; see {GENERATED}")
     final = ROOT / "export" / f"{topic['id']}_reel.mp4"
+    out_dir = ROOT / "export" / "studio" / f"{topic['id']}_{QUALITY}"
     res = pipeline.generate_video(topic=topic["id"], spec_path=spec, quality=QUALITY,
-                                  out_dir=ROOT / "export" / "studio" / f"{topic['id']}_{QUALITY}", final_path=final)
+                                  out_dir=out_dir, final_path=out_dir / "raw_reel.mp4")
     if not res["qc_passed"]:
         raise RuntimeError(f"QC failed, not publishing: {res['issues']}")
-    return final
+    return branding.finalize(out_dir / "raw_reel.mp4", final, topic)
 
 
 def main() -> None:
