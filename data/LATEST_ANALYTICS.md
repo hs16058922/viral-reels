@@ -1,20 +1,21 @@
 # 📊 CurioMotion Reel Analytics Intelligence Report
-**Audit Timestamp:** 2026-11-23T13:43:17.418650  
-**Channel:** `@curio__motion` | **Total Published Reels:** 8
+**Audit Timestamp:** 2026-11-24T04:28:05.937705  
+**Channel:** `@curio__motion` | **Total Published Reels:** 9
 
 ---
 ## 📈 Published Reels Performance Matrix
 
 | Topic | Tier | Likes | Comments | Saves | Shares | Virality Score | Link |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **How Does a Thermal Water Bottle ** | `B-Tier` | 4 | 1 | 1 | 0 | **52.9/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
+| **How Does a Thermal Water Bottle ** | `B-Tier` | 4 | 1 | 1 | 0 | **52.5/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
 | **How Does a Bladeless Fan Actuall** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDcEkvlRTw/) |
-| **Why Your Washing Machine Hides a** | `A-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
+| **Why Your Washing Machine Hides a** | `B-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
 | **How Noise-Cancelling Headphones ** | `S-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgE3kNRDw4E/) |
-| **Why Induction Stoves Cook Withou** | `B-Tier` | 2 | 0 | 0 | 1 | **50.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
-| **How a Mechanical Watch Works Wit** | `A-Tier` | 2 | 0 | 0 | 0 | **20.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFUj7_DA6R/) |
-| **The Microscopic Engineering Insi** | `S-Tier` | 3 | 0 | 0 | 0 | **30.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFbykXgDQt/) |
-| **How Jet Engines Produce 100,000 ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFg3yYAN8Y/) |
+| **Why Induction Stoves Cook Withou** | `B-Tier` | 2 | 0 | 0 | 1 | **46.3/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
+| **How a Mechanical Watch Works Wit** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFUj7_DA6R/) |
+| **The Microscopic Engineering Insi** | `C-Tier` | 6 | 0 | 0 | 0 | **24.5/100** | [Watch Reel](https://www.instagram.com/reel/DgFbykXgDQt/) |
+| **How Jet Engines Produce 100,000 ** | `C-Tier` | 2 | 0 | 0 | 0 | **18.9/100** | [Watch Reel](https://www.instagram.com/reel/DgFg3yYAN8Y/) |
+| **How the Human Heart Pumps 2,000 ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgHGHAcAiiS/) |
 
 ---
 ## 💡 Strategic Intelligence & Optimization Recommendations

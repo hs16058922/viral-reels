@@ -352,7 +352,9 @@
     "cover_tag": "BIOLOGY SECRETS",
     "cover_sticker": "100,000 BEATS A DAY",
     "video_format": "CINEMATIC_FULLSCREEN",
-    "status": "ready",
-    "video_path": "export/human_heart_reel.mp4"
+    "status": "published",
+    "video_path": "export/human_heart_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgHGHAcAiiS/",
+    "published_at": "2026-11-24T04:27:58.823739"
   }
 ]
