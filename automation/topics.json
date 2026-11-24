@@ -214,12 +214,14 @@
       "#3DAnimation",
       "#HowItWorks"
     ],
-    "status": "ready",
+    "status": "published",
     "video_path": "ready_reels/jet_engine_3d_reel.mp4",
     "cover_hook_1": "FAN + FIRE = THRUST",
     "cover_hook_2": "INSIDE A JET ENGINE",
     "cover_tag": "AVIATION",
-    "cover_sticker": "3D CUTAWAY"
+    "cover_sticker": "3D CUTAWAY",
+    "permalink": "https://www.instagram.com/reel/DgILF-tDI4W/",
+    "published_at": "2026-11-24T14:30:58.788494"
   },
   {
     "id": "airplane_pressurization",
