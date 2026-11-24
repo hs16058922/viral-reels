@@ -1,0 +1,1778 @@
+{
+ "title": "The Rocket Science of Airbags",
+ "prefabs": {
+  "wheel_assembly": [
+   {
+    "id": "rim",
+    "kind": "torus",
+    "material": "clay_dark",
+    "params": {
+     "major": 1.8,
+     "minor": 0.15
+    }
+   },
+   {
+    "id": "spoke_l",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     -0.8,
+     -0.4,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     20
+    ],
+    "params": {
+     "size": [
+      1.4,
+      0.4,
+      0.2
+     ]
+    }
+   },
+   {
+    "id": "spoke_r",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     0.8,
+     -0.4,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     -20
+    ],
+    "params": {
+     "size": [
+      1.4,
+      0.4,
+      0.2
+     ]
+    }
+   },
+   {
+    "id": "hub_base",
+    "kind": "cylinder",
+    "material": "clay_dark",
+    "params": {
+     "radius": 0.6,
+     "depth": 0.5
+    }
+   },
+   {
+    "id": "hub_cover",
+    "kind": "lathe",
+    "material": "clay",
+    "position": [
+     0,
+     0,
+     0.2
+    ],
+    "params": {
+     "profile": [
+      [
+       0,
+       0.4
+      ],
+      [
+       0.55,
+       0.38
+      ],
+      [
+       0.6,
+       0
+      ]
+     ],
+     "thickness": 0.05,
+     "sweep": 270,
+     "cut_material": "accent"
+    }
+   }
+  ],
+  "inflator_internals": [
+   {
+    "id": "housing",
+    "kind": "lathe",
+    "material": "steel",
+    "params": {
+     "profile": [
+      [
+       0,
+       0
+      ],
+      [
+       0.45,
+       0
+      ],
+      [
+       0.45,
+       0.35
+      ],
+      [
+       0,
+       0.35
+      ]
+     ],
+     "sweep": 270,
+     "thickness": 0.05,
+     "cut_material": "steel"
+    }
+   },
+   {
+    "id": "base_plate",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "params": {
+     "radius": 0.45,
+     "depth": 0.05
+    }
+   },
+   {
+    "id": "squib",
+    "kind": "cylinder",
+    "material": "brass",
+    "position": [
+     0,
+     0,
+     0.05
+    ],
+    "params": {
+     "radius": 0.08,
+     "depth": 0.15
+    }
+   },
+   {
+    "id": "filter_mesh",
+    "kind": "lathe",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     0.05
+    ],
+    "params": {
+     "profile": [
+      [
+       0.35,
+       0
+      ],
+      [
+       0.38,
+       0.1
+      ],
+      [
+       0.38,
+       0.25
+      ],
+      [
+       0.35,
+       0.3
+      ]
+     ],
+     "thickness": 0.02,
+     "sweep": 270
+    }
+   },
+   {
+    "id": "pellet_stack",
+    "kind": "blob",
+    "material": "accent2",
+    "position": [
+     0,
+     0,
+     0.18
+    ],
+    "params": {
+     "elements": [
+      [
+       0.15,
+       0,
+       0,
+       0.07
+      ],
+      [
+       -0.15,
+       0.1,
+       0,
+       0.07
+      ],
+      [
+       0,
+       -0.15,
+       0,
+       0.07
+      ],
+      [
+       0.1,
+       0.1,
+       0.05,
+       0.07
+      ],
+      [
+       -0.1,
+       -0.1,
+       0.05,
+       0.07
+      ]
+     ],
+     "resolution": 20
+    }
+   },
+   {
+    "id": "retainer_cap",
+    "kind": "cylinder",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.32
+    ],
+    "params": {
+     "radius": 0.4,
+     "depth": 0.03
+    }
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "narration": "Your car's airbag doesn't use compressed air. It inflates using a literal rocket explosion.",
+   "objective": "Hook: Show a steering wheel cutaway with a sudden internal flash.",
+   "keywords": [
+    "compressed air",
+    "rocket explosion"
+   ],
+   "use": [
+    "wheel_assembly",
+    "inflator_internals"
+   ],
+   "objects": [
+    {
+     "id": "rim",
+     "kind": "torus",
+     "params": {
+      "major": 1.8,
+      "minor": 0.15
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "spoke_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      20.0
+     ]
+    },
+    {
+     "id": "spoke_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -20.0
+     ]
+    },
+    {
+     "id": "hub_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.6,
+      "depth": 0.5
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "hub_cover",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0.4
+       ],
+       [
+        0.55,
+        0.38
+       ],
+       [
+        0.6,
+        0
+       ]
+      ],
+      "thickness": 0.05,
+      "sweep": 270,
+      "cut_material": "accent"
+     },
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "housing",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.45,
+        0.35
+       ],
+       [
+        0,
+        0.35
+       ]
+      ],
+      "sweep": 270,
+      "thickness": 0.05,
+      "cut_material": "steel"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "base_plate",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.45,
+      "depth": 0.05
+     },
+     "material": "dark_steel"
+    },
+    {
+     "id": "squib",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.15
+     },
+     "material": "brass",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "filter_mesh",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        0
+       ],
+       [
+        0.38,
+        0.1
+       ],
+       [
+        0.38,
+        0.25
+       ],
+       [
+        0.35,
+        0.3
+       ]
+      ],
+      "thickness": 0.02,
+      "sweep": 270
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pellet_stack",
+     "kind": "blob",
+     "params": {
+      "elements": [
+       [
+        0.15,
+        0,
+        0,
+        0.07
+       ],
+       [
+        -0.15,
+        0.1,
+        0,
+        0.07
+       ],
+       [
+        0,
+        -0.15,
+        0,
+        0.07
+       ],
+       [
+        0.1,
+        0.1,
+        0.05,
+        0.07
+       ],
+       [
+        -0.1,
+        -0.1,
+        0.05,
+        0.07
+       ]
+      ],
+      "resolution": 20
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "retainer_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.4,
+      "depth": 0.03
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.32
+     ]
+    },
+    {
+     "id": "flash",
+     "kind": "sphere",
+     "material": "flame",
+     "position": [
+      0.0,
+      0.0,
+      0.15
+     ],
+     "scale": 0.01
+    }
+   ],
+   "actions": [
+    {
+     "target": "hub_cover",
+     "do": "fade",
+     "at": "compressed air",
+     "duration": 0.8,
+     "params": {
+      "to": 0.3
+     }
+    },
+    {
+     "target": "flash",
+     "do": "scale",
+     "at": "rocket explosion",
+     "duration": 0.2,
+     "params": {
+      "to": 1.5
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": "flash",
+     "do": "highlight",
+     "at": "rocket explosion",
+     "params": {
+      "color": "#FFA500",
+      "strength": 3.0
+     }
+    },
+    {
+     "target": "flash",
+     "do": "pop_out",
+     "at": "rocket explosion",
+     "offset": 0.4
+    }
+   ],
+   "shots": [
+    {
+     "target": "hub_base",
+     "frame": [
+      "rim",
+      "hub_base"
+     ],
+     "azimuth": -25.0,
+     "elevation": 40.0,
+     "orbit": 15.0
+    }
+   ]
+  },
+  {
+   "id": "physics",
+   "narration": "In a forty-mile-per-hour crash, your head strikes the wheel in under fifty milliseconds. Compressed air tanks are far too slow.",
+   "objective": "Visualize impact speed vs the slow nature of compressed gas.",
+   "background": "blue",
+   "keywords": [
+    "fifty milliseconds",
+    "too slow"
+   ],
+   "note": "Time slowed for demonstration",
+   "use": [
+    "wheel_assembly"
+   ],
+   "objects": [
+    {
+     "id": "rim",
+     "kind": "torus",
+     "params": {
+      "major": 1.8,
+      "minor": 0.15
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "spoke_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      20.0
+     ]
+    },
+    {
+     "id": "spoke_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -20.0
+     ]
+    },
+    {
+     "id": "hub_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.6,
+      "depth": 0.5
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "hub_cover",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0.4
+       ],
+       [
+        0.55,
+        0.38
+       ],
+       [
+        0.6,
+        0
+       ]
+      ],
+      "thickness": 0.05,
+      "sweep": 270,
+      "cut_material": "accent"
+     },
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "head",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.8
+     },
+     "position": [
+      0.0,
+      0.0,
+      5.0
+     ]
+    },
+    {
+     "id": "tank",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.3,
+        0
+       ],
+       [
+        0.4,
+        0.2
+       ],
+       [
+        0.4,
+        1.2
+       ],
+       [
+        0.3,
+        1.4
+       ]
+      ],
+      "thickness": 0.05
+     },
+     "material": "blue",
+     "position": [
+      2.5,
+      0.0,
+      1.0
+     ]
+    },
+    {
+     "id": "slow_label",
+     "kind": "label",
+     "params": {
+      "text": "TOO SLOW",
+      "size": 0.2
+     },
+     "material": "accent",
+     "position": [
+      2.5,
+      0.0,
+      2.8
+     ]
+    },
+    {
+     "id": "timer",
+     "kind": "label",
+     "params": {
+      "text": "50ms",
+      "size": 0.3
+     },
+     "material": "white",
+     "position": [
+      0.0,
+      2.0,
+      3.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "head",
+     "do": "move",
+     "at": "forty-mile-per-hour",
+     "duration": 1.5,
+     "ease": "linear",
+     "params": {
+      "by": [
+       0,
+       0,
+       -4.2
+      ]
+     }
+    },
+    {
+     "target": "timer",
+     "do": "pop_in",
+     "at": "fifty milliseconds",
+     "sfx": "click"
+    },
+    {
+     "target": [
+      "tank",
+      "slow_label"
+     ],
+     "do": "pop_in",
+     "at": "Compressed air",
+     "stagger": 0.2,
+     "sfx": "pop"
+    },
+    {
+     "target": "tank",
+     "do": "highlight",
+     "at": "too slow",
+     "params": {
+      "color": "#FF0000",
+      "strength": 1.0
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": [
+      0.0,
+      0.0,
+      2.0
+     ],
+     "frame": [
+      "head",
+      "rim",
+      "tank"
+     ],
+     "azimuth": -40.0,
+     "elevation": 20.0
+    }
+   ]
+  },
+  {
+   "id": "trigger",
+   "narration": "When sensors detect a crash, an electrical squib ignites solid propellant pellets like sodium azide inside a steel housing.",
+   "objective": "Dissect the inflator to show the electrical trigger and chemical pellets.",
+   "background": "dark",
+   "keywords": [
+    "electrical squib",
+    "sodium azide"
+   ],
+   "use": [
+    "inflator_internals"
+   ],
+   "objects": [
+    {
+     "id": "housing",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.45,
+        0.35
+       ],
+       [
+        0,
+        0.35
+       ]
+      ],
+      "sweep": 270,
+      "thickness": 0.05,
+      "cut_material": "steel"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "base_plate",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.45,
+      "depth": 0.05
+     },
+     "material": "dark_steel"
+    },
+    {
+     "id": "squib",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.15
+     },
+     "material": "brass",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "filter_mesh",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        0
+       ],
+       [
+        0.38,
+        0.1
+       ],
+       [
+        0.38,
+        0.25
+       ],
+       [
+        0.35,
+        0.3
+       ]
+      ],
+      "thickness": 0.02,
+      "sweep": 270
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pellet_stack",
+     "kind": "blob",
+     "params": {
+      "elements": [
+       [
+        0.15,
+        0,
+        0,
+        0.07
+       ],
+       [
+        -0.15,
+        0.1,
+        0,
+        0.07
+       ],
+       [
+        0,
+        -0.15,
+        0,
+        0.07
+       ],
+       [
+        0.1,
+        0.1,
+        0.05,
+        0.07
+       ],
+       [
+        -0.1,
+        -0.1,
+        0.05,
+        0.07
+       ]
+      ],
+      "resolution": 20
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "retainer_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.4,
+      "depth": 0.03
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.32
+     ]
+    },
+    {
+     "id": "wire_a",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -0.05,
+        0,
+        -1
+       ],
+       [
+        -0.05,
+        0,
+        0.05
+       ]
+      ],
+      "radius": 0.02
+     },
+     "material": "blue"
+    },
+    {
+     "id": "wire_b",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.05,
+        0,
+        -1
+       ],
+       [
+        0.05,
+        0,
+        0.05
+       ]
+      ],
+      "radius": 0.02
+     },
+     "material": "blue"
+    },
+    {
+     "id": "current",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        0,
+        0,
+        -1
+       ],
+       [
+        0,
+        0,
+        0.05
+       ]
+      ],
+      "count": 6,
+      "radius": 0.03,
+      "speed": 6
+     },
+     "material": "white"
+    }
+   ],
+   "actions": [
+    {
+     "target": "current",
+     "do": "show",
+     "at": "electrical squib"
+    },
+    {
+     "target": "squib",
+     "do": "highlight",
+     "at": "ignites",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 2.0
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "pellet_stack",
+     "do": "highlight",
+     "at": "sodium azide",
+     "params": {
+      "color": "#FFA500",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "housing",
+     "do": "spin",
+     "params": {
+      "rate": 20
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "squib",
+     "frame": [
+      "squib",
+      "pellet_stack",
+      "housing"
+     ],
+     "azimuth": -15.0,
+     "elevation": 45.0,
+     "lens": 80.0
+    }
+   ]
+  },
+  {
+   "id": "reaction",
+   "narration": "In thirty milliseconds, these pellets burn violently, producing a massive cloud of harmless nitrogen gas.",
+   "objective": "Show the chemical conversion from solid to gas passing through the filter.",
+   "keywords": [
+    "burn violently",
+    "nitrogen gas"
+   ],
+   "use": [
+    "inflator_internals"
+   ],
+   "objects": [
+    {
+     "id": "housing",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.45,
+        0.35
+       ],
+       [
+        0,
+        0.35
+       ]
+      ],
+      "sweep": 270,
+      "thickness": 0.05,
+      "cut_material": "steel"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "base_plate",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.45,
+      "depth": 0.05
+     },
+     "material": "dark_steel"
+    },
+    {
+     "id": "squib",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.15
+     },
+     "material": "brass",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "filter_mesh",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        0
+       ],
+       [
+        0.38,
+        0.1
+       ],
+       [
+        0.38,
+        0.25
+       ],
+       [
+        0.35,
+        0.3
+       ]
+      ],
+      "thickness": 0.02,
+      "sweep": 270
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pellet_stack",
+     "kind": "blob",
+     "params": {
+      "elements": [
+       [
+        0.15,
+        0,
+        0,
+        0.07
+       ],
+       [
+        -0.15,
+        0.1,
+        0,
+        0.07
+       ],
+       [
+        0,
+        -0.15,
+        0,
+        0.07
+       ],
+       [
+        0.1,
+        0.1,
+        0.05,
+        0.07
+       ],
+       [
+        -0.1,
+        -0.1,
+        0.05,
+        0.07
+       ]
+      ],
+      "resolution": 20
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "retainer_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.4,
+      "depth": 0.03
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.32
+     ]
+    },
+    {
+     "id": "gas_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        0,
+        0,
+        0.2
+       ],
+       [
+        0.3,
+        0,
+        0.2
+       ],
+       [
+        0.6,
+        0,
+        0.3
+       ]
+      ],
+      "count": 25,
+      "radius": 0.05,
+      "speed": 8,
+      "radial_copies": 8,
+      "axis": "z"
+     },
+     "material": "air"
+    },
+    {
+     "id": "heat_glow",
+     "kind": "sphere",
+     "material": "flame",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ],
+     "scale": 0.1
+    }
+   ],
+   "actions": [
+    {
+     "target": "heat_glow",
+     "do": "scale",
+     "at": "burn violently",
+     "duration": 0.5,
+     "params": {
+      "to": 4
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": "pellet_stack",
+     "do": "fade",
+     "at": "burn violently",
+     "duration": 0.4,
+     "params": {
+      "to": 0
+     }
+    },
+    {
+     "target": "gas_flow",
+     "do": "show",
+     "at": "producing"
+    },
+    {
+     "target": "housing",
+     "do": "oscillate",
+     "at": "burn violently",
+     "params": {
+      "amplitude": 0.04,
+      "hz": 30,
+      "axis": "x"
+     }
+    },
+    {
+     "target": "filter_mesh",
+     "do": "highlight",
+     "at": "nitrogen gas",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 1.0
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "housing",
+     "frame": [
+      "housing",
+      "gas_flow"
+     ],
+     "elevation": 30.0,
+     "orbit": 25.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "deployment",
+   "narration": "This expands the nylon bag at over two hundred miles per hour, catching your head right before the impact.",
+   "objective": "Show the rapid expansion of the bag and the head meeting it.",
+   "background": "blue",
+   "keywords": [
+    "nylon bag",
+    "impact"
+   ],
+   "use": [
+    "wheel_assembly"
+   ],
+   "objects": [
+    {
+     "id": "rim",
+     "kind": "torus",
+     "params": {
+      "major": 1.8,
+      "minor": 0.15
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "spoke_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      20.0
+     ]
+    },
+    {
+     "id": "spoke_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -20.0
+     ]
+    },
+    {
+     "id": "hub_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.6,
+      "depth": 0.5
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "hub_cover",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0.4
+       ],
+       [
+        0.55,
+        0.38
+       ],
+       [
+        0.6,
+        0
+       ]
+      ],
+      "thickness": 0.05,
+      "sweep": 270,
+      "cut_material": "accent"
+     },
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "airbag",
+     "kind": "blob",
+     "params": {
+      "elements": [
+       [
+        0,
+        0,
+        0,
+        0.1
+       ]
+      ],
+      "resolution": 30
+     },
+     "material": "tissue",
+     "position": [
+      0.0,
+      0.0,
+      0.4
+     ]
+    },
+    {
+     "id": "head",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.8
+     },
+     "position": [
+      0.0,
+      0.0,
+      3.5
+     ]
+    },
+    {
+     "id": "speed_tag",
+     "kind": "label",
+     "params": {
+      "text": "200 MPH",
+      "size": 0.25
+     },
+     "material": "accent",
+     "position": [
+      1.8,
+      1.8,
+      2.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "airbag",
+     "do": "scale",
+     "at": "expands",
+     "duration": 0.25,
+     "ease": "expo",
+     "params": {
+      "to": [
+       7,
+       7,
+       4
+      ]
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": "head",
+     "do": "move",
+     "at": "catching",
+     "duration": 0.5,
+     "params": {
+      "to": [
+       0,
+       0,
+       1.2
+      ]
+     }
+    },
+    {
+     "target": "speed_tag",
+     "do": "pop_in",
+     "at": "two hundred",
+     "sfx": "pop"
+    },
+    {
+     "target": "rim",
+     "do": "oscillate",
+     "at": "expands",
+     "params": {
+      "amplitude": 0.05,
+      "hz": 15,
+      "axis": "z"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": "hub_base",
+     "frame": [
+      "rim",
+      "airbag",
+      "head"
+     ],
+     "azimuth": -50.0,
+     "elevation": 15.0,
+     "lens": 45.0
+    }
+   ]
+  },
+  {
+   "id": "safety",
+   "narration": "Vents behind the bag immediately release the gas, so your chest doesn't bounce back. It's a life-saving rocket in your wheel.",
+   "objective": "Explain deflation vents and the finalized safety mechanism.",
+   "keywords": [
+    "Vents",
+    "bounce back"
+   ],
+   "use": [
+    "wheel_assembly"
+   ],
+   "objects": [
+    {
+     "id": "rim",
+     "kind": "torus",
+     "params": {
+      "major": 1.8,
+      "minor": 0.15
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "spoke_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      20.0
+     ]
+    },
+    {
+     "id": "spoke_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.4,
+       0.4,
+       0.2
+      ]
+     },
+     "material": "clay_dark",
+     "position": [
+      0.8,
+      -0.4,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -20.0
+     ]
+    },
+    {
+     "id": "hub_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.6,
+      "depth": 0.5
+     },
+     "material": "clay_dark"
+    },
+    {
+     "id": "hub_cover",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0,
+        0.4
+       ],
+       [
+        0.55,
+        0.38
+       ],
+       [
+        0.6,
+        0
+       ]
+      ],
+      "thickness": 0.05,
+      "sweep": 270,
+      "cut_material": "accent"
+     },
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "bag_inflated",
+     "kind": "blob",
+     "params": {
+      "elements": [
+       [
+        0,
+        0,
+        0,
+        0.1
+       ]
+      ],
+      "resolution": 30
+     },
+     "material": "tissue",
+     "position": [
+      0.0,
+      0.0,
+      0.4
+     ],
+     "scale": [
+      7.0,
+      7.0,
+      4.0
+     ]
+    },
+    {
+     "id": "vent_hole_l",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.05,
+      "axis": "z"
+     },
+     "material": "clay_dark",
+     "position": [
+      -1.2,
+      1.0,
+      0.5
+     ]
+    },
+    {
+     "id": "vent_hole_r",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.05,
+      "axis": "z"
+     },
+     "material": "clay_dark",
+     "position": [
+      1.2,
+      1.0,
+      0.5
+     ]
+    },
+    {
+     "id": "exhaust",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.2,
+        1,
+        0.5
+       ],
+       [
+        2.5,
+        1.5,
+        -0.5
+       ]
+      ],
+      "count": 12,
+      "radius": 0.05,
+      "speed": 4
+     },
+     "material": "air"
+    },
+    {
+     "id": "head",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.8
+     },
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "exhaust",
+     "do": "show",
+     "at": "Vents"
+    },
+    {
+     "target": "bag_inflated",
+     "do": "scale",
+     "at": "release",
+     "duration": 1.5,
+     "params": {
+      "to": [
+       6,
+       6,
+       2.5
+      ]
+     }
+    },
+    {
+     "target": "head",
+     "do": "move",
+     "at": "bounce back",
+     "duration": 1.2,
+     "params": {
+      "by": [
+       0,
+       0,
+       0.2
+      ]
+     }
+    },
+    {
+     "target": [
+      "vent_hole_l",
+      "vent_hole_r"
+     ],
+     "do": "highlight",
+     "at": "Vents",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 1.0
+     }
+    },
+    {
+     "target": "hub_base",
+     "do": "highlight",
+     "at": "rocket",
+     "params": {
+      "color": "#FFA500",
+      "strength": 0.8
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "bag_inflated",
+     "frame": [
+      "bag_inflated",
+      "head",
+      "vent_hole_r"
+     ],
+     "azimuth": 130.0,
+     "elevation": 25.0,
+     "orbit": -30.0,
+     "lens": 55.0
+    }
+   ]
+  }
+ ]
+}

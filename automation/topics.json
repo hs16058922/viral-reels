@@ -274,7 +274,7 @@
     "cover_hook_2": "IT'S A ROCKET EXPLOSION?!",
     "cover_tag": "AUTOMOTIVE PHYSICS",
     "cover_sticker": "30-MILLISECOND BLAST",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -436,6 +436,32 @@
     "cover_hook_2": "THE 32,768 Hz CRYSTAL?!",
     "cover_tag": "PRECISION PHYSICS",
     "cover_sticker": "PIEZOELECTRIC EFFECT",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "maglev_train_levitation",
+    "title": "How Maglev Trains Float on Thin Air at 370 MPH",
+    "hook": "A bullet train weighing over five hundred tons can float two inches above the tracks with zero wheels. Here's the electromagnetic magic.",
+    "script": "A bullet train weighing five hundred tons can float two inches in the air with zero wheels touching the track. How does it defeat gravity?\nIt doesn't use ordinary magnets. It uses liquid helium-cooled superconducting electromagnets.\nWhen cooled to negative four hundred and fifty degrees Fahrenheit, electrical resistance vanishes completely, allowing massive currents to generate magnetic fields tens of thousands of times stronger than Earth's.\nAs the train glides forward, these superconducting magnets pass over aluminum coils embedded in the concrete track walls.\nThis induces a mirror magnetic field in the tracks. By physics, like poles repel and opposite poles attract.\nThe track coils repel the bottom of the train upward, levitating five hundred tons on a cushion of pure magnetic flux.\nWith zero rolling friction and zero rail wear, the train hits three hundred and seventy miles per hour in whisper-quiet flight.\nFollow @CurioMotion for your daily dose of futuristic engineering. What transportation wonder should we break down next?",
+    "bullets": [
+      "Superconducting electromagnets cooled by liquid helium to -450\u00b0F",
+      "Zero electrical resistance creates massive persistent magnetic fields",
+      "Electrodynamic suspension (EDS) induces repulsive magnetic forces in guideway",
+      "Levitates 500-ton train chassis 100mm above tracks with zero physical contact",
+      "Eliminates rolling friction for speeds exceeding 370 mph"
+    ],
+    "niche_tags": [
+      "#MaglevTrain",
+      "#Superconductivity",
+      "#Electromagnetism",
+      "#FutureTransport",
+      "#HighSpeedRail"
+    ],
+    "cover_hook_1": "MAGLEV TRAIN SECRET",
+    "cover_hook_2": "HOW 500 TONS FLOATS?!",
+    "cover_tag": "SUPERCONDUCTIVITY",
+    "cover_sticker": "ZERO WHEELS, 370 MPH",
     "status": "pending",
     "video_path": null
   }
