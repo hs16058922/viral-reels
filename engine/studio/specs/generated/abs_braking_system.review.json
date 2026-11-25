@@ -1,0 +1,144 @@
+{
+ "passed": false,
+ "drafter": "nemotron-3-ultra-550b-a55b",
+ "history": [
+  {
+   "round": 0,
+   "drafter": "gemini",
+   "scores": [
+    2,
+    2,
+    1,
+    2,
+    2,
+    1
+   ],
+   "avg": 1.67,
+   "feedback": "- scene hook: score 2/10. Problems: Composed entirely of abstract, primitive 3D shapes (a metallic disc, torus, cube, and block) rather than a recognisable wheel, tire, and disc brake assembly.. Fix: Replace primitive geometry with a realistic, high-detail 3D car wheel and brake rotor lockup setup under dynamic braking.\n- scene friction_physics: score 2/10. Problems: Abstract shapes on a plain background fail to show rubber-to-road contact or the physical contrast between static and kinetic friction.. Fix: Model a realistic tire contact patch on asphalt with clear visual force vectors and labels contrasting static rolling friction against sliding kinetic friction.\n- scene steering_loss: score 1/10. Problems: Top-down view of primitive geometric blocks provides no visual representation of steering mechanism or loss of lateral control.. Fix: Depict a turned front wheel assembly sliding forward uncontrollable across the road, using trajectory arrows to highlight zero lateral traction.\n- scene speed_sensor: score 2/10. Problems: Does not present a notched tone ring or Hall-effect magnetic sensor probe, showing only a close-up of the same generic primitive torus and cylinder.. Fix: Show a detailed close-up / cutaway of a wheel hub's notched tone ring with a magnetic Hall-effect sensor reading the spinning teeth.\n- scene hydraulic_modulator: score 2/10. Problems: Completely lacks a cutaway valve body, hydraulic fluid lines, or piston pulsing dynamics; the text callout is cut off at the edge.. Fix: Create a cutaway view of an ABS hydraulic modulator unit demonstrating fluid pressure pulsing dynamically to the caliper piston.\n- scene max_grip_control: score 1/10. Problems: Identical distant shot of primitive shapes; gives no visual context for full system operation, threshold slip, or evasive steering.. Fix: Show a complete wheel assembly or vehicle executing a smooth evasive maneuver around an obstacle while ABS maintains maximum grip.",
+   "stills": [
+    "build/director/review_0_gemini/00_hook/still_0111.png",
+    "build/director/review_0_gemini/01_friction_physics/still_0117.png",
+    "build/director/review_0_gemini/02_steering_loss/still_0110.png",
+    "build/director/review_0_gemini/03_speed_sensor/still_0118.png",
+    "build/director/review_0_gemini/04_hydraulic_modulator/still_0117.png",
+    "build/director/review_0_gemini/05_max_grip_control/still_0128.png"
+   ]
+  },
+  {
+   "round": 0,
+   "drafter": "nemotron-3-ultra-550b-a55b",
+   "scores": [
+    3,
+    3,
+    4,
+    5,
+    3,
+    3,
+    1
+   ],
+   "avg": 3.14,
+   "feedback": "- scene hook: score 3/10. Problems: The wheel layout consists of crude abstract geometric primitives floating horizontally; a box object is awkwardly cut off on the left edge.. Fix: Replace primitive models with realistic automotive brake rotor, caliper, and wheel components, framed upright on a realistic road surface.\n- scene friction_physics: score 3/10. Problems: Wheel assembly floats unnaturally over a plain grey slab; fails to visibly demonstrate friction, rolling motion, or skidding.. Fix: Place tire directly onto an asphalt plane with dynamic smoke/skid trail visual effects to clearly show lock-up vs rolling grip.\n- scene static_vs_kinetic: score 4/10. Problems: Text overlays '+30% GRIP' correctly, but framing is tight and distorted, while geometry remains primitive and unconvincing.. Fix: Macro-frame the tire contact patch pressing against the road, using graphic force vectors to compare static and kinetic friction coefficients.\n- scene speed_sensor: score 5/10. Problems: Tone ring gear and pulse graphics are identifiable, but the sensor body is extremely crude and component placement lacks mechanical realism.. Fix: Focus camera cleanly on a detailed Hall-effect pickup sensor mounted near an accurate tone ring, visualizing magnetic field pulses.\n- scene hydraulic_modulator: score 3/10. Problems: The modulator is depicted as a featureless gray box connected by a basic line; fails to demonstrate valve cycling or fluid dynamics.. Fix: Show a transparent cutaway view of the hydraulic block with moving inlet/outlet valves and pulsating fluid pressure waves.\n- scene threshold_control: score 3/10. Problems: Scene relies on low-detail floating primitives; completely lacks visual indicators showing how sensor signal drives caliper pressure and grip.. Fix: Show an integrated, high-detail dynamic view with illuminated signal pathways connecting the sensor, modulator, and brake caliper.\n- scene assembly_reveal: score 1/10. Problems: Extremely poor camera framing; the frame is mostly empty pitch-black space with microscopic, unrecognizable particles clustered at the bottom.. Fix: Recamera and zoom into the main subject, filling the vertical portrait frame with a dramatic exploded assembly view.",
+   "stills": [
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/00_hook/still_0111.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/01_friction_physics/still_0124.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/02_static_vs_kinetic/still_0124.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/03_speed_sensor/still_0076.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/04_hydraulic_modulator/still_0145.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/05_threshold_control/still_0152.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/06_assembly_reveal/still_0108.png"
+   ]
+  },
+  {
+   "round": 0,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": [
+    2,
+    2,
+    3,
+    2,
+    2,
+    2
+   ],
+   "avg": 2.17,
+   "feedback": "- scene hook: score 2/10. Problems: Abstract primitive shapes floating in air around a basic wheel geometry; a large white box blocks the scene; fails to depict panic braking, skidding, or loss of steering control.. Fix: Show a realistic wheel assembly locking up on asphalt with smoke and skid marks, framing a turned steering wheel showing loss of vehicle control.\n- scene friction: score 2/10. Problems: Camera angle is rotated unnaturally sideways/upside down; no visible contact patch or distinction between static and kinetic friction forces.. Fix: Orient the camera upright, zoom in close to the tire contact patch on the road surface, and use visual force vectors to compare static grip versus sliding friction.\n- scene sensor: score 3/10. Problems: Tone ring and sensor are surrounded by random floating wires and cylinders; camera is too distant and a white wall obstructs the view of the mechanism.. Fix: Provide a clean macro shot focusing tightly on the magnetic sensor tip positioned right against the teeth of the rotating tone ring, highlighting the signal pulses.\n- scene modulator: score 2/10. Problems: Hydraulic modulator and brake caliper pistons are entirely absent; replaced by abstract floating gold and silver primitives with clipped text.. Fix: Render a detailed cutaway view of the hydraulic modulator valve body and brake caliper piston showing rapid fluid pressure pulsation.\n- scene steering: score 2/10. Problems: A red arrow stuck vertically to a floating white block does not explain rolling grip or steering maneuverability.. Fix: Display a dynamic wide shot showing a car with rolling wheels steering safely around an obstacle while slowing down rapidly.\n- scene pedal: score 2/10. Problems: No brake pedal or driver cabin is shown; relies on floating abstract components and a poorly placed text box.. Fix: Show a realistic driver footwell cutaway with a foot depressing the brake pedal, using visual pulse waves to demonstrate haptic ABS feedback.",
+   "stills": [
+    "build/director/review_0_nemotron-3.5-super-vl/00_hook/still_0117.png",
+    "build/director/review_0_nemotron-3.5-super-vl/01_friction/still_0138.png",
+    "build/director/review_0_nemotron-3.5-super-vl/02_sensor/still_0076.png",
+    "build/director/review_0_nemotron-3.5-super-vl/03_modulator/still_0124.png",
+    "build/director/review_0_nemotron-3.5-super-vl/04_steering/still_0151.png",
+    "build/director/review_0_nemotron-3.5-super-vl/05_pedal/still_0121.png"
+   ]
+  },
+  {
+   "round": 1,
+   "drafter": "gemini",
+   "scores": [
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    3
+   ],
+   "avg": 2.14,
+   "feedback": "- scene hook: score 3/10. Problems: Extremely low-detail primitive shapes (torus tire on generic box) against a plain background; fails to demonstrate dynamic comparison between locked skidding and ABS pulsing rescue.. Fix: Use detailed 3D car wheel, brake assembly, and road surface with visual split effect comparing a smoking, locked tire to an ABS pulsing wheel.\n- scene friction_physics: score 2/10. Problems: Completely missing skid marks, friction indicators, tire smoke, or motion cues; looks like a static primitive toy tire sitting on a grey slab.. Fix: Add dark rubber skid mark on detailed asphalt, friction force vectors, tire deformation, and motion blur/smoke behind contact patch.\n- scene static_vs_kinetic: score 2/10. Problems: Camera zoomed into the wheel rim instead of the road contact patch; text is cut off on the left; no force vectors or microscopic friction comparison present.. Fix: Re-frame camera directly onto the contact patch between tire tread and road, adding macro inset and labeled vector arrows comparing static and kinetic friction force magnitudes.\n- scene speed_sensor: score 2/10. Problems: Abstract thin wire floating near blurred rim; fails to show a clear Hall effect sensor probe or magnetic tone ring mechanism.. Fix: Show a detailed close-up of a notched tone ring gear on the hub with a realistic Hall effect sensor probe and glowing pulse wave signal overlay.\n- scene hydraulic_modulator: score 2/10. Problems: Depicts a crude toy-like red box with simple cylinders floating next to the wheel instead of a technical cutaway of an ABS hydraulic modulator block.. Fix: Create a detailed metallic cutaway model of a hydraulic block showing solenoid valves, fluid channels, and fluid pressure pulse animations.\n- scene threshold_control: score 1/10. Problems: Severe geometry breakdown where the tire rubber ring is rotated 90 degrees out of alignment with the rim inner wheel; background text is chopped off.. Fix: Fix broken model hierarchy and mesh orientation; demonstrate steering angle variation on a properly assembled wheel moving along a curved trajectory.\n- scene assembly_reveal: score 3/10. Problems: Exploded parts are tiny featureless primitive blocks floating far away in dark space rather than recognizable automotive ABS mechanical components.. Fix: Replace floating abstract blocks with detailed 3D models of brake rotor, caliper, speed sensor, tone ring, and modulator block framed dynamically in an exploded layout.",
+   "stills": [
+    "build/director/review_1_gemini/00_hook/still_0111.png",
+    "build/director/review_1_gemini/01_friction_physics/still_0124.png",
+    "build/director/review_1_gemini/02_static_vs_kinetic/still_0145.png",
+    "build/director/review_1_gemini/03_speed_sensor/still_0076.png",
+    "build/director/review_1_gemini/04_hydraulic_modulator/still_0151.png",
+    "build/director/review_1_gemini/05_threshold_control/still_0173.png",
+    "build/director/review_1_gemini/06_assembly_reveal/still_0107.png"
+   ]
+  },
+  {
+   "round": 1,
+   "drafter": "nemotron-3-ultra-550b-a55b",
+   "scores": [
+    4,
+    3,
+    4,
+    5,
+    2,
+    3,
+    1
+   ],
+   "avg": 3.14,
+   "feedback": "- scene hook: score 4/10. Problems: The 'tire' is a featureless torus and the 'brake' is a generic metallic blob. It lacks the mechanical realism of a professional explainer.. Fix: Model a realistic tire with tread and a recognizable brake disc/caliper. Add motion blur to the wheel to imply spinning.\n- scene friction_physics: score 3/10. Problems: Static image of a floating object. There is zero visual indication of 'sliding' versus 'rolling' or any interaction with the ground plane.. Fix: Add a road texture to the base. Use particle effects (smoke/dust) for the slide and a rotation arrow for the roll.\n- scene static_vs_kinetic: score 4/10. Problems: The '+30% GRIP' text is clipped by the geometry and the font choice looks like a placeholder. The tire texture is still too plastic.. Fix: Reposition text to be fully visible. Use a color-coded heat map on the contact patch to show the difference in friction levels.\n- scene speed_sensor: score 5/10. Problems: The tone ring lacks actual teeth (it's a smooth cylinder) and the sensor is a generic white cube. Framing is okay but the objects are wrong.. Fix: Model distinct teeth on the tone ring. Add a pulsing light or magnetic field lines between the sensor and the ring to show 'reading'.\n- scene hydraulic_modulator: score 2/10. Problems: This is not a modulator cutaway; it is the same wheel assembly with floating parts. It fails to show valves, pumps, or fluid.. Fix: Create a dedicated model of the ABS block. Use a cross-section (cutaway) to show the internal piston and valve movement.\n- scene threshold_control: score 3/10. Problems: The 'system' is just a vague arrangement of the previous parts. There is no clear signal flow or steering mechanism visible.. Fix: Use glowing 'data' lines to connect the sensor to the modulator and caliper. Show the wheel turning on its vertical axis to represent steering.\n- scene assembly_reveal: score 1/10. Problems: The subject is microscopic. The framing is completely broken, leaving 95% of the screen as empty dark space.. Fix: Fill the frame with the components. Use a standard 'exploded view' layout where parts are clearly visible before they collapse together.",
+   "stills": [
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/00_hook/still_0111.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/01_friction_physics/still_0117.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/02_static_vs_kinetic/still_0124.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/03_speed_sensor/still_0076.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/04_hydraulic_modulator/still_0145.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/05_threshold_control/still_0152.png",
+    "build/director/review_1_nemotron-3-ultra-550b-a55b/06_assembly_reveal/still_0107.png"
+   ]
+  },
+  {
+   "round": 1,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": [
+    3,
+    2,
+    3,
+    2,
+    1,
+    1
+   ],
+   "avg": 2.0,
+   "feedback": "- scene hook: score 3/10. Problems: Uses primitive, floating geometric shapes (abstract torus ring and a floating red block) in a white void. Lacks a realistic car wheel, brake caliper, disc, or road surface.. Fix: Replace abstract primitives with a realistic 3D car wheel, brake disc, caliper, and asphalt road surface to clearly depict hard braking.\n- scene friction: score 2/10. Problems: Camera angle is rotated sideways, completely missing the contact patch. The road is represented as a floating grey slab against a flat blue background.. Fix: Re-orient camera to ground level focusing directly on the tire's contact patch against realistic pavement, showing static vs kinetic friction callouts.\n- scene sensor: score 3/10. Problems: Tone ring teeth and Hall-effect sensor are hidden inside semi-transparent abstract discs; no clear mechanism or teeth passing are readable.. Fix: Provide a clean close-up shot of a metallic tone ring with visible gear teeth and an aligned Hall-effect magnetic sensor emitting pulse graphics.\n- scene modulator: score 2/10. Problems: Microscopic objects floating far apart in a blue void. The brake line is a thin wire and the modulator unit is an untextured red box.. Fix: Frame a detailed 3D hydraulic modulator block in center screen with transparent cutaways showing internal solenoid valves and fluid pressure waves.\n- scene threshold: score 1/10. Problems: Severe framing error; a massive dark grey box obscures 80% of the frame, hiding the wheel and mechanism almost entirely.. Fix: Remove the blocking geometry and frame a clear wide-to-medium shot of the wheel turning on asphalt while showing steering control trajectory.\n- scene assembly: score 1/10. Problems: Pitch black background with tiny, unlit, unidentifiable primitives scattered far in the distance.. Fix: Center and illuminate all real ABS components (ECU, sensor, modulator, brake pedal, caliper, rotor) in a bright studio environment, nicely organized in an exploded diagram view.",
+   "stills": [
+    "build/director/review_1_nemotron-3.5-super-vl/00_hook/still_0138.png",
+    "build/director/review_1_nemotron-3.5-super-vl/01_friction/still_0159.png",
+    "build/director/review_1_nemotron-3.5-super-vl/02_sensor/still_0097.png",
+    "build/director/review_1_nemotron-3.5-super-vl/03_modulator/still_0138.png",
+    "build/director/review_1_nemotron-3.5-super-vl/04_threshold/still_0152.png",
+    "build/director/review_1_nemotron-3.5-super-vl/05_assembly/still_0100.png"
+   ]
+  }
+ ]
+}

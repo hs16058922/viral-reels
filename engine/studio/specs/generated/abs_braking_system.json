@@ -1,0 +1,4754 @@
+{
+ "title": "Why Stomping Your Brakes Used to Cause Crashes",
+ "prefabs": {
+  "wheel_assembly": [
+   {
+    "id": "hub",
+    "kind": "lathe",
+    "material": "steel",
+    "params": {
+     "profile": [
+      [
+       0.15,
+       -0.2
+      ],
+      [
+       0.18,
+       -0.15
+      ],
+      [
+       0.22,
+       0.0
+      ],
+      [
+       0.25,
+       0.1
+      ],
+      [
+       0.22,
+       0.2
+      ],
+      [
+       0.18,
+       0.35
+      ],
+      [
+       0.15,
+       0.4
+      ]
+     ],
+     "axis": "z",
+     "sweep": 270,
+     "start_angle": 45,
+     "thickness": 0.03,
+     "cut_material": "accent"
+    }
+   },
+   {
+    "id": "rotor",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     0.2
+    ],
+    "params": {
+     "radius": 0.35,
+     "depth": 0.04,
+     "axis": "z"
+    }
+   },
+   {
+    "id": "tone_ring",
+    "kind": "gear",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.42
+    ],
+    "params": {
+     "teeth": 48,
+     "module": 0.012,
+     "thickness": 0.03,
+     "arms": 0,
+     "bore": 0.16
+    }
+   },
+   {
+    "id": "wheel_rim",
+    "kind": "lathe",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     -0.2
+    ],
+    "params": {
+     "profile": [
+      [
+       0.45,
+       -0.15
+      ],
+      [
+       0.48,
+       -0.1
+      ],
+      [
+       0.5,
+       0.0
+      ],
+      [
+       0.48,
+       0.1
+      ],
+      [
+       0.45,
+       0.15
+      ]
+     ],
+     "axis": "z",
+     "thickness": 0.04
+    }
+   },
+   {
+    "id": "tire",
+    "kind": "lathe",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     -0.2
+    ],
+    "params": {
+     "profile": [
+      [
+       0.5,
+       -0.15
+      ],
+      [
+       0.55,
+       -0.1
+      ],
+      [
+       0.6,
+       0.0
+      ],
+      [
+       0.55,
+       0.1
+      ],
+      [
+       0.5,
+       0.15
+      ]
+     ],
+     "axis": "z",
+     "thickness": 0.02
+    }
+   }
+  ],
+  "caliper_assembly": [
+   {
+    "id": "caliper_body",
+    "kind": "lathe",
+    "material": "steel",
+    "position": [
+     0.55,
+     0,
+     0.15
+    ],
+    "rotation": [
+     0,
+     90,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.08,
+       -0.25
+      ],
+      [
+       0.12,
+       -0.2
+      ],
+      [
+       0.18,
+       0.0
+      ],
+      [
+       0.12,
+       0.2
+      ],
+      [
+       0.08,
+       0.25
+      ]
+     ],
+     "axis": "x",
+     "sweep": 300,
+     "start_angle": 30,
+     "thickness": 0.04,
+     "cut_material": "accent"
+    }
+   },
+   {
+    "id": "piston_1",
+    "kind": "cylinder",
+    "material": "chrome",
+    "parent": "caliper_body",
+    "position": [
+     -0.12,
+     0,
+     0.08
+    ],
+    "params": {
+     "radius": 0.035,
+     "depth": 0.08,
+     "axis": "x"
+    }
+   },
+   {
+    "id": "piston_2",
+    "kind": "cylinder",
+    "material": "chrome",
+    "parent": "caliper_body",
+    "position": [
+     0.12,
+     0,
+     0.08
+    ],
+    "params": {
+     "radius": 0.035,
+     "depth": 0.08,
+     "axis": "x"
+    }
+   },
+   {
+    "id": "pad_inner",
+    "kind": "box",
+    "material": "clay",
+    "parent": "caliper_body",
+    "position": [
+     -0.12,
+     0,
+     -0.15
+    ],
+    "params": {
+     "size": [
+      0.08,
+      0.12,
+      0.04
+     ],
+     "bevel": 0.005
+    }
+   },
+   {
+    "id": "pad_outer",
+    "kind": "box",
+    "material": "clay",
+    "parent": "caliper_body",
+    "position": [
+     0.12,
+     0,
+     -0.15
+    ],
+    "params": {
+     "size": [
+      0.08,
+      0.12,
+      0.04
+     ],
+     "bevel": 0.005
+    }
+   },
+   {
+    "id": "bleeder",
+    "kind": "cylinder",
+    "material": "brass",
+    "parent": "caliper_body",
+    "position": [
+     0,
+     0.18,
+     0
+    ],
+    "params": {
+     "radius": 0.015,
+     "depth": 0.04,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "inlet_port",
+    "kind": "cylinder",
+    "material": "steel",
+    "parent": "caliper_body",
+    "position": [
+     0,
+     -0.18,
+     0
+    ],
+    "params": {
+     "radius": 0.012,
+     "depth": 0.03,
+     "axis": "y"
+    }
+   }
+  ],
+  "sensor_assembly": [
+   {
+    "id": "sensor_body",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     0.35,
+     0.25,
+     0.4
+    ],
+    "rotation": [
+     0,
+     0,
+     -30
+    ],
+    "params": {
+     "size": [
+      0.06,
+      0.03,
+      0.04
+     ],
+     "bevel": 0.003
+    }
+   },
+   {
+    "id": "sensor_tip",
+    "kind": "cylinder",
+    "material": "steel",
+    "parent": "sensor_body",
+    "position": [
+     0,
+     0,
+     -0.02
+    ],
+    "params": {
+     "radius": 0.008,
+     "depth": 0.025,
+     "axis": "z"
+    }
+   },
+   {
+    "id": "sensor_wire",
+    "kind": "tube",
+    "material": "ink",
+    "params": {
+     "points": [
+      [
+       0.35,
+       0.25,
+       0.38
+      ],
+      [
+       0.3,
+       0.3,
+       0.3
+      ],
+      [
+       0.2,
+       0.4,
+       0.2
+      ],
+      [
+       0.1,
+       0.5,
+       0.1
+      ]
+     ],
+     "radius": 0.004
+    }
+   }
+  ],
+  "modulator": [
+   {
+    "id": "mod_body",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     -0.8,
+     0.6,
+     0.1
+    ],
+    "params": {
+     "size": [
+      0.3,
+      0.2,
+      0.15
+     ],
+     "bevel": 0.01
+    }
+   },
+   {
+    "id": "inlet_valve",
+    "kind": "cylinder",
+    "material": "chrome",
+    "parent": "mod_body",
+    "position": [
+     -0.1,
+     0,
+     0.05
+    ],
+    "params": {
+     "radius": 0.02,
+     "depth": 0.06,
+     "axis": "z"
+    }
+   },
+   {
+    "id": "outlet_valve",
+    "kind": "cylinder",
+    "material": "chrome",
+    "parent": "mod_body",
+    "position": [
+     0.1,
+     0,
+     0.05
+    ],
+    "params": {
+     "radius": 0.02,
+     "depth": 0.06,
+     "axis": "z"
+    }
+   },
+   {
+    "id": "pump",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "parent": "mod_body",
+    "position": [
+     0,
+     -0.08,
+     0
+    ],
+    "params": {
+     "radius": 0.025,
+     "depth": 0.08,
+     "axis": "z"
+    }
+   },
+   {
+    "id": "mod_inlet",
+    "kind": "cylinder",
+    "material": "steel",
+    "parent": "mod_body",
+    "position": [
+     -0.15,
+     0,
+     -0.07
+    ],
+    "params": {
+     "radius": 0.01,
+     "depth": 0.03,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "mod_outlet",
+    "kind": "cylinder",
+    "material": "steel",
+    "parent": "mod_body",
+    "position": [
+     0.15,
+     0,
+     -0.07
+    ],
+    "params": {
+     "radius": 0.01,
+     "depth": 0.03,
+     "axis": "y"
+    }
+   }
+  ],
+  "brake_lines": [
+   {
+    "id": "line_master",
+    "kind": "tube",
+    "material": "ink",
+    "params": {
+     "points": [
+      [
+       -1.2,
+       0.8,
+       0.15
+      ],
+      [
+       -0.95,
+       0.7,
+       0.15
+      ],
+      [
+       -0.8,
+       0.6,
+       0.1
+      ]
+     ],
+     "radius": 0.008
+    }
+   },
+   {
+    "id": "line_to_caliper",
+    "kind": "tube",
+    "material": "ink",
+    "params": {
+     "points": [
+      [
+       -0.8,
+       0.5,
+       0.1
+      ],
+      [
+       -0.5,
+       0.3,
+       0.1
+      ],
+      [
+       -0.2,
+       0.15,
+       0.1
+      ],
+      [
+       0.43,
+       0,
+       0.15
+      ]
+     ],
+     "radius": 0.008
+    }
+   },
+   {
+    "id": "fluid_flow",
+    "kind": "flow",
+    "material": "accent2",
+    "params": {
+     "points": [
+      [
+       -1.2,
+       0.8,
+       0.15
+      ],
+      [
+       -0.8,
+       0.6,
+       0.1
+      ],
+      [
+       0.43,
+       0,
+       0.15
+      ]
+     ],
+     "count": 12,
+     "radius": 0.006,
+     "speed": 1.5,
+     "radial_copies": 1,
+     "axis": "x"
+    }
+   }
+  ],
+  "contact_patch": [
+   {
+    "id": "road",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     -0.65
+    ],
+    "params": {
+     "size": [
+      2.0,
+      1.0,
+      0.1
+     ],
+     "bevel": 0.01
+    }
+   },
+   {
+    "id": "patch_static",
+    "kind": "box",
+    "material": "accent",
+    "position": [
+     0,
+     0,
+     -0.59
+    ],
+    "params": {
+     "size": [
+      0.12,
+      0.08,
+      0.01
+     ]
+    }
+   },
+   {
+    "id": "patch_slide",
+    "kind": "box",
+    "material": "accent2",
+    "position": [
+     0,
+     0,
+     -0.59
+    ],
+    "params": {
+     "size": [
+      0.12,
+      0.08,
+      0.01
+     ]
+    }
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "narration": "Why does stomping your brakes at full force make a car skid harder, until ABS intervenes?",
+   "objective": "Hook: wheel locks up, then ABS saves it",
+   "background": "blue",
+   "keywords": [
+    "stomping your brakes",
+    "skid harder",
+    "ABS intervenes"
+   ],
+   "use": [
+    "wheel_assembly",
+    "caliper_assembly",
+    "sensor_assembly",
+    "modulator"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "caliper_body",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.08,
+        -0.25
+       ],
+       [
+        0.12,
+        -0.2
+       ],
+       [
+        0.18,
+        0.0
+       ],
+       [
+        0.12,
+        0.2
+       ],
+       [
+        0.08,
+        0.25
+       ]
+      ],
+      "axis": "x",
+      "sweep": 300,
+      "start_angle": 30,
+      "thickness": 0.04,
+      "cut_material": "accent"
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.0,
+      0.15
+     ],
+     "rotation": [
+      0.0,
+      90.0,
+      0.0
+     ]
+    },
+    {
+     "id": "piston_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "piston_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "pad_inner",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "pad_outer",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "bleeder",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.015,
+      "depth": 0.04,
+      "axis": "y"
+     },
+     "material": "brass",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "inlet_port",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.012,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      -0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "sensor_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.03,
+       0.04
+      ],
+      "bevel": 0.003
+     },
+     "position": [
+      0.35,
+      0.25,
+      0.4
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -30.0
+     ]
+    },
+    {
+     "id": "sensor_tip",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.008,
+      "depth": 0.025,
+      "axis": "z"
+     },
+     "material": "steel",
+     "parent": "sensor_body",
+     "position": [
+      0.0,
+      0.0,
+      -0.02
+     ]
+    },
+    {
+     "id": "sensor_wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.35,
+        0.25,
+        0.38
+       ],
+       [
+        0.3,
+        0.3,
+        0.3
+       ],
+       [
+        0.2,
+        0.4,
+        0.2
+       ],
+       [
+        0.1,
+        0.5,
+        0.1
+       ]
+      ],
+      "radius": 0.004
+     },
+     "material": "ink"
+    },
+    {
+     "id": "mod_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.3,
+       0.2,
+       0.15
+      ],
+      "bevel": 0.01
+     },
+     "material": "steel",
+     "position": [
+      -0.8,
+      0.6,
+      0.1
+     ]
+    },
+    {
+     "id": "inlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      -0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "outlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pump",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.025,
+      "depth": 0.08,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "parent": "mod_body",
+     "position": [
+      0.0,
+      -0.08,
+      0.0
+     ]
+    },
+    {
+     "id": "mod_inlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      -0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "mod_outlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      0.15,
+      0.0,
+      -0.07
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 360,
+      "ramp": 0.5,
+      "axis": "z"
+     }
+    },
+    {
+     "target": [
+      "pad_inner",
+      "pad_outer"
+     ],
+     "do": "move",
+     "at": "stomping your brakes",
+     "duration": 0.4,
+     "params": {
+      "by": [
+       0,
+       0,
+       -0.05
+      ]
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "at": "skid harder",
+     "duration": 1.0,
+     "params": {
+      "rate": 0,
+      "ramp": 0.3
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": [
+      "inlet_valve",
+      "outlet_valve"
+     ],
+     "do": "cycle",
+     "at": "ABS intervenes",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.05,
+        -0.015
+       ],
+       [
+        0.5,
+        -0.015
+       ],
+       [
+        0.55,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": [
+      "pad_inner",
+      "pad_outer"
+     ],
+     "do": "cycle",
+     "at": "ABS intervenes",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        -0.05
+       ],
+       [
+        0.05,
+        0
+       ],
+       [
+        0.5,
+        0
+       ],
+       [
+        0.55,
+        -0.05
+       ],
+       [
+        1,
+        -0.05
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "at": "ABS intervenes",
+     "duration": 1.0,
+     "params": {
+      "rate": 360,
+      "ramp": 0.5
+     },
+     "sfx": "swoosh"
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "tire",
+     "frame": [
+      "tire",
+      "caliper_body"
+     ],
+     "elevation": 25.0,
+     "lens": 55.0
+    },
+    {
+     "at": "skid harder",
+     "target": "hub",
+     "frame": [
+      "tire",
+      "rotor"
+     ],
+     "azimuth": -20.0,
+     "elevation": 30.0,
+     "orbit": 40.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "friction_physics",
+   "narration": "When you slam the brakes, your tires don't stop you faster by locking up. They completely lose control.",
+   "objective": "Show locked wheel sliding vs rolling with grip",
+   "keywords": [
+    "slam the brakes",
+    "locking up",
+    "lose control"
+   ],
+   "note": "Illustrative - slowed 4x",
+   "use": [
+    "wheel_assembly",
+    "caliper_assembly",
+    "contact_patch"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "caliper_body",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.08,
+        -0.25
+       ],
+       [
+        0.12,
+        -0.2
+       ],
+       [
+        0.18,
+        0.0
+       ],
+       [
+        0.12,
+        0.2
+       ],
+       [
+        0.08,
+        0.25
+       ]
+      ],
+      "axis": "x",
+      "sweep": 300,
+      "start_angle": 30,
+      "thickness": 0.04,
+      "cut_material": "accent"
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.0,
+      0.15
+     ],
+     "rotation": [
+      0.0,
+      90.0,
+      0.0
+     ]
+    },
+    {
+     "id": "piston_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "piston_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "pad_inner",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "pad_outer",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "bleeder",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.015,
+      "depth": 0.04,
+      "axis": "y"
+     },
+     "material": "brass",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "inlet_port",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.012,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      -0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "road",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.0,
+       1.0,
+       0.1
+      ],
+      "bevel": 0.01
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "patch_static",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    },
+    {
+     "id": "patch_slide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 360,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": [
+      "pad_inner",
+      "pad_outer"
+     ],
+     "do": "move",
+     "at": "slam the brakes",
+     "duration": 0.3,
+     "params": {
+      "by": [
+       0,
+       0,
+       -0.05
+      ]
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "at": "locking up",
+     "duration": 0.8,
+     "params": {
+      "rate": 0,
+      "ramp": 0.4
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": "patch_static",
+     "do": "hide",
+     "at": "locking up"
+    },
+    {
+     "target": "patch_slide",
+     "do": "show",
+     "at": "locking up",
+     "sfx": "pop"
+    },
+    {
+     "target": "patch_slide",
+     "do": "move",
+     "at": "locking up",
+     "duration": 2.0,
+     "params": {
+      "by": [
+       0.5,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "target": "tire",
+     "do": "highlight",
+     "at": "lose control",
+     "params": {
+      "color": "#FF3333",
+      "strength": 0.8
+     }
+    },
+    {
+     "target": "road",
+     "do": "highlight",
+     "at": "lose control",
+     "params": {
+      "color": "#FF3333",
+      "strength": 0.4
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "tire",
+     "frame": [
+      "tire",
+      "road",
+      "patch_slide"
+     ],
+     "azimuth": -40.0,
+     "elevation": 15.0,
+     "orbit": 30.0,
+     "lens": 55.0
+    },
+    {
+     "at": "locking up",
+     "type": "macro",
+     "target": "patch_slide",
+     "frame": [
+      "patch_slide",
+      "tire"
+     ],
+     "azimuth": -60.0,
+     "elevation": 45.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "static_vs_kinetic",
+   "narration": "Static friction where rubber grips pavement is thirty percent stronger than kinetic friction when a locked tire skids.",
+   "objective": "Visualize static vs kinetic friction at contact patch",
+   "background": "blue",
+   "keywords": [
+    "Static friction",
+    "thirty percent stronger",
+    "kinetic friction",
+    "locked tire skids"
+   ],
+   "note": "Force arrows illustrative",
+   "use": [
+    "wheel_assembly",
+    "contact_patch"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "road",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.0,
+       1.0,
+       0.1
+      ],
+      "bevel": 0.01
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "patch_static",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    },
+    {
+     "id": "patch_slide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    },
+    {
+     "id": "arrow_static",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.3,
+       0.15,
+       -0.58
+      ],
+      "radius": 0.015
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.15,
+      -0.58
+     ]
+    },
+    {
+     "id": "arrow_kinetic",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       0.3,
+       -0.15,
+       -0.58
+      ],
+      "radius": 0.015
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      -0.15,
+      -0.58
+     ]
+    },
+    {
+     "id": "label_static",
+     "kind": "label",
+     "params": {
+      "text": "STATIC",
+      "size": 0.12
+     },
+     "material": "ink",
+     "position": [
+      -0.35,
+      0.15,
+      -0.55
+     ]
+    },
+    {
+     "id": "label_kinetic",
+     "kind": "label",
+     "params": {
+      "text": "KINETIC",
+      "size": 0.12
+     },
+     "material": "ink",
+     "position": [
+      0.35,
+      -0.15,
+      -0.55
+     ]
+    },
+    {
+     "id": "label_30",
+     "kind": "label",
+     "params": {
+      "text": "+30% GRIP",
+      "size": 0.15
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.0,
+      -0.45
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 180,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "patch_static",
+     "do": "show",
+     "at": "Static friction",
+     "sfx": "pop"
+    },
+    {
+     "target": "patch_slide",
+     "do": "hide",
+     "at": "Static friction"
+    },
+    {
+     "target": [
+      "arrow_static",
+      "label_static"
+     ],
+     "do": "pop_in",
+     "at": "Static friction",
+     "stagger": 0.1,
+     "sfx": "pop"
+    },
+    {
+     "target": "patch_slide",
+     "do": "show",
+     "at": "kinetic friction",
+     "sfx": "pop"
+    },
+    {
+     "target": "patch_static",
+     "do": "hide",
+     "at": "kinetic friction"
+    },
+    {
+     "target": [
+      "arrow_kinetic",
+      "label_kinetic"
+     ],
+     "do": "pop_in",
+     "at": "kinetic friction",
+     "stagger": 0.1,
+     "sfx": "pop"
+    },
+    {
+     "target": "label_30",
+     "do": "pop_in",
+     "at": "thirty percent stronger",
+     "sfx": "click"
+    },
+    {
+     "target": "tire",
+     "do": "pulse",
+     "at": "rubber grips",
+     "params": {
+      "amount": 0.02,
+      "hz": 2,
+      "axis": "all"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "patch_static",
+     "frame": [
+      "patch_static",
+      "arrow_static",
+      "label_static",
+      "label_30"
+     ],
+     "azimuth": -90.0,
+     "elevation": 60.0,
+     "lens": 75.0
+    },
+    {
+     "at": "kinetic friction",
+     "type": "macro",
+     "target": "patch_slide",
+     "frame": [
+      "patch_slide",
+      "arrow_kinetic",
+      "label_kinetic"
+     ],
+     "azimuth": -90.0,
+     "elevation": 60.0,
+     "lens": 75.0
+    }
+   ]
+  },
+  {
+   "id": "speed_sensor",
+   "narration": "Magnetic wheel speed sensors detect a tire locking up in milliseconds.",
+   "objective": "Hall-effect sensor reads tone ring teeth passing",
+   "keywords": [
+    "Magnetic wheel speed sensors",
+    "locking up",
+    "milliseconds"
+   ],
+   "use": [
+    "wheel_assembly",
+    "sensor_assembly"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "sensor_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.03,
+       0.04
+      ],
+      "bevel": 0.003
+     },
+     "position": [
+      0.35,
+      0.25,
+      0.4
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -30.0
+     ]
+    },
+    {
+     "id": "sensor_tip",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.008,
+      "depth": 0.025,
+      "axis": "z"
+     },
+     "material": "steel",
+     "parent": "sensor_body",
+     "position": [
+      0.0,
+      0.0,
+      -0.02
+     ]
+    },
+    {
+     "id": "sensor_wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.35,
+        0.25,
+        0.38
+       ],
+       [
+        0.3,
+        0.3,
+        0.3
+       ],
+       [
+        0.2,
+        0.4,
+        0.2
+       ],
+       [
+        0.1,
+        0.5,
+        0.1
+       ]
+      ],
+      "radius": 0.004
+     },
+     "material": "ink"
+    },
+    {
+     "id": "field_lines",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        0.35,
+        0.25,
+        0.4
+       ],
+       [
+        0.3,
+        0.2,
+        0.42
+       ],
+       [
+        0.25,
+        0.15,
+        0.42
+       ],
+       [
+        0.22,
+        0.1,
+        0.42
+       ]
+      ],
+      "count": 8,
+      "radius": 0.005,
+      "speed": 0.8,
+      "radial_copies": 4,
+      "axis": "z"
+     },
+     "material": "blue"
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 720,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "field_lines",
+     "do": "show",
+     "at": "Magnetic wheel speed sensors",
+     "sfx": "swoosh"
+    },
+    {
+     "target": "sensor_tip",
+     "do": "pulse",
+     "at": "detect a tire",
+     "params": {
+      "amount": 0.1,
+      "hz": 20,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "tone_ring",
+     "do": "highlight",
+     "at": "locking up",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 0.7
+     }
+    },
+    {
+     "target": "sensor_body",
+     "do": "highlight",
+     "at": "milliseconds",
+     "params": {
+      "color": "#2F5BD3",
+      "strength": 1.0
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "sensor_wire",
+     "do": "pulse",
+     "at": "milliseconds",
+     "params": {
+      "amount": 0.05,
+      "hz": 15,
+      "axis": "all"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "sensor_tip",
+     "frame": [
+      "sensor_tip",
+      "tone_ring",
+      "field_lines"
+     ],
+     "azimuth": -45.0,
+     "elevation": 35.0,
+     "lens": 80.0
+    },
+    {
+     "at": "locking up",
+     "target": "tone_ring",
+     "frame": [
+      "tone_ring",
+      "sensor_body"
+     ],
+     "azimuth": -30.0,
+     "elevation": 40.0,
+     "orbit": 25.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "hydraulic_modulator",
+   "narration": "The ABS hydraulic modulator pulses brake fluid pressure up to twenty times per second, rapidly releasing and reapplying the brake pad.",
+   "objective": "Modulator valves cycle: inlet closes, outlet opens, pump runs",
+   "background": "blue",
+   "keywords": [
+    "ABS hydraulic modulator",
+    "twenty times per second",
+    "releasing and reapplying"
+   ],
+   "note": "Illustrative - slowed 8x",
+   "use": [
+    "modulator",
+    "brake_lines",
+    "caliper_assembly",
+    "wheel_assembly"
+   ],
+   "objects": [
+    {
+     "id": "mod_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.3,
+       0.2,
+       0.15
+      ],
+      "bevel": 0.01
+     },
+     "material": "steel",
+     "position": [
+      -0.8,
+      0.6,
+      0.1
+     ]
+    },
+    {
+     "id": "inlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      -0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "outlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pump",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.025,
+      "depth": 0.08,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "parent": "mod_body",
+     "position": [
+      0.0,
+      -0.08,
+      0.0
+     ]
+    },
+    {
+     "id": "mod_inlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      -0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "mod_outlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "line_master",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.95,
+        0.7,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "line_to_caliper",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -0.8,
+        0.5,
+        0.1
+       ],
+       [
+        -0.5,
+        0.3,
+        0.1
+       ],
+       [
+        -0.2,
+        0.15,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "fluid_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "count": 12,
+      "radius": 0.006,
+      "speed": 1.5,
+      "radial_copies": 1,
+      "axis": "x"
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "caliper_body",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.08,
+        -0.25
+       ],
+       [
+        0.12,
+        -0.2
+       ],
+       [
+        0.18,
+        0.0
+       ],
+       [
+        0.12,
+        0.2
+       ],
+       [
+        0.08,
+        0.25
+       ]
+      ],
+      "axis": "x",
+      "sweep": 300,
+      "start_angle": 30,
+      "thickness": 0.04,
+      "cut_material": "accent"
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.0,
+      0.15
+     ],
+     "rotation": [
+      0.0,
+      90.0,
+      0.0
+     ]
+    },
+    {
+     "id": "piston_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "piston_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "pad_inner",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "pad_outer",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "bleeder",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.015,
+      "depth": 0.04,
+      "axis": "y"
+     },
+     "material": "brass",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "inlet_port",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.012,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      -0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "inlet_valve",
+     "do": "cycle",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.05,
+        -0.02
+       ],
+       [
+        0.5,
+        -0.02
+       ],
+       [
+        0.55,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": "outlet_valve",
+     "do": "cycle",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.05,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.5,
+        0.02
+       ],
+       [
+        0.55,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": "pump",
+     "do": "spin",
+     "params": {
+      "rate": 720,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "fluid_flow",
+     "do": "show",
+     "at": "pulses brake fluid",
+     "sfx": "swoosh"
+    },
+    {
+     "target": "fluid_flow",
+     "do": "cycle",
+     "at": "pulses brake fluid",
+     "params": {
+      "prop": "location",
+      "axis": "x",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.1,
+        -0.1
+       ],
+       [
+        0.5,
+        -0.1
+       ],
+       [
+        0.6,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "pad_inner",
+      "pad_outer"
+     ],
+     "do": "cycle",
+     "at": "releasing and reapplying",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        -0.05
+       ],
+       [
+        0.05,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.5,
+        -0.05
+       ],
+       [
+        1,
+        -0.05
+       ]
+      ]
+     }
+    },
+    {
+     "target": "inlet_valve",
+     "do": "highlight",
+     "at": "modulator",
+     "params": {
+      "color": "#2F5BD3",
+      "strength": 1.0
+     }
+    },
+    {
+     "target": "outlet_valve",
+     "do": "highlight",
+     "at": "releasing",
+     "params": {
+      "color": "#FF3333",
+      "strength": 1.0
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "inlet_valve",
+     "frame": [
+      "inlet_valve",
+      "outlet_valve",
+      "pump",
+      "fluid_flow"
+     ],
+     "azimuth": -30.0,
+     "elevation": 40.0,
+     "lens": 75.0
+    },
+    {
+     "at": "releasing and reapplying",
+     "type": "push_in",
+     "target": "pad_inner",
+     "frame": [
+      "pad_inner",
+      "pad_outer",
+      "rotor"
+     ],
+     "azimuth": -60.0,
+     "elevation": 30.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "threshold_control",
+   "narration": "This keeps the tire at the threshold of maximum static friction, letting you steer around obstacles while stopping in the shortest distance.",
+   "objective": "System working together: sensor -> modulator -> caliper -> tire grip",
+   "keywords": [
+    "threshold of maximum static friction",
+    "steer around obstacles",
+    "shortest distance"
+   ],
+   "use": [
+    "wheel_assembly",
+    "caliper_assembly",
+    "sensor_assembly",
+    "modulator",
+    "brake_lines",
+    "contact_patch"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "caliper_body",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.08,
+        -0.25
+       ],
+       [
+        0.12,
+        -0.2
+       ],
+       [
+        0.18,
+        0.0
+       ],
+       [
+        0.12,
+        0.2
+       ],
+       [
+        0.08,
+        0.25
+       ]
+      ],
+      "axis": "x",
+      "sweep": 300,
+      "start_angle": 30,
+      "thickness": 0.04,
+      "cut_material": "accent"
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.0,
+      0.15
+     ],
+     "rotation": [
+      0.0,
+      90.0,
+      0.0
+     ]
+    },
+    {
+     "id": "piston_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "piston_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "pad_inner",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "pad_outer",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "bleeder",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.015,
+      "depth": 0.04,
+      "axis": "y"
+     },
+     "material": "brass",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "inlet_port",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.012,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      -0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "sensor_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.03,
+       0.04
+      ],
+      "bevel": 0.003
+     },
+     "position": [
+      0.35,
+      0.25,
+      0.4
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -30.0
+     ]
+    },
+    {
+     "id": "sensor_tip",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.008,
+      "depth": 0.025,
+      "axis": "z"
+     },
+     "material": "steel",
+     "parent": "sensor_body",
+     "position": [
+      0.0,
+      0.0,
+      -0.02
+     ]
+    },
+    {
+     "id": "sensor_wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.35,
+        0.25,
+        0.38
+       ],
+       [
+        0.3,
+        0.3,
+        0.3
+       ],
+       [
+        0.2,
+        0.4,
+        0.2
+       ],
+       [
+        0.1,
+        0.5,
+        0.1
+       ]
+      ],
+      "radius": 0.004
+     },
+     "material": "ink"
+    },
+    {
+     "id": "mod_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.3,
+       0.2,
+       0.15
+      ],
+      "bevel": 0.01
+     },
+     "material": "steel",
+     "position": [
+      -0.8,
+      0.6,
+      0.1
+     ]
+    },
+    {
+     "id": "inlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      -0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "outlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pump",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.025,
+      "depth": 0.08,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "parent": "mod_body",
+     "position": [
+      0.0,
+      -0.08,
+      0.0
+     ]
+    },
+    {
+     "id": "mod_inlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      -0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "mod_outlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "line_master",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.95,
+        0.7,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "line_to_caliper",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -0.8,
+        0.5,
+        0.1
+       ],
+       [
+        -0.5,
+        0.3,
+        0.1
+       ],
+       [
+        -0.2,
+        0.15,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "fluid_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "count": 12,
+      "radius": 0.006,
+      "speed": 1.5,
+      "radial_copies": 1,
+      "axis": "x"
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "road",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.0,
+       1.0,
+       0.1
+      ],
+      "bevel": 0.01
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "patch_static",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    },
+    {
+     "id": "patch_slide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       0.08,
+       0.01
+      ]
+     },
+     "material": "accent2",
+     "position": [
+      0.0,
+      0.0,
+      -0.59
+     ]
+    },
+    {
+     "id": "steer_arrow",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.4,
+       0,
+       0.5
+      ],
+      "radius": 0.02
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "id": "steer_label",
+     "kind": "label",
+     "params": {
+      "text": "STEER",
+      "size": 0.15
+     },
+     "material": "accent",
+     "position": [
+      -0.5,
+      0.0,
+      0.6
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 360,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": [
+      "inlet_valve",
+      "outlet_valve"
+     ],
+     "do": "cycle",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.05,
+        -0.015
+       ],
+       [
+        0.5,
+        -0.015
+       ],
+       [
+        0.55,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "pad_inner",
+      "pad_outer"
+     ],
+     "do": "cycle",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        -0.03
+       ],
+       [
+        0.05,
+        0
+       ],
+       [
+        0.45,
+        0
+       ],
+       [
+        0.5,
+        -0.03
+       ],
+       [
+        1,
+        -0.03
+       ]
+      ]
+     }
+    },
+    {
+     "target": "patch_static",
+     "do": "show",
+     "at": "threshold of maximum",
+     "sfx": "pop"
+    },
+    {
+     "target": "patch_slide",
+     "do": "hide",
+     "at": "threshold of maximum"
+    },
+    {
+     "target": "steer_arrow",
+     "do": "pop_in",
+     "at": "steer around obstacles",
+     "sfx": "swoosh"
+    },
+    {
+     "target": "steer_label",
+     "do": "pop_in",
+     "at": "steer around obstacles",
+     "offset": 0.1,
+     "sfx": "pop"
+    },
+    {
+     "target": "tire",
+     "do": "rotate",
+     "at": "steer around",
+     "duration": 0.8,
+     "params": {
+      "by": [
+       0,
+       0,
+       15
+      ]
+     }
+    },
+    {
+     "target": "road",
+     "do": "highlight",
+     "at": "shortest distance",
+     "params": {
+      "color": "#2F5BD3",
+      "strength": 0.5
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "tire",
+     "frame": [
+      "tire",
+      "patch_static",
+      "steer_arrow"
+     ],
+     "elevation": 20.0,
+     "orbit": 35.0,
+     "lens": 55.0
+    },
+    {
+     "at": "steer around",
+     "type": "push_in",
+     "target": "patch_static",
+     "frame": [
+      "patch_static",
+      "tire"
+     ],
+     "azimuth": -80.0,
+     "elevation": 50.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "assembly_reveal",
+   "narration": "The rapid shutter in your pedal isn't a malfunction; it's physics saving your life.",
+   "objective": "Exploded view of full ABS brake system collapsing into place",
+   "background": "dark",
+   "keywords": [
+    "rapid shutter",
+    "isn't a malfunction",
+    "physics saving your life"
+   ],
+   "use": [
+    "wheel_assembly",
+    "caliper_assembly",
+    "sensor_assembly",
+    "modulator",
+    "brake_lines"
+   ],
+   "objects": [
+    {
+     "id": "hub",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -0.2
+       ],
+       [
+        0.18,
+        -0.15
+       ],
+       [
+        0.22,
+        0.0
+       ],
+       [
+        0.25,
+        0.1
+       ],
+       [
+        0.22,
+        0.2
+       ],
+       [
+        0.18,
+        0.35
+       ],
+       [
+        0.15,
+        0.4
+       ]
+      ],
+      "axis": "z",
+      "sweep": 270,
+      "start_angle": 45,
+      "thickness": 0.03,
+      "cut_material": "accent"
+     },
+     "material": "steel"
+    },
+    {
+     "id": "rotor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.35,
+      "depth": 0.04,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "position": [
+      0.0,
+      0.0,
+      0.2
+     ]
+    },
+    {
+     "id": "tone_ring",
+     "kind": "gear",
+     "params": {
+      "teeth": 48,
+      "module": 0.012,
+      "thickness": 0.03,
+      "arms": 0,
+      "bore": 0.16
+     },
+     "material": "steel",
+     "position": [
+      0.0,
+      0.0,
+      0.42
+     ]
+    },
+    {
+     "id": "wheel_rim",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45,
+        -0.15
+       ],
+       [
+        0.48,
+        -0.1
+       ],
+       [
+        0.5,
+        0.0
+       ],
+       [
+        0.48,
+        0.1
+       ],
+       [
+        0.45,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.04
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "tire",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -0.15
+       ],
+       [
+        0.55,
+        -0.1
+       ],
+       [
+        0.6,
+        0.0
+       ],
+       [
+        0.55,
+        0.1
+       ],
+       [
+        0.5,
+        0.15
+       ]
+      ],
+      "axis": "z",
+      "thickness": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      0.0,
+      -0.2
+     ]
+    },
+    {
+     "id": "caliper_body",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.08,
+        -0.25
+       ],
+       [
+        0.12,
+        -0.2
+       ],
+       [
+        0.18,
+        0.0
+       ],
+       [
+        0.12,
+        0.2
+       ],
+       [
+        0.08,
+        0.25
+       ]
+      ],
+      "axis": "x",
+      "sweep": 300,
+      "start_angle": 30,
+      "thickness": 0.04,
+      "cut_material": "accent"
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.0,
+      0.15
+     ],
+     "rotation": [
+      0.0,
+      90.0,
+      0.0
+     ]
+    },
+    {
+     "id": "piston_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "piston_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.035,
+      "depth": 0.08,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      0.08
+     ]
+    },
+    {
+     "id": "pad_inner",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      -0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "pad_outer",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.08,
+       0.12,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "parent": "caliper_body",
+     "position": [
+      0.12,
+      0.0,
+      -0.15
+     ]
+    },
+    {
+     "id": "bleeder",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.015,
+      "depth": 0.04,
+      "axis": "y"
+     },
+     "material": "brass",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "inlet_port",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.012,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "caliper_body",
+     "position": [
+      0.0,
+      -0.18,
+      0.0
+     ]
+    },
+    {
+     "id": "sensor_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.03,
+       0.04
+      ],
+      "bevel": 0.003
+     },
+     "position": [
+      0.35,
+      0.25,
+      0.4
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      -30.0
+     ]
+    },
+    {
+     "id": "sensor_tip",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.008,
+      "depth": 0.025,
+      "axis": "z"
+     },
+     "material": "steel",
+     "parent": "sensor_body",
+     "position": [
+      0.0,
+      0.0,
+      -0.02
+     ]
+    },
+    {
+     "id": "sensor_wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.35,
+        0.25,
+        0.38
+       ],
+       [
+        0.3,
+        0.3,
+        0.3
+       ],
+       [
+        0.2,
+        0.4,
+        0.2
+       ],
+       [
+        0.1,
+        0.5,
+        0.1
+       ]
+      ],
+      "radius": 0.004
+     },
+     "material": "ink"
+    },
+    {
+     "id": "mod_body",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.3,
+       0.2,
+       0.15
+      ],
+      "bevel": 0.01
+     },
+     "material": "steel",
+     "position": [
+      -0.8,
+      0.6,
+      0.1
+     ]
+    },
+    {
+     "id": "inlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      -0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "outlet_valve",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.02,
+      "depth": 0.06,
+      "axis": "z"
+     },
+     "material": "chrome",
+     "parent": "mod_body",
+     "position": [
+      0.1,
+      0.0,
+      0.05
+     ]
+    },
+    {
+     "id": "pump",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.025,
+      "depth": 0.08,
+      "axis": "z"
+     },
+     "material": "dark_steel",
+     "parent": "mod_body",
+     "position": [
+      0.0,
+      -0.08,
+      0.0
+     ]
+    },
+    {
+     "id": "mod_inlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      -0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "mod_outlet",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.01,
+      "depth": 0.03,
+      "axis": "y"
+     },
+     "material": "steel",
+     "parent": "mod_body",
+     "position": [
+      0.15,
+      0.0,
+      -0.07
+     ]
+    },
+    {
+     "id": "line_master",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.95,
+        0.7,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "line_to_caliper",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -0.8,
+        0.5,
+        0.1
+       ],
+       [
+        -0.5,
+        0.3,
+        0.1
+       ],
+       [
+        -0.2,
+        0.15,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "radius": 0.008
+     },
+     "material": "ink"
+    },
+    {
+     "id": "fluid_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        -1.2,
+        0.8,
+        0.15
+       ],
+       [
+        -0.8,
+        0.6,
+        0.1
+       ],
+       [
+        0.43,
+        0,
+        0.15
+       ]
+      ],
+      "count": 12,
+      "radius": 0.006,
+      "speed": 1.5,
+      "radial_copies": 1,
+      "axis": "x"
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "pedal",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.15,
+       0.08,
+       0.04
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "position": [
+      -1.5,
+      0.9,
+      0.3
+     ]
+    },
+    {
+     "id": "master_cyl",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.04,
+      "depth": 0.12,
+      "axis": "x"
+     },
+     "material": "steel",
+     "position": [
+      -1.2,
+      0.8,
+      0.15
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire"
+     ],
+     "do": "spin",
+     "params": {
+      "rate": 360,
+      "ramp": 0,
+      "axis": "z"
+     }
+    },
+    {
+     "target": [
+      "inlet_valve",
+      "outlet_valve"
+     ],
+     "do": "cycle",
+     "params": {
+      "prop": "location",
+      "axis": "z",
+      "hz": 10,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.05,
+        -0.015
+       ],
+       [
+        0.5,
+        -0.015
+       ],
+       [
+        0.55,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire",
+      "caliper_body",
+      "piston_1",
+      "piston_2",
+      "pad_inner",
+      "pad_outer",
+      "bleeder",
+      "inlet_port",
+      "sensor_body",
+      "sensor_tip",
+      "sensor_wire",
+      "mod_body",
+      "inlet_valve",
+      "outlet_valve",
+      "pump",
+      "mod_inlet",
+      "mod_outlet",
+      "line_master",
+      "line_to_caliper",
+      "fluid_flow",
+      "pedal",
+      "master_cyl"
+     ],
+     "do": "explode",
+     "at": "rapid shutter",
+     "offset": -0.5,
+     "duration": 1.0,
+     "stagger": 0.08,
+     "params": {
+      "by": [
+       0,
+       0.3,
+       0.2
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": [
+      "hub",
+      "rotor",
+      "tone_ring",
+      "wheel_rim",
+      "tire",
+      "caliper_body",
+      "piston_1",
+      "piston_2",
+      "pad_inner",
+      "pad_outer",
+      "bleeder",
+      "inlet_port",
+      "sensor_body",
+      "sensor_tip",
+      "sensor_wire",
+      "mod_body",
+      "inlet_valve",
+      "outlet_valve",
+      "pump",
+      "mod_inlet",
+      "mod_outlet",
+      "line_master",
+      "line_to_caliper",
+      "fluid_flow",
+      "pedal",
+      "master_cyl"
+     ],
+     "do": "explode",
+     "at": "isn't a malfunction",
+     "duration": 1.2,
+     "stagger": 0.08,
+     "params": {
+      "by": [
+       0,
+       -0.3,
+       -0.2
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "pedal",
+     "do": "pulse",
+     "at": "rapid shutter",
+     "params": {
+      "amount": 0.1,
+      "hz": 15,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "master_cyl",
+     "do": "highlight",
+     "at": "physics saving",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 0.8
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": [
+      0.0,
+      0.0,
+      0.2
+     ],
+     "frame": [
+      "tire",
+      "caliper_body",
+      "mod_body",
+      "master_cyl"
+     ],
+     "azimuth": -45.0,
+     "elevation": 25.0,
+     "orbit": 50.0
+    },
+    {
+     "at": "physics saving your life",
+     "type": "pull_out",
+     "target": [
+      0.0,
+      0.0,
+      0.1
+     ],
+     "frame": [
+      "tire",
+      "caliper_body",
+      "mod_body",
+      "master_cyl",
+      "pedal"
+     ],
+     "azimuth": -30.0,
+     "elevation": 30.0,
+     "lens": 45.0
+    }
+   ]
+  }
+ ]
+}

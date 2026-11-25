@@ -326,7 +326,7 @@
     "cover_hook_2": "WHY LOCKED TIRES SKID?!",
     "cover_tag": "MECHANICAL PHYSICS",
     "cover_sticker": "20 PULSES PER SECOND",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -487,6 +487,31 @@
     "cover_hook_2": "USE FANS?!",
     "cover_tag": "FLUID DYNAMICS",
     "cover_sticker": "3,000 PSI MECHANISM",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "scroll_compressor_cutaway",
+    "title": "Inside a Scroll Compressor",
+    "hook": "Your air conditioner's compressor doesn\u2019t pump refrigerant using reciprocating pistons\u2014it actually traps gas inside crescent pockets using two interlocking geometric spirals.",
+    "script": "Your air conditioner's compressor doesn\u2019t pump refrigerant using reciprocating pistons\u2014it actually traps gas inside crescent pockets using two interlocking geometric spirals.\n\nInside, a stationary scroll pairs with an orbiting scroll driven by an eccentric crankshaft. As the drive shaft rotates, an Oldham coupling prevents the orbiting scroll from spinning, forcing it into a precise circular orbit instead. This orbital motion creates sealed, crescent-shaped chambers between the spiral walls. As refrigerant vapor enters the outer perimeter, these chambers progressively shrink in volume while shifting toward the center. This continuous volumetric reduction compresses the low-pressure gas into a high-pressure, high-temperature vapor before discharging it through the central port. Dual dynamic seals prevent gas backflow, ensuring continuous flow without the vibration of traditional pistons.\n\nTap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?",
+    "bullets": [
+      "Oldham coupling constrains motion to pure orbital rotation without spinning",
+      "Crescent-shaped compression pockets shrink in volume toward the center discharge port",
+      "Eccentric crankshaft generates continuous smooth volumetric reduction",
+      "Dynamic tip seals maintain pressure boundaries between adjacent gas pockets"
+    ],
+    "niche_tags": [
+      "#mechanicalengineering",
+      "#3danimation",
+      "#hvacengineering",
+      "#physicsexplained",
+      "#cadanimation"
+    ],
+    "cover_hook_1": "NO PISTONS INSIDE?",
+    "cover_hook_2": "HOW AC SPIRALS WORK",
+    "cover_tag": "MECHANICAL PHYSICS",
+    "cover_sticker": "3D CUTAWAY",
     "status": "pending",
     "video_path": null
   }
