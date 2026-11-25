@@ -116,16 +116,32 @@ class GeminiUnavailable(RuntimeError):
     """Every model was overloaded/unreachable: retry next run instead of judging the topic."""
 
 
+_DEADLINE = [float("inf")]  # wall-clock end of the current direct() run; every API call respects it
+CALL_TIMEOUT = 240
+
+
+def _timeout() -> float:
+    """Per-request timeout that never runs past the deadline."""
+    left = _DEADLINE[0] - time.time()
+    if left < 30:
+        raise GeminiUnavailable("director time budget exhausted")
+    return min(CALL_TIMEOUT, left)
+
+
+def _backoff(seconds: float) -> None:
+    time.sleep(max(0, min(seconds, _DEADLINE[0] - time.time() - 30)))
+
+
 def _call_gemini(prompt: str | list, model: str, key: str, temperature: float = 0.6) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     parts = [{"text": prompt}] if isinstance(prompt, str) else prompt
     for attempt in range(5):  # free tier: back off on 429 (rate limit) and 5xx (overloaded)
-        r = requests.post(url, headers={"x-goog-api-key": key}, timeout=300, json={
+        r = requests.post(url, headers={"x-goog-api-key": key}, timeout=_timeout(), json={
             "contents": [{"role": "user", "parts": parts}],
             "generationConfig": {"response_mime_type": "application/json", "temperature": temperature,
                                  "maxOutputTokens": 32768}})
         if (r.status_code == 429 or r.status_code >= 500) and attempt < 4:
-            time.sleep(30 * (attempt + 1))
+            _backoff(30 * (attempt + 1))
             continue
         r.raise_for_status()
         parts_out = r.json()["candidates"][0]["content"]["parts"]
@@ -140,13 +156,13 @@ def _call_openrouter(parts: list, model: str, key: str, temperature: float = 0.6
     content = [{"type": "text", "text": p["text"]} if "text" in p else
                {"type": "image_url", "image_url": {"url": f"data:{p['inline_data']['mime_type']};base64,"
                                                           f"{p['inline_data']['data']}"}} for p in parts]
-    for attempt in range(4):
-        r = requests.post("https://openrouter.ai/api/v1/chat/completions", timeout=600,
+    for attempt in range(3):
+        r = requests.post("https://openrouter.ai/api/v1/chat/completions", timeout=_timeout(),
                           headers={"Authorization": f"Bearer {key}"},
                           json={"model": model, "messages": [{"role": "user", "content": content}],
                                 "temperature": temperature, "max_tokens": 32000})
-        if (r.status_code == 429 or r.status_code >= 500) and attempt < 3:
-            time.sleep(20 * (attempt + 1))
+        if (r.status_code == 429 or r.status_code >= 500) and attempt < 2:
+            _backoff(20 * (attempt + 1))
             continue
         r.raise_for_status()
         data = r.json()
@@ -267,7 +283,7 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
     return scores, feedback
 
 
-def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budget_s: float = 100 * 60) -> dict:
+def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budget_s: float = 90 * 60) -> dict:
     """Draft -> validate -> render stills -> vision review -> revise (seeing its own renders).
 
     Each revision starts from the best-scoring draft so far, so a bad round can't undo progress.
@@ -276,11 +292,22 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budg
     from engine.studio.pipeline import render_stills
 
     key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    t0, history, best = time.time(), [], None
+    history = []
+    _DEADLINE[0] = time.time() + budget_s
+    try:
+        return _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_stills)
+    finally:
+        _DEADLINE[0] = float("inf")
+
+
+def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_stills) -> dict:
+    best = None
     feedback, images = "", []
     for rnd in range(visual_rounds + 1):
         outage = True  # stays True only if every drafter failed for network/availability reasons
         for name, call in _drafters():
+            if _DEADLINE[0] - time.time() < 5 * 60:  # not enough time left to draft + render + review
+                break
             cand = out_path.with_name(f"{out_path.stem}.r{rnd}.{name}.json")
             try:
                 draft_spec(topic, cand, attempts=3 if name == "gemini" else 2, feedback=feedback,
@@ -295,7 +322,12 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budg
             toks = tokens(spec.script)
             plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
             stills = render_stills(plan, work / f"review_{rnd}_{name}")
-            scores, fb = _review(spec, stills, key)
+            try:
+                scores, fb = _review(spec, stills, key)
+            except GeminiUnavailable:  # reviewers down or out of time: keep what we already have
+                if best is None:
+                    raise
+                break
             vals = [int(s.get("score", 0)) for s in scores] or [0]
             avg = sum(vals) / len(vals)
             history.append({"round": rnd, "drafter": name, "scores": vals, "avg": round(avg, 2),
@@ -312,7 +344,7 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budg
             if outage:
                 raise GeminiUnavailable("every drafter was unavailable")
             raise RuntimeError("no drafter produced a valid spec")
-        if time.time() - t0 > budget_s:
+        if _DEADLINE[0] - time.time() < 5 * 60:
             log.info("director: time budget used after round %d", rnd)
             break
         feedback = ("The attached images are renders of the best spec so far, one per scene, in order. LOOK at "

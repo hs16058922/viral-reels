@@ -223,3 +223,16 @@ class TestBranding(unittest.TestCase):
             self.assertTrue((Path(tmp) / "t_cover.jpg").exists())
             first = branding._frame(dst, "0.05", Path(tmp) / "f.png")
             self.assertNotEqual(first.getpixel((135, 20)), (0, 0, 255))  # cover, not the raw blue frame
+
+
+class TestDirectorBudget(unittest.TestCase):
+    def test_calls_refuse_to_start_past_the_deadline(self):
+        import time
+        from engine.studio import director
+        director._DEADLINE[0] = time.time() + 10
+        try:
+            with self.assertRaises(director.GeminiUnavailable):
+                director._timeout()
+        finally:
+            director._DEADLINE[0] = float("inf")
+        self.assertEqual(director._timeout(), director.CALL_TIMEOUT)
