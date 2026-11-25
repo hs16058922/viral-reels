@@ -1,0 +1,3025 @@
+{
+ "title": "Why Microwaves Heat Soup But Never the Bowl",
+ "prefabs": {
+  "hero": [
+   {
+    "id": "outer_case",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.2,
+      2.6,
+      2.6
+     ],
+     "bevel": 0.08
+    },
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_material": "clay_dark"
+   },
+   {
+    "id": "inner_cavity",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     -0.3,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      2.2,
+      2.0,
+      2.0
+     ],
+     "bevel": 0.05
+    },
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_material": "dark_steel"
+   },
+   {
+    "id": "turntable_motor",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     -0.3,
+     -1.05,
+     0
+    ],
+    "params": {
+     "radius": 0.15,
+     "depth": 0.15,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "turntable",
+    "kind": "cylinder",
+    "material": "glass",
+    "position": [
+     -0.3,
+     -0.92,
+     0
+    ],
+    "params": {
+     "radius": 0.85,
+     "depth": 0.05,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "glass_bowl",
+    "kind": "lathe",
+    "material": "glass",
+    "parent": "turntable",
+    "position": [
+     0,
+     0.05,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.2,
+       -0.9
+      ],
+      [
+       0.65,
+       -0.88
+      ],
+      [
+       0.75,
+       -0.35
+      ],
+      [
+       0.72,
+       -0.25
+      ]
+     ],
+     "axis": "y",
+     "thickness": 0.04
+    }
+   },
+   {
+    "id": "soup_fill",
+    "kind": "cylinder",
+    "material": "blood_red",
+    "parent": "glass_bowl",
+    "position": [
+     0,
+     -0.55,
+     0
+    ],
+    "params": {
+     "radius": 0.65,
+     "depth": 0.4,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "magnetron_housing",
+    "kind": "box",
+    "material": "dark_steel",
+    "position": [
+     1.1,
+     0.25,
+     0
+    ],
+    "params": {
+     "size": [
+      0.65,
+      0.85,
+      0.65
+     ],
+     "bevel": 0.03
+    }
+   },
+   {
+    "id": "magnetron_core",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     1.1,
+     0.25,
+     0
+    ],
+    "params": {
+     "radius": 0.22,
+     "depth": 0.75,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "magnetron_cap",
+    "kind": "cylinder",
+    "material": "brass",
+    "position": [
+     1.1,
+     0.7,
+     0
+    ],
+    "params": {
+     "radius": 0.12,
+     "depth": 0.2,
+     "axis": "y"
+    }
+   },
+   {
+    "id": "magnetron_antenna",
+    "kind": "cylinder",
+    "material": "accent",
+    "position": [
+     0.75,
+     0.4,
+     0
+    ],
+    "params": {
+     "radius": 0.06,
+     "depth": 0.35,
+     "axis": "x"
+    }
+   },
+   {
+    "id": "waveguide",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0.55,
+     0.4,
+     0
+    ],
+    "params": {
+     "size": [
+      0.45,
+      0.22,
+      0.35
+     ],
+     "bevel": 0.02
+    }
+   },
+   {
+    "id": "wave_stream",
+    "kind": "flow",
+    "material": "accent2",
+    "params": {
+     "points": [
+      [
+       1.1,
+       0.4,
+       0
+      ],
+      [
+       0.55,
+       0.4,
+       0
+      ],
+      [
+       -0.3,
+       0.4,
+       0
+      ],
+      [
+       -0.3,
+       -0.2,
+       0
+      ]
+     ],
+     "count": 16,
+     "radius": 0.03,
+     "speed": 3.0
+    }
+   }
+  ],
+  "molecules": [
+   {
+    "id": "mol_pivot1",
+    "kind": "empty",
+    "position": [
+     -0.45,
+     -0.55,
+     0.2
+    ]
+   },
+   {
+    "id": "mol1_o",
+    "kind": "sphere",
+    "material": "blue",
+    "parent": "mol_pivot1",
+    "params": {
+     "radius": 0.14
+    }
+   },
+   {
+    "id": "mol1_h1",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot1",
+    "position": [
+     0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   },
+   {
+    "id": "mol1_h2",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot1",
+    "position": [
+     -0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   },
+   {
+    "id": "lbl_plus1",
+    "kind": "label",
+    "material": "white",
+    "parent": "mol_pivot1",
+    "position": [
+     0,
+     0.24,
+     0
+    ],
+    "params": {
+     "text": "+",
+     "size": 0.18
+    }
+   },
+   {
+    "id": "lbl_minus1",
+    "kind": "label",
+    "material": "white",
+    "parent": "mol_pivot1",
+    "position": [
+     0,
+     -0.2,
+     0
+    ],
+    "params": {
+     "text": "-",
+     "size": 0.2
+    }
+   },
+   {
+    "id": "mol_pivot2",
+    "kind": "empty",
+    "position": [
+     -0.15,
+     -0.55,
+     -0.1
+    ]
+   },
+   {
+    "id": "mol2_o",
+    "kind": "sphere",
+    "material": "blue",
+    "parent": "mol_pivot2",
+    "params": {
+     "radius": 0.14
+    }
+   },
+   {
+    "id": "mol2_h1",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot2",
+    "position": [
+     0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   },
+   {
+    "id": "mol2_h2",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot2",
+    "position": [
+     -0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   },
+   {
+    "id": "lbl_plus2",
+    "kind": "label",
+    "material": "white",
+    "parent": "mol_pivot2",
+    "position": [
+     0,
+     0.24,
+     0
+    ],
+    "params": {
+     "text": "+",
+     "size": 0.18
+    }
+   },
+   {
+    "id": "lbl_minus2",
+    "kind": "label",
+    "material": "white",
+    "parent": "mol_pivot2",
+    "position": [
+     0,
+     -0.2,
+     0
+    ],
+    "params": {
+     "text": "-",
+     "size": 0.2
+    }
+   },
+   {
+    "id": "mol_pivot3",
+    "kind": "empty",
+    "position": [
+     -0.35,
+     -0.35,
+     0
+    ]
+   },
+   {
+    "id": "mol3_o",
+    "kind": "sphere",
+    "material": "blue",
+    "parent": "mol_pivot3",
+    "params": {
+     "radius": 0.14
+    }
+   },
+   {
+    "id": "mol3_h1",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot3",
+    "position": [
+     0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   },
+   {
+    "id": "mol3_h2",
+    "kind": "sphere",
+    "material": "blood_red",
+    "parent": "mol_pivot3",
+    "position": [
+     -0.16,
+     0.1,
+     0
+    ],
+    "params": {
+     "radius": 0.07
+    }
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "narration": "A microwave oven does not heat food from the outside in. It targets water molecules directly using electromagnetic resonance.",
+   "objective": "Cutaway view of microwave oven showing cavity, turntable, soup bowl, and incoming radiation waves",
+   "background": "blue",
+   "keywords": [
+    "outside in",
+    "water molecules",
+    "electromagnetic resonance"
+   ],
+   "use": [
+    "hero"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    }
+   ],
+   "actions": [
+    {
+     "target": "turntable",
+     "do": "spin",
+     "params": {
+      "rate": 12,
+      "axis": "y"
+     }
+    },
+    {
+     "target": "wave_stream",
+     "do": "pulse",
+     "params": {
+      "amount": 0.2,
+      "hz": 8,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "outer_case",
+     "do": "highlight",
+     "at": "outside in",
+     "params": {
+      "strength": 0.6
+     }
+    },
+    {
+     "target": "soup_fill",
+     "do": "highlight",
+     "at": "water molecules",
+     "params": {
+      "color": "#FF3300",
+      "strength": 1.2,
+      "hold": true
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "inner_cavity",
+     "frame": [
+      "outer_case",
+      "inner_cavity",
+      "glass_bowl",
+      "soup_fill"
+     ],
+     "azimuth": -30.0,
+     "elevation": 25.0,
+     "orbit": 20.0,
+     "lens": 55.0
+    },
+    {
+     "at": "electromagnetic resonance",
+     "offset": -0.2,
+     "type": "push_in",
+     "target": "soup_fill",
+     "frame": [
+      "glass_bowl",
+      "soup_fill"
+     ],
+     "azimuth": -15.0,
+     "elevation": 35.0,
+     "lens": 65.0
+    }
+   ]
+  },
+  {
+   "id": "magnetron",
+   "narration": "Inside the side wall, a vacuum tube called a magnetron fires electromagnetic waves at two point four five gigahertz.",
+   "objective": "Macro shot revealing magnetron core, copper antenna, and high-frequency microwave emissions",
+   "background": "dark",
+   "keywords": [
+    "magnetron",
+    "two point four five gigahertz"
+   ],
+   "note": "Illustrative - microwaves slowed to visible speed",
+   "use": [
+    "hero"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    }
+   ],
+   "actions": [
+    {
+     "target": "outer_case",
+     "do": "fade",
+     "duration": 0.8,
+     "params": {
+      "to": 0.2
+     }
+    },
+    {
+     "target": "magnetron_core",
+     "do": "highlight",
+     "at": "magnetron",
+     "params": {
+      "strength": 1.0,
+      "hold": true
+     }
+    },
+    {
+     "target": "magnetron_antenna",
+     "do": "highlight",
+     "at": "magnetron",
+     "offset": 0.15,
+     "params": {
+      "color": "#FFCC00",
+      "strength": 1.5,
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "wave_stream",
+     "do": "pulse",
+     "at": "two point four five gigahertz",
+     "params": {
+      "amount": 0.4,
+      "hz": 12,
+      "axis": "all"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "magnetron_core",
+     "frame": [
+      "magnetron_core",
+      "magnetron_antenna",
+      "waveguide"
+     ],
+     "azimuth": 25.0,
+     "elevation": 35.0,
+     "lens": 70.0
+    },
+    {
+     "at": "two point four five gigahertz",
+     "offset": -0.3,
+     "target": "magnetron_antenna",
+     "frame": [
+      "magnetron_core",
+      "wave_stream"
+     ],
+     "azimuth": 45.0,
+     "elevation": 25.0,
+     "orbit": 20.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "dipoles",
+   "narration": "Water molecules are electric dipoles, with a positive hydrogen side and a negative oxygen side.",
+   "objective": "Show structure of H2O molecules with distinct positive (+) and negative (-) electric charges",
+   "keywords": [
+    "electric dipoles",
+    "positive hydrogen side",
+    "negative oxygen side"
+   ],
+   "use": [
+    "hero",
+    "molecules"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "mol_pivot1",
+     "kind": "empty",
+     "position": [
+      -0.45,
+      -0.55,
+      0.2
+     ]
+    },
+    {
+     "id": "mol1_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot1"
+    },
+    {
+     "id": "mol1_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol1_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus1",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus1",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot2",
+     "kind": "empty",
+     "position": [
+      -0.15,
+      -0.55,
+      -0.1
+     ]
+    },
+    {
+     "id": "mol2_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot2"
+    },
+    {
+     "id": "mol2_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol2_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus2",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus2",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot3",
+     "kind": "empty",
+     "position": [
+      -0.35,
+      -0.35,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot3"
+    },
+    {
+     "id": "mol3_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "mol_pivot1",
+      "mol_pivot2",
+      "mol_pivot3"
+     ],
+     "do": "pop_in",
+     "stagger": 0.15,
+     "sfx": "pop"
+    },
+    {
+     "target": [
+      "lbl_plus1",
+      "lbl_plus2"
+     ],
+     "do": "highlight",
+     "at": "positive hydrogen side",
+     "params": {
+      "color": "#FF0000",
+      "strength": 1.5,
+      "hold": true
+     }
+    },
+    {
+     "target": [
+      "lbl_minus1",
+      "lbl_minus2"
+     ],
+     "do": "highlight",
+     "at": "negative oxygen side",
+     "params": {
+      "color": "#0000FF",
+      "strength": 1.5,
+      "hold": true
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "mol_pivot1",
+     "frame": [
+      "mol_pivot1",
+      "mol_pivot2",
+      "lbl_plus1",
+      "lbl_minus1"
+     ],
+     "azimuth": -20.0,
+     "elevation": 45.0,
+     "lens": 75.0
+    },
+    {
+     "at": "negative oxygen side",
+     "offset": -0.2,
+     "type": "push_in",
+     "target": "mol1_h1",
+     "frame": [
+      "mol1_o",
+      "mol1_h1",
+      "mol1_h2"
+     ],
+     "azimuth": 0.0,
+     "elevation": 55.0,
+     "lens": 80.0
+    }
+   ]
+  },
+  {
+   "id": "field_flip",
+   "narration": "As the electric field flips billions of times a second, water molecules rapidly twist to align, creating intense friction and boiling heat.",
+   "objective": "Demonstrate flipping electric field vectors driving rapid rotation and kinetic heat generation",
+   "background": "blue",
+   "keywords": [
+    "electric field flips",
+    "twist to align",
+    "boiling heat"
+   ],
+   "note": "Illustrative - slowed 100 million times",
+   "use": [
+    "hero",
+    "molecules"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "mol_pivot1",
+     "kind": "empty",
+     "position": [
+      -0.45,
+      -0.55,
+      0.2
+     ]
+    },
+    {
+     "id": "mol1_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot1"
+    },
+    {
+     "id": "mol1_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol1_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus1",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus1",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot2",
+     "kind": "empty",
+     "position": [
+      -0.15,
+      -0.55,
+      -0.1
+     ]
+    },
+    {
+     "id": "mol2_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot2"
+    },
+    {
+     "id": "mol2_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol2_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus2",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus2",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot3",
+     "kind": "empty",
+     "position": [
+      -0.35,
+      -0.35,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot3"
+    },
+    {
+     "id": "mol3_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "e_field_arrow1",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.3,
+       0.6,
+       0
+      ],
+      "radius": 0.05
+     },
+     "material": "accent",
+     "position": [
+      -0.3,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "e_field_label",
+     "kind": "label",
+     "params": {
+      "text": "E-FIELD",
+      "size": 0.22
+     },
+     "material": "accent",
+     "position": [
+      -0.3,
+      0.85,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "e_field_arrow1",
+      "e_field_label"
+     ],
+     "do": "pop_in",
+     "sfx": "pop"
+    },
+    {
+     "target": "e_field_arrow1",
+     "do": "cycle",
+     "at": "electric field flips",
+     "params": {
+      "prop": "rotation",
+      "axis": "z",
+      "hz": 3,
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.4,
+        180
+       ],
+       [
+        0.5,
+        180
+       ],
+       [
+        0.9,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "mol_pivot1",
+      "mol_pivot2",
+      "mol_pivot3"
+     ],
+     "do": "oscillate",
+     "at": "twist to align",
+     "params": {
+      "amplitude": 140,
+      "hz": 6,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "soup_fill",
+     "do": "highlight",
+     "at": "boiling heat",
+     "params": {
+      "color": "#FF2200",
+      "strength": 2.0,
+      "hold": true
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": "soup_fill",
+     "do": "pulse",
+     "at": "boiling heat",
+     "params": {
+      "amount": 0.12,
+      "hz": 8,
+      "axis": "all"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "mol_pivot1",
+     "frame": [
+      "mol_pivot1",
+      "e_field_arrow1"
+     ],
+     "azimuth": -15.0,
+     "elevation": 40.0,
+     "lens": 75.0
+    },
+    {
+     "at": "boiling heat",
+     "offset": -0.2,
+     "type": "push_in",
+     "target": "soup_fill",
+     "frame": [
+      "soup_fill",
+      "mol_pivot1",
+      "mol_pivot2"
+     ],
+     "azimuth": 10.0,
+     "elevation": 35.0,
+     "lens": 65.0
+    }
+   ]
+  },
+  {
+   "id": "bowl_cold",
+   "narration": "Glass and ceramic bowls have no free dipoles, so the radiation passes straight through without warming the container.",
+   "objective": "Show microwaves penetrating glass bowl harmlessly while directly heating liquid inside",
+   "keywords": [
+    "no free dipoles",
+    "passes straight through",
+    "warming the container"
+   ],
+   "use": [
+    "hero"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    }
+   ],
+   "actions": [
+    {
+     "target": "glass_bowl",
+     "do": "highlight",
+     "at": "Glass and ceramic bowls",
+     "params": {
+      "color": "#2F5BD3",
+      "strength": 1.0,
+      "hold": true
+     }
+    },
+    {
+     "target": "wave_stream",
+     "do": "pulse",
+     "at": "passes straight through",
+     "params": {
+      "amount": 0.3,
+      "hz": 10,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "soup_fill",
+     "do": "highlight",
+     "at": "passes straight through",
+     "params": {
+      "color": "#FF3300",
+      "strength": 2.0,
+      "hold": true
+     }
+    },
+    {
+     "target": "glass_bowl",
+     "do": "pulse",
+     "at": "without warming the container",
+     "params": {
+      "amount": -0.01,
+      "hz": 1,
+      "axis": "all"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "glass_bowl",
+     "frame": [
+      "glass_bowl",
+      "soup_fill",
+      "wave_stream"
+     ],
+     "elevation": 30.0,
+     "orbit": 25.0,
+     "lens": 55.0
+    },
+    {
+     "at": "without warming the container",
+     "offset": -0.3,
+     "type": "push_in",
+     "target": "glass_bowl",
+     "frame": [
+      "glass_bowl"
+     ],
+     "azimuth": 0.0,
+     "elevation": 45.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "conclusion",
+   "narration": "The oven never cooks the bowl. It forces the water inside your food to heat itself.",
+   "objective": "Beauty shot of cutaway microwave showing excited boiling liquid inside cold glass container",
+   "background": "dark",
+   "keywords": [
+    "never cooks the bowl",
+    "water inside your food"
+   ],
+   "use": [
+    "hero",
+    "molecules"
+   ],
+   "objects": [
+    {
+     "id": "outer_case",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.2,
+       2.6,
+       2.6
+      ],
+      "bevel": 0.08
+     },
+     "material": "clay_dark",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "clay_dark"
+    },
+    {
+     "id": "inner_cavity",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.2,
+       2.0,
+       2.0
+      ],
+      "bevel": 0.05
+     },
+     "material": "steel",
+     "position": [
+      -0.3,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_material": "dark_steel"
+    },
+    {
+     "id": "turntable_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.15,
+      "depth": 0.15,
+      "axis": "y"
+     },
+     "material": "dark_steel",
+     "position": [
+      -0.3,
+      -1.05,
+      0.0
+     ]
+    },
+    {
+     "id": "turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.85,
+      "depth": 0.05,
+      "axis": "y"
+     },
+     "material": "glass",
+     "position": [
+      -0.3,
+      -0.92,
+      0.0
+     ]
+    },
+    {
+     "id": "glass_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.9
+       ],
+       [
+        0.65,
+        -0.88
+       ],
+       [
+        0.75,
+        -0.35
+       ],
+       [
+        0.72,
+        -0.25
+       ]
+      ],
+      "axis": "y",
+      "thickness": 0.04
+     },
+     "material": "glass",
+     "parent": "turntable",
+     "position": [
+      0.0,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "soup_fill",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.65,
+      "depth": 0.4,
+      "axis": "y"
+     },
+     "material": "blood_red",
+     "parent": "glass_bowl",
+     "position": [
+      0.0,
+      -0.55,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_housing",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.65,
+       0.85,
+       0.65
+      ],
+      "bevel": 0.03
+     },
+     "material": "dark_steel",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_core",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 0.75,
+      "axis": "y"
+     },
+     "material": "chrome",
+     "position": [
+      1.1,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.12,
+      "depth": 0.2,
+      "axis": "y"
+     },
+     "material": "brass",
+     "position": [
+      1.1,
+      0.7,
+      0.0
+     ]
+    },
+    {
+     "id": "magnetron_antenna",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.06,
+      "depth": 0.35,
+      "axis": "x"
+     },
+     "material": "accent",
+     "position": [
+      0.75,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.45,
+       0.22,
+       0.35
+      ],
+      "bevel": 0.02
+     },
+     "material": "steel",
+     "position": [
+      0.55,
+      0.4,
+      0.0
+     ]
+    },
+    {
+     "id": "wave_stream",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        1.1,
+        0.4,
+        0
+       ],
+       [
+        0.55,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        0.4,
+        0
+       ],
+       [
+        -0.3,
+        -0.2,
+        0
+       ]
+      ],
+      "count": 16,
+      "radius": 0.03,
+      "speed": 3.0
+     },
+     "material": "accent2"
+    },
+    {
+     "id": "mol_pivot1",
+     "kind": "empty",
+     "position": [
+      -0.45,
+      -0.55,
+      0.2
+     ]
+    },
+    {
+     "id": "mol1_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot1"
+    },
+    {
+     "id": "mol1_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol1_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot1",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus1",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus1",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot1",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot2",
+     "kind": "empty",
+     "position": [
+      -0.15,
+      -0.55,
+      -0.1
+     ]
+    },
+    {
+     "id": "mol2_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot2"
+    },
+    {
+     "id": "mol2_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol2_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot2",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_plus2",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.18
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      0.24,
+      0.0
+     ]
+    },
+    {
+     "id": "lbl_minus2",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.2
+     },
+     "material": "white",
+     "parent": "mol_pivot2",
+     "position": [
+      0.0,
+      -0.2,
+      0.0
+     ]
+    },
+    {
+     "id": "mol_pivot3",
+     "kind": "empty",
+     "position": [
+      -0.35,
+      -0.35,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_o",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.14
+     },
+     "material": "blue",
+     "parent": "mol_pivot3"
+    },
+    {
+     "id": "mol3_h1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      0.16,
+      0.1,
+      0.0
+     ]
+    },
+    {
+     "id": "mol3_h2",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.07
+     },
+     "material": "blood_red",
+     "parent": "mol_pivot3",
+     "position": [
+      -0.16,
+      0.1,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "turntable",
+     "do": "spin",
+     "params": {
+      "rate": 12,
+      "axis": "y"
+     }
+    },
+    {
+     "target": "soup_fill",
+     "do": "highlight",
+     "at": "water inside your food",
+     "params": {
+      "color": "#FF2200",
+      "strength": 2.0,
+      "hold": true
+     }
+    },
+    {
+     "target": "soup_fill",
+     "do": "pulse",
+     "at": "heat itself",
+     "params": {
+      "amount": 0.15,
+      "hz": 9,
+      "axis": "all"
+     }
+    },
+    {
+     "target": [
+      "mol_pivot1",
+      "mol_pivot2",
+      "mol_pivot3"
+     ],
+     "do": "oscillate",
+     "at": "heat itself",
+     "params": {
+      "amplitude": 160,
+      "hz": 8,
+      "axis": "z"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": "inner_cavity",
+     "frame": [
+      "outer_case",
+      "inner_cavity",
+      "glass_bowl",
+      "soup_fill"
+     ],
+     "azimuth": -40.0,
+     "elevation": 25.0,
+     "orbit": 30.0
+    },
+    {
+     "at": "heat itself",
+     "offset": -0.3,
+     "type": "push_in",
+     "target": "soup_fill",
+     "frame": [
+      "glass_bowl",
+      "soup_fill"
+     ],
+     "azimuth": 10.0,
+     "elevation": 35.0,
+     "lens": 60.0
+    }
+   ]
+  }
+ ]
+}
