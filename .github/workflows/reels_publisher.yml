@@ -63,6 +63,7 @@ jobs:
         id: prep
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}   # free ":free" models only
         run: python -m automation.studio_ci prepare --build build --topic "${{ inputs.topic }}"
       - uses: actions/upload-artifact@v4
         with:

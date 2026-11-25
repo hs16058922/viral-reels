@@ -23,6 +23,12 @@ from engine.studio.spec import KIND_PARAMS, VideoSpec, resolve, tokens
 
 log = logging.getLogger("viral_reels.director")
 SPECS = Path(__file__).parent / "specs"
+# Free OpenRouter models (":free" = $0) that draft alongside Gemini; best-scoring draft wins each round.
+OPENROUTER_MODELS = [m.strip() for m in os.getenv(
+    "OPENROUTER_MODELS",
+    "nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-super-vl:free,google/gemma-4-31b-it:free",
+).split(",") if m.strip()]
+OPENROUTER_REVIEWER = os.getenv("OPENROUTER_REVIEWER", "nvidia/nemotron-3.5-super-vl:free")
 MODELS = [m.strip() for m in os.getenv("GEMINI_DIRECTOR_MODELS", "gemini-3.8-flash,gemini-3.5-flash,gemini-flash-latest,gemini-3-flash-preview").split(",") if m.strip()]
 
 REFERENCE = """
@@ -127,9 +133,63 @@ def _call_gemini(prompt: str | list, model: str, key: str, temperature: float = 
     raise RuntimeError("unreachable")
 
 
+def _call_openrouter(parts: list, model: str, key: str, temperature: float = 0.6) -> str:
+    """OpenAI-compatible chat call; images become data URLs. Free models only (":free")."""
+    if not model.endswith(":free"):
+        raise ValueError(f"refusing non-free OpenRouter model {model}")
+    content = [{"type": "text", "text": p["text"]} if "text" in p else
+               {"type": "image_url", "image_url": {"url": f"data:{p['inline_data']['mime_type']};base64,"
+                                                          f"{p['inline_data']['data']}"}} for p in parts]
+    for attempt in range(4):
+        r = requests.post("https://openrouter.ai/api/v1/chat/completions", timeout=600,
+                          headers={"Authorization": f"Bearer {key}"},
+                          json={"model": model, "messages": [{"role": "user", "content": content}],
+                                "temperature": temperature, "max_tokens": 32000})
+        if (r.status_code == 429 or r.status_code >= 500) and attempt < 3:
+            time.sleep(20 * (attempt + 1))
+            continue
+        r.raise_for_status()
+        data = r.json()
+        if "choices" not in data:
+            raise requests.HTTPError(f"OpenRouter error: {str(data.get('error', data))[:300]}")
+        return data["choices"][0]["message"].get("content") or ""
+    raise RuntimeError("unreachable")
+
+
+def _gemini_any(parts: list, temperature: float = 0.6) -> str:
+    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if not key:
+        raise GeminiUnavailable("GEMINI_API_KEY not set")
+    for model in MODELS:
+        try:
+            return _call_gemini(parts, model, key, temperature)
+        except requests.RequestException as e:
+            log.warning("gemini %s failed (%s), trying next", model, e)
+    raise GeminiUnavailable("no Gemini model available")
+
+
+def _drafters() -> list[tuple[str, callable]]:
+    """(name, call(parts) -> text) for every free model we can draft with."""
+    out = [("gemini", _gemini_any)]
+    key = os.getenv("OPENROUTER_API_KEY")
+    for m in OPENROUTER_MODELS if key else []:
+        def call(parts, m=m):
+            try:
+                return _call_openrouter(parts, m, key)
+            except requests.HTTPError:
+                if len(parts) == 1:
+                    raise
+                return _call_openrouter(parts[:1], m, key)  # text-only model: drop the images
+        out.append((m.split("/")[-1].replace(":free", ""), call))
+    return out
+
+
 def _check(text: str) -> tuple[VideoSpec | None, str]:
     """Validate a draft; returns (spec, "") or (None, error message for the repair round)."""
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.S)
     text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
+    if "{" in text:  # chatty models wrap the JSON in prose
+        text = text[text.index("{"):text.rindex("}") + 1]
     try:
         spec = VideoSpec.model_validate_json(text)
     except ValidationError as e:
@@ -189,12 +249,17 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
         "\"problems\": str, \"fix\": str}]}. Scenes:\n" +
         "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(spec.scenes)))}]
     parts += _img_parts(stills)
-    for model in MODELS:
+    reviewers = [(m, lambda p, m=m: _call_gemini(p, m, key, temperature=0.2)) for m in MODELS if key]
+    if os.getenv("OPENROUTER_API_KEY"):
+        reviewers.append((OPENROUTER_REVIEWER, lambda p: _call_openrouter(
+            p, OPENROUTER_REVIEWER, os.environ["OPENROUTER_API_KEY"], temperature=0.2)))
+    for name, call in reviewers:
         try:
-            scores = json.loads(_call_gemini(parts, model, key, temperature=0.2))["scenes"]
+            text = call(parts)
+            scores = json.loads(text[text.index("{"):text.rindex("}") + 1])["scenes"]
             break
-        except Exception as e:  # noqa: BLE001 — try the next model
-            log.warning("review: model %s failed (%s)", model, e)
+        except Exception as e:  # noqa: BLE001 — try the next reviewer
+            log.warning("review: %s failed (%s)", name, e)
     else:
         raise GeminiUnavailable("visual review unavailable")
     feedback = "\n".join(f"- scene {s.get('id')}: score {s.get('score')}/10. Problems: {s.get('problems')}. "
@@ -214,39 +279,55 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budg
     t0, history, best = time.time(), [], None
     feedback, images = "", []
     for rnd in range(visual_rounds + 1):
-        draft_spec(topic, out_path, feedback=feedback, images=images)
-        spec = VideoSpec.model_validate_json(out_path.read_text())
-        toks = tokens(spec.script)
-        plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
-        stills = render_stills(plan, work / f"review_{rnd}")
-        scores, fb = _review(spec, stills, key)
-        vals = [int(s.get("score", 0)) for s in scores] or [0]
-        avg = sum(vals) / len(vals)
-        history.append({"round": rnd, "scores": vals, "avg": round(avg, 2), "feedback": fb,
-                        "stills": [str(p) for p in stills]})
-        log.info("director: visual round %d scores %s (avg %.1f)", rnd, vals, avg)
-        if min(vals) >= PASS_MIN and avg >= PASS_AVG:
-            return {"spec": str(out_path), "passed": True, "history": history}
-        if best is None or avg > best["avg"]:
-            best = {"avg": avg, "text": out_path.read_text(), "fb": fb, "stills": stills}
+        outage = True  # stays True only if every drafter failed for network/availability reasons
+        for name, call in _drafters():
+            cand = out_path.with_name(f"{out_path.stem}.r{rnd}.{name}.json")
+            try:
+                draft_spec(topic, cand, attempts=3 if name == "gemini" else 2, feedback=feedback,
+                           images=images, call=call)
+            except Exception as e:  # noqa: BLE001 — one drafter failing must not stop the others
+                if not isinstance(e, (GeminiUnavailable, requests.RequestException)):
+                    outage = False
+                log.warning("director: %s produced no valid draft in round %d (%s)", name, rnd, str(e)[:200])
+                continue
+            outage = False
+            spec = VideoSpec.model_validate_json(cand.read_text())
+            toks = tokens(spec.script)
+            plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
+            stills = render_stills(plan, work / f"review_{rnd}_{name}")
+            scores, fb = _review(spec, stills, key)
+            vals = [int(s.get("score", 0)) for s in scores] or [0]
+            avg = sum(vals) / len(vals)
+            history.append({"round": rnd, "drafter": name, "scores": vals, "avg": round(avg, 2),
+                            "feedback": fb, "stills": [str(p) for p in stills]})
+            log.info("director: round %d %s scores %s (avg %.1f)", rnd, name, vals, avg)
+            text = cand.read_text()
+            cand.unlink()
+            if min(vals) >= PASS_MIN and avg >= PASS_AVG:
+                out_path.write_text(text)
+                return {"spec": str(out_path), "passed": True, "drafter": name, "history": history}
+            if best is None or avg > best["avg"]:
+                best = {"avg": avg, "text": text, "fb": fb, "stills": stills, "drafter": name}
+        if best is None:
+            if outage:
+                raise GeminiUnavailable("every drafter was unavailable")
+            raise RuntimeError("no drafter produced a valid spec")
         if time.time() - t0 > budget_s:
             log.info("director: time budget used after round %d", rnd)
             break
-        feedback = ("The attached images are renders of your best spec so far, one per scene, in order. LOOK at "
+        feedback = ("The attached images are renders of the best spec so far, one per scene, in order. LOOK at "
                     "them: anything that does not read as the real object must be rebuilt. Keep scenes that scored "
                     ">= 7 unchanged; rebuild the rest with more accurate, detailed, tightly framed parts.\n"
                     f"Reviewer notes:\n{best['fb']}\nBEST SPEC SO FAR:\n{best['text']}")
         images = best["stills"]
     out_path.write_text(best["text"])
-    return {"spec": str(out_path), "passed": False, "history": history}
+    return {"spec": str(out_path), "passed": False, "drafter": best["drafter"], "history": history}
 
 
 def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "",
-               images: list[Path] | None = None) -> Path:
+               images: list[Path] | None = None, call=None) -> Path:
     """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
-    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    if not key:
-        raise RuntimeError("AI director needs GEMINI_API_KEY (free tier) to draft specs for new topics")
+    call = call or _gemini_any
     examples = "\n\n".join(f"EXAMPLE SPEC ({p.stem}):\n{p.read_text()}" for p in
                            (SPECS / "mechanical_watch.json", SPECS / "jet_engine.json"))
     schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
@@ -257,14 +338,7 @@ def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "
             + (f"\nREVIEW OF YOUR LAST VERSION:\n{feedback}\n" if feedback else ""))
     prompt, last_err = base, ""
     for i in range(attempts):
-        for model in MODELS:
-            try:
-                text = _call_gemini([{"text": prompt}] + _img_parts(images or []), model, key)
-                break
-            except requests.RequestException as e:
-                log.warning("director: model %s failed (%s), trying next", model, e)
-        else:
-            raise GeminiUnavailable("AI director: no Gemini model available")
+        text = call([{"text": prompt}] + _img_parts(images or []))
         spec, err = _check(text)
         if spec and (lint := _lint(spec)):
             spec, err = None, "Quality rules failed:\n" + lint
