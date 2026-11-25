@@ -1,4 +1,28 @@
 {
  "passed": false,
- "error": "1 validation error for VideoSpec\nscenes.0.objects.53\n  Value error, appliance: unknown params for kind 'asset': ['_path'] [type=value_error, input_value={'id': 'appliance', 'kind...age_microwave_1k.gltf'}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+ "drafter": "nemotron-3-ultra-550b-a55b",
+ "history": [
+  {
+   "round": 0,
+   "drafter": "nemotron-3-ultra-550b-a55b",
+   "scores": [
+    6,
+    3,
+    2,
+    2,
+    4,
+    1
+   ],
+   "avg": 3.0,
+   "feedback": "- scene hook: score 6/10. Problems: The microwave model is a decent vintage asset, but it is floating in a void with flat lighting. It fails to show the 'reveal' of the magnetron or waveguide as requested.. Fix: Use a technical X-ray shader or a 'shell-peel' animation to show the internal copper components while maintaining the outer casing's silhouette.\n- scene magnetron: score 3/10. Problems: The component on top is a generic mechanical block with fins, not a magnetron cutaway. There are no resonant vanes or spiraling electrons; the 'waves' are just a primitive dotted line.. Fix: Model the internal cylindrical anode block with its characteristic keyhole-shaped cavities. Use a particle system to show electrons spiraling in the magnetic field.\n- scene dipole: score 2/10. Problems: The water molecule is represented by two crude orange arrows. This is scientifically unrecognizable and looks like a placeholder asset.. Fix: Model a proper V-shaped H2O molecule with a large oxygen sphere and two smaller hydrogen spheres. Use color coding (red/white) and '+' / '-' signs to indicate the dipole.\n- scene friction: score 2/10. Problems: Fails to show molecular chaos or steam. The liquid is a static orange plane. The dotted line does not represent a flipping electromagnetic field.. Fix: Add a steam particle simulation and animate a cluster of water molecules rotating rapidly in opposite directions to visualize 'molecular friction.'\n- scene bowl_pass: score 4/10. Problems: The visual logic is understandable but the execution is crude. The dotted line passing through the bowl is a very weak representation of radiation.. Fix: Use a glowing sine-wave ripple effect that passes through the bowl geometry but terminates/glows intensely when hitting the water volume.\n- scene summary: score 1/10. Problems: The geometry is broken. The vintage microwave is clipping through a white box in a nonsensical way. It looks like a viewport error rather than a professional 3D explainer.. Fix: Create a clean 'exploded view' where the outer casing, the waveguide, the magnetron, and the food tray are all spaced out neatly with connecting lines.",
+   "stills": [
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/00_hook/still_0124.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/01_magnetron/still_0110.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/02_dipole/still_0090.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/03_friction/still_0117.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/04_bowl_pass/still_0111.png",
+    "build/director/review_0_nemotron-3-ultra-550b-a55b/05_summary/still_0121.png"
+   ]
+  }
+ ]
 }
