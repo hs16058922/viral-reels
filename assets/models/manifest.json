@@ -1,0 +1,230 @@
+{
+ "vintage_microwave": {
+  "file": "vintage_microwave/vintage_microwave_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "countertop microwave oven (closed door)",
+  "dimensions_m": [
+   1.074,
+   0.746,
+   0.526
+  ],
+  "source": "https://polyhaven.com/a/vintage_microwave",
+  "author": "Adam Nekola"
+ },
+ "wooden_bowl_01": {
+  "file": "wooden_bowl_01/wooden_bowl_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "wooden bowl",
+  "dimensions_m": [
+   0.313,
+   0.309,
+   0.094
+  ],
+  "source": "https://polyhaven.com/a/wooden_bowl_01",
+  "author": "Oliver Harries"
+ },
+ "pot_enamel_01": {
+  "file": "pot_enamel_01/pot_enamel_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "enamel cooking pot",
+  "dimensions_m": [
+   0.263,
+   0.18,
+   0.178
+  ],
+  "source": "https://polyhaven.com/a/pot_enamel_01",
+  "author": "Kuutti Siitonen"
+ },
+ "vintage_electric_kettle": {
+  "file": "vintage_electric_kettle/vintage_electric_kettle_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "electric kettle",
+  "dimensions_m": [
+   0.321,
+   0.249,
+   0.305
+  ],
+  "source": "https://polyhaven.com/a/vintage_electric_kettle",
+  "author": "SV Garip"
+ },
+ "electric_stove": {
+  "file": "electric_stove/electric_stove_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "kitchen electric stove / oven",
+  "dimensions_m": [
+   0.503,
+   0.648,
+   0.859
+  ],
+  "source": "https://polyhaven.com/a/electric_stove",
+  "author": "Kuutti Siitonen"
+ },
+ "alarm_clock_01": {
+  "file": "alarm_clock_01/alarm_clock_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "twin-bell alarm clock",
+  "dimensions_m": [
+   0.228,
+   0.168,
+   0.174
+  ],
+  "source": "https://polyhaven.com/a/alarm_clock_01",
+  "author": "Yann Kervran, James Ray Cock"
+ },
+ "wall_clock": {
+  "file": "wall_clock/wall_clock_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "round wall clock",
+  "dimensions_m": [
+   0.32,
+   0.047,
+   0.32
+  ],
+  "source": "https://polyhaven.com/a/wall_clock",
+  "author": "PierreB3D"
+ },
+ "vintage_pocket_watch": {
+  "file": "vintage_pocket_watch/vintage_pocket_watch_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "pocket watch",
+  "dimensions_m": [
+   0.062,
+   0.014,
+   0.08
+  ],
+  "source": "https://polyhaven.com/a/vintage_pocket_watch",
+  "author": "Tal Swicegood"
+ },
+ "ceiling_fan": {
+  "file": "ceiling_fan/ceiling_fan_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "ceiling fan",
+  "dimensions_m": [
+   1.463,
+   1.463,
+   0.516
+  ],
+  "source": "https://polyhaven.com/a/ceiling_fan",
+  "author": "Ulan Cabanilla"
+ },
+ "Drill_01": {
+  "file": "Drill_01/Drill_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "cordless power drill",
+  "dimensions_m": [
+   0.183,
+   0.052,
+   0.185
+  ],
+  "source": "https://polyhaven.com/a/Drill_01",
+  "author": "Fernando Quinn"
+ },
+ "lightbulb_01": {
+  "file": "lightbulb_01/lightbulb_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "incandescent light bulb",
+  "dimensions_m": [
+   0.06,
+   0.06,
+   0.1
+  ],
+  "source": "https://polyhaven.com/a/lightbulb_01",
+  "author": "Josh Dean"
+ },
+ "lightbulb_led": {
+  "file": "lightbulb_led/lightbulb_led_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "LED light bulb",
+  "dimensions_m": [
+   0.061,
+   0.061,
+   0.1
+  ],
+  "source": "https://polyhaven.com/a/lightbulb_led",
+  "author": "Josh Dean"
+ },
+ "old_tyre": {
+  "file": "old_tyre/old_tyre_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "car tyre",
+  "dimensions_m": [
+   0.6,
+   0.165,
+   0.6
+  ],
+  "source": "https://polyhaven.com/a/old_tyre",
+  "author": "MP"
+ },
+ "rusted_wheel_rim_01": {
+  "file": "rusted_wheel_rim_01/rusted_wheel_rim_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "steel car wheel rim",
+  "dimensions_m": [
+   0.403,
+   0.154,
+   0.395
+  ],
+  "source": "https://polyhaven.com/a/rusted_wheel_rim_01",
+  "author": "John Hutcheson"
+ },
+ "tire_pump": {
+  "file": "tire_pump/tire_pump_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "hand tyre pump",
+  "dimensions_m": [
+   0.255,
+   0.101,
+   0.58
+  ],
+  "source": "https://polyhaven.com/a/tire_pump",
+  "author": "Garrison Gager"
+ },
+ "Camera_01": {
+  "file": "Camera_01/Camera_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "compact camera",
+  "dimensions_m": [
+   0.214,
+   0.263,
+   0.078
+  ],
+  "source": "https://polyhaven.com/a/Camera_01",
+  "author": "Rajil Jose Macatangay"
+ },
+ "propane_tank": {
+  "file": "propane_tank/propane_tank_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "propane gas tank",
+  "dimensions_m": [
+   0.337,
+   0.337,
+   0.554
+  ],
+  "source": "https://polyhaven.com/a/propane_tank",
+  "author": "Slinc"
+ },
+ "Television_01": {
+  "file": "Television_01/Television_01_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "old CRT television",
+  "dimensions_m": [
+   0.6,
+   0.471,
+   0.457
+  ],
+  "source": "https://polyhaven.com/a/Television_01",
+  "author": "Gabriel Radi\u0107"
+ },
+ "covered_car": {
+  "file": "covered_car/covered_car_1k.gltf",
+  "license": "CC0-1.0",
+  "description": "car under a cover (silhouette of a car)",
+  "dimensions_m": [
+   1.789,
+   4.38,
+   1.411
+  ],
+  "source": "https://polyhaven.com/a/covered_car",
+  "author": "MP"
+ }
+}

@@ -19,6 +19,8 @@ from pathlib import Path
 import requests
 from pydantic import ValidationError
 
+from engine.studio import kit
+from engine.studio.pipeline import resolve_assets
 from engine.studio.spec import KIND_PARAMS, VideoSpec, resolve, tokens
 
 log = logging.getLogger("viral_reels.director")
@@ -52,6 +54,8 @@ OBJECT KINDS (params) — units are scene units (~1 = a large part), angles in d
 - label: text, size (3D tag that always faces camera; use few, short, UPPERCASE or numbers).
 - arrow: to [x,y,z] (from = position), radius.
 - stage: nx, ny, tile, gap, height (tiled display floor). empty: group/pivot for children.
+- asset: asset_id, size (longest side in units). A photoreal CC0 3D model (see MODELS). Great for the hook and the
+  final shot (the real-world object), not for internals.
 Every object: id, kind, params, material, position, rotation, scale, parent (children move/rotate with parent),
 cut [nx,ny,nz] = SECTION CUT (removes the half of the object the normal points into, showing the inside with
 a coloured cut face; e.g. [0,-1,0] removes the half facing the default camera), cut_offset, cut_material.
@@ -94,12 +98,14 @@ Hard rules:
 5. Reuse parts across scenes with `prefabs` + `use`; ids are unique per scene, letters/digits/underscore only.
 6. Keep the main subject within roughly a 4 x 7 unit volume, taller than wide when possible (vertical video).
 7. Physically faithful directions and ratios; when you exaggerate speed or simplify, add a scene `note`.
-8. Build every recognisable object from several parts, the way a 3D artist would block it out: e.g. an
+8. KITS FIRST: if the KIT CATALOG has the device or its parts, use kit instances; build custom parts from
+   primitives only for what no kit covers, and use `asset` MODELS for the everyday object in hook/final shots.
+   Otherwise build every recognisable object from several parts, the way a 3D artist would block it out: e.g. an
    aircraft = lathe fuselage with tapered nose/tail + box wings + fin; a valve = lathe housing + cylinder disc +
    stem + handle; a phone = beveled box body + glass screen + camera bump. 6-20 solid parts per scene.
 9. Every shot lists the ids it must keep visible in `frame`. Never put the camera inside a large object;
    use cutaways (lathe sweep / `cut`) to look inside things.
-10. ONE HERO ASSEMBLY: build the device once in `prefabs` at realistic proportions with its real internal parts
+10. ONE HERO ASSEMBLY: build the device once in `prefabs` (kits + custom parts) at realistic proportions with its real internal parts
     (housing, shafts, bearings, coils, chambers, seals, fasteners...) and `use` it in most scenes. Each scene
     reveals a different part of the SAME object (cutaway, explode, highlight, push_in/macro shots on that part).
     Do not invent unrelated props per scene.
@@ -109,6 +115,19 @@ Hard rules:
 12. FILL THE FRAME: parts sit close together the way they are really assembled (no floating gaps); each shot
     frames only the parts being explained so they appear large; keep labels to 0-2 per scene.
 13. Output ONLY the JSON object. No markdown fences, no comments.
+"""
+
+
+KITS = f"""
+KIT CATALOG — pre-built, art-directed assemblies. Place one as a scene/prefab object:
+  {{"id": "mag", "kit": "magnetron", "position": [x,y,z], "rotation": [deg], "scale": 1 or [x,y,z], "cut": [0,-1,0]}}
+It becomes an empty `mag` (move/rotate/scale/pop the whole kit) plus parts `mag_<part>` (animate/highlight a part).
+Optional "materials": {{"<part>": "<material>"}} recolours parts; "cut" slices the static shell for a cutaway.
+Kits are ~2-3 units tall and centred on their origin; combine several (e.g. a magnetron beside a microwave_cavity).
+{kit.catalog()}
+
+MODELS (kind "asset", params.asset_id):
+{chr(10).join(f"- {k}: {v['description']}" for k, v in json.loads((Path(__file__).resolve().parents[2] / "assets" / "models" / "manifest.json").read_text()).items())}
 """
 
 
@@ -229,6 +248,10 @@ PASS_MIN, PASS_AVG = 5, 6.5
 def _lint(spec: VideoSpec) -> str:
     """Density rules the schema can't express: thin scenes look like slideshows."""
     probs = []
+    try:
+        resolve_assets(spec)
+    except (LookupError, PermissionError) as e:
+        probs.append(f"{e}; use only asset_ids listed under MODELS")
     for sc in spec.scenes:
         solid = [o for o in sc.objects if o.kind not in ("label", "empty", "flow")]
         if len(solid) < LINT_MIN_OBJECTS:
@@ -319,6 +342,7 @@ def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_st
                 continue
             outage = False
             spec = VideoSpec.model_validate_json(cand.read_text())
+            resolve_assets(spec)
             toks = tokens(spec.script)
             plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
             stills = render_stills(plan, work / f"review_{rnd}_{name}")
@@ -360,11 +384,10 @@ def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "
                images: list[Path] | None = None, call=None) -> Path:
     """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
     call = call or _gemini_any
-    examples = "\n\n".join(f"EXAMPLE SPEC ({p.stem}):\n{p.read_text()}" for p in
-                           (SPECS / "mechanical_watch.json", SPECS / "jet_engine.json"))
+    examples = f"EXAMPLE SPEC (kits + asset; note part ids like motor_rotor):\n{(SPECS / 'examples' / 'cordless_drill.json').read_text()}"
     schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
     brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
-    base = (f"{RULES}\n{REFERENCE}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
+    base = (f"{RULES}\n{REFERENCE}\n{KITS}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
             f"{json.dumps({k: sorted(v) for k, v in KIND_PARAMS.items()})}\n\n{examples}\n\n"
             f"TOPIC BRIEF (facts to cover; rewrite the narration for the scenes):\n{json.dumps(brief, indent=1)}\n"
             + (f"\nREVIEW OF YOUR LAST VERSION:\n{feedback}\n" if feedback else ""))

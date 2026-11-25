@@ -488,7 +488,7 @@ class Build:
     def __init__(self, plan, args):
         self.plan, self.args, self.fps = plan, args, plan["fps"]
         self.n = plan["frames"]
-        self.objs, self.members, self.mats, self.warnings = {}, {}, {}, []
+        self.objs, self.members, self.mats, self.warnings, self.cutters = {}, {}, {}, [], {}
         self.col = bpy.context.scene.collection
 
     def link(self, o):
@@ -557,6 +557,8 @@ class Build:
         for o in self.plan["objects"]:
             if o["parent"]:
                 self.objs[o["id"]].parent = self.objs[o["parent"]]
+                if o["id"] in self.cutters:
+                    self.cutters[o["id"]].parent = self.objs[o["parent"]]
             if o.get("driver"):
                 self.add_gear_driver(self.objs[o["id"]], o["driver"])
 
@@ -574,6 +576,7 @@ class Build:
         cutter.hide_render = True
         cutter.display_type = "WIRE"
         self.link(cutter)
+        self.cutters[o["id"]] = cutter  # parented with obj's parent: the plane is in the same local frame
         mod = obj.modifiers.new("Section", "BOOLEAN")
         mod.operation, mod.object, mod.solver = "DIFFERENCE", cutter, "EXACT"
         mod.material_mode = "TRANSFER"

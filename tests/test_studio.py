@@ -225,6 +225,30 @@ class TestBranding(unittest.TestCase):
             self.assertNotEqual(first.getpixel((135, 20)), (0, 0, 255))  # cover, not the raw blue frame
 
 
+class TestKit(unittest.TestCase):
+    def _spec(self, obj):
+        return VideoSpec.model_validate({"title": "t", "scenes": [{"id": "a", "narration": "hello there", "objects": [obj],
+                                         "actions": [], "shots": [{"frame": [obj["id"]]}]}]})
+
+    def test_every_kit_expands_and_validates(self):
+        from engine.studio import kit
+        for name in kit.KIT:
+            objs = self._spec({"id": "k", "kit": name, "cut": [0, -1, 0]}).scenes[0].objects
+            self.assertEqual(objs[0].id, "k")
+            self.assertTrue(all(o.id.startswith("k_") and o.parent for o in objs[1:]), name)
+
+    def test_cut_plane_passes_through_kit_origin_and_gears_remap(self):
+        objs = {o.id: o for o in self._spec({"id": "m", "kit": "clock_movement", "cut": [0, -1, 0]}).scenes[0].objects}
+        self.assertEqual(objs["m_gear_mid"].params["mesh_with"], "m_gear_drive")
+        self.assertIsNone(objs["m_gear_mid"].cut)  # moving internals stay whole
+        plate = objs["m_plate"]  # at y=0.25 in kit space: plane offset compensates so it cuts at y=0
+        self.assertAlmostEqual(plate.cut_offset, 0.25)
+
+    def test_unknown_kit_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            self._spec({"id": "k", "kit": "flux_capacitor"})
+
+
 class TestDirectorBudget(unittest.TestCase):
     def test_calls_refuse_to_start_past_the_deadline(self):
         import time

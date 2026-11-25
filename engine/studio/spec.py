@@ -23,6 +23,8 @@ from typing import Any, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from engine.studio import kit
+
 Vec3 = tuple[float, float, float]
 Anchor = Union[float, str]
 
@@ -169,7 +171,8 @@ class VideoSpec(Strict):
         if not isinstance(data, dict):
             return data
         data = copy.deepcopy(data)
-        pre = data.get("prefabs", {})
+        pre = {k: kit.expand(v) for k, v in data.get("prefabs", {}).items()}
+        data["prefabs"] = pre
         for sc in data.get("scenes", []):
             have = {o["id"] for o in sc.get("objects", [])}
             extra = []
@@ -180,7 +183,7 @@ class VideoSpec(Strict):
                     if o["id"] not in have:
                         have.add(o["id"])
                         extra.append(o)
-            sc["objects"] = extra + sc.get("objects", [])
+            sc["objects"] = extra + kit.expand(sc.get("objects", []))
         return data
 
     @field_validator("scenes")
