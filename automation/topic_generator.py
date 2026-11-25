@@ -300,7 +300,10 @@ class ViralTopicGenerator:
         prompt = f"""You are the head science writer for @CurioMotion, a viral 3D animation Instagram page explaining everyday engineering and physics mysteries.
 Generate {count} unique, high-retention topics.
 Requirements:
-1. Subject must be an everyday mechanical, technological, or physics object.
+1. Subject must be an everyday device whose INSIDE is a rigid mechanism that a 3D cutaway can show clearly:
+   gears, rotors, fans, pistons, valves, pumps, springs, coils, magnets, bearings, lenses, chambers, pipes
+   (e.g. a lock cylinder, a car differential, a toilet flush valve, a hard drive, a bicycle hub).
+   Avoid subjects that are mostly fabric, chemistry, software, electronics on circuit boards, or people.
 2. Hook must be counterintuitive ("X doesn't do Y, it actually does Z").
 3. Script must be 120-150 words, descriptive with real physics/engineering terms, and end with: "Tap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?"
 4. Provide 4 technical bullet points.
@@ -323,18 +326,12 @@ Return strictly JSON array:
   }}
 ]
 """
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-        try:
-            resp = requests.post(url, headers={"x-goog-api-key": api_key}, json={
-                "contents": [{"parts": [{"text": prompt}]}],
-                "generationConfig": {"response_mime_type": "application/json"}
-            }, timeout=30)
-            if resp.status_code == 200:
-                data = resp.json()
-                text = data["candidates"][0]["content"]["parts"][0]["text"]
-                return json.loads(text)
-        except Exception as e:
-            logger.warning("Gemini generation failed: %s. Using curated library...", e)
+        from engine.studio.director import MODELS, _call_gemini
+        for model in MODELS:
+            try:
+                return json.loads(_call_gemini(prompt, model, api_key))
+            except Exception as e:  # noqa: BLE001 — fall back to the next model, then the curated library
+                logger.warning("Gemini topic generation with %s failed: %s", model, e)
         return []
 
     @classmethod

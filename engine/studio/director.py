@@ -93,7 +93,16 @@ Hard rules:
    stem + handle; a phone = beveled box body + glass screen + camera bump. 6-20 solid parts per scene.
 9. Every shot lists the ids it must keep visible in `frame`. Never put the camera inside a large object;
    use cutaways (lathe sweep / `cut`) to look inside things.
-10. Output ONLY the JSON object. No markdown fences, no comments.
+10. ONE HERO ASSEMBLY: build the device once in `prefabs` at realistic proportions with its real internal parts
+    (housing, shafts, bearings, coils, chambers, seals, fasteners...) and `use` it in most scenes. Each scene
+    reveals a different part of the SAME object (cutaway, explode, highlight, push_in/macro shots on that part).
+    Do not invent unrelated props per scene.
+11. NO STAND-INS: never use a lone sphere/box/cylinder to stand for a complex thing (a person, a car, a circuit
+    board, a bag, a cloud of gas). Model its recognisable silhouette from several shaped parts (lathe profiles,
+    beveled boxes, tubes) or leave it out. Gas/liquid/electricity = `flow` particles inside a cutaway.
+12. FILL THE FRAME: parts sit close together the way they are really assembled (no floating gaps); each shot
+    frames only the parts being explained so they appear large; keep labels to 0-2 per scene.
+13. Output ONLY the JSON object. No markdown fences, no comments.
 """
 
 
@@ -156,12 +165,21 @@ def _lint(spec: VideoSpec) -> str:
     return "\n".join(probs)
 
 
-def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], str]:
-    """Free-tier Gemini vision review of one still per scene. Returns (scores, feedback)."""
+def _img_parts(stills: list[Path]) -> list[dict]:
     import base64
     import io
     from PIL import Image
 
+    out = []
+    for png in stills:
+        buf = io.BytesIO()
+        Image.open(png).convert("RGB").save(buf, "JPEG", quality=85)
+        out.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}})
+    return out
+
+
+def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], str]:
+    """Free-tier Gemini vision review of one still per scene. Returns (scores, feedback)."""
     parts = [{"text": (
         "You are a strict art director for a premium 3D educational Reels channel. For each still (one per scene, "
         "in order) score 1-10 how clearly and REALISTICALLY it depicts the scene's objective: recognisable, "
@@ -170,10 +188,7 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
         "but crude, 1-3 = unrecognisable or broken. Return JSON: {\"scenes\": [{\"id\": str, \"score\": int, "
         "\"problems\": str, \"fix\": str}]}. Scenes:\n" +
         "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(spec.scenes)))}]
-    for png in stills:
-        buf = io.BytesIO()
-        Image.open(png).convert("RGB").save(buf, "JPEG", quality=85)
-        parts.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}})
+    parts += _img_parts(stills)
     for model in MODELS:
         try:
             scores = json.loads(_call_gemini(parts, model, key, temperature=0.2))["scenes"]
@@ -187,14 +202,19 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
     return scores, feedback
 
 
-def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 2) -> dict:
-    """Draft → validate → render stills → vision review → revise. Raises if it never looks good enough."""
+def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budget_s: float = 100 * 60) -> dict:
+    """Draft -> validate -> render stills -> vision review -> revise (seeing its own renders).
+
+    Each revision starts from the best-scoring draft so far, so a bad round can't undo progress.
+    Stops early on a pass, or when the time budget (free-tier rate-limit waits included) runs out.
+    """
     from engine.studio.pipeline import render_stills
 
     key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    feedback, history = "", []
+    t0, history, best = time.time(), [], None
+    feedback, images = "", []
     for rnd in range(visual_rounds + 1):
-        draft_spec(topic, out_path, feedback=feedback)
+        draft_spec(topic, out_path, feedback=feedback, images=images)
         spec = VideoSpec.model_validate_json(out_path.read_text())
         toks = tokens(spec.script)
         plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
@@ -207,12 +227,22 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 2) -> d
         log.info("director: visual round %d scores %s (avg %.1f)", rnd, vals, avg)
         if min(vals) >= PASS_MIN and avg >= PASS_AVG:
             return {"spec": str(out_path), "passed": True, "history": history}
-        feedback = ("A render of your previous spec was reviewed. Improve modelling detail, realism and framing "
-                    "where it scored low (keep what scored well):\n" + fb + "\nPREVIOUS SPEC:\n" + out_path.read_text())
+        if best is None or avg > best["avg"]:
+            best = {"avg": avg, "text": out_path.read_text(), "fb": fb, "stills": stills}
+        if time.time() - t0 > budget_s:
+            log.info("director: time budget used after round %d", rnd)
+            break
+        feedback = ("The attached images are renders of your best spec so far, one per scene, in order. LOOK at "
+                    "them: anything that does not read as the real object must be rebuilt. Keep scenes that scored "
+                    ">= 7 unchanged; rebuild the rest with more accurate, detailed, tightly framed parts.\n"
+                    f"Reviewer notes:\n{best['fb']}\nBEST SPEC SO FAR:\n{best['text']}")
+        images = best["stills"]
+    out_path.write_text(best["text"])
     return {"spec": str(out_path), "passed": False, "history": history}
 
 
-def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "") -> Path:
+def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "",
+               images: list[Path] | None = None) -> Path:
     """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
     key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     if not key:
@@ -229,7 +259,7 @@ def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "
     for i in range(attempts):
         for model in MODELS:
             try:
-                text = _call_gemini(prompt, model, key)
+                text = _call_gemini([{"text": prompt}] + _img_parts(images or []), model, key)
                 break
             except requests.RequestException as e:
                 log.warning("director: model %s failed (%s), trying next", model, e)
