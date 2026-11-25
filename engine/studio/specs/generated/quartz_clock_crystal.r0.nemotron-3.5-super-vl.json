@@ -1,0 +1,2893 @@
+{
+ "title": "The Vibrating Crystal Inside Every Wristwatch",
+ "prefabs": {
+  "watch_timebase": [
+   {
+    "id": "q",
+    "kind": "empty",
+    "position": [
+     0,
+     0,
+     1.4
+    ],
+    "scale": 1.0
+   },
+   {
+    "id": "q_can",
+    "kind": "lathe",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.0,
+       1.5
+      ],
+      [
+       0.42,
+       1.45
+      ],
+      [
+       0.45,
+       1.3
+      ],
+      [
+       0.45,
+       -0.9
+      ],
+      [
+       0.5,
+       -1.0
+      ]
+     ],
+     "sweep": 200,
+     "start_angle": -10,
+     "thickness": 0.03
+    },
+    "scale": 1.0,
+    "parent": "q",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "q_base",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     -1.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.5,
+     "depth": 0.15
+    },
+    "scale": 1.0,
+    "parent": "q",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "q_fork_base",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     0,
+     0,
+     -0.65
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.6,
+      0.12,
+      0.4
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "q"
+   },
+   {
+    "id": "q_prong_l",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     -0.2,
+     0,
+     0.35
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.16,
+      0.12,
+      1.6
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "q"
+   },
+   {
+    "id": "q_prong_r",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     0.2,
+     0,
+     0.35
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.16,
+      0.12,
+      1.6
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "q"
+   },
+   {
+    "id": "q_electrode_l",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     0,
+     -0.065,
+     -0.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.1,
+      0.01,
+      1.3
+     ]
+    },
+    "scale": 1.0,
+    "parent": "q_prong_l"
+   },
+   {
+    "id": "q_electrode_r",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     0,
+     -0.065,
+     -0.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.1,
+      0.01,
+      1.3
+     ]
+    },
+    "scale": 1.0,
+    "parent": "q_prong_r"
+   },
+   {
+    "id": "q_lead_a",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     -0.2,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.03,
+     "depth": 1.0
+    },
+    "scale": 1.0,
+    "parent": "q"
+   },
+   {
+    "id": "q_lead_b",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0.2,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.03,
+     "depth": 1.0
+    },
+    "scale": 1.0,
+    "parent": "q"
+   },
+   {
+    "id": "m",
+    "kind": "empty",
+    "position": [
+     0,
+     0,
+     -1.4
+    ],
+    "scale": 0.9
+   },
+   {
+    "id": "m_plate",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     0.6,
+     0.25,
+     0.0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.8,
+      0.08,
+      3.8
+     ],
+     "bevel": 0.04
+    },
+    "scale": 1.0,
+    "parent": "m",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.25
+   },
+   {
+    "id": "m_battery",
+    "kind": "cylinder",
+    "material": "accent2",
+    "position": [
+     -0.4,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.22,
+     "depth": 1.0,
+     "axis": "x"
+    },
+    "scale": 1.0,
+    "parent": "m",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "m_battery_cap",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0.12,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.1,
+     "depth": 0.06,
+     "axis": "x"
+    },
+    "scale": 1.0,
+    "parent": "m",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "m_motor_coil",
+    "kind": "spring",
+    "material": "brass",
+    "position": [
+     1.7,
+     0,
+     -1.55
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "coils": 14,
+     "radius": 0.2,
+     "wire": 0.03,
+     "height": 0.5
+    },
+    "scale": 1.0,
+    "parent": "m"
+   },
+   {
+    "id": "m_train",
+    "kind": "empty",
+    "material": "clay",
+    "position": [
+     0,
+     -0.1,
+     0.2
+    ],
+    "rotation": [
+     90,
+     0,
+     0
+    ],
+    "params": {},
+    "scale": 1.0,
+    "parent": "m"
+   },
+   {
+    "id": "m_gear_drive",
+    "kind": "gear",
+    "material": "brass",
+    "position": [
+     0.75,
+     0.05,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 12,
+     "module": 0.06,
+     "thickness": 0.06
+    },
+    "scale": 1.0,
+    "parent": "m_train"
+   },
+   {
+    "id": "m_gear_mid",
+    "kind": "gear",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 40,
+     "module": 0.06,
+     "thickness": 0.06,
+     "arms": 4,
+     "pinion_teeth": 10,
+     "mesh_with": "m_gear_drive",
+     "angle": 170
+    },
+    "scale": 1.0,
+    "parent": "m_train"
+   },
+   {
+    "id": "m_gear_out",
+    "kind": "gear",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 20,
+     "module": 0.06,
+     "thickness": 0.06,
+     "arms": 5,
+     "mesh_with": "m_gear_mid",
+     "angle": -30
+    },
+    "scale": 1.0,
+    "parent": "m_train"
+   },
+   {
+    "id": "m_hand",
+    "kind": "box",
+    "material": "accent2",
+    "position": [
+     0,
+     0.45,
+     0.08
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.06,
+      0.9,
+      0.02
+     ]
+    },
+    "scale": 1.0,
+    "parent": "m_gear_out"
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "narration": "Your wristwatch keeps time with a microscopic tuning fork carved from solid quartz rock, not gears or a microchip.",
+   "objective": "Hook with the real watch and name the quartz crystal.",
+   "keywords": [
+    "microscopic tuning fork",
+    "solid quartz rock"
+   ],
+   "objects": [
+    {
+     "id": "watch",
+     "kind": "asset",
+     "params": {
+      "asset_id": "vintage_pocket_watch",
+      "size": 2.6
+     },
+     "rotation": [
+      0.0,
+      15.0,
+      0.0
+     ]
+    },
+    {
+     "id": "quartz_label",
+     "kind": "label",
+     "params": {
+      "text": "QUARTZ",
+      "size": 0.35
+     },
+     "position": [
+      0.0,
+      1.4,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "watch",
+     "do": "rotate",
+     "duration": 4.0,
+     "params": {
+      "by": [
+       0,
+       25,
+       0
+      ]
+     }
+    },
+    {
+     "target": "quartz_label",
+     "do": "pop_in",
+     "at": "solid quartz rock",
+     "sfx": "pop"
+    },
+    {
+     "target": "quartz_label",
+     "do": "highlight",
+     "at": "solid quartz rock",
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "watch",
+     "frame": [
+      "watch"
+     ],
+     "azimuth": -30.0,
+     "elevation": 20.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "piezo",
+   "narration": "Apply voltage to the quartz and it bends. Remove it and it springs back, releasing an electric pulse.",
+   "objective": "Show the piezoelectric bending of the quartz prongs.",
+   "background": "blue",
+   "keywords": [
+    "Apply voltage to the quartz",
+    "springs back",
+    "electric pulse"
+   ],
+   "note": "Illustrative - slowed",
+   "use": [
+    "watch_timebase"
+   ],
+   "objects": [
+    {
+     "id": "q",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      1.4
+     ]
+    },
+    {
+     "id": "q_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "q_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "q_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "m",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -1.4
+     ],
+     "scale": 0.9
+    },
+    {
+     "id": "m_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "m",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.25
+    },
+    {
+     "id": "m_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "m",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "m",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "m",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "m_train",
+     "kind": "empty",
+     "parent": "m",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "m_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "m_gear_drive",
+      "angle": 170
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "m_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "accent2",
+     "parent": "m_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "q_prong_l",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 1.5,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        -6
+       ],
+       [
+        0.5,
+        6
+       ],
+       [
+        1,
+        -6
+       ]
+      ]
+     }
+    },
+    {
+     "target": "q_prong_r",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 1.5,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        6
+       ],
+       [
+        0.5,
+        -6
+       ],
+       [
+        1,
+        6
+       ]
+      ]
+     }
+    },
+    {
+     "target": [
+      "q_electrode_l",
+      "q_electrode_r"
+     ],
+     "do": "highlight",
+     "at": "Apply voltage to the quartz",
+     "params": {
+      "color": "#FFB347",
+      "strength": 2
+     }
+    },
+    {
+     "target": "q_fork_base",
+     "do": "highlight",
+     "at": "springs back",
+     "params": {
+      "color": "#E8452C",
+      "strength": 2
+     }
+    },
+    {
+     "target": "q_lead_a",
+     "do": "highlight",
+     "at": "electric pulse",
+     "params": {
+      "color": "#E8452C",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "q",
+     "frame": [
+      "q_can",
+      "q_prong_l",
+      "q_prong_r",
+      "q_electrode_l",
+      "q_electrode_r"
+     ],
+     "azimuth": -40.0,
+     "elevation": 25.0,
+     "orbit": 20.0
+    }
+   ]
+  },
+  {
+   "id": "frequency",
+   "narration": "Engineers cut the fork so precisely it vibrates thirty-two thousand seven hundred and sixty-eight times every second.",
+   "objective": "Show the exact 32,768 Hz vibration rate.",
+   "background": "dark",
+   "keywords": [
+    "thirty-two thousand seven hundred and sixty-eight"
+   ],
+   "note": "Illustrative - slowed 4096x",
+   "use": [
+    "watch_timebase"
+   ],
+   "objects": [
+    {
+     "id": "q",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      1.4
+     ]
+    },
+    {
+     "id": "q_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "q_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "q_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "m",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -1.4
+     ],
+     "scale": 0.9
+    },
+    {
+     "id": "m_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "m",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.25
+    },
+    {
+     "id": "m_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "m",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "m",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "m",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "m_train",
+     "kind": "empty",
+     "parent": "m",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "m_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "m_gear_drive",
+      "angle": 170
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "m_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "accent2",
+     "parent": "m_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "hz_label",
+     "kind": "label",
+     "params": {
+      "text": "32,768 Hz",
+      "size": 0.4
+     },
+     "position": [
+      0.0,
+      1.8,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "q_prong_l",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 3,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        -10
+       ],
+       [
+        0.5,
+        10
+       ],
+       [
+        1,
+        -10
+       ]
+      ]
+     }
+    },
+    {
+     "target": "q_prong_r",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 3,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        10
+       ],
+       [
+        0.5,
+        -10
+       ],
+       [
+        1,
+        10
+       ]
+      ]
+     }
+    },
+    {
+     "target": "hz_label",
+     "do": "pop_in",
+     "at": "thirty-two thousand seven hundred and sixty-eight",
+     "sfx": "pop"
+    },
+    {
+     "target": [
+      "q_prong_l",
+      "q_prong_r"
+     ],
+     "do": "highlight",
+     "at": "thirty-two thousand seven hundred and sixty-eight",
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "q_prong_l",
+     "frame": [
+      "q_prong_l",
+      "q_prong_r"
+     ],
+     "azimuth": 0.0,
+     "elevation": 0.0,
+     "lens": 85.0
+    }
+   ]
+  },
+  {
+   "id": "divide",
+   "narration": "That number is two to the power of fifteen, so fifteen dividers can halve it again and again.",
+   "objective": "Explain the 2^15 division chain.",
+   "keywords": [
+    "two to the power of fifteen",
+    "fifteen dividers"
+   ],
+   "note": "Illustrative - slowed",
+   "use": [
+    "watch_timebase"
+   ],
+   "objects": [
+    {
+     "id": "q",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      1.4
+     ]
+    },
+    {
+     "id": "q_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "q_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "q_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "m",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -1.4
+     ],
+     "scale": 0.9
+    },
+    {
+     "id": "m_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "m",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.25
+    },
+    {
+     "id": "m_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "m",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "m",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "m",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "m_train",
+     "kind": "empty",
+     "parent": "m",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "m_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "m_gear_drive",
+      "angle": 170
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "m_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "accent2",
+     "parent": "m_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "divide_label",
+     "kind": "label",
+     "params": {
+      "text": "2^15",
+      "size": 0.45
+     },
+     "position": [
+      0.0,
+      0.0,
+      2.4
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "m_gear_drive",
+     "do": "spin",
+     "params": {
+      "rate": 70,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "divide_label",
+     "do": "pop_in",
+     "at": "two to the power of fifteen",
+     "sfx": "pop"
+    },
+    {
+     "target": "m_gear_drive",
+     "do": "highlight",
+     "at": "fifteen dividers",
+     "params": {
+      "color": "#E8452C",
+      "strength": 2
+     }
+    },
+    {
+     "target": "m_gear_mid",
+     "do": "highlight",
+     "at": "fifteen dividers",
+     "offset": 0.4,
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    },
+    {
+     "target": "m_gear_out",
+     "do": "highlight",
+     "at": "fifteen dividers",
+     "offset": 0.8,
+     "params": {
+      "color": "#FFB347",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "m",
+     "frame": [
+      "m_gear_drive",
+      "m_gear_mid",
+      "m_gear_out"
+     ],
+     "azimuth": -30.0,
+     "elevation": 30.0,
+     "orbit": 25.0
+    }
+   ]
+  },
+  {
+   "id": "onehz",
+   "narration": "Fifteen halvings turn thirty-two thousand seven hundred and sixty-eight hertz into exactly one pulse per second.",
+   "objective": "Show the final one pulse per second output.",
+   "background": "blue",
+   "keywords": [
+    "thirty-two thousand seven hundred and sixty-eight hertz",
+    "one pulse per second"
+   ],
+   "note": "Illustrative - slowed",
+   "use": [
+    "watch_timebase"
+   ],
+   "objects": [
+    {
+     "id": "q",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      1.4
+     ]
+    },
+    {
+     "id": "q_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "q_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "q_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "m",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -1.4
+     ],
+     "scale": 0.9
+    },
+    {
+     "id": "m_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "m",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.25
+    },
+    {
+     "id": "m_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "m",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "m",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "m",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "m_train",
+     "kind": "empty",
+     "parent": "m",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "m_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "m_gear_drive",
+      "angle": 170
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "m_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "accent2",
+     "parent": "m_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "m_gear_drive",
+     "do": "spin",
+     "params": {
+      "rate": 10,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "m_hand",
+     "do": "rotate",
+     "at": "one pulse per second",
+     "duration": 0.3,
+     "params": {
+      "by": [
+       0,
+       0,
+       8
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "m_hand",
+     "do": "highlight",
+     "at": "one pulse per second",
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "m_hand",
+     "frame": [
+      "m_hand",
+      "m_gear_out"
+     ],
+     "azimuth": -15.0,
+     "elevation": 10.0,
+     "lens": 70.0
+    }
+   ]
+  },
+  {
+   "id": "conclusion",
+   "narration": "One pulse ticks the second hand once. A stone crystal vibrating thirty-two thousand times a second measures human time.",
+   "objective": "Final synthesis: crystal vibration becomes human time.",
+   "background": "dark",
+   "keywords": [
+    "one pulse",
+    "second hand",
+    "thirty-two thousand times a second"
+   ],
+   "use": [
+    "watch_timebase"
+   ],
+   "objects": [
+    {
+     "id": "q",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      1.4
+     ]
+    },
+    {
+     "id": "q_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "q_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "q_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "q_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "brass",
+     "parent": "q_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "q_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "q_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "q",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "m",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -1.4
+     ],
+     "scale": 0.9
+    },
+    {
+     "id": "m_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "m",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.25
+    },
+    {
+     "id": "m_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "m",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "m",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "m",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "m_train",
+     "kind": "empty",
+     "parent": "m",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "m_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "m_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "m_gear_drive",
+      "angle": 170
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "m_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "m_train"
+    },
+    {
+     "id": "m_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "accent2",
+     "parent": "m_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "watch",
+     "kind": "asset",
+     "params": {
+      "asset_id": "vintage_pocket_watch",
+      "size": 2.6
+     },
+     "position": [
+      0.0,
+      -2.2,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      15.0,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "q_prong_l",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 2,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        -6
+       ],
+       [
+        0.5,
+        6
+       ],
+       [
+        1,
+        -6
+       ]
+      ]
+     }
+    },
+    {
+     "target": "q_prong_r",
+     "do": "cycle",
+     "params": {
+      "prop": "rotation",
+      "axis": "x",
+      "hz": 2,
+      "phase": 0,
+      "keys": [
+       [
+        0,
+        6
+       ],
+       [
+        0.5,
+        -6
+       ],
+       [
+        1,
+        6
+       ]
+      ]
+     }
+    },
+    {
+     "target": "m_hand",
+     "do": "rotate",
+     "at": "one pulse",
+     "duration": 0.3,
+     "params": {
+      "by": [
+       0,
+       0,
+       8
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": [
+      "q_prong_l",
+      "q_prong_r"
+     ],
+     "do": "highlight",
+     "at": "thirty-two thousand times a second",
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    },
+    {
+     "target": "watch",
+     "do": "pop_in",
+     "at": "human time",
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": "q",
+     "frame": [
+      "q_can",
+      "m_plate",
+      "m_hand"
+     ],
+     "elevation": 25.0
+    },
+    {
+     "at": "human time",
+     "type": "push_in",
+     "target": "watch",
+     "frame": [
+      "watch"
+     ],
+     "azimuth": -25.0,
+     "elevation": 15.0,
+     "lens": 60.0,
+     "blend": 0.6
+    }
+   ]
+  }
+ ]
+}

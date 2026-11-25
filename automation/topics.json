@@ -436,7 +436,7 @@
     "cover_hook_2": "THE 32,768 Hz CRYSTAL?!",
     "cover_tag": "PRECISION PHYSICS",
     "cover_sticker": "PIEZOELECTRIC EFFECT",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -512,6 +512,31 @@
     "cover_hook_2": "HOW AC SPIRALS WORK",
     "cover_tag": "MECHANICAL PHYSICS",
     "cover_sticker": "3D CUTAWAY",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "impact_driver_mechanism",
+    "title": "The Secret Hammer Inside Your Drill",
+    "hook": "Your impact driver doesn't just spin faster to tighten a bolt; it actually stops and hits itself thousands of times per minute.",
+    "script": "Inside this impact driver, the motor isn't directly connected to the bit. Instead, it drives a heavy cylindrical weight called the hammer. As resistance builds, a massive compression spring pushes the hammer forward, engaging two metal lugs against the output anvil. But here is the secret: when the torque threshold is met, the hammer slides back up a V-shaped helical groove, disengaging for a split second. This allows the motor to build up rotational kinetic energy before the spring slams the hammer forward again. This 'impact' delivers a massive burst of torque that a standard drill simply cannot match. It is a cycle of energy storage and violent release, all happening inside this steel housing. The sound you hear isn't the motor straining\u2014it is the hammer striking the anvil at high velocity. Tap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?",
+    "bullets": [
+      "Helical Cam Grooves: These allow the hammer to retract and reset after every strike.",
+      "Rotational Kinetic Energy: The hammer accelerates during the flight phase to maximize impact force.",
+      "Torsion Spring: Provides the axial force necessary to re-engage the hammer lugs with the anvil.",
+      "Anvil Lugs: The specific contact points where stored energy is transferred to the fastener."
+    ],
+    "niche_tags": [
+      "#mechanicalengineering",
+      "#impactdriver",
+      "#3danimation",
+      "#physicsfacts",
+      "#tooltech"
+    ],
+    "cover_hook_1": "DRILLS DON'T",
+    "cover_hook_2": "ACTUALLY SPIN?!",
+    "cover_tag": "TOOL PHYSICS",
+    "cover_sticker": "1000x TORQUE",
     "status": "pending",
     "video_path": null
   }

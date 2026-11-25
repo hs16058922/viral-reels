@@ -1,0 +1,5031 @@
+{
+ "title": "The Vibrating Crystal Inside Every Wristwatch",
+ "prefabs": {
+  "watch_mechanism": [
+   {
+    "id": "crystal",
+    "kind": "empty",
+    "position": [
+     -1.8,
+     0,
+     0
+    ],
+    "scale": 2.2
+   },
+   {
+    "id": "crystal_can",
+    "kind": "lathe",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.0,
+       1.5
+      ],
+      [
+       0.42,
+       1.45
+      ],
+      [
+       0.45,
+       1.3
+      ],
+      [
+       0.45,
+       -0.9
+      ],
+      [
+       0.5,
+       -1.0
+      ]
+     ],
+     "sweep": 200,
+     "start_angle": -10,
+     "thickness": 0.03
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_base",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     -1.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.5,
+     "depth": 0.15
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_fork_base",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     0,
+     0,
+     -0.65
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.6,
+      0.12,
+      0.4
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_prong_l",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     -0.2,
+     0,
+     0.35
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.16,
+      0.12,
+      1.6
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_prong_r",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     0.2,
+     0,
+     0.35
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.16,
+      0.12,
+      1.6
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_electrode_l",
+    "kind": "box",
+    "material": "chrome",
+    "position": [
+     0,
+     -0.065,
+     -0.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.1,
+      0.01,
+      1.3
+     ]
+    },
+    "scale": 1.0,
+    "parent": "crystal_prong_l"
+   },
+   {
+    "id": "crystal_electrode_r",
+    "kind": "box",
+    "material": "chrome",
+    "position": [
+     0,
+     -0.065,
+     -0.05
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.1,
+      0.01,
+      1.3
+     ]
+    },
+    "scale": 1.0,
+    "parent": "crystal_prong_r"
+   },
+   {
+    "id": "crystal_lead_a",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     -0.2,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.03,
+     "depth": 1.0
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "crystal_lead_b",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0.2,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.03,
+     "depth": 1.0
+    },
+    "scale": 1.0,
+    "parent": "crystal"
+   },
+   {
+    "id": "movement",
+    "kind": "empty",
+    "position": [
+     1.2,
+     0,
+     0
+    ],
+    "scale": 1.5
+   },
+   {
+    "id": "movement_plate",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     0.6,
+     0.25,
+     0.0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.8,
+      0.08,
+      3.8
+     ],
+     "bevel": 0.04
+    },
+    "scale": 1.0,
+    "parent": "movement"
+   },
+   {
+    "id": "movement_battery",
+    "kind": "cylinder",
+    "material": "accent2",
+    "position": [
+     -0.4,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.22,
+     "depth": 1.0,
+     "axis": "x"
+    },
+    "scale": 1.0,
+    "parent": "movement"
+   },
+   {
+    "id": "movement_battery_cap",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0.12,
+     0,
+     -1.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.1,
+     "depth": 0.06,
+     "axis": "x"
+    },
+    "scale": 1.0,
+    "parent": "movement"
+   },
+   {
+    "id": "movement_motor_coil",
+    "kind": "spring",
+    "material": "brass",
+    "position": [
+     1.7,
+     0,
+     -1.55
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "coils": 14,
+     "radius": 0.2,
+     "wire": 0.03,
+     "height": 0.5
+    },
+    "scale": 1.0,
+    "parent": "movement"
+   },
+   {
+    "id": "movement_train",
+    "kind": "empty",
+    "material": "clay",
+    "position": [
+     0,
+     -0.1,
+     0.2
+    ],
+    "rotation": [
+     90,
+     0,
+     0
+    ],
+    "params": {},
+    "scale": 1.0,
+    "parent": "movement"
+   },
+   {
+    "id": "movement_gear_drive",
+    "kind": "gear",
+    "material": "brass",
+    "position": [
+     0.75,
+     0.05,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 12,
+     "module": 0.06,
+     "thickness": 0.06
+    },
+    "scale": 1.0,
+    "parent": "movement_train"
+   },
+   {
+    "id": "movement_gear_mid",
+    "kind": "gear",
+    "material": "brass",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 40,
+     "module": 0.06,
+     "thickness": 0.06,
+     "arms": 4,
+     "pinion_teeth": 10,
+     "mesh_with": "movement_gear_drive",
+     "angle": 170
+    },
+    "scale": 1.0,
+    "parent": "movement_train"
+   },
+   {
+    "id": "movement_gear_out",
+    "kind": "gear",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "teeth": 20,
+     "module": 0.06,
+     "thickness": 0.06,
+     "arms": 5,
+     "mesh_with": "movement_gear_mid",
+     "angle": -30
+    },
+    "scale": 1.0,
+    "parent": "movement_train"
+   },
+   {
+    "id": "movement_hand",
+    "kind": "box",
+    "material": "ink",
+    "position": [
+     0,
+     0.45,
+     0.08
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.06,
+      0.9,
+      0.02
+     ]
+    },
+    "scale": 1.0,
+    "parent": "movement_gear_out"
+   },
+   {
+    "id": "wire",
+    "kind": "tube",
+    "params": {
+     "points": [
+      [
+       -1.0,
+       0,
+       0
+      ],
+      [
+       0.4,
+       0,
+       0
+      ]
+     ],
+     "radius": 0.04
+    },
+    "material": "steel"
+   },
+   {
+    "id": "battery",
+    "kind": "empty",
+    "position": [
+     1.2,
+     -1.6,
+     0
+    ],
+    "scale": 0.7
+   },
+   {
+    "id": "battery_can",
+    "kind": "lathe",
+    "material": "accent2",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.5,
+       -1.2
+      ],
+      [
+       0.5,
+       1.2
+      ]
+     ],
+     "sweep": 270,
+     "start_angle": -45,
+     "thickness": 0.03
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_jelly_roll",
+    "kind": "spring",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "flat": true,
+     "coils": 7,
+     "radius": 0.45,
+     "inner_radius": 0.08,
+     "wire": 0.02
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_layer_0",
+    "kind": "lathe",
+    "material": "clay_dark",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.15,
+       -1.1
+      ],
+      [
+       0.15,
+       1.1
+      ]
+     ],
+     "sweep": 270,
+     "start_angle": -45,
+     "thickness": 0.025
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_layer_1",
+    "kind": "lathe",
+    "material": "brass",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.25,
+       -1.1
+      ],
+      [
+       0.25,
+       1.1
+      ]
+     ],
+     "sweep": 270,
+     "start_angle": -45,
+     "thickness": 0.025
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_layer_2",
+    "kind": "lathe",
+    "material": "white",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.35,
+       -1.1
+      ],
+      [
+       0.35,
+       1.1
+      ]
+     ],
+     "sweep": 270,
+     "start_angle": -45,
+     "thickness": 0.025
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_layer_3",
+    "kind": "lathe",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.45000000000000007,
+       -1.1
+      ],
+      [
+       0.45000000000000007,
+       1.1
+      ]
+     ],
+     "sweep": 270,
+     "start_angle": -45,
+     "thickness": 0.025
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_cap",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0,
+     0,
+     1.25
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.2,
+     "depth": 0.1
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   },
+   {
+    "id": "battery_ions",
+    "kind": "flow",
+    "material": "air",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "count": 12,
+     "radius": 0.025,
+     "speed": 0.4,
+     "radial_copies": 6,
+     "axis": "z",
+     "points": [
+      [
+       0.15,
+       0,
+       0
+      ],
+      [
+       0.45,
+       0,
+       0
+      ]
+     ]
+    },
+    "scale": 1.0,
+    "parent": "battery"
+   }
+  ],
+  "flipflops": [
+   {
+    "id": "ff_0",
+    "kind": "box",
+    "params": {
+     "size": [
+      0.35,
+      0.35,
+      0.1
+     ],
+     "bevel": 0.02
+    },
+    "position": [
+     -0.5,
+     1.2,
+     0
+    ],
+    "material": "clay_dark"
+   },
+   {
+    "id": "ff_1",
+    "kind": "box",
+    "params": {
+     "size": [
+      0.35,
+      0.35,
+      0.1
+     ],
+     "bevel": 0.02
+    },
+    "position": [
+     0.0,
+     1.2,
+     0
+    ],
+    "material": "clay_dark"
+   },
+   {
+    "id": "ff_2",
+    "kind": "box",
+    "params": {
+     "size": [
+      0.35,
+      0.35,
+      0.1
+     ],
+     "bevel": 0.02
+    },
+    "position": [
+     0.5,
+     1.2,
+     0
+    ],
+    "material": "clay_dark"
+   },
+   {
+    "id": "ff_3",
+    "kind": "box",
+    "params": {
+     "size": [
+      0.35,
+      0.35,
+      0.1
+     ],
+     "bevel": 0.02
+    },
+    "position": [
+     1.0,
+     1.2,
+     0
+    ],
+    "material": "clay_dark"
+   },
+   {
+    "id": "ff_4",
+    "kind": "box",
+    "params": {
+     "size": [
+      0.35,
+      0.35,
+      0.1
+     ],
+     "bevel": 0.02
+    },
+    "position": [
+     1.5,
+     1.2,
+     0
+    ],
+    "material": "clay_dark"
+   },
+   {
+    "id": "dots",
+    "kind": "label",
+    "params": {
+     "text": "… ×15",
+     "size": 0.18
+    },
+    "position": [
+     2.0,
+     1.2,
+     0
+    ]
+   },
+   {
+    "id": "arrow1",
+    "kind": "arrow",
+    "params": {
+     "to": [
+      -0.5,
+      1.2,
+      0
+     ],
+     "radius": 0.02
+    },
+    "position": [
+     -1.8,
+     1.2,
+     0
+    ],
+    "material": "accent"
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "narration": "Your watch doesn't tick using gears or microchips to keep time. It uses a microscopic tuning fork carved from quartz rock.",
+   "objective": "Hook viewer with the surprise that a rock keeps time.",
+   "keywords": [
+    "microscopic tuning fork",
+    "quartz rock"
+   ],
+   "objects": [
+    {
+     "id": "watch",
+     "kind": "asset",
+     "params": {
+      "asset_id": "vintage_pocket_watch",
+      "size": 3.5
+     },
+     "rotation": [
+      0.0,
+      0.0,
+      -15.0
+     ]
+    },
+    {
+     "id": "tag",
+     "kind": "label",
+     "params": {
+      "text": "32 kHz",
+      "size": 0.25
+     },
+     "position": [
+      0.8,
+      -0.8,
+      -1.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "watch",
+     "do": "rotate",
+     "duration": 3.5,
+     "params": {
+      "by": [
+       0,
+       0,
+       30
+      ]
+     }
+    },
+    {
+     "target": "tag",
+     "do": "pop_in",
+     "at": "microscopic tuning fork",
+     "sfx": "pop"
+    },
+    {
+     "target": "tag",
+     "do": "highlight",
+     "at": "quartz rock",
+     "params": {
+      "color": "#F28C28",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "watch",
+     "frame": [
+      "watch"
+     ],
+     "azimuth": -25.0,
+     "elevation": 15.0,
+     "lens": 60.0,
+     "blend": 0.5
+    }
+   ]
+  },
+  {
+   "id": "piezo",
+   "narration": "Quartz exhibits the piezoelectric effect: apply voltage and it bends; release voltage and it produces an electric pulse.",
+   "objective": "Show the piezoelectric bend and voltage pulse.",
+   "background": "blue",
+   "keywords": [
+    "piezoelectric effect",
+    "apply voltage",
+    "electric pulse"
+   ],
+   "note": "Illustrative - crystal enlarged 100x, motion slowed 100000x",
+   "use": [
+    "watch_mechanism"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    },
+    {
+     "id": "voltage_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        -2.5,
+        0,
+        0
+       ],
+       [
+        -1.8,
+        0,
+        0
+       ]
+      ],
+      "count": 20,
+      "radius": 0.02,
+      "speed": 2.0
+     },
+     "material": "air"
+    },
+    {
+     "id": "pulse_flow",
+     "kind": "flow",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        -0.3,
+        0,
+        0
+       ]
+      ],
+      "count": 15,
+      "radius": 0.02,
+      "speed": 3.0
+     },
+     "material": "air"
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "crystal_prong_l",
+      "crystal_prong_r"
+     ],
+     "do": "oscillate",
+     "params": {
+      "amplitude": 0.15,
+      "hz": 2,
+      "axis": "x"
+     }
+    },
+    {
+     "target": "crystal_fork_base",
+     "do": "highlight",
+     "at": "piezoelectric effect",
+     "duration": 1.5,
+     "params": {
+      "color": "#FFB347",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "voltage_flow",
+     "do": "show",
+     "at": "apply voltage",
+     "duration": 1.2
+    },
+    {
+     "target": [
+      "crystal_prong_l",
+      "crystal_prong_r"
+     ],
+     "do": "oscillate",
+     "at": "apply voltage",
+     "duration": 1.5,
+     "params": {
+      "amplitude": 0.25,
+      "hz": 4,
+      "axis": "x"
+     }
+    },
+    {
+     "target": "pulse_flow",
+     "do": "show",
+     "at": "electric pulse",
+     "duration": 1.0
+    },
+    {
+     "target": "crystal_electrode_l",
+     "do": "highlight",
+     "at": "electric pulse",
+     "duration": 1.0,
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "crystal",
+     "frame": [
+      "crystal"
+     ],
+     "azimuth": -10.0,
+     "elevation": 10.0,
+     "lens": 80.0,
+     "blend": 0.4
+    }
+   ]
+  },
+  {
+   "id": "frequency",
+   "narration": "Engineers carve this crystal so precisely that a watch battery makes it oscillate at exactly thirty-two thousand seven hundred sixty-eight times per second.",
+   "objective": "Reveal the precise 32,768 Hz resonance driven by the battery.",
+   "background": "dark",
+   "keywords": [
+    "thirty-two thousand seven hundred sixty-eight times per second",
+    "watch battery"
+   ],
+   "note": "Illustrative - oscillation slowed 100000x",
+   "use": [
+    "watch_mechanism"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "crystal_prong_l",
+      "crystal_prong_r"
+     ],
+     "do": "oscillate",
+     "params": {
+      "amplitude": 0.12,
+      "hz": 8,
+      "axis": "x"
+     }
+    },
+    {
+     "target": "battery_ions",
+     "do": "show",
+     "at": "watch battery",
+     "duration": 2.0
+    },
+    {
+     "target": "battery_jelly_roll",
+     "do": "highlight",
+     "at": "watch battery",
+     "duration": 2.0,
+     "params": {
+      "color": "#00FF88",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "crystal_can",
+     "do": "highlight",
+     "at": "carve this crystal",
+     "duration": 1.5,
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 1
+     }
+    }
+   ],
+   "shots": [
+    {
+     "target": "crystal",
+     "frame": [
+      "crystal",
+      "battery"
+     ],
+     "elevation": 25.0,
+     "orbit": 40.0,
+     "lens": 55.0,
+     "blend": 0.6
+    }
+   ]
+  },
+  {
+   "id": "binary",
+   "narration": "Why this number? Because thirty-two thousand seven hundred sixty-eight equals two to the fifteenth power.",
+   "objective": "Explain the binary significance of 32,768 = 2^15.",
+   "keywords": [
+    "two to the fifteenth power"
+   ],
+   "note": "Illustrative - flip-flop chain representative",
+   "use": [
+    "watch_mechanism",
+    "flipflops"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    },
+    {
+     "id": "ff_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "dots",
+     "kind": "label",
+     "params": {
+      "text": "… ×15",
+      "size": 0.18
+     },
+     "position": [
+      2.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "arrow1",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.5,
+       1.2,
+       0
+      ],
+      "radius": 0.02
+     },
+     "material": "accent",
+     "position": [
+      -1.8,
+      1.2,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "crystal",
+     "do": "highlight",
+     "at": "Why this number",
+     "duration": 1.0,
+     "params": {
+      "color": "#F28C28",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": [
+      "ff_0",
+      "ff_1",
+      "ff_2",
+      "ff_3",
+      "ff_4",
+      "dots"
+     ],
+     "do": "pop_in",
+     "at": "two to the fifteenth power",
+     "stagger": 0.1,
+     "sfx": "pop"
+    },
+    {
+     "target": "arrow1",
+     "do": "show",
+     "at": "two to the fifteenth power",
+     "duration": 1.5
+    },
+    {
+     "target": [
+      "ff_0",
+      "ff_1",
+      "ff_2",
+      "ff_3",
+      "ff_4"
+     ],
+     "do": "highlight",
+     "at": "fifteenth power",
+     "duration": 1.0,
+     "stagger": 0.15,
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "static",
+     "target": [
+      0.0,
+      1.2,
+      0.0
+     ],
+     "frame": [
+      "crystal",
+      "ff_0",
+      "ff_1",
+      "ff_2",
+      "ff_3",
+      "ff_4",
+      "dots"
+     ],
+     "azimuth": -90.0,
+     "elevation": 20.0,
+     "blend": 0.5
+    }
+   ]
+  },
+  {
+   "id": "division",
+   "narration": "Fifteen flip-flop dividers halve that frequency fifteen times, producing exactly one pulse per second.",
+   "objective": "Show the cascade division from 32 kHz to 1 Hz.",
+   "background": "blue",
+   "keywords": [
+    "halve that frequency",
+    "one pulse per second"
+   ],
+   "note": "Illustrative - division cascade accelerated",
+   "use": [
+    "watch_mechanism",
+    "flipflops"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    },
+    {
+     "id": "ff_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "dots",
+     "kind": "label",
+     "params": {
+      "text": "… ×15",
+      "size": 0.18
+     },
+     "position": [
+      2.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "arrow1",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.5,
+       1.2,
+       0
+      ],
+      "radius": 0.02
+     },
+     "material": "accent",
+     "position": [
+      -1.8,
+      1.2,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "ff_0",
+      "ff_1",
+      "ff_2",
+      "ff_3",
+      "ff_4"
+     ],
+     "do": "highlight",
+     "at": "Fifteen flip-flop dividers",
+     "duration": 0.8,
+     "stagger": 0.1,
+     "params": {
+      "color": "#FFB347",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "ff_0",
+     "do": "pulse",
+     "at": "halve that frequency",
+     "duration": 0.5,
+     "params": {
+      "amount": 0.2,
+      "hz": 4,
+      "duty": 0.3,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "ff_1",
+     "do": "pulse",
+     "at": "halve that frequency",
+     "offset": 0.3,
+     "duration": 0.5,
+     "params": {
+      "amount": 0.2,
+      "hz": 2,
+      "duty": 0.3,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "ff_2",
+     "do": "pulse",
+     "at": "halve that frequency",
+     "offset": 0.6,
+     "duration": 0.5,
+     "params": {
+      "amount": 0.2,
+      "hz": 1,
+      "duty": 0.3,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "ff_3",
+     "do": "pulse",
+     "at": "fifteen times",
+     "offset": 0.9,
+     "duration": 0.5,
+     "params": {
+      "amount": 0.2,
+      "hz": 0.5,
+      "duty": 0.3,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "ff_4",
+     "do": "pulse",
+     "at": "fifteen times",
+     "offset": 1.2,
+     "duration": 0.5,
+     "params": {
+      "amount": 0.2,
+      "hz": 0.25,
+      "duty": 0.3,
+      "axis": "all"
+     }
+    },
+    {
+     "target": "movement_motor_coil",
+     "do": "highlight",
+     "at": "one pulse per second",
+     "duration": 1.0,
+     "params": {
+      "color": "#00FF88",
+      "strength": 2
+     }
+    },
+    {
+     "target": "wire",
+     "do": "highlight",
+     "at": "one pulse per second",
+     "duration": 1.0,
+     "params": {
+      "color": "#00FF88",
+      "strength": 1.5
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "movement",
+     "frame": [
+      "movement",
+      "ff_4"
+     ],
+     "azimuth": -20.0,
+     "elevation": 15.0,
+     "lens": 65.0,
+     "blend": 0.5
+    }
+   ]
+  },
+  {
+   "id": "tick",
+   "narration": "That single pulse advances the second hand one tick.",
+   "objective": "Show the stepper motor driving the gear train to move the second hand.",
+   "background": "dark",
+   "keywords": [
+    "single pulse",
+    "second hand one tick"
+   ],
+   "note": "Illustrative - gear train ratios accurate",
+   "use": [
+    "watch_mechanism"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    }
+   ],
+   "actions": [
+    {
+     "target": "movement_gear_drive",
+     "do": "tick",
+     "at": "single pulse",
+     "duration": 1.0,
+     "params": {
+      "rate": 1,
+      "step": 6,
+      "axis": "z"
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "movement_hand",
+     "do": "rotate",
+     "at": "second hand one tick",
+     "duration": 0.3,
+     "ease": "back",
+     "params": {
+      "by": [
+       0,
+       0,
+       6
+      ]
+     },
+     "sfx": "click"
+    },
+    {
+     "target": "movement_gear_mid",
+     "do": "spin",
+     "params": {
+      "rate": 0.5,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "movement_gear_out",
+     "do": "spin",
+     "params": {
+      "rate": 0.05,
+      "axis": "z"
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "movement_hand",
+     "frame": [
+      "movement_hand",
+      "movement_gear_drive",
+      "movement_gear_mid"
+     ],
+     "azimuth": -15.0,
+     "elevation": 10.0,
+     "lens": 85.0,
+     "blend": 0.4
+    }
+   ]
+  },
+  {
+   "id": "summary",
+   "narration": "A stone crystal vibrating thirty-two thousand times a second measures human time with near-atomic precision.",
+   "objective": "Final pull-out revealing the complete watch keeping perfect time.",
+   "keywords": [
+    "stone crystal",
+    "near-atomic precision"
+   ],
+   "use": [
+    "watch_mechanism",
+    "flipflops"
+   ],
+   "objects": [
+    {
+     "id": "crystal",
+     "kind": "empty",
+     "position": [
+      -1.8,
+      0.0,
+      0.0
+     ],
+     "scale": 2.2
+    },
+    {
+     "id": "crystal_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        1.5
+       ],
+       [
+        0.42,
+        1.45
+       ],
+       [
+        0.45,
+        1.3
+       ],
+       [
+        0.45,
+        -0.9
+       ],
+       [
+        0.5,
+        -1.0
+       ]
+      ],
+      "sweep": 200,
+      "start_angle": -10,
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "crystal"
+    },
+    {
+     "id": "crystal_base",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.5,
+      "depth": 0.15
+     },
+     "material": "dark_steel",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -1.05
+     ]
+    },
+    {
+     "id": "crystal_fork_base",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.6,
+       0.12,
+       0.4
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.0,
+      0.0,
+      -0.65
+     ]
+    },
+    {
+     "id": "crystal_prong_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_prong_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.16,
+       0.12,
+       1.6
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      0.35
+     ]
+    },
+    {
+     "id": "crystal_electrode_l",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_l",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_electrode_r",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.1,
+       0.01,
+       1.3
+      ]
+     },
+     "material": "chrome",
+     "parent": "crystal_prong_r",
+     "position": [
+      0.0,
+      -0.065,
+      -0.05
+     ]
+    },
+    {
+     "id": "crystal_lead_a",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      -0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "crystal_lead_b",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.03,
+      "depth": 1.0
+     },
+     "material": "chrome",
+     "parent": "crystal",
+     "position": [
+      0.2,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement",
+     "kind": "empty",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "movement_plate",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.8,
+       0.08,
+       3.8
+      ],
+      "bevel": 0.04
+     },
+     "material": "clay_dark",
+     "parent": "movement",
+     "position": [
+      0.6,
+      0.25,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_battery",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.22,
+      "depth": 1.0,
+      "axis": "x"
+     },
+     "material": "accent2",
+     "parent": "movement",
+     "position": [
+      -0.4,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.1,
+      "depth": 0.06,
+      "axis": "x"
+     },
+     "material": "chrome",
+     "parent": "movement",
+     "position": [
+      0.12,
+      0.0,
+      -1.6
+     ]
+    },
+    {
+     "id": "movement_motor_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 14,
+      "radius": 0.2,
+      "wire": 0.03,
+      "height": 0.5
+     },
+     "material": "brass",
+     "parent": "movement",
+     "position": [
+      1.7,
+      0.0,
+      -1.55
+     ]
+    },
+    {
+     "id": "movement_train",
+     "kind": "empty",
+     "parent": "movement",
+     "position": [
+      0.0,
+      -0.1,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_drive",
+     "kind": "gear",
+     "params": {
+      "teeth": 12,
+      "module": 0.06,
+      "thickness": 0.06
+     },
+     "material": "brass",
+     "parent": "movement_train",
+     "position": [
+      0.75,
+      0.05,
+      0.0
+     ]
+    },
+    {
+     "id": "movement_gear_mid",
+     "kind": "gear",
+     "params": {
+      "teeth": 40,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 4,
+      "pinion_teeth": 10,
+      "mesh_with": "movement_gear_drive",
+      "angle": 170
+     },
+     "material": "brass",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_gear_out",
+     "kind": "gear",
+     "params": {
+      "teeth": 20,
+      "module": 0.06,
+      "thickness": 0.06,
+      "arms": 5,
+      "mesh_with": "movement_gear_mid",
+      "angle": -30
+     },
+     "material": "steel",
+     "parent": "movement_train"
+    },
+    {
+     "id": "movement_hand",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       0.9,
+       0.02
+      ]
+     },
+     "material": "ink",
+     "parent": "movement_gear_out",
+     "position": [
+      0.0,
+      0.45,
+      0.08
+     ]
+    },
+    {
+     "id": "wire",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        -1.0,
+        0,
+        0
+       ],
+       [
+        0.4,
+        0,
+        0
+       ]
+      ],
+      "radius": 0.04
+     },
+     "material": "steel"
+    },
+    {
+     "id": "battery",
+     "kind": "empty",
+     "position": [
+      1.2,
+      -1.6,
+      0.0
+     ],
+     "scale": 0.7
+    },
+    {
+     "id": "battery_can",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.5,
+        -1.2
+       ],
+       [
+        0.5,
+        1.2
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.03
+     },
+     "material": "accent2",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_jelly_roll",
+     "kind": "spring",
+     "params": {
+      "flat": true,
+      "coils": 7,
+      "radius": 0.45,
+      "inner_radius": 0.08,
+      "wire": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_0",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.15,
+        -1.1
+       ],
+       [
+        0.15,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "clay_dark",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_1",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.25,
+        -1.1
+       ],
+       [
+        0.25,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "brass",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_2",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -1.1
+       ],
+       [
+        0.35,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "white",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_layer_3",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.45000000000000007,
+        -1.1
+       ],
+       [
+        0.45000000000000007,
+        1.1
+       ]
+      ],
+      "sweep": 270,
+      "start_angle": -45,
+      "thickness": 0.025
+     },
+     "material": "steel",
+     "parent": "battery"
+    },
+    {
+     "id": "battery_cap",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.2,
+      "depth": 0.1
+     },
+     "material": "chrome",
+     "parent": "battery",
+     "position": [
+      0.0,
+      0.0,
+      1.25
+     ]
+    },
+    {
+     "id": "battery_ions",
+     "kind": "flow",
+     "params": {
+      "count": 12,
+      "radius": 0.025,
+      "speed": 0.4,
+      "radial_copies": 6,
+      "axis": "z",
+      "points": [
+       [
+        0.15,
+        0,
+        0
+       ],
+       [
+        0.45,
+        0,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "battery"
+    },
+    {
+     "id": "ff_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      -0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      0.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "ff_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.35,
+       0.35,
+       0.1
+      ],
+      "bevel": 0.02
+     },
+     "material": "clay_dark",
+     "position": [
+      1.5,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "dots",
+     "kind": "label",
+     "params": {
+      "text": "… ×15",
+      "size": 0.18
+     },
+     "position": [
+      2.0,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "arrow1",
+     "kind": "arrow",
+     "params": {
+      "to": [
+       -0.5,
+       1.2,
+       0
+      ],
+      "radius": 0.02
+     },
+     "material": "accent",
+     "position": [
+      -1.8,
+      1.2,
+      0.0
+     ]
+    },
+    {
+     "id": "watch_final",
+     "kind": "asset",
+     "params": {
+      "asset_id": "vintage_pocket_watch",
+      "size": 3.5
+     },
+     "rotation": [
+      0.0,
+      0.0,
+      -15.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": [
+      "crystal",
+      "movement",
+      "wire",
+      "battery",
+      "ff_0",
+      "ff_1",
+      "ff_2",
+      "ff_3",
+      "ff_4",
+      "dots",
+      "arrow1"
+     ],
+     "do": "fade",
+     "duration": 0.5,
+     "params": {
+      "alpha": 0
+     }
+    },
+    {
+     "target": "watch_final",
+     "do": "pop_in",
+     "duration": 0.5,
+     "sfx": "pop"
+    },
+    {
+     "target": "watch_final",
+     "do": "rotate",
+     "at": "stone crystal",
+     "duration": 3.0,
+     "params": {
+      "by": [
+       0,
+       0,
+       20
+      ]
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": "watch_final",
+     "frame": [
+      "watch_final"
+     ],
+     "azimuth": -25.0,
+     "elevation": 15.0
+    }
+   ]
+  }
+ ]
+}
