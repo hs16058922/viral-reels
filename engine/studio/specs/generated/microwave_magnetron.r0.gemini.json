@@ -1,0 +1,7568 @@
+{
+ "title": "Why Microwaves Heat Soup But Never the Bowl",
+ "prefabs": {
+  "hero_microwave": [
+   {
+    "id": "oven",
+    "kind": "empty",
+    "position": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "id": "oven_floor",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     -0.75
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      2.4,
+      1.8,
+      0.06
+     ]
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "oven_ceiling",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.75
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      2.4,
+      1.8,
+      0.06
+     ]
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "oven_back_wall",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0.9,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      2.4,
+      0.06,
+      1.56
+     ]
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.9
+   },
+   {
+    "id": "oven_left_wall",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     -1.2,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.06,
+      1.8,
+      1.56
+     ]
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "oven_right_wall",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     1.2,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.06,
+      1.8,
+      1.56
+     ]
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "oven_shell_top",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     0.35,
+     0.05,
+     0.86
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.3,
+      2.1,
+      0.12
+     ],
+     "bevel": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.05
+   },
+   {
+    "id": "oven_shell_bottom",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     0.35,
+     0.05,
+     -0.86
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.3,
+      2.1,
+      0.12
+     ],
+     "bevel": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.05
+   },
+   {
+    "id": "oven_shell_left",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     -1.3,
+     0.05,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.12,
+      2.1,
+      1.6
+     ],
+     "bevel": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.05
+   },
+   {
+    "id": "oven_shell_right",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     2.0,
+     0.05,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.12,
+      2.1,
+      1.6
+     ],
+     "bevel": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.05
+   },
+   {
+    "id": "oven_shell_back",
+    "kind": "box",
+    "material": "clay",
+    "position": [
+     0.35,
+     1.05,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      3.3,
+      0.1,
+      1.6
+     ],
+     "bevel": 0.03
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 1.05
+   },
+   {
+    "id": "oven_control_panel",
+    "kind": "box",
+    "material": "clay_dark",
+    "position": [
+     1.6,
+     -1.0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.5,
+      0.06,
+      1.6
+     ],
+     "bevel": 0.03
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": -1.0
+   },
+   {
+    "id": "oven_button_0",
+    "kind": "cylinder",
+    "material": "accent",
+    "position": [
+     1.6,
+     -1.05,
+     0.5
+    ],
+    "rotation": [
+     90,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.08,
+     "depth": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": -1.05
+   },
+   {
+    "id": "oven_button_1",
+    "kind": "cylinder",
+    "material": "accent",
+    "position": [
+     1.6,
+     -1.05,
+     0.2
+    ],
+    "rotation": [
+     90,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.08,
+     "depth": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": -1.05
+   },
+   {
+    "id": "oven_button_2",
+    "kind": "cylinder",
+    "material": "accent",
+    "position": [
+     1.6,
+     -1.05,
+     -0.09999999999999998
+    ],
+    "rotation": [
+     90,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.08,
+     "depth": 0.05
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": -1.05
+   },
+   {
+    "id": "oven_door",
+    "kind": "box",
+    "material": "glass",
+    "position": [
+     -1.25,
+     -0.95,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      2.5,
+      0.05,
+      1.55
+     ],
+     "pivot": [
+      -1.25,
+      0,
+      0
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "oven"
+   },
+   {
+    "id": "oven_waveguide",
+    "kind": "box",
+    "material": "dark_steel",
+    "position": [
+     1.45,
+     0.2,
+     0.45
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      0.4,
+      0.7,
+      0.3
+     ],
+     "bevel": 0.02
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.2
+   },
+   {
+    "id": "oven_turntable",
+    "kind": "cylinder",
+    "material": "glass",
+    "position": [
+     0,
+     0,
+     -0.6
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.75,
+     "depth": 0.04
+    },
+    "scale": 1.0,
+    "parent": "oven"
+   },
+   {
+    "id": "oven_roller_ring",
+    "kind": "torus",
+    "material": "ink",
+    "position": [
+     0,
+     0,
+     -0.66
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "major": 0.45,
+     "minor": 0.03
+    },
+    "scale": 1.0,
+    "parent": "oven"
+   },
+   {
+    "id": "oven_drive_motor",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     -0.95
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.18,
+     "depth": 0.25
+    },
+    "scale": 1.0,
+    "parent": "oven",
+    "cut": [
+     0,
+     -1,
+     0
+    ],
+    "cut_offset": 0.0
+   },
+   {
+    "id": "mag",
+    "kind": "empty",
+    "position": [
+     1.4,
+     0,
+     0.4
+    ],
+    "scale": 0.55
+   },
+   {
+    "id": "mag_anode",
+    "kind": "lathe",
+    "material": "brass",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.62,
+       -0.32
+      ],
+      [
+       0.62,
+       0.32
+      ]
+     ],
+     "thickness": 0.12,
+     "cut_material": "accent2"
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_0",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     0.39,
+     0.0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_1",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     0.27577164466275356,
+     0.2757716446627535,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     45.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_2",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     2.3880612583373387e-17,
+     0.39,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     90.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_3",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     -0.2757716446627535,
+     0.27577164466275356,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     135.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_4",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     -0.39,
+     4.7761225166746774e-17,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     180.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_5",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     -0.2757716446627536,
+     -0.2757716446627535,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     225.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_6",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     -7.164183775012016e-17,
+     -0.39,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     270.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_vane_7",
+    "kind": "box",
+    "material": "brass",
+    "position": [
+     0.2757716446627535,
+     -0.2757716446627536,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     315.0
+    ],
+    "params": {
+     "size": [
+      0.38,
+      0.06,
+      0.6
+     ],
+     "bevel": 0.01
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_cathode",
+    "kind": "cylinder",
+    "material": "flame",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.07,
+     "depth": 0.9
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_cathode_coil",
+    "kind": "spring",
+    "material": "accent2",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "coils": 8,
+     "radius": 0.09,
+     "wire": 0.012,
+     "height": 0.6
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_magnet_top",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     0.62
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.72,
+     "depth": 0.22,
+     "bevel": 0.04
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_magnet_bottom",
+    "kind": "cylinder",
+    "material": "dark_steel",
+    "position": [
+     0,
+     0,
+     -0.62
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.72,
+     "depth": 0.22,
+     "bevel": 0.04
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_fin_0",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     -0.28
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      1.9,
+      1.9,
+      0.03
+     ],
+     "bevel": 0.005
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_fin_1",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     -0.14
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      1.9,
+      1.9,
+      0.03
+     ],
+     "bevel": 0.005
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_fin_2",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      1.9,
+      1.9,
+      0.03
+     ],
+     "bevel": 0.005
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_fin_3",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.14
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      1.9,
+      1.9,
+      0.03
+     ],
+     "bevel": 0.005
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_fin_4",
+    "kind": "box",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     0.28
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "size": [
+      1.9,
+      1.9,
+      0.03
+     ],
+     "bevel": 0.005
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_antenna_stem",
+    "kind": "cylinder",
+    "material": "chrome",
+    "position": [
+     0,
+     0,
+     0.95
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.05,
+     "depth": 0.5
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_antenna_dome",
+    "kind": "lathe",
+    "material": "steel",
+    "position": [
+     0,
+     0,
+     1.2
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.2,
+       -0.1
+      ],
+      [
+       0.2,
+       0.05
+      ],
+      [
+       0.14,
+       0.16
+      ],
+      [
+       0.0,
+       0.2
+      ]
+     ],
+     "thickness": 0.03
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_filament_leads",
+    "kind": "tube",
+    "material": "chrome",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "points": [
+      [
+       0.04,
+       0,
+       -0.45
+      ],
+      [
+       0.05,
+       0,
+       -0.9
+      ],
+      [
+       0.3,
+       0,
+       -1.2
+      ]
+     ],
+     "radius": 0.025
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "mag_electrons",
+    "kind": "flow",
+    "material": "air",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "count": 24,
+     "radius": 0.025,
+     "speed": 0.5,
+     "radial_copies": 8,
+     "axis": "z",
+     "points": [
+      [
+       0.1,
+       0.0,
+       0
+      ],
+      [
+       0.117058123305848,
+       0.056545519434459936,
+       0
+      ],
+      [
+       0.0994575949233063,
+       0.12533230554039734,
+       0
+      ],
+      [
+       0.04161127054767789,
+       0.18538743798706522,
+       0
+      ],
+      [
+       -0.04998446083247916,
+       0.21424647879320294,
+       0
+      ],
+      [
+       -0.15704340568068478,
+       0.1945182992219803,
+       0
+      ],
+      [
+       -0.25314019976477714,
+       0.11966636646547235,
+       0
+      ],
+      [
+       -0.309989044126116,
+       -0.002606246683816072,
+       0
+      ],
+      [
+       -0.30489786155360993,
+       -0.1504569507202498,
+       0
+      ],
+      [
+       -0.22755087931446255,
+       -0.29175434413769213,
+       0
+      ],
+      [
+       -0.08431831977231188,
+       -0.3910120470660388,
+       0
+      ],
+      [
+       0.10121402047041399,
+       -0.4179183198427829,
+       0
+      ],
+      [
+       0.2919587229336119,
+       -0.35547166427575405,
+       0
+      ],
+      [
+       0.4447403067582226,
+       -0.20568436874153084,
+       0
+      ]
+     ]
+    },
+    "scale": 1.0,
+    "parent": "mag"
+   },
+   {
+    "id": "soup",
+    "kind": "empty",
+    "position": [
+     0,
+     0,
+     -0.3
+    ],
+    "scale": 0.85
+   },
+   {
+    "id": "soup_bowl",
+    "kind": "lathe",
+    "material": "clay",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "profile": [
+      [
+       0.0,
+       -0.35
+      ],
+      [
+       0.45,
+       -0.33
+      ],
+      [
+       0.75,
+       -0.1
+      ],
+      [
+       0.9,
+       0.3
+      ]
+     ],
+     "thickness": 0.05,
+     "cut_material": "clay"
+    },
+    "scale": 1.0,
+    "parent": "soup"
+   },
+   {
+    "id": "soup_soup",
+    "kind": "cylinder",
+    "material": "accent2",
+    "position": [
+     0,
+     0,
+     0.18
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.82,
+     "depth": 0.04
+    },
+    "scale": 1.0,
+    "parent": "soup"
+   },
+   {
+    "id": "soup_steam",
+    "kind": "flow",
+    "material": "white",
+    "position": [
+     0,
+     0,
+     0.25
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "count": 10,
+     "radius": 0.03,
+     "speed": 0.4,
+     "radial_copies": 3,
+     "points": [
+      [
+       0.3,
+       0,
+       0
+      ],
+      [
+       0.35,
+       0,
+       0.4
+      ],
+      [
+       0.25,
+       0,
+       0.8
+      ],
+      [
+       0.35,
+       0,
+       1.2
+      ]
+     ]
+    },
+    "scale": 1.0,
+    "parent": "soup"
+   },
+   {
+    "id": "h2o",
+    "kind": "empty",
+    "position": [
+     0,
+     0.1,
+     -0.1
+    ],
+    "scale": 0.45
+   },
+   {
+    "id": "h2o_oxygen",
+    "kind": "sphere",
+    "material": "accent",
+    "position": [
+     0,
+     0,
+     0
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.5
+    },
+    "scale": 1.0,
+    "parent": "h2o"
+   },
+   {
+    "id": "h2o_hydrogen_0",
+    "kind": "sphere",
+    "material": "white",
+    "position": [
+     0.4902275357211828,
+     0,
+     -0.3795747136213586
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.3
+    },
+    "scale": 1.0,
+    "parent": "h2o"
+   },
+   {
+    "id": "h2o_hydrogen_1",
+    "kind": "sphere",
+    "material": "white",
+    "position": [
+     -0.4902275357211828,
+     0,
+     -0.3795747136213586
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "radius": 0.3
+    },
+    "scale": 1.0,
+    "parent": "h2o"
+   },
+   {
+    "id": "h2o_charge_neg",
+    "kind": "label",
+    "material": "ink",
+    "position": [
+     0,
+     -0.2,
+     0.75
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "text": "-",
+     "size": 0.3
+    },
+    "scale": 1.0,
+    "parent": "h2o"
+   },
+   {
+    "id": "h2o_charge_pos",
+    "kind": "label",
+    "material": "ink",
+    "position": [
+     0,
+     -0.2,
+     -0.95
+    ],
+    "rotation": [
+     0,
+     0,
+     0
+    ],
+    "params": {
+     "text": "+",
+     "size": 0.3
+    },
+    "scale": 1.0,
+    "parent": "h2o"
+   }
+  ]
+ },
+ "scenes": [
+  {
+   "id": "scene1_hook",
+   "narration": "A microwave oven does not cook food from the outside in. It targets water molecules directly from the inside out.",
+   "objective": "Hook the viewer with a photoreal microwave transition into a dissected internal cavity view.",
+   "background": "dark",
+   "keywords": [
+    "water molecules",
+    "inside out"
+   ],
+   "use": [
+    "hero_microwave"
+   ],
+   "objects": [
+    {
+     "id": "oven",
+     "kind": "empty"
+    },
+    {
+     "id": "oven_floor",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_ceiling",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_back_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       0.06,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.9,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.9
+    },
+    {
+     "id": "oven_left_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      -1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_right_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_shell_top",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_bottom",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      -0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_left",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      -1.3,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_right",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      2.0,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_back",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       0.1,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      1.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 1.05
+    },
+    {
+     "id": "oven_control_panel",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.5,
+       0.06,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "material": "clay_dark",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.0
+    },
+    {
+     "id": "oven_button_0",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.5
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      -0.09999999999999998
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_door",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       1.55
+      ],
+      "pivot": [
+       -1.25,
+       0,
+       0
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      -1.25,
+      -0.95,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.4,
+       0.7,
+       0.3
+      ],
+      "bevel": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      1.45,
+      0.2,
+      0.45
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.2
+    },
+    {
+     "id": "oven_turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.75,
+      "depth": 0.04
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.6
+     ]
+    },
+    {
+     "id": "oven_roller_ring",
+     "kind": "torus",
+     "params": {
+      "major": 0.45,
+      "minor": 0.03
+     },
+     "material": "ink",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.66
+     ]
+    },
+    {
+     "id": "oven_drive_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.18,
+      "depth": 0.25
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.95
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag",
+     "kind": "empty",
+     "position": [
+      1.4,
+      0.0,
+      0.4
+     ],
+     "scale": 0.55
+    },
+    {
+     "id": "mag_anode",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.62,
+        -0.32
+       ],
+       [
+        0.62,
+        0.32
+       ]
+      ],
+      "thickness": 0.12,
+      "cut_material": "accent2"
+     },
+     "material": "brass",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_vane_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.39,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag_vane_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.27577164466275356,
+      0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      45.0
+     ]
+    },
+    {
+     "id": "mag_vane_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      2.3880612583373387e-17,
+      0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      90.0
+     ]
+    },
+    {
+     "id": "mag_vane_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627535,
+      0.27577164466275356,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      135.0
+     ]
+    },
+    {
+     "id": "mag_vane_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.39,
+      4.7761225166746774e-17,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      180.0
+     ]
+    },
+    {
+     "id": "mag_vane_5",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627536,
+      -0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      225.0
+     ]
+    },
+    {
+     "id": "mag_vane_6",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -7.164183775012016e-17,
+      -0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      270.0
+     ]
+    },
+    {
+     "id": "mag_vane_7",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.2757716446627535,
+      -0.2757716446627536,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      315.0
+     ]
+    },
+    {
+     "id": "mag_cathode",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.07,
+      "depth": 0.9
+     },
+     "material": "flame",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_cathode_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 8,
+      "radius": 0.09,
+      "wire": 0.012,
+      "height": 0.6
+     },
+     "material": "accent2",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_magnet_top",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.62
+     ]
+    },
+    {
+     "id": "mag_magnet_bottom",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.62
+     ]
+    },
+    {
+     "id": "mag_fin_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.28
+     ]
+    },
+    {
+     "id": "mag_fin_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.14
+     ]
+    },
+    {
+     "id": "mag_fin_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_fin_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.14
+     ]
+    },
+    {
+     "id": "mag_fin_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.28
+     ]
+    },
+    {
+     "id": "mag_antenna_stem",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.05,
+      "depth": 0.5
+     },
+     "material": "chrome",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.95
+     ]
+    },
+    {
+     "id": "mag_antenna_dome",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.1
+       ],
+       [
+        0.2,
+        0.05
+       ],
+       [
+        0.14,
+        0.16
+       ],
+       [
+        0.0,
+        0.2
+       ]
+      ],
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    },
+    {
+     "id": "mag_filament_leads",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.04,
+        0,
+        -0.45
+       ],
+       [
+        0.05,
+        0,
+        -0.9
+       ],
+       [
+        0.3,
+        0,
+        -1.2
+       ]
+      ],
+      "radius": 0.025
+     },
+     "material": "chrome",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_electrons",
+     "kind": "flow",
+     "params": {
+      "count": 24,
+      "radius": 0.025,
+      "speed": 0.5,
+      "radial_copies": 8,
+      "axis": "z",
+      "points": [
+       [
+        0.1,
+        0.0,
+        0
+       ],
+       [
+        0.117058123305848,
+        0.056545519434459936,
+        0
+       ],
+       [
+        0.0994575949233063,
+        0.12533230554039734,
+        0
+       ],
+       [
+        0.04161127054767789,
+        0.18538743798706522,
+        0
+       ],
+       [
+        -0.04998446083247916,
+        0.21424647879320294,
+        0
+       ],
+       [
+        -0.15704340568068478,
+        0.1945182992219803,
+        0
+       ],
+       [
+        -0.25314019976477714,
+        0.11966636646547235,
+        0
+       ],
+       [
+        -0.309989044126116,
+        -0.002606246683816072,
+        0
+       ],
+       [
+        -0.30489786155360993,
+        -0.1504569507202498,
+        0
+       ],
+       [
+        -0.22755087931446255,
+        -0.29175434413769213,
+        0
+       ],
+       [
+        -0.08431831977231188,
+        -0.3910120470660388,
+        0
+       ],
+       [
+        0.10121402047041399,
+        -0.4179183198427829,
+        0
+       ],
+       [
+        0.2919587229336119,
+        -0.35547166427575405,
+        0
+       ],
+       [
+        0.4447403067582226,
+        -0.20568436874153084,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "mag"
+    },
+    {
+     "id": "soup",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -0.3
+     ],
+     "scale": 0.85
+    },
+    {
+     "id": "soup_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        -0.35
+       ],
+       [
+        0.45,
+        -0.33
+       ],
+       [
+        0.75,
+        -0.1
+       ],
+       [
+        0.9,
+        0.3
+       ]
+      ],
+      "thickness": 0.05,
+      "cut_material": "clay"
+     },
+     "parent": "soup"
+    },
+    {
+     "id": "soup_soup",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.82,
+      "depth": 0.04
+     },
+     "material": "accent2",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "soup_steam",
+     "kind": "flow",
+     "params": {
+      "count": 10,
+      "radius": 0.03,
+      "speed": 0.4,
+      "radial_copies": 3,
+      "points": [
+       [
+        0.3,
+        0,
+        0
+       ],
+       [
+        0.35,
+        0,
+        0.4
+       ],
+       [
+        0.25,
+        0,
+        0.8
+       ],
+       [
+        0.35,
+        0,
+        1.2
+       ]
+      ]
+     },
+     "material": "white",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.25
+     ]
+    },
+    {
+     "id": "h2o",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.1,
+      -0.1
+     ],
+     "scale": 0.45
+    },
+    {
+     "id": "h2o_oxygen",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.5
+     },
+     "material": "accent",
+     "parent": "h2o"
+    },
+    {
+     "id": "h2o_hydrogen_0",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_hydrogen_1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      -0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_charge_neg",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      0.75
+     ]
+    },
+    {
+     "id": "h2o_charge_pos",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      -0.95
+     ]
+    },
+    {
+     "id": "appliance",
+     "kind": "asset",
+     "params": {
+      "asset_id": "vintage_microwave",
+      "size": 3.0,
+      "_path": "/home/runner/work/viral-reels/viral-reels/assets/models/vintage_microwave/vintage_microwave_1k.gltf"
+     }
+    },
+    {
+     "id": "label_frequency",
+     "kind": "label",
+     "params": {
+      "text": "2.45 GHz",
+      "size": 0.35
+     },
+     "position": [
+      0.0,
+      1.5,
+      1.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "appliance",
+     "do": "rotate",
+     "duration": 3.0,
+     "params": {
+      "by": [
+       0,
+       20,
+       0
+      ]
+     }
+    },
+    {
+     "target": "oven_turntable",
+     "do": "spin",
+     "params": {
+      "axis": "z",
+      "rate": 30
+     }
+    },
+    {
+     "target": "appliance",
+     "do": "fade",
+     "at": "targets water molecules",
+     "duration": 0.6,
+     "params": {
+      "to": 0.0
+     }
+    },
+    {
+     "target": "soup_soup",
+     "do": "highlight",
+     "at": "targets water molecules",
+     "params": {
+      "color": "#FF4500",
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "label_frequency",
+     "do": "pop_in",
+     "at": "inside out",
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "appliance",
+     "frame": [
+      "appliance",
+      "soup_soup"
+     ],
+     "azimuth": -25.0,
+     "elevation": 18.0,
+     "lens": 55.0
+    }
+   ]
+  },
+  {
+   "id": "scene2_magnetron",
+   "narration": "Inside the oven wall, a magnetron tube generates high frequency electromagnetic waves at two point four five gigahertz.",
+   "objective": "Dissect the magnetron module generating microwave radiation inside the waveguide.",
+   "background": "blue",
+   "keywords": [
+    "magnetron tube",
+    "electromagnetic waves"
+   ],
+   "use": [
+    "hero_microwave"
+   ],
+   "objects": [
+    {
+     "id": "oven",
+     "kind": "empty"
+    },
+    {
+     "id": "oven_floor",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_ceiling",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_back_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       0.06,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.9,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.9
+    },
+    {
+     "id": "oven_left_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      -1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_right_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_shell_top",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_bottom",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      -0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_left",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      -1.3,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_right",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      2.0,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_back",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       0.1,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      1.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 1.05
+    },
+    {
+     "id": "oven_control_panel",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.5,
+       0.06,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "material": "clay_dark",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.0
+    },
+    {
+     "id": "oven_button_0",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.5
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      -0.09999999999999998
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_door",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       1.55
+      ],
+      "pivot": [
+       -1.25,
+       0,
+       0
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      -1.25,
+      -0.95,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.4,
+       0.7,
+       0.3
+      ],
+      "bevel": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      1.45,
+      0.2,
+      0.45
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.2
+    },
+    {
+     "id": "oven_turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.75,
+      "depth": 0.04
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.6
+     ]
+    },
+    {
+     "id": "oven_roller_ring",
+     "kind": "torus",
+     "params": {
+      "major": 0.45,
+      "minor": 0.03
+     },
+     "material": "ink",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.66
+     ]
+    },
+    {
+     "id": "oven_drive_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.18,
+      "depth": 0.25
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.95
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag",
+     "kind": "empty",
+     "position": [
+      1.4,
+      0.0,
+      0.4
+     ],
+     "scale": 0.55
+    },
+    {
+     "id": "mag_anode",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.62,
+        -0.32
+       ],
+       [
+        0.62,
+        0.32
+       ]
+      ],
+      "thickness": 0.12,
+      "cut_material": "accent2"
+     },
+     "material": "brass",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_vane_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.39,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag_vane_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.27577164466275356,
+      0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      45.0
+     ]
+    },
+    {
+     "id": "mag_vane_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      2.3880612583373387e-17,
+      0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      90.0
+     ]
+    },
+    {
+     "id": "mag_vane_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627535,
+      0.27577164466275356,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      135.0
+     ]
+    },
+    {
+     "id": "mag_vane_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.39,
+      4.7761225166746774e-17,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      180.0
+     ]
+    },
+    {
+     "id": "mag_vane_5",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627536,
+      -0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      225.0
+     ]
+    },
+    {
+     "id": "mag_vane_6",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -7.164183775012016e-17,
+      -0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      270.0
+     ]
+    },
+    {
+     "id": "mag_vane_7",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.2757716446627535,
+      -0.2757716446627536,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      315.0
+     ]
+    },
+    {
+     "id": "mag_cathode",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.07,
+      "depth": 0.9
+     },
+     "material": "flame",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_cathode_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 8,
+      "radius": 0.09,
+      "wire": 0.012,
+      "height": 0.6
+     },
+     "material": "accent2",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_magnet_top",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.62
+     ]
+    },
+    {
+     "id": "mag_magnet_bottom",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.62
+     ]
+    },
+    {
+     "id": "mag_fin_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.28
+     ]
+    },
+    {
+     "id": "mag_fin_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.14
+     ]
+    },
+    {
+     "id": "mag_fin_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_fin_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.14
+     ]
+    },
+    {
+     "id": "mag_fin_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.28
+     ]
+    },
+    {
+     "id": "mag_antenna_stem",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.05,
+      "depth": 0.5
+     },
+     "material": "chrome",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.95
+     ]
+    },
+    {
+     "id": "mag_antenna_dome",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.1
+       ],
+       [
+        0.2,
+        0.05
+       ],
+       [
+        0.14,
+        0.16
+       ],
+       [
+        0.0,
+        0.2
+       ]
+      ],
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    },
+    {
+     "id": "mag_filament_leads",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.04,
+        0,
+        -0.45
+       ],
+       [
+        0.05,
+        0,
+        -0.9
+       ],
+       [
+        0.3,
+        0,
+        -1.2
+       ]
+      ],
+      "radius": 0.025
+     },
+     "material": "chrome",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_electrons",
+     "kind": "flow",
+     "params": {
+      "count": 24,
+      "radius": 0.025,
+      "speed": 0.5,
+      "radial_copies": 8,
+      "axis": "z",
+      "points": [
+       [
+        0.1,
+        0.0,
+        0
+       ],
+       [
+        0.117058123305848,
+        0.056545519434459936,
+        0
+       ],
+       [
+        0.0994575949233063,
+        0.12533230554039734,
+        0
+       ],
+       [
+        0.04161127054767789,
+        0.18538743798706522,
+        0
+       ],
+       [
+        -0.04998446083247916,
+        0.21424647879320294,
+        0
+       ],
+       [
+        -0.15704340568068478,
+        0.1945182992219803,
+        0
+       ],
+       [
+        -0.25314019976477714,
+        0.11966636646547235,
+        0
+       ],
+       [
+        -0.309989044126116,
+        -0.002606246683816072,
+        0
+       ],
+       [
+        -0.30489786155360993,
+        -0.1504569507202498,
+        0
+       ],
+       [
+        -0.22755087931446255,
+        -0.29175434413769213,
+        0
+       ],
+       [
+        -0.08431831977231188,
+        -0.3910120470660388,
+        0
+       ],
+       [
+        0.10121402047041399,
+        -0.4179183198427829,
+        0
+       ],
+       [
+        0.2919587229336119,
+        -0.35547166427575405,
+        0
+       ],
+       [
+        0.4447403067582226,
+        -0.20568436874153084,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "mag"
+    },
+    {
+     "id": "soup",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -0.3
+     ],
+     "scale": 0.85
+    },
+    {
+     "id": "soup_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        -0.35
+       ],
+       [
+        0.45,
+        -0.33
+       ],
+       [
+        0.75,
+        -0.1
+       ],
+       [
+        0.9,
+        0.3
+       ]
+      ],
+      "thickness": 0.05,
+      "cut_material": "clay"
+     },
+     "parent": "soup"
+    },
+    {
+     "id": "soup_soup",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.82,
+      "depth": 0.04
+     },
+     "material": "accent2",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "soup_steam",
+     "kind": "flow",
+     "params": {
+      "count": 10,
+      "radius": 0.03,
+      "speed": 0.4,
+      "radial_copies": 3,
+      "points": [
+       [
+        0.3,
+        0,
+        0
+       ],
+       [
+        0.35,
+        0,
+        0.4
+       ],
+       [
+        0.25,
+        0,
+        0.8
+       ],
+       [
+        0.35,
+        0,
+        1.2
+       ]
+      ]
+     },
+     "material": "white",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.25
+     ]
+    },
+    {
+     "id": "h2o",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.1,
+      -0.1
+     ],
+     "scale": 0.45
+    },
+    {
+     "id": "h2o_oxygen",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.5
+     },
+     "material": "accent",
+     "parent": "h2o"
+    },
+    {
+     "id": "h2o_hydrogen_0",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_hydrogen_1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      -0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_charge_neg",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      0.75
+     ]
+    },
+    {
+     "id": "h2o_charge_pos",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      -0.95
+     ]
+    },
+    {
+     "id": "wave_particles",
+     "kind": "flow",
+     "params": {
+      "count": 16,
+      "points": [
+       [
+        1.4,
+        0,
+        0.4
+       ],
+       [
+        0.8,
+        0,
+        0.2
+       ],
+       [
+        0,
+        0,
+        -0.1
+       ]
+      ],
+      "radius": 0.04,
+      "speed": 2.2
+     },
+     "material": "accent"
+    }
+   ],
+   "actions": [
+    {
+     "target": "mag_electrons",
+     "do": "spin",
+     "params": {
+      "axis": "z",
+      "rate": 150
+     }
+    },
+    {
+     "target": "mag_cathode",
+     "do": "highlight",
+     "at": "magnetron tube",
+     "params": {
+      "color": "#FFD700",
+      "strength": 2.0
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": "mag_antenna_dome",
+     "do": "highlight",
+     "at": "electromagnetic waves",
+     "params": {
+      "color": "#00FFFF",
+      "hold": true
+     },
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "target": "mag",
+     "frame": [
+      "mag_anode",
+      "mag_antenna_dome",
+      "oven_waveguide"
+     ],
+     "azimuth": -45.0,
+     "elevation": 25.0,
+     "orbit": 20.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "scene3_dipole",
+   "narration": "Every water molecule in your soup is a microscopic electric dipole, with a positive hydrogen side and a negative oxygen side.",
+   "objective": "Zoom into a single water molecule to show its polar dipole charge structure.",
+   "keywords": [
+    "microscopic electric dipole",
+    "positive hydrogen side"
+   ],
+   "use": [
+    "hero_microwave"
+   ],
+   "objects": [
+    {
+     "id": "oven",
+     "kind": "empty"
+    },
+    {
+     "id": "oven_floor",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_ceiling",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_back_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       0.06,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.9,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.9
+    },
+    {
+     "id": "oven_left_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      -1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_right_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_shell_top",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_bottom",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      -0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_left",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      -1.3,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_right",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      2.0,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_back",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       0.1,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      1.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 1.05
+    },
+    {
+     "id": "oven_control_panel",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.5,
+       0.06,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "material": "clay_dark",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.0
+    },
+    {
+     "id": "oven_button_0",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.5
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      -0.09999999999999998
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_door",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       1.55
+      ],
+      "pivot": [
+       -1.25,
+       0,
+       0
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      -1.25,
+      -0.95,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.4,
+       0.7,
+       0.3
+      ],
+      "bevel": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      1.45,
+      0.2,
+      0.45
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.2
+    },
+    {
+     "id": "oven_turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.75,
+      "depth": 0.04
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.6
+     ]
+    },
+    {
+     "id": "oven_roller_ring",
+     "kind": "torus",
+     "params": {
+      "major": 0.45,
+      "minor": 0.03
+     },
+     "material": "ink",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.66
+     ]
+    },
+    {
+     "id": "oven_drive_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.18,
+      "depth": 0.25
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.95
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag",
+     "kind": "empty",
+     "position": [
+      1.4,
+      0.0,
+      0.4
+     ],
+     "scale": 0.55
+    },
+    {
+     "id": "mag_anode",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.62,
+        -0.32
+       ],
+       [
+        0.62,
+        0.32
+       ]
+      ],
+      "thickness": 0.12,
+      "cut_material": "accent2"
+     },
+     "material": "brass",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_vane_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.39,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag_vane_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.27577164466275356,
+      0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      45.0
+     ]
+    },
+    {
+     "id": "mag_vane_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      2.3880612583373387e-17,
+      0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      90.0
+     ]
+    },
+    {
+     "id": "mag_vane_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627535,
+      0.27577164466275356,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      135.0
+     ]
+    },
+    {
+     "id": "mag_vane_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.39,
+      4.7761225166746774e-17,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      180.0
+     ]
+    },
+    {
+     "id": "mag_vane_5",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627536,
+      -0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      225.0
+     ]
+    },
+    {
+     "id": "mag_vane_6",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -7.164183775012016e-17,
+      -0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      270.0
+     ]
+    },
+    {
+     "id": "mag_vane_7",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.2757716446627535,
+      -0.2757716446627536,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      315.0
+     ]
+    },
+    {
+     "id": "mag_cathode",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.07,
+      "depth": 0.9
+     },
+     "material": "flame",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_cathode_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 8,
+      "radius": 0.09,
+      "wire": 0.012,
+      "height": 0.6
+     },
+     "material": "accent2",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_magnet_top",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.62
+     ]
+    },
+    {
+     "id": "mag_magnet_bottom",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.62
+     ]
+    },
+    {
+     "id": "mag_fin_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.28
+     ]
+    },
+    {
+     "id": "mag_fin_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.14
+     ]
+    },
+    {
+     "id": "mag_fin_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_fin_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.14
+     ]
+    },
+    {
+     "id": "mag_fin_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.28
+     ]
+    },
+    {
+     "id": "mag_antenna_stem",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.05,
+      "depth": 0.5
+     },
+     "material": "chrome",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.95
+     ]
+    },
+    {
+     "id": "mag_antenna_dome",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.1
+       ],
+       [
+        0.2,
+        0.05
+       ],
+       [
+        0.14,
+        0.16
+       ],
+       [
+        0.0,
+        0.2
+       ]
+      ],
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    },
+    {
+     "id": "mag_filament_leads",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.04,
+        0,
+        -0.45
+       ],
+       [
+        0.05,
+        0,
+        -0.9
+       ],
+       [
+        0.3,
+        0,
+        -1.2
+       ]
+      ],
+      "radius": 0.025
+     },
+     "material": "chrome",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_electrons",
+     "kind": "flow",
+     "params": {
+      "count": 24,
+      "radius": 0.025,
+      "speed": 0.5,
+      "radial_copies": 8,
+      "axis": "z",
+      "points": [
+       [
+        0.1,
+        0.0,
+        0
+       ],
+       [
+        0.117058123305848,
+        0.056545519434459936,
+        0
+       ],
+       [
+        0.0994575949233063,
+        0.12533230554039734,
+        0
+       ],
+       [
+        0.04161127054767789,
+        0.18538743798706522,
+        0
+       ],
+       [
+        -0.04998446083247916,
+        0.21424647879320294,
+        0
+       ],
+       [
+        -0.15704340568068478,
+        0.1945182992219803,
+        0
+       ],
+       [
+        -0.25314019976477714,
+        0.11966636646547235,
+        0
+       ],
+       [
+        -0.309989044126116,
+        -0.002606246683816072,
+        0
+       ],
+       [
+        -0.30489786155360993,
+        -0.1504569507202498,
+        0
+       ],
+       [
+        -0.22755087931446255,
+        -0.29175434413769213,
+        0
+       ],
+       [
+        -0.08431831977231188,
+        -0.3910120470660388,
+        0
+       ],
+       [
+        0.10121402047041399,
+        -0.4179183198427829,
+        0
+       ],
+       [
+        0.2919587229336119,
+        -0.35547166427575405,
+        0
+       ],
+       [
+        0.4447403067582226,
+        -0.20568436874153084,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "mag"
+    },
+    {
+     "id": "soup",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -0.3
+     ],
+     "scale": 0.85
+    },
+    {
+     "id": "soup_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        -0.35
+       ],
+       [
+        0.45,
+        -0.33
+       ],
+       [
+        0.75,
+        -0.1
+       ],
+       [
+        0.9,
+        0.3
+       ]
+      ],
+      "thickness": 0.05,
+      "cut_material": "clay"
+     },
+     "parent": "soup"
+    },
+    {
+     "id": "soup_soup",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.82,
+      "depth": 0.04
+     },
+     "material": "accent2",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "soup_steam",
+     "kind": "flow",
+     "params": {
+      "count": 10,
+      "radius": 0.03,
+      "speed": 0.4,
+      "radial_copies": 3,
+      "points": [
+       [
+        0.3,
+        0,
+        0
+       ],
+       [
+        0.35,
+        0,
+        0.4
+       ],
+       [
+        0.25,
+        0,
+        0.8
+       ],
+       [
+        0.35,
+        0,
+        1.2
+       ]
+      ]
+     },
+     "material": "white",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.25
+     ]
+    },
+    {
+     "id": "h2o",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.1,
+      -0.1
+     ],
+     "scale": 0.45
+    },
+    {
+     "id": "h2o_oxygen",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.5
+     },
+     "material": "accent",
+     "parent": "h2o"
+    },
+    {
+     "id": "h2o_hydrogen_0",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_hydrogen_1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      -0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_charge_neg",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      0.75
+     ]
+    },
+    {
+     "id": "h2o_charge_pos",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      -0.95
+     ]
+    },
+    {
+     "id": "plus_label",
+     "kind": "label",
+     "params": {
+      "size": 0.3,
+      "text": "+"
+     },
+     "position": [
+      -0.35,
+      0.35,
+      0.1
+     ]
+    },
+    {
+     "id": "minus_label",
+     "kind": "label",
+     "params": {
+      "size": 0.3,
+      "text": "-"
+     },
+     "position": [
+      0.0,
+      0.1,
+      -0.35
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "h2o",
+     "do": "rotate",
+     "duration": 3.0,
+     "params": {
+      "by": [
+       0,
+       0,
+       30
+      ]
+     }
+    },
+    {
+     "target": "h2o",
+     "do": "scale",
+     "at": "microscopic electric dipole",
+     "duration": 0.8,
+     "params": {
+      "to": 1.3
+     }
+    },
+    {
+     "target": "h2o_hydrogen_0",
+     "do": "highlight",
+     "at": "positive hydrogen side",
+     "params": {
+      "color": "#FF3333",
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "plus_label",
+     "do": "pop_in",
+     "at": "positive hydrogen side"
+    },
+    {
+     "target": "h2o_oxygen",
+     "do": "highlight",
+     "at": "negative oxygen side",
+     "params": {
+      "color": "#3388FF",
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "minus_label",
+     "do": "pop_in",
+     "at": "negative oxygen side"
+    }
+   ],
+   "shots": [
+    {
+     "type": "macro",
+     "target": "h2o",
+     "frame": [
+      "h2o_oxygen",
+      "h2o_hydrogen_0",
+      "h2o_hydrogen_1"
+     ],
+     "azimuth": -15.0,
+     "elevation": 15.0,
+     "lens": 75.0
+    }
+   ]
+  },
+  {
+   "id": "scene4_friction",
+   "narration": "As the passing electric field rapidly flips back and forth, water molecules violently twist to align, turning molecular friction into heat.",
+   "objective": "Demonstrate the alternating field driving violent molecular rotation and kinetic heat generation.",
+   "background": "dark",
+   "keywords": [
+    "electric field",
+    "molecular friction"
+   ],
+   "note": "Illustrative - molecular oscillation frequency slowed for visibility",
+   "use": [
+    "hero_microwave"
+   ],
+   "objects": [
+    {
+     "id": "oven",
+     "kind": "empty"
+    },
+    {
+     "id": "oven_floor",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_ceiling",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_back_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       0.06,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.9,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.9
+    },
+    {
+     "id": "oven_left_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      -1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_right_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_shell_top",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_bottom",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      -0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_left",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      -1.3,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_right",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      2.0,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_back",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       0.1,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      1.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 1.05
+    },
+    {
+     "id": "oven_control_panel",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.5,
+       0.06,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "material": "clay_dark",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.0
+    },
+    {
+     "id": "oven_button_0",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.5
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      -0.09999999999999998
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_door",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       1.55
+      ],
+      "pivot": [
+       -1.25,
+       0,
+       0
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      -1.25,
+      -0.95,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.4,
+       0.7,
+       0.3
+      ],
+      "bevel": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      1.45,
+      0.2,
+      0.45
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.2
+    },
+    {
+     "id": "oven_turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.75,
+      "depth": 0.04
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.6
+     ]
+    },
+    {
+     "id": "oven_roller_ring",
+     "kind": "torus",
+     "params": {
+      "major": 0.45,
+      "minor": 0.03
+     },
+     "material": "ink",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.66
+     ]
+    },
+    {
+     "id": "oven_drive_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.18,
+      "depth": 0.25
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.95
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag",
+     "kind": "empty",
+     "position": [
+      1.4,
+      0.0,
+      0.4
+     ],
+     "scale": 0.55
+    },
+    {
+     "id": "mag_anode",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.62,
+        -0.32
+       ],
+       [
+        0.62,
+        0.32
+       ]
+      ],
+      "thickness": 0.12,
+      "cut_material": "accent2"
+     },
+     "material": "brass",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_vane_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.39,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag_vane_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.27577164466275356,
+      0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      45.0
+     ]
+    },
+    {
+     "id": "mag_vane_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      2.3880612583373387e-17,
+      0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      90.0
+     ]
+    },
+    {
+     "id": "mag_vane_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627535,
+      0.27577164466275356,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      135.0
+     ]
+    },
+    {
+     "id": "mag_vane_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.39,
+      4.7761225166746774e-17,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      180.0
+     ]
+    },
+    {
+     "id": "mag_vane_5",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627536,
+      -0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      225.0
+     ]
+    },
+    {
+     "id": "mag_vane_6",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -7.164183775012016e-17,
+      -0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      270.0
+     ]
+    },
+    {
+     "id": "mag_vane_7",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.2757716446627535,
+      -0.2757716446627536,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      315.0
+     ]
+    },
+    {
+     "id": "mag_cathode",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.07,
+      "depth": 0.9
+     },
+     "material": "flame",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_cathode_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 8,
+      "radius": 0.09,
+      "wire": 0.012,
+      "height": 0.6
+     },
+     "material": "accent2",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_magnet_top",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.62
+     ]
+    },
+    {
+     "id": "mag_magnet_bottom",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.62
+     ]
+    },
+    {
+     "id": "mag_fin_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.28
+     ]
+    },
+    {
+     "id": "mag_fin_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.14
+     ]
+    },
+    {
+     "id": "mag_fin_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_fin_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.14
+     ]
+    },
+    {
+     "id": "mag_fin_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.28
+     ]
+    },
+    {
+     "id": "mag_antenna_stem",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.05,
+      "depth": 0.5
+     },
+     "material": "chrome",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.95
+     ]
+    },
+    {
+     "id": "mag_antenna_dome",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.1
+       ],
+       [
+        0.2,
+        0.05
+       ],
+       [
+        0.14,
+        0.16
+       ],
+       [
+        0.0,
+        0.2
+       ]
+      ],
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    },
+    {
+     "id": "mag_filament_leads",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.04,
+        0,
+        -0.45
+       ],
+       [
+        0.05,
+        0,
+        -0.9
+       ],
+       [
+        0.3,
+        0,
+        -1.2
+       ]
+      ],
+      "radius": 0.025
+     },
+     "material": "chrome",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_electrons",
+     "kind": "flow",
+     "params": {
+      "count": 24,
+      "radius": 0.025,
+      "speed": 0.5,
+      "radial_copies": 8,
+      "axis": "z",
+      "points": [
+       [
+        0.1,
+        0.0,
+        0
+       ],
+       [
+        0.117058123305848,
+        0.056545519434459936,
+        0
+       ],
+       [
+        0.0994575949233063,
+        0.12533230554039734,
+        0
+       ],
+       [
+        0.04161127054767789,
+        0.18538743798706522,
+        0
+       ],
+       [
+        -0.04998446083247916,
+        0.21424647879320294,
+        0
+       ],
+       [
+        -0.15704340568068478,
+        0.1945182992219803,
+        0
+       ],
+       [
+        -0.25314019976477714,
+        0.11966636646547235,
+        0
+       ],
+       [
+        -0.309989044126116,
+        -0.002606246683816072,
+        0
+       ],
+       [
+        -0.30489786155360993,
+        -0.1504569507202498,
+        0
+       ],
+       [
+        -0.22755087931446255,
+        -0.29175434413769213,
+        0
+       ],
+       [
+        -0.08431831977231188,
+        -0.3910120470660388,
+        0
+       ],
+       [
+        0.10121402047041399,
+        -0.4179183198427829,
+        0
+       ],
+       [
+        0.2919587229336119,
+        -0.35547166427575405,
+        0
+       ],
+       [
+        0.4447403067582226,
+        -0.20568436874153084,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "mag"
+    },
+    {
+     "id": "soup",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -0.3
+     ],
+     "scale": 0.85
+    },
+    {
+     "id": "soup_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        -0.35
+       ],
+       [
+        0.45,
+        -0.33
+       ],
+       [
+        0.75,
+        -0.1
+       ],
+       [
+        0.9,
+        0.3
+       ]
+      ],
+      "thickness": 0.05,
+      "cut_material": "clay"
+     },
+     "parent": "soup"
+    },
+    {
+     "id": "soup_soup",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.82,
+      "depth": 0.04
+     },
+     "material": "accent2",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "soup_steam",
+     "kind": "flow",
+     "params": {
+      "count": 10,
+      "radius": 0.03,
+      "speed": 0.4,
+      "radial_copies": 3,
+      "points": [
+       [
+        0.3,
+        0,
+        0
+       ],
+       [
+        0.35,
+        0,
+        0.4
+       ],
+       [
+        0.25,
+        0,
+        0.8
+       ],
+       [
+        0.35,
+        0,
+        1.2
+       ]
+      ]
+     },
+     "material": "white",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.25
+     ]
+    },
+    {
+     "id": "h2o",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.1,
+      -0.1
+     ],
+     "scale": 0.45
+    },
+    {
+     "id": "h2o_oxygen",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.5
+     },
+     "material": "accent",
+     "parent": "h2o"
+    },
+    {
+     "id": "h2o_hydrogen_0",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_hydrogen_1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      -0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_charge_neg",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      0.75
+     ]
+    },
+    {
+     "id": "h2o_charge_pos",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      -0.95
+     ]
+    },
+    {
+     "id": "field_arrow",
+     "kind": "arrow",
+     "params": {
+      "radius": 0.05,
+      "to": [
+       0,
+       1.1,
+       0
+      ]
+     },
+     "material": "accent",
+     "position": [
+      0.0,
+      -1.1,
+      0.0
+     ]
+    }
+   ],
+   "actions": [
+    {
+     "target": "field_arrow",
+     "do": "oscillate",
+     "params": {
+      "amplitude": 0.4,
+      "axis": "y",
+      "hz": 2.0
+     }
+    },
+    {
+     "target": "field_arrow",
+     "do": "highlight",
+     "at": "electric field",
+     "params": {
+      "color": "#FFFF00",
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "h2o",
+     "do": "oscillate",
+     "at": "violently twist",
+     "params": {
+      "amplitude": 45,
+      "axis": "z",
+      "hz": 4.0
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": "soup_soup",
+     "do": "highlight",
+     "at": "molecular friction",
+     "params": {
+      "color": "#FF2200",
+      "hold": true,
+      "strength": 2.5
+     },
+     "sfx": "impact"
+    }
+   ],
+   "shots": [
+    {
+     "target": "h2o",
+     "frame": [
+      "h2o_oxygen",
+      "soup_soup",
+      "field_arrow"
+     ],
+     "azimuth": -30.0,
+     "elevation": 20.0,
+     "orbit": 30.0,
+     "lens": 60.0
+    }
+   ]
+  },
+  {
+   "id": "scene5_glass",
+   "narration": "Ceramic and glass bowls lack free electric dipoles. Microwave radiation passes straight through them cold while forcing the soup inside to boil.",
+   "objective": "Show waves passing transparently through the non-polar ceramic bowl while forcing the soup inside to heat up.",
+   "keywords": [
+    "lack free electric dipoles",
+    "passes straight through"
+   ],
+   "use": [
+    "hero_microwave"
+   ],
+   "objects": [
+    {
+     "id": "oven",
+     "kind": "empty"
+    },
+    {
+     "id": "oven_floor",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_ceiling",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       1.8,
+       0.06
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      0.75
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_back_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.4,
+       0.06,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.9,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.9
+    },
+    {
+     "id": "oven_left_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      -1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_right_wall",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.06,
+       1.8,
+       1.56
+      ]
+     },
+     "material": "steel",
+     "parent": "oven",
+     "position": [
+      1.2,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_shell_top",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_bottom",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       2.1,
+       0.12
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      0.05,
+      -0.86
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_left",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      -1.3,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_right",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.12,
+       2.1,
+       1.6
+      ],
+      "bevel": 0.05
+     },
+     "parent": "oven",
+     "position": [
+      2.0,
+      0.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.05
+    },
+    {
+     "id": "oven_shell_back",
+     "kind": "box",
+     "params": {
+      "size": [
+       3.3,
+       0.1,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "parent": "oven",
+     "position": [
+      0.35,
+      1.05,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 1.05
+    },
+    {
+     "id": "oven_control_panel",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.5,
+       0.06,
+       1.6
+      ],
+      "bevel": 0.03
+     },
+     "material": "clay_dark",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.0
+    },
+    {
+     "id": "oven_button_0",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.5
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_1",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      0.2
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_button_2",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.08,
+      "depth": 0.05
+     },
+     "material": "accent",
+     "parent": "oven",
+     "position": [
+      1.6,
+      -1.05,
+      -0.09999999999999998
+     ],
+     "rotation": [
+      90.0,
+      0.0,
+      0.0
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": -1.05
+    },
+    {
+     "id": "oven_door",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       1.55
+      ],
+      "pivot": [
+       -1.25,
+       0,
+       0
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      -1.25,
+      -0.95,
+      0.0
+     ]
+    },
+    {
+     "id": "oven_waveguide",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.4,
+       0.7,
+       0.3
+      ],
+      "bevel": 0.02
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      1.45,
+      0.2,
+      0.45
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "cut_offset": 0.2
+    },
+    {
+     "id": "oven_turntable",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.75,
+      "depth": 0.04
+     },
+     "material": "glass",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.6
+     ]
+    },
+    {
+     "id": "oven_roller_ring",
+     "kind": "torus",
+     "params": {
+      "major": 0.45,
+      "minor": 0.03
+     },
+     "material": "ink",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.66
+     ]
+    },
+    {
+     "id": "oven_drive_motor",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.18,
+      "depth": 0.25
+     },
+     "material": "dark_steel",
+     "parent": "oven",
+     "position": [
+      0.0,
+      0.0,
+      -0.95
+     ],
+     "cut": [
+      0.0,
+      -1.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag",
+     "kind": "empty",
+     "position": [
+      1.4,
+      0.0,
+      0.4
+     ],
+     "scale": 0.55
+    },
+    {
+     "id": "mag_anode",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.62,
+        -0.32
+       ],
+       [
+        0.62,
+        0.32
+       ]
+      ],
+      "thickness": 0.12,
+      "cut_material": "accent2"
+     },
+     "material": "brass",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_vane_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.39,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "id": "mag_vane_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.27577164466275356,
+      0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      45.0
+     ]
+    },
+    {
+     "id": "mag_vane_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      2.3880612583373387e-17,
+      0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      90.0
+     ]
+    },
+    {
+     "id": "mag_vane_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627535,
+      0.27577164466275356,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      135.0
+     ]
+    },
+    {
+     "id": "mag_vane_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.39,
+      4.7761225166746774e-17,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      180.0
+     ]
+    },
+    {
+     "id": "mag_vane_5",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -0.2757716446627536,
+      -0.2757716446627535,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      225.0
+     ]
+    },
+    {
+     "id": "mag_vane_6",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      -7.164183775012016e-17,
+      -0.39,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      270.0
+     ]
+    },
+    {
+     "id": "mag_vane_7",
+     "kind": "box",
+     "params": {
+      "size": [
+       0.38,
+       0.06,
+       0.6
+      ],
+      "bevel": 0.01
+     },
+     "material": "brass",
+     "parent": "mag",
+     "position": [
+      0.2757716446627535,
+      -0.2757716446627536,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      315.0
+     ]
+    },
+    {
+     "id": "mag_cathode",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.07,
+      "depth": 0.9
+     },
+     "material": "flame",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_cathode_coil",
+     "kind": "spring",
+     "params": {
+      "coils": 8,
+      "radius": 0.09,
+      "wire": 0.012,
+      "height": 0.6
+     },
+     "material": "accent2",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_magnet_top",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.62
+     ]
+    },
+    {
+     "id": "mag_magnet_bottom",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.72,
+      "depth": 0.22,
+      "bevel": 0.04
+     },
+     "material": "dark_steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.62
+     ]
+    },
+    {
+     "id": "mag_fin_0",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.28
+     ]
+    },
+    {
+     "id": "mag_fin_1",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      -0.14
+     ]
+    },
+    {
+     "id": "mag_fin_2",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_fin_3",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.14
+     ]
+    },
+    {
+     "id": "mag_fin_4",
+     "kind": "box",
+     "params": {
+      "size": [
+       1.9,
+       1.9,
+       0.03
+      ],
+      "bevel": 0.005
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.28
+     ]
+    },
+    {
+     "id": "mag_antenna_stem",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.05,
+      "depth": 0.5
+     },
+     "material": "chrome",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      0.95
+     ]
+    },
+    {
+     "id": "mag_antenna_dome",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.2,
+        -0.1
+       ],
+       [
+        0.2,
+        0.05
+       ],
+       [
+        0.14,
+        0.16
+       ],
+       [
+        0.0,
+        0.2
+       ]
+      ],
+      "thickness": 0.03
+     },
+     "material": "steel",
+     "parent": "mag",
+     "position": [
+      0.0,
+      0.0,
+      1.2
+     ]
+    },
+    {
+     "id": "mag_filament_leads",
+     "kind": "tube",
+     "params": {
+      "points": [
+       [
+        0.04,
+        0,
+        -0.45
+       ],
+       [
+        0.05,
+        0,
+        -0.9
+       ],
+       [
+        0.3,
+        0,
+        -1.2
+       ]
+      ],
+      "radius": 0.025
+     },
+     "material": "chrome",
+     "parent": "mag"
+    },
+    {
+     "id": "mag_electrons",
+     "kind": "flow",
+     "params": {
+      "count": 24,
+      "radius": 0.025,
+      "speed": 0.5,
+      "radial_copies": 8,
+      "axis": "z",
+      "points": [
+       [
+        0.1,
+        0.0,
+        0
+       ],
+       [
+        0.117058123305848,
+        0.056545519434459936,
+        0
+       ],
+       [
+        0.0994575949233063,
+        0.12533230554039734,
+        0
+       ],
+       [
+        0.04161127054767789,
+        0.18538743798706522,
+        0
+       ],
+       [
+        -0.04998446083247916,
+        0.21424647879320294,
+        0
+       ],
+       [
+        -0.15704340568068478,
+        0.1945182992219803,
+        0
+       ],
+       [
+        -0.25314019976477714,
+        0.11966636646547235,
+        0
+       ],
+       [
+        -0.309989044126116,
+        -0.002606246683816072,
+        0
+       ],
+       [
+        -0.30489786155360993,
+        -0.1504569507202498,
+        0
+       ],
+       [
+        -0.22755087931446255,
+        -0.29175434413769213,
+        0
+       ],
+       [
+        -0.08431831977231188,
+        -0.3910120470660388,
+        0
+       ],
+       [
+        0.10121402047041399,
+        -0.4179183198427829,
+        0
+       ],
+       [
+        0.2919587229336119,
+        -0.35547166427575405,
+        0
+       ],
+       [
+        0.4447403067582226,
+        -0.20568436874153084,
+        0
+       ]
+      ]
+     },
+     "material": "air",
+     "parent": "mag"
+    },
+    {
+     "id": "soup",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.0,
+      -0.3
+     ],
+     "scale": 0.85
+    },
+    {
+     "id": "soup_bowl",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.0,
+        -0.35
+       ],
+       [
+        0.45,
+        -0.33
+       ],
+       [
+        0.75,
+        -0.1
+       ],
+       [
+        0.9,
+        0.3
+       ]
+      ],
+      "thickness": 0.05,
+      "cut_material": "clay"
+     },
+     "parent": "soup"
+    },
+    {
+     "id": "soup_soup",
+     "kind": "cylinder",
+     "params": {
+      "radius": 0.82,
+      "depth": 0.04
+     },
+     "material": "accent2",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.18
+     ]
+    },
+    {
+     "id": "soup_steam",
+     "kind": "flow",
+     "params": {
+      "count": 10,
+      "radius": 0.03,
+      "speed": 0.4,
+      "radial_copies": 3,
+      "points": [
+       [
+        0.3,
+        0,
+        0
+       ],
+       [
+        0.35,
+        0,
+        0.4
+       ],
+       [
+        0.25,
+        0,
+        0.8
+       ],
+       [
+        0.35,
+        0,
+        1.2
+       ]
+      ]
+     },
+     "material": "white",
+     "parent": "soup",
+     "position": [
+      0.0,
+      0.0,
+      0.25
+     ]
+    },
+    {
+     "id": "h2o",
+     "kind": "empty",
+     "position": [
+      0.0,
+      0.1,
+      -0.1
+     ],
+     "scale": 0.45
+    },
+    {
+     "id": "h2o_oxygen",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.5
+     },
+     "material": "accent",
+     "parent": "h2o"
+    },
+    {
+     "id": "h2o_hydrogen_0",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_hydrogen_1",
+     "kind": "sphere",
+     "params": {
+      "radius": 0.3
+     },
+     "material": "white",
+     "parent": "h2o",
+     "position": [
+      -0.4902275357211828,
+      0.0,
+      -0.3795747136213586
+     ]
+    },
+    {
+     "id": "h2o_charge_neg",
+     "kind": "label",
+     "params": {
+      "text": "-",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      0.75
+     ]
+    },
+    {
+     "id": "h2o_charge_pos",
+     "kind": "label",
+     "params": {
+      "text": "+",
+      "size": 0.3
+     },
+     "material": "ink",
+     "parent": "h2o",
+     "position": [
+      0.0,
+      -0.2,
+      -0.95
+     ]
+    },
+    {
+     "id": "pass_through_flow",
+     "kind": "flow",
+     "params": {
+      "count": 14,
+      "points": [
+       [
+        -1.6,
+        0,
+        -0.3
+       ],
+       [
+        0,
+        0,
+        -0.3
+       ],
+       [
+        1.6,
+        0,
+        -0.3
+       ]
+      ],
+      "radius": 0.03,
+      "speed": 1.5
+     },
+     "material": "accent2"
+    }
+   ],
+   "actions": [
+    {
+     "target": "pass_through_flow",
+     "do": "move",
+     "duration": 3.0,
+     "params": {
+      "by": [
+       0.2,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "target": "soup_bowl",
+     "do": "highlight",
+     "at": "lack free electric dipoles",
+     "params": {
+      "color": "#77CCFF",
+      "hold": true
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "pass_through_flow",
+     "do": "highlight",
+     "at": "passes straight through",
+     "params": {
+      "color": "#00FFFF",
+      "hold": true
+     },
+     "sfx": "swoosh"
+    },
+    {
+     "target": "soup_soup",
+     "do": "highlight",
+     "at": "forcing the soup inside to boil",
+     "params": {
+      "color": "#FF3300",
+      "hold": true
+     },
+     "sfx": "impact"
+    },
+    {
+     "target": "soup_steam",
+     "do": "show",
+     "at": "forcing the soup inside to boil",
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "pull_out",
+     "target": "soup",
+     "frame": [
+      "soup_bowl",
+      "soup_soup",
+      "oven_floor"
+     ],
+     "elevation": 25.0,
+     "blend": 0.8
+    }
+   ]
+  }
+ ]
+}
