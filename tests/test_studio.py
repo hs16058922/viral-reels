@@ -244,6 +244,15 @@ class TestKit(unittest.TestCase):
         plate = objs["m_plate"]  # at y=0.25 in kit space: plane offset compensates so it cuts at y=0
         self.assertAlmostEqual(plate.cut_offset, 0.25)
 
+    def test_kit_example_passes_lint_and_round_trips_through_draft_spec(self):
+        from engine.studio import director
+        text = (Path(director.SPECS) / "examples" / "cordless_drill.json").read_text()
+        self.assertEqual(director._lint(VideoSpec.model_validate_json(text)), "")
+        spec = VideoSpec.model_validate_json(text)
+        director._lint(spec)  # must not leave render-only params behind
+        saved = spec.model_dump_json(indent=1, exclude_defaults=True)  # exactly what draft_spec writes
+        VideoSpec.model_validate_json(saved)  # what the director re-reads before rendering
+
     def test_unknown_kit_is_rejected(self):
         with self.assertRaises(ValidationError):
             self._spec({"id": "k", "kit": "flux_capacitor"})

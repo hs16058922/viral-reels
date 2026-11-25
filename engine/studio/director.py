@@ -249,12 +249,12 @@ def _lint(spec: VideoSpec) -> str:
     """Density rules the schema can't express: thin scenes look like slideshows."""
     probs = []
     try:
-        resolve_assets(spec)
+        resolve_assets(spec.model_copy(deep=True))  # copy: resolving adds render-only `_path` params
     except (LookupError, PermissionError) as e:
         probs.append(f"{e}; use only asset_ids listed under MODELS")
     for sc in spec.scenes:
         solid = [o for o in sc.objects if o.kind not in ("label", "empty", "flow")]
-        if len(solid) < LINT_MIN_OBJECTS:
+        if len(solid) < LINT_MIN_OBJECTS and not any(o.kind == "asset" for o in solid):
             probs.append(f"scene {sc.id}: only {len(solid)} solid parts; build the real mechanism from >= {LINT_MIN_OBJECTS}")
         if len(sc.actions) < LINT_MIN_ACTIONS:
             probs.append(f"scene {sc.id}: only {len(sc.actions)} actions; animate what the narration describes")
@@ -384,7 +384,7 @@ def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "
                images: list[Path] | None = None, call=None) -> Path:
     """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
     call = call or _gemini_any
-    examples = f"EXAMPLE SPEC (kits + asset; note part ids like motor_rotor):\n{(SPECS / 'examples' / 'cordless_drill.json').read_text()}"
+    examples = f"EXAMPLE SPEC (only 3 scenes shown; yours needs 5-7. Kits + asset; note part ids like motor_rotor):\n{(SPECS / 'examples' / 'cordless_drill.json').read_text()}"
     schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
     brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
     base = (f"{RULES}\n{REFERENCE}\n{KITS}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "

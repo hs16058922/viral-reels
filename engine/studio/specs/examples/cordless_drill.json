@@ -19,7 +19,8 @@
    ],
    "actions": [
     {"target": "drill", "do": "rotate", "params": {"by": [0, 0, 40]}, "duration": 3.5},
-    {"target": "glow", "do": "pop_in", "at": "a battery", "sfx": "pop"}
+    {"target": "glow", "do": "pop_in", "at": "a battery", "sfx": "pop"},
+    {"target": "glow", "do": "highlight", "at": "size of your thumb", "params": {"color": "#F28C28"}}
    ],
    "shots": [
     {"type": "push_in", "target": "drill", "frame": ["drill"], "azimuth": -25, "elevation": 15}
