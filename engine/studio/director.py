@@ -327,7 +327,7 @@ def _review(scenes: list, stills: list[Path], key: str) -> tuple[list[dict], str
     return scores, feedback
 
 
-def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budget_s: float = 90 * 60) -> dict:
+def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 10, budget_s: float = 90 * 60) -> dict:
     """Draft -> validate -> render stills -> vision review -> fix only the weak scenes (seeing their renders).
 
     Round 0 drafts whole specs (every drafter once, best wins). Later rounds keep every scene that scored
