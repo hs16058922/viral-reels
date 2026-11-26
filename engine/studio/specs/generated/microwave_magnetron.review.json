@@ -1,314 +1,144 @@
 {
- "passed": false,
- "drafter": "nemotron-3-ultra-550b-a55b",
+ "passed": true,
+ "drafter": "gemini",
  "history": [
   {
-   "round": 0,
    "drafter": "gemini",
-   "scores": {
-    "hook": 4,
-    "magnetron_reveal": 3,
-    "dipole_physics": 1,
-    "molecular_twist": 2,
-    "friction_heat": 2,
-    "bowl_transparency": 3,
-    "final_view": 4
+   "board": {
+    "title": "Why Microwaves Heat Soup But Never the Bowl",
+    "scenes": [
+     {
+      "id": "hook",
+      "shot": "microwave_hero",
+      "narration": "A microwave oven does not cook your food from the outside in. It reaches straight inside to heat the water directly.",
+      "keywords": [
+       "heat the water directly"
+      ],
+      "callouts": []
+     },
+     {
+      "id": "wave_path",
+      "shot": "microwave_wave_path",
+      "narration": "Inside the side wall, a magnetron tube shoots high frequency radio waves down a waveguide into the cabinet.",
+      "keywords": [
+       "radio waves"
+      ],
+      "callouts": [
+       {
+        "part": "mag",
+        "at": "a magnetron tube"
+       },
+       {
+        "part": "oven_waveguide",
+        "at": "down a waveguide"
+       }
+      ],
+      "label": "2.45 GHZ"
+     },
+     {
+      "id": "magnetron",
+      "shot": "magnetron_cutaway",
+      "narration": "This hidden tube converts electricity into electromagnetic waves flipping direction over two billion times every single second.",
+      "keywords": [
+       "two billion times"
+      ],
+      "callouts": [
+       {
+        "part": "magnetron_cathode",
+        "at": "This hidden tube"
+       }
+      ]
+     },
+     {
+      "id": "dipole_flip",
+      "shot": "water_dipole_flip",
+      "narration": "Water molecules act like tiny magnets. Positive hydrogen atoms and negative oxygen atoms twist wildly as they try to align with the flipping field.",
+      "keywords": [
+       "Water molecules"
+      ],
+      "callouts": [
+       {
+        "part": "w_hydrogen_0",
+        "at": "hydrogen atoms"
+       },
+       {
+        "part": "w_oxygen",
+        "at": "oxygen atoms"
+       }
+      ]
+     },
+     {
+      "id": "friction_heat",
+      "shot": "water_molecules_jostle",
+      "narration": "This relentless spinning creates intense friction between neighboring molecules, transforming rapid kinetic motion directly into heat.",
+      "keywords": [
+       "kinetic motion"
+      ],
+      "callouts": [
+       {
+        "part": "w4",
+        "at": "neighboring molecules"
+       }
+      ]
+     },
+     {
+      "id": "bowl_cool",
+      "shot": "soup_heating",
+      "narration": "Because glass and ceramic bowls lack free water molecules, the waves pass right through them, keeping the bowl cool while your soup boils.",
+      "keywords": [
+       "ceramic bowls"
+      ],
+      "callouts": [
+       {
+        "part": "soup_bowl",
+        "at": "ceramic bowls"
+       },
+       {
+        "part": "soup_steam",
+        "at": "soup boils"
+       }
+      ]
+     }
+    ]
    },
-   "avg": 2.71,
-   "feedback": {
-    "hook": "Problems: The microwave model is decent, but the bowl is a flat, unshaded white shape that lacks 3D depth. The 'waves' are represented by a primitive dotted line that looks like a 2D UI element rather than a 3D effect.. Fix: Apply a realistic ceramic shader to the bowl with subtle reflections. Replace the dotted line with a volumetric sine-wave glow that interacts with the environment's lighting.",
-    "magnetron_reveal": "Problems: The 'magnetron' is just a generic PC heat sink slapped onto the exterior of the casing. It contradicts the narration which says it sits 'inside the wall'.. Fix: Create a technical cutaway of the microwave's side panel to reveal the actual internal copper vacuum tube assembly of a real magnetron.",
-    "dipole_physics": "Problems: This is a complete failure of the objective. It is an extreme close-up of a blurry white surface. There are no molecules, no dipoles, and no educational value.. Fix: Transition to a microscopic 3D view showing H2O molecules (oxygen sphere with two smaller hydrogen spheres) labeled with '+' and '-' signs.",
-    "molecular_twist": "Problems: The visual returns to a static wide shot of the microwave. It does not show molecules twisting or the electric field flipping as narrated.. Fix: Use a split-screen or an 'X-ray' bubble overlay showing the water molecules rotating 180 degrees rapidly in response to an oscillating vector arrow.",
-    "friction_heat": "Problems: Changing the background to blue does nothing to visualize friction or heat. The bowl still looks like a broken 2D asset.. Fix: Show the molecules colliding with motion trails. Use a red/orange 'thermal' glow spreading from the center of the food to represent kinetic energy turning into heat.",
-    "bowl_transparency": "Problems: The bowl is still a solid white blob. It doesn't look like glass or ceramic, and there is no visual indication of waves passing 'through' it.. Fix: Change the bowl material to a refractive glass or glazed ceramic. Animate the waves passing through the bowl walls undisturbed while vibrating the food inside.",
-    "final_view": "Problems: A repetitive wide shot that lacks a 'hero' finish. There is no visual evidence of boiling or internal cooking.. Fix: Add a steam particle simulation rising from the bowl and use a cross-section view to show the internal temperature gradient being higher than the surface."
-   }
-  },
-  {
-   "round": 0,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.0,
-   "feedback": {
-    "hook": "Problems: The microwave body is rendered as a broken, solid black unlit silhouette. The internal wave path is represented by a crude string of white dots rather than electromagnetic wave visualizer.. Fix: Render a photorealistic closed microwave exterior, then use an X-ray transition or smooth shell fade to reveal realistic glowing wave patterns travelling inside.",
-    "magnetron": "Problems: The magnetron is reduced to floating grey fins and red dots on a plain blue backdrop, lacking the actual cylindrical copper cavity geometry, central cathode, or magnet structure.. Fix: Create a detailed 3D cutaway of a realistic copper magnetron showing the central cathode filament, surrounding resonant cavities, magnets, and electron cloud trajectories.",
-    "waveguide": "Problems: The waveguide tube itself is not clearly shown; wave energy is depicted as primitive dotted particle lines coming from a blue bar inside the cavity while cooling fins sit awkwardly on top.. Fix: Add a transparent cross-section of the metallic waveguide channel guiding waves from the magnetron antenna, and represent microwaves as continuous volumetric field waves instead of dotted particles.",
-    "dipole": "Problems: The scene is visually cluttered with the microwave frame breaking through the background. Electric fields are crudely shown as floating black cards with '+' and '-' signs rather than dynamic field forces.. Fix: Isolate the water molecule on a clean backdrop, refine the water molecular shading/geometry, and represent the alternating electric field with sleek glowing field arrows or charged plates.",
-    "bowl": "Problems: The shot shows a bowl of soup inside the cavity, but fails to show waves actively passing through the transparent ceramic walls into the liquid.. Fix: Overlay translucent wave rays passing cleanly through the ceramic material without attenuation while showing energy absorption and thermal glowing exclusively inside the soup volume.",
-    "summary": "Problems: Framing is far too zoomed out with excessive empty space. The microwave model appears toy-like with simplistic red buttons and blocky cooling fins, while energy path detail is minimal.. Fix: Fill the vertical frame closer, upgrade materials and details for a premium look, and use clear glowing visual schematics tracing energy from magnetron to waveguide, cavity, and food."
-   }
-  },
-  {
-   "round": 1,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "dipole",
-    "summary"
-   ],
-   "accepted": [
-    "hook",
-    "dipole"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave model is extremely low-poly with flat, unrealistic materials. The 'wave path' is represented by a single vertical line of dots which is physically inaccurate and looks like a placeholder.. Fix: Use PBR materials for the microwave (brushed metal and glass). Replace the dots with a glowing, volumetric sine-wave that reflects off the internal walls to show the actual wave path.",
-    "magnetron": "Problems: The geometry does not resemble a magnetron; it looks like a generic heat sink or capacitor. It lacks the circular anode block and resonant cavities essential for the explanation.. Fix: Model a proper cylindrical magnetron cutaway. Ensure the central cathode and the circular 'keyhole' resonant vanes are clearly visible and accurately proportioned.",
-    "dipole": "Problems: The water molecule is recognizable, but the background is a messy, unshaded black silhouette of the microwave. The electric field lines are thin and lack visual impact.. Fix: Isolate the molecule in a clean, stylized environment. Use high-quality subsurface scattering on the spheres and replace the dashed lines with a shimmering, animated volumetric field.",
-    "summary": "Problems: The image is a blank white frame with no visible content.. Fix: Render a wide-angle cutaway of the entire microwave system, showing the energy flow from the magnetron through the waveguide into the food."
-   }
-  },
-  {
-   "round": 2,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook",
-    "summary"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave model is extremely low-poly and lacks realistic materials. The 'wave path' looks like a 2D hand-drawn scribble rather than a 3D physical effect, which undermines the premium educational tone.. Fix: Use a high-fidelity PBR microwave model with realistic glass and metal textures. Replace the dotted line with a volumetric glow or a clean, animated sine-wave that realistically reflects off the interior metal walls.",
-    "magnetron": "Problems: Fails the technical objective. The image shows external cooling fins but does not reveal the internal resonant vanes or cathode. The floating blue rings are abstract and do not clearly communicate electron emission or microwave generation.. Fix: Create a dedicated cutaway model of the magnetron's copper anode block. Show the circular resonant cavities and a central cathode emitting a particle stream of electrons to explain the actual physics.",
-    "summary": "Problems: The model looks like a toy with basic red cylinders for buttons. The 'energy path' is represented by static blue sticks that don't look like energy. The framing is too wide, leaving too much dead space for a vertical Reel.. Fix: Increase model detail (add bevels, UI labels, and a waveguide). Use a dynamic light-trail effect to show the energy moving from the magnetron, through the waveguide, and into the chamber. Zoom in to fill the frame."
-   }
-  },
-  {
-   "round": 3,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook"
-   ],
-   "feedback": {
-    "hook": "Problems: The wave representation looks like a static low-poly wireframe rather than electromagnetic energy. The microwave model is a primitive grey box lacking realistic textures, a handle, or a control interface.. Fix: Replace the dotted lines with glowing, oscillating sine-wave pulses. Apply realistic PBR materials (brushed metal, glass) and add a digital display/buttons to the front panel.",
-    "magnetron": "Problems: Fails the objective of showing internal resonant vanes and the cathode; it only shows external cooling fins. The blue 'waves' are physically incorrect, appearing to emanate from the bowl and floor rather than the magnetron source.. Fix: Model the internal copper 'clover' cavities of the magnetron tube. Show a central cathode emitting electron particles that spiral into the cavities to generate the waves, which should then flow through a waveguide into the top of the cabin.",
-    "summary": "Problems: The framing is unacceptable for a vertical Reel; the subject is a tiny speck in a vast white void. The 'complete energy path' is invisible at this scale, making the educational objective impossible to meet.. Fix: Re-frame the shot to fill at least 70% of the vertical canvas. Use glowing 'energy' overlays to trace the path from the power cord, through the transformer, into the magnetron, and finally bouncing inside the cabin."
-   }
-  },
-  {
-   "round": 4,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave model is a primitive grey box lacking realistic textures or details. The wave visualization is a cluttered, non-physical mesh that doesn't represent a 'path' so much as a static geometric shape.. Fix: Use a high-fidelity microwave model with PBR materials. Replace the dotted mesh with clean, glowing sine-wave splines that originate from the waveguide and bounce off the internal walls.",
-    "magnetron": "Problems: The model is mechanically incorrect. It depicts a series of flat cooling fins rather than the internal resonant cavities of a magnetron anode. The red spheres do not represent electron flow or the cloud-like behavior of a vacuum tube.. Fix: Model a proper cylindrical cross-section of a magnetron showing the central cathode and the circular anode block with its characteristic 'keyhole' resonant vanes. Use particle emitters to show electrons spiraling in the magnetic field.",
-    "summary": "Problems: The blue wave lines are clipping through the top of the microwave geometry, breaking the physical logic of a Faraday cage. The model looks like a placeholder asset with generic red buttons.. Fix: Fix the geometry clipping so waves stay contained within the cavity. Add a visible waveguide (the metal 'tunnel' from the magnetron to the oven) to show the actual energy path as requested in the objective."
-   }
-  },
-  {
-   "round": 5,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "summary"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave is a featureless grey box lacking any professional textures or UI. The 'wave path' is a chaotic, unreadable cloud of dots that fails to communicate electromagnetic resonance.. Fix: Use a high-quality PBR-textured microwave model. Replace the dot cloud with glowing, oscillating sine-wave ribbons that clearly bounce off the internal walls.",
-    "magnetron": "Problems: The geometry is factually incorrect; it shows a stack of flat plates instead of a cylindrical anode block with resonant cavities. The electrons are depicted as large, static red spheres.. Fix: Model a realistic cylindrical magnetron cutaway showing the central cathode and the 'keyhole' shaped resonant vanes. Use a particle system for electrons to show high-speed movement.",
-    "summary": "Problems: The framing is poor with the subject being too small for a vertical Reel format. The waves look like rigid neon sticks clipping through the geometry rather than energy contained in a cavity.. Fix: Zoom the camera in to fill the frame. Use volumetric light or glow effects for the waves and ensure they are masked to stay within the oven's internal dimensions."
-   }
-  },
-  {
-   "round": 6,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook"
-   ],
-   "feedback": {
-    "hook": "Problems: The model is a crude, semi-transparent grey box rather than a realistic microwave. The 'waves' are represented by amateurish dotted lines that lack physical presence or glow.. Fix: Model a high-fidelity microwave with realistic metal and glass shaders. Use a volumetric shader or glowing sine-wave geometry to represent the waves instead of dots.",
-    "magnetron": "Problems: Completely fails the technical objective. It shows the exterior of the oven with cooling fins, not a cutaway of the magnetron's internal resonant vanes or cathode. The blue background is distracting and unprofessional.. Fix: Create a dedicated close-up asset of the magnetron. Use a Boolean cutaway to reveal the internal copper cavities (vanes) and a glowing central cathode emitting particle-based electrons.",
-    "summary": "Problems: The framing is unacceptable for a Reel; the subject is tiny and lost in a vast white void. The 'energy path' looks like random blue sticks rather than a cohesive flow.. Fix: Tighten the camera framing to fill the 9:16 aspect ratio. Use a 'ghosted' view of the chassis to show the energy flowing specifically from the magnetron, through the waveguide, and into the food."
-   }
-  },
-  {
-   "round": 7,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave model is a crude, low-poly box lacking realistic textures or components like a handle or control panel. The 'wave path' is represented by a jagged, 2D-looking dotted line that lacks the fluid, volumetric quality of a professional 3D explainer.. Fix: Replace the placeholder box with a high-fidelity PBR microwave model. Use a volumetric glowing sine-wave shader to represent the electromagnetic field bouncing off the interior walls.",
-    "magnetron": "Problems: The geometry does not accurately represent a magnetron's internal resonant cavities; it looks like generic cooling fins. The electrons are depicted as flat red circles rather than dynamic particles, and the lighting is flat.. Fix: Model a true cross-section of a copper anode block with circular resonant vanes. Use a particle system for the electrons and add a metallic material with realistic anisotropic highlights to the copper.",
-    "summary": "Problems: The image is a blank white frame. No objects, mechanisms, or energy paths are visible.. Fix: Render a wide-angle cutaway view of the entire microwave assembly, showing the magnetron connected to the waveguide leading into the cooking chamber with the energy path clearly visualized."
-   }
-  },
-  {
-   "round": 8,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "summary"
-   ],
-   "feedback": {
-    "hook": "Problems: The microwave model is a primitive, low-detail box. The 'wave path' is a messy, hand-drawn 2D scribble that lacks any 3D depth or physical realism, looking more like a digital paint-over than a professional render.. Fix: Replace the scribble with a clean, glowing 3D sine-wave visualization. Use a high-fidelity microwave model with realistic textures (brushed metal, glass) and a proper 'X-ray' transition to reveal the interior.",
-    "magnetron": "Problems: The geometry is technically incorrect. A magnetron is a radial/cylindrical vacuum tube, but this shows a linear stack of plates resembling a heat sink or capacitor. The 'electrons' are just static red spheres with no sense of motion or emission.. Fix: Model a proper cylindrical anode block with circular resonant cavities (vanes) and a central cathode. Use a particle system to show electrons spiraling from the center toward the cavities to generate the microwave energy.",
-    "summary": "Problems: The framing is poor; the subject is tiny and lost in a vast white void. The magnetron component is incorrectly placed on top of the unit rather than integrated into the side. The 'waves' look like glowing sticks rather than electromagnetic energy.. Fix: Tighten the camera framing to fill the screen. Integrate the magnetron into the internal side compartment. Use consistent volumetric lighting or glowing paths to show the energy moving from the magnetron, through the waveguide, and into the cooking chamber."
-   }
-  },
-  {
-   "round": 9,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "magnetron"
-   ],
-   "feedback": {
-    "hook": "Problems: The wave visualization is a chaotic, hand-drawn scribble that lacks any physical or mathematical logic. The microwave model is a low-fidelity primitive with no realistic textures or hardware details.. Fix: Replace the cyan scribble with a clean, glowing 3D sine-wave pattern or a volumetric field. Use a high-poly microwave model with realistic materials like brushed steel and tempered glass.",
-    "magnetron": "Problems: The geometry is fundamentally incorrect; it looks like a generic heat sink rather than a magnetron. It lacks the characteristic circular resonant cavities and a defined central cathode. The red 'electrons' are static and poorly integrated.. Fix: Model a proper cylindrical magnetron cutaway showing the copper anode block and resonant vanes. Use a particle system with motion blur for the electrons to show them spiraling toward the vanes.",
-    "summary": "Problems: The framing is unacceptable for a vertical Reel; the subject is tiny and lost in a vast white void. The internal components are represented by vague, glowing sticks that do not communicate a 'system' or 'path'.. Fix: Zoom in significantly to fill the frame. Use a 'X-ray' shader on the microwave shell to reveal the magnetron, waveguide, and turntable simultaneously, using consistent light-trail effects to show the energy flow."
-   }
-  },
-  {
-   "round": 10,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": {
-    "hook": 4,
-    "magnetron": 4,
-    "waveguide": 5,
-    "dipole": 5,
-    "bowl": 5,
-    "summary": 4
-   },
-   "avg": 4.5,
-   "rewrote": [
-    "hook",
-    "magnetron",
-    "summary"
-   ],
-   "accepted": [
-    "hook"
-   ],
-   "feedback": {
-    "hook": "Problems: The model is extremely low-poly and lacks professional textures. The 'internal reveal' is just a transparent box rather than a technical cutaway. The magnetron assembly looks like a stack of paper rather than a mechanical component.. Fix: Apply PBR materials (brushed metal, textured plastic). Use a boolean modifier for a clean mechanical cutaway. Increase the scale of the microwave in the frame to fill the vertical space.",
-    "magnetron": "Problems: This does not resemble a magnetron vacuum tube. It looks like a radiator or cooling fins. The 'electrons' are flat red circles that lack depth or energy. The geometry is clipping and the blue background is a flat, non-cinematic color.. Fix: Model a realistic cylindrical anode block with resonant cavities and a central cathode. Replace red circles with a glowing particle system or volumetric streaks. Use a dark, high-contrast studio lighting setup.",
-    "summary": "Problems: The energy path is represented by static blue cylinders that are clipping through the top of the microwave, which is physically incorrect. The framing is too wide, leaving 70% of the screen as empty white space.. Fix: Animate sine-wave light paths that reflect off the internal walls. Use a 'ghosted' or X-ray shader for the outer shell instead of simple transparency. Zoom the camera in significantly to focus on the interaction between the waves and the food."
-   }
+   "review": [
+    {
+     "id": "hook",
+     "score": 9,
+     "problems": "The microwave model is a vintage 1970s style which might feel dated for a modern educational hook.",
+     "fix": "Use a more modern, photorealistic stainless steel microwave model to better match the 'real countertop' objective."
+    },
+    {
+     "id": "wave_path",
+     "score": 10,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "magnetron",
+     "score": 10,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "dipole_flip",
+     "score": 9,
+     "problems": "The electric field icons (lightning boxes) are a bit abstract and might distract from the molecule.",
+     "fix": "Simplify the background field indicators to focus entirely on the molecule's rotation."
+    },
+    {
+     "id": "friction_heat",
+     "score": 7,
+     "problems": "The 'crowd' of molecules is a small 3x3 grid, which looks too organized to suggest friction or heat.",
+     "fix": "Increase the number of molecules and randomize their positions/rotations to show them bumping into each other, adding a red glow to indicate rising temperature."
+    },
+    {
+     "id": "bowl_cool",
+     "score": 8,
+     "problems": "The steam is represented by a single line of dots, which looks a bit sparse for 'boiling' soup.",
+     "fix": "Add more steam particles or a volumetric fog effect to emphasize that the soup is hot while the bowl remains clean and cool."
+    }
+   ]
   }
  ]
 }

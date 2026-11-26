@@ -300,8 +300,13 @@
     "cover_hook_2": "WHY THE BOWL STAYS COLD?!",
     "cover_tag": "ELECTROMAGNETISM",
     "cover_sticker": "2.45 BILLION CYCLES/SEC",
-    "status": "pending",
-    "video_path": null
+    "status": "failed_qc",
+    "video_path": null,
+    "qc_issues": [
+      "ERROR 05_bowl_cool_0114-0171: no visible motion",
+      "ERROR 05_bowl_cool_0172-0228: no visible motion",
+      "ERROR 05_bowl_cool_0229-0285: no visible motion"
+    ]
   },
   {
     "id": "abs_braking_system",
