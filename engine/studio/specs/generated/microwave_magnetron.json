@@ -4,736 +4,1054 @@
  "voice": "en-US-ChristopherNeural",
  "fps": 30,
  "prefabs": {
-  "oven": [
+  "microwave_system": [
    {
-    "id": "cavity",
+    "id": "oven",
     "kit": "microwave_cavity",
     "position": [
      0,
      0,
      0
     ],
-    "scale": [
-     0.95,
-     1.15,
-     0.95
-    ]
+    "scale": 1.2
    },
    {
-    "id": "magnetron",
+    "id": "mag",
     "kit": "magnetron",
     "position": [
-     2.0,
-     0.1,
-     0.1
+     1.8,
+     0,
+     0.6
     ],
     "rotation": [
      0,
      -90,
      0
     ],
-    "scale": [
-     0.7,
-     0.7,
-     0.7
-    ]
+    "scale": 0.9
    },
    {
-    "id": "bowl",
+    "id": "soup",
     "kit": "bowl_of_soup",
     "position": [
      0,
-     -0.9,
-     0
+     0,
+     -0.3
     ],
-    "scale": 0.5
+    "scale": 0.7
+   },
+   {
+    "id": "wave",
+    "kind": "flow",
+    "material": "air",
+    "params": {
+     "points": [
+      [
+       1.5,
+       0,
+       0.6
+      ],
+      [
+       0.8,
+       0,
+       0.6
+      ],
+      [
+       0,
+       0,
+       0.6
+      ],
+      [
+       -0.5,
+       0,
+       0.6
+      ]
+     ],
+     "count": 30,
+     "radius": 0.04,
+     "speed": 2.5
+    },
+    "position": [
+     0,
+     0,
+     0
+    ]
    }
   ]
  },
  "scenes": [
   {
    "id": "hook",
-   "narration": "A microwave oven heats soup from the inside out while the bowl stays cold to the touch right now today.",
+   "narration": "A microwave doesn't heat from the outside in. It targets water molecules directly using electromagnetic resonance.",
+   "objective": "Show the closed oven then reveal the internal wave path",
    "background": "light",
    "keywords": [
-    "soup from the inside out",
-    "bowl stays cold to the touch"
+    "outside in",
+    "water molecules",
+    "electromagnetic resonance"
+   ],
+   "note": "Illustrative - slowed",
+   "use": [
+    "microwave_system"
    ],
    "objects": [
     {
-     "id": "oven_ext",
+     "id": "closed_oven",
      "kind": "asset",
      "params": {
       "asset_id": "vintage_microwave",
-      "size": 2.6
+      "size": 3.5
      },
-     "position": [
-      0,
-      0.2,
-      0
-     ],
      "rotation": [
       0,
-      10,
+      15,
       0
      ],
-     "scale": 1.0
-    },
-    {
-     "id": "soup_bowl",
-     "kit": "bowl_of_soup",
-     "position": [
-      1.8,
-      -0.9,
-      0
-     ],
-     "scale": 0.55
+     "material": "chrome"
     }
    ],
    "actions": [
     {
-     "target": "oven_ext",
+     "target": "closed_oven",
      "do": "rotate",
-     "at": 0,
      "params": {
       "by": [
        0,
-       24,
+       -30,
        0
-      ]
-     },
-     "duration": 4
-    },
-    {
-     "target": "soup_bowl_soup",
-     "do": "highlight",
-     "at": "soup from the inside out",
-     "params": {
-      "color": "#F28C28",
-      "strength": 2,
-      "hold": true
-     }
-    },
-    {
-     "target": "soup_bowl_bowl",
-     "do": "highlight",
-     "at": "bowl stays cold to the touch",
-     "params": {
-      "color": "#A8C8E8",
-      "strength": 1.5
-     }
-    }
-   ],
-   "shots": [
-    {
-     "at": 0,
-     "type": "push_in",
-     "target": "oven_ext",
-     "frame": [
-      "oven_ext",
-      "soup_bowl_bowl",
-      "soup_bowl_soup"
-     ],
-     "azimuth": -30,
-     "elevation": 12,
-     "lens": 50,
-     "blend": 0.6
-    }
-   ]
-  },
-  {
-   "id": "magnetron",
-   "narration": "Inside the wall sits a magnetron, a vacuum tube firing waves at two point four five gigahertz.",
-   "background": "blue",
-   "keywords": [
-    "magnetron",
-    "two point four five gigahertz"
-   ],
-   "note": "Illustrative - microwaves shown as moving particles",
-   "use": [
-    "oven"
-   ],
-   "objects": [
-    {
-     "id": "waves",
-     "kind": "flow",
-     "material": "air",
-     "params": {
-      "points": [
-       [
-        2.0,
-        0.2,
-        0.1
-       ],
-       [
-        1.4,
-        0.2,
-        0.1
-       ],
-       [
-        0.7,
-        0.2,
-        0.1
-       ]
-      ],
-      "count": 12,
-      "radius": 0.04,
-      "speed": 1.4
-     }
-    }
-   ],
-   "actions": [
-    {
-     "target": "magnetron_cathode",
-     "do": "highlight",
-     "at": "magnetron",
-     "params": {
-      "color": "#FFB347",
-      "strength": 2,
-      "hold": true
-     }
-    },
-    {
-     "target": "magnetron_antenna_dome",
-     "do": "highlight",
-     "at": "two point four five gigahertz",
-     "params": {
-      "color": "#F28C28",
-      "strength": 2
-     }
-    },
-    {
-     "target": "waves",
-     "do": "highlight",
-     "at": "two point four five gigahertz",
-     "params": {
-      "color": "#F28C28",
-      "strength": 1.5
-     }
-    }
-   ],
-   "shots": [
-    {
-     "at": 0,
-     "type": "macro",
-     "target": "magnetron",
-     "frame": [
-      "magnetron_cathode",
-      "magnetron_anode",
-      "magnetron_antenna_dome",
-      "waves"
-     ],
-     "azimuth": -45,
-     "elevation": 30,
-     "lens": 70,
-     "blend": 0.7
-    }
-   ]
-  },
-  {
-   "id": "molecule",
-   "narration": "Water molecules are electric dipoles, positive on the hydrogen side and negative on oxygen.",
-   "background": "dark",
-   "keywords": [
-    "electric dipoles",
-    "hydrogen side",
-    "negative on oxygen"
-   ],
-   "use": [],
-   "objects": [
-    {
-     "id": "mol",
-     "kit": "water_molecule",
-     "position": [
-      0,
-      -0.9,
-      0
-     ],
-     "scale": 0.5
-    },
-    {
-     "id": "bond_0",
-     "kind": "cylinder",
-     "params": {
-      "radius": 0.02,
-      "depth": 0.4,
-      "axis": "z"
-     },
-     "material": "clay_dark",
-     "position": [
-      0,
-      0,
-      0
-     ],
-     "rotation": [
-      0,
-      52.25,
-      0
-     ],
-     "parent": "mol_oxygen"
-    },
-    {
-     "id": "bond_1",
-     "kind": "cylinder",
-     "params": {
-      "radius": 0.02,
-      "depth": 0.4,
-      "axis": "z"
-     },
-     "material": "clay_dark",
-     "position": [
-      0,
-      0,
-      0
-     ],
-     "rotation": [
-      0,
-      -52.25,
-      0
-     ],
-     "parent": "mol_oxygen"
-    },
-    {
-     "id": "lbl_plus",
-     "kind": "label",
-     "params": {
-      "text": "+",
-      "size": 0.2
-     },
-     "position": [
-      0,
-      0.25,
-      0
-     ],
-     "parent": "mol_hydrogen_0"
-    },
-    {
-     "id": "lbl_minus",
-     "kind": "label",
-     "params": {
-      "text": "-",
-      "size": 0.25
-     },
-     "position": [
-      0,
-      -0.25,
-      0
-     ],
-     "parent": "mol_oxygen"
-    },
-    {
-     "id": "mol_stand",
-     "kind": "cylinder",
-     "params": {
-      "radius": 0.04,
-      "depth": 0.25,
-      "axis": "y"
-     },
-     "material": "steel",
-     "position": [
-      0,
-      -1.05,
-      0
-     ]
-    }
-   ],
-   "actions": [
-    {
-     "target": "mol",
-     "do": "rotate",
-     "at": 0,
-     "params": {
-      "by": [
-       0,
-       0,
-       360
       ]
      },
      "duration": 3
     },
     {
-     "target": "mol",
+     "target": "closed_oven",
+     "do": "fade",
+     "at": "outside in",
+     "params": {
+      "to": 0
+     },
+     "duration": 0.8
+    },
+    {
+     "target": [
+      "oven",
+      "mag",
+      "soup",
+      "wave"
+     ],
+     "do": "pop_in",
+     "at": "outside in",
+     "stagger": 0.1,
+     "sfx": "pop"
+    },
+    {
+     "target": [
+      "oven_shell_top",
+      "oven_shell_right",
+      "oven_shell_back"
+     ],
+     "do": "fade",
+     "at": "outside in",
+     "params": {
+      "to": 0.2
+     },
+     "duration": 0.5
+    },
+    {
+     "target": "wave",
      "do": "highlight",
-     "at": "electric dipoles",
+     "at": "electromagnetic resonance",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 3
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "push_in",
+     "target": "closed_oven",
+     "frame": [
+      "closed_oven"
+     ],
+     "azimuth": -20,
+     "elevation": 10,
+     "lens": 55
+    },
+    {
+     "type": "orbit",
+     "at": "outside in",
+     "target": "oven",
+     "frame": [
+      "oven",
+      "mag",
+      "wave",
+      "soup"
+     ],
+     "azimuth": -35,
+     "elevation": 25,
+     "orbit": 40,
+     "lens": 50,
+     "blend": 1.0
+    }
+   ]
+  },
+  {
+   "id": "magnetron",
+   "narration": "Inside the wall, a magnetron vacuum tube fires waves at two point four five gigahertz.",
+   "objective": "Cutaway the magnetron to show resonant vanes and cathode emitting electrons",
+   "background": "blue",
+   "keywords": [
+    "magnetron vacuum tube",
+    "two point four five gigahertz"
+   ],
+   "note": "Illustrative - slowed 1000000x",
+   "use": [
+    "microwave_system"
+   ],
+   "objects": [
+    {
+     "id": "mag_cut",
+     "kind": "lathe",
+     "params": {
+      "profile": [
+       [
+        0.35,
+        -0.9
+       ],
+       [
+        0.35,
+        0.9
+       ]
+      ],
+      "sweep": 180,
+      "start_angle": 90,
+      "thickness": 0.06,
+      "cut_material": "steel"
+     },
+     "material": "steel",
+     "position": [
+      1.8,
+      0,
+      0.6
+     ],
+     "rotation": [
+      0,
+      -90,
+      0
+     ],
+     "parent": "mag"
+    }
+   ],
+   "actions": [
+    {
+     "target": "oven",
+     "do": "fade",
+     "params": {
+      "to": 0.1
+     },
+     "duration": 0.5
+    },
+    {
+     "target": "mag_anode",
+     "do": "highlight",
+     "at": "magnetron vacuum tube",
+     "params": {
+      "color": "#FFB347",
+      "strength": 1.8
+     },
+     "duration": 1.5
+    },
+    {
+     "target": [
+      "mag_vane_0",
+      "mag_vane_1",
+      "mag_vane_2",
+      "mag_vane_3",
+      "mag_vane_4",
+      "mag_vane_5",
+      "mag_vane_6",
+      "mag_vane_7"
+     ],
+     "do": "highlight",
+     "at": "magnetron vacuum tube",
+     "stagger": 0.08,
      "params": {
       "color": "#F28C28",
       "strength": 1.5
      }
     },
     {
-     "target": "mol_oxygen",
+     "target": "mag_cathode",
      "do": "highlight",
-     "at": "negative on oxygen",
+     "at": "fires waves",
      "params": {
-      "color": "#2B6CB0",
-      "strength": 2
+      "color": "#FF4444",
+      "strength": 2.2
      }
     },
     {
+     "target": "mag_cathode_coil",
+     "do": "highlight",
+     "at": "fires waves",
+     "params": {
+      "color": "#FF8800",
+      "strength": 1.8
+     }
+    },
+    {
+     "target": "mag_electrons",
+     "do": "show",
+     "at": "fires waves"
+    },
+    {
+     "target": "wave",
+     "do": "show",
+     "at": "fires waves"
+    },
+    {
      "target": [
-      "mol_hydrogen_0",
-      "mol_hydrogen_1"
+      "mag_magnet_top",
+      "mag_magnet_bottom"
      ],
      "do": "highlight",
-     "at": "hydrogen side",
+     "at": "two point four five gigahertz",
      "params": {
-      "color": "#E8452C",
-      "strength": 2
-     },
-     "stagger": 0.1
+      "color": "#8844FF",
+      "strength": 1.5
+     }
     }
    ],
    "shots": [
     {
-     "at": 0,
      "type": "macro",
-     "target": "mol",
+     "target": "mag",
      "frame": [
-      "mol_oxygen",
-      "mol_hydrogen_0",
-      "mol_hydrogen_1",
-      "bond_0",
-      "bond_1",
-      "mol_charge_neg",
-      "mol_charge_pos",
-      "lbl_plus",
-      "lbl_minus"
+      "mag_anode",
+      "mag_vane_0",
+      "mag_cathode",
+      "mag_electrons",
+      "mag_cathode_coil"
      ],
-     "azimuth": -20,
-     "elevation": 10,
+     "azimuth": -10,
+     "elevation": 15,
+     "lens": 75
+    },
+    {
+     "type": "orbit",
+     "at": "two point four five gigahertz",
+     "target": "mag",
+     "frame": [
+      "mag_anode",
+      "mag_vane_0",
+      "mag_cathode",
+      "wave",
+      "mag_magnet_top"
+     ],
+     "azimuth": -40,
+     "elevation": 20,
+     "orbit": 30,
      "lens": 70,
-     "blend": 0.7
+     "blend": 1.2
     }
    ]
   },
   {
-   "id": "field",
-   "narration": "The field flips two point four five billion times a second, forcing molecules to twist and rub together.",
-   "objective": "Show the 2.45 GHz field flipping and water molecules twisting and rubbing to generate heat.",
-   "background": "light",
+   "id": "waveguide",
+   "narration": "These waves travel down a waveguide into the cavity, where they meet water molecules in your soup.",
+   "objective": "Show wave propagation from magnetron antenna through waveguide into cavity to soup",
+   "background": "dark",
    "keywords": [
-    "two point four five billion times a second",
-    "twist and rub together"
+    "waveguide",
+    "cavity",
+    "water molecules in your soup"
    ],
-   "note": "Illustrative - molecular rotation slowed ~1000x",
-   "use": [],
+   "note": "Illustrative - slowed",
+   "use": [
+    "microwave_system"
+   ],
+   "objects": [],
+   "actions": [
+    {
+     "target": "oven",
+     "do": "fade",
+     "params": {
+      "to": 0.4
+     },
+     "duration": 0.5
+    },
+    {
+     "target": "mag_antenna_stem",
+     "do": "highlight",
+     "at": "waveguide",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2
+     }
+    },
+    {
+     "target": "oven_waveguide",
+     "do": "highlight",
+     "at": "waveguide",
+     "params": {
+      "color": "#00AAAA",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "wave",
+     "do": "highlight",
+     "at": "travel down",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2
+     }
+    },
+    {
+     "target": "soup_soup",
+     "do": "highlight",
+     "at": "water molecules in your soup",
+     "params": {
+      "color": "#44AAFF",
+      "strength": 1.5
+     }
+    }
+   ],
+   "shots": [
+    {
+     "type": "orbit",
+     "target": "oven_waveguide",
+     "frame": [
+      "mag_antenna_stem",
+      "oven_waveguide",
+      "wave",
+      "soup_soup"
+     ],
+     "azimuth": -30,
+     "elevation": 20,
+     "orbit": 35,
+     "lens": 60
+    },
+    {
+     "type": "push_in",
+     "at": "cavity",
+     "target": "soup_soup",
+     "frame": [
+      "soup_soup",
+      "wave"
+     ],
+     "azimuth": -25,
+     "elevation": 15,
+     "lens": 65,
+     "blend": 1.0
+    }
+   ]
+  },
+  {
+   "id": "dipole",
+   "narration": "Each water molecule is a tiny dipole. As the field flips billions of times per second, molecules twist violently, creating friction and heat.",
+   "objective": "Close-up of water dipole oscillating in flipping electric field",
+   "background": "blue",
+   "keywords": [
+    "tiny dipole",
+    "field flips",
+    "twist violently",
+    "friction and heat"
+   ],
+   "note": "Illustrative - slowed 1000000000x",
+   "use": [
+    "microwave_system"
+   ],
    "objects": [
     {
-     "id": "mol_a",
+     "id": "h2o",
      "kit": "water_molecule",
-     "position": [
-      -0.3,
-      -0.9,
-      0
-     ],
-     "scale": 0.45
-    },
-    {
-     "id": "mol_b",
-     "kit": "water_molecule",
-     "position": [
-      0.3,
-      -0.9,
-      0
-     ],
-     "scale": 0.45
-    },
-    {
-     "id": "field_dir",
-     "kind": "arrow",
-     "params": {
-      "radius": 0.06,
-      "to": [
-       0,
-       0.9,
-       0
-      ]
-     },
-     "material": "accent",
      "position": [
       0,
-      -0.9,
+      0,
+      0.6
+     ],
+     "scale": 1.5
+    },
+    {
+     "id": "field_plate_pos",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       2.5
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "position": [
+      0,
+      0,
+      1.8
+     ]
+    },
+    {
+     "id": "field_plate_neg",
+     "kind": "box",
+     "params": {
+      "size": [
+       2.5,
+       0.05,
+       2.5
+      ],
+      "bevel": 0.02
+     },
+     "material": "glass",
+     "position": [
+      0,
+      0,
+      -0.6
+     ]
+    },
+    {
+     "id": "efield_lines",
+     "kind": "flow",
+     "material": "air",
+     "params": {
+      "points": [
+       [
+        0,
+        -0.5,
+        1.8
+       ],
+       [
+        0,
+        -0.5,
+        0.6
+       ],
+       [
+        0,
+        -0.5,
+        -0.6
+       ]
+      ],
+      "count": 30,
+      "radius": 0.02,
+      "speed": 2,
+      "radial_copies": 8,
+      "axis": "y"
+     },
+     "position": [
+      0,
+      0,
       0
      ]
     }
    ],
    "actions": [
     {
-     "target": "mol_a",
-     "do": "oscillate",
-     "at": 0,
+     "target": [
+      "oven",
+      "mag",
+      "soup",
+      "wave"
+     ],
+     "do": "fade",
      "params": {
-      "amplitude": 25,
-      "hz": 3,
-      "axis": "z"
+      "to": 0
      },
-     "duration": null
+     "duration": 0.4
     },
     {
-     "target": "mol_b",
-     "do": "oscillate",
-     "at": 0,
-     "params": {
-      "amplitude": 25,
-      "hz": 3,
-      "axis": "z"
-     },
-     "duration": null,
-     "offset": 0.2
+     "target": "h2o",
+     "do": "pop_in",
+     "at": "tiny dipole",
+     "sfx": "pop"
     },
     {
-     "target": "field_dir",
-     "do": "cycle",
-     "at": 0,
-     "params": {
-      "prop": "rotation",
-      "axis": "y",
-      "hz": 3,
-      "keys": [
-       [
-        0,
-        0
-       ],
-       [
-        0.5,
-        180
-       ],
-       [
-        1,
-        0
-       ]
-      ]
-     },
-     "duration": null
-    },
-    {
-     "target": "field_dir",
+     "target": "h2o_oxygen",
      "do": "highlight",
-     "at": "two point four five billion times a second",
+     "at": "tiny dipole",
      "params": {
-      "color": "#F28C28",
-      "strength": 2
+      "color": "#FF4444",
+      "strength": 1.5
      }
     },
     {
      "target": [
-      "mol_a_oxygen",
-      "mol_a_hydrogen_0",
-      "mol_a_hydrogen_1",
-      "mol_b_oxygen",
-      "mol_b_hydrogen_0",
-      "mol_b_hydrogen_1"
+      "h2o_hydrogen_0",
+      "h2o_hydrogen_1"
      ],
      "do": "highlight",
-     "at": "twist and rub together",
+     "at": "tiny dipole",
      "params": {
-      "color": "#F28C28",
-      "strength": 2,
-      "hold": true
+      "color": "#4444FF",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "field_plate_pos",
+     "do": "highlight",
+     "at": "field flips",
+     "params": {
+      "color": "#FF8800",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "field_plate_neg",
+     "do": "highlight",
+     "at": "field flips",
+     "params": {
+      "color": "#0088FF",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "efield_lines",
+     "do": "show",
+     "at": "field flips"
+    },
+    {
+     "target": "h2o",
+     "do": "oscillate",
+     "at": "field flips",
+     "params": {
+      "amplitude": 45,
+      "hz": 1.5,
+      "axis": "y"
      },
-     "stagger": 0.1
+     "duration": null
+    },
+    {
+     "target": "h2o_charge_pos",
+     "do": "highlight",
+     "at": "twist violently",
+     "params": {
+      "color": "#FF8800",
+      "strength": 2
+     }
+    },
+    {
+     "target": "h2o_charge_neg",
+     "do": "highlight",
+     "at": "twist violently",
+     "params": {
+      "color": "#0088FF",
+      "strength": 2
+     }
+    },
+    {
+     "target": "h2o",
+     "do": "highlight",
+     "at": "friction and heat",
+     "params": {
+      "color": "#FF4400",
+      "strength": 2
+     }
     }
    ],
    "shots": [
     {
-     "at": 0,
-     "type": "push_in",
-     "target": [
-      0,
-      -0.9,
-      0
-     ],
+     "type": "macro",
+     "target": "h2o",
      "frame": [
-      "mol_a_oxygen",
-      "mol_a_hydrogen_0",
-      "mol_a_hydrogen_1",
-      "mol_b_oxygen",
-      "mol_b_hydrogen_0",
-      "mol_b_hydrogen_1",
-      "field_dir"
+      "h2o_oxygen",
+      "h2o_hydrogen_0",
+      "h2o_hydrogen_1",
+      "efield_lines",
+      "field_plate_pos",
+      "field_plate_neg"
      ],
      "azimuth": -15,
+     "elevation": 10,
+     "lens": 85
+    },
+    {
+     "type": "static",
+     "at": "friction and heat",
+     "target": "h2o",
+     "frame": [
+      "h2o",
+      "efield_lines"
+     ],
+     "azimuth": -10,
      "elevation": 5,
-     "lens": 60,
-     "blend": 0.6
+     "lens": 80
     }
    ]
   },
   {
    "id": "bowl",
-   "narration": "Ceramic and glass have no dipoles, so the radiation passes straight through and the bowl stays cold.",
-   "background": "blue",
+   "narration": "Glass and ceramic have no free dipoles, so the radiation passes straight through without warming the bowl.",
+   "objective": "Show soup heating while bowl stays transparent to waves",
+   "background": "dark",
    "keywords": [
-    "no dipoles",
+    "no free dipoles",
     "passes straight through",
-    "bowl stays cold"
+    "without warming the bowl"
    ],
+   "note": "Illustrative - slowed",
    "use": [
-    "oven"
+    "microwave_system"
+   ],
+   "objects": [],
+   "actions": [
+    {
+     "target": [
+      "oven",
+      "soup",
+      "wave"
+     ],
+     "do": "pop_in",
+     "at": "no free dipoles",
+     "stagger": 0.1
+    },
+    {
+     "target": "soup_soup",
+     "do": "highlight",
+     "at": "no free dipoles",
+     "params": {
+      "color": "#FF8800",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "soup_bowl",
+     "do": "highlight",
+     "at": "passes straight through",
+     "params": {
+      "color": "#88CCFF",
+      "strength": 1.2
+     }
+    },
+    {
+     "target": "wave",
+     "do": "highlight",
+     "at": "passes straight through",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 1.5
+     }
+    },
+    {
+     "target": "soup_bowl",
+     "do": "fade",
+     "at": "without warming the bowl",
+     "params": {
+      "to": 0.3
+     },
+     "duration": 0.8
+    },
+    {
+     "target": "soup_steam",
+     "do": "show",
+     "at": "without warming the bowl"
+    }
+   ],
+   "shots": [
+    {
+     "type": "orbit",
+     "target": "soup",
+     "frame": [
+      "soup_bowl",
+      "soup_soup",
+      "wave",
+      "soup_steam"
+     ],
+     "azimuth": -35,
+     "elevation": 25,
+     "orbit": 30,
+     "lens": 55
+    },
+    {
+     "type": "push_in",
+     "at": "without warming the bowl",
+     "target": "soup_soup",
+     "frame": [
+      "soup_soup",
+      "soup_steam"
+     ],
+     "azimuth": -20,
+     "elevation": 15,
+     "lens": 70,
+     "blend": 1.0
+    }
+   ]
+  },
+  {
+   "id": "summary",
+   "narration": "The oven doesn't cook your food. It forces the water inside to boil itself.",
+   "objective": "Pull back to full system showing complete energy path",
+   "background": "light",
+   "keywords": [
+    "doesn't cook your food",
+    "forces the water inside",
+    "boil itself"
+   ],
+   "note": "Illustrative - slowed",
+   "use": [
+    "microwave_system"
    ],
    "objects": [
     {
-     "id": "waves",
+     "id": "energy_trail_1",
      "kind": "flow",
      "material": "air",
      "params": {
       "points": [
        [
-        2.5,
-        -0.9,
-        0
-       ],
-       [
+        1.8,
         0,
-        -0.9,
-        0
+        0.6
        ],
        [
-        -2.2,
-        -0.9,
-        0
+        1.4,
+        0,
+        0.6
+       ],
+       [
+        1.0,
+        0,
+        0.6
+       ],
+       [
+        0.6,
+        0,
+        0.6
        ]
       ],
-      "count": 12,
-      "radius": 0.05,
-      "speed": 1.2
-     }
+      "count": 50,
+      "radius": 0.04,
+      "speed": 3.5,
+      "radial_copies": 8,
+      "axis": "y"
+     },
+     "position": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "id": "energy_trail_2",
+     "kind": "flow",
+     "material": "air",
+     "params": {
+      "points": [
+       [
+        0.6,
+        0,
+        0.6
+       ],
+       [
+        0.2,
+        0,
+        0.6
+       ],
+       [
+        -0.2,
+        0,
+        0.6
+       ],
+       [
+        -0.4,
+        0,
+        0.6
+       ]
+      ],
+      "count": 45,
+      "radius": 0.04,
+      "speed": 3.5,
+      "radial_copies": 8,
+      "axis": "y"
+     },
+     "position": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "id": "energy_trail_3",
+     "kind": "flow",
+     "material": "air",
+     "params": {
+      "points": [
+       [
+        -0.4,
+        0,
+        0.6
+       ],
+       [
+        -0.4,
+        0,
+        0.3
+       ],
+       [
+        -0.4,
+        0,
+        0
+       ],
+       [
+        -0.4,
+        0,
+        -0.3
+       ]
+      ],
+      "count": 40,
+      "radius": 0.035,
+      "speed": 2.5,
+      "radial_copies": 6,
+      "axis": "x"
+     },
+     "position": [
+      0,
+      0,
+      0
+     ]
     }
    ],
    "actions": [
     {
-     "target": "bowl_bowl",
-     "do": "highlight",
-     "at": "no dipoles",
+     "target": "oven",
+     "do": "fade",
      "params": {
-      "color": "#A8C8E8",
-      "strength": 1.5
-     }
-    },
-    {
-     "target": "waves",
-     "do": "highlight",
-     "at": "passes straight through",
-     "params": {
-      "color": "#A8C8E8",
-      "strength": 1.5
-     }
-    },
-    {
-     "target": "bowl_bowl",
-     "do": "highlight",
-     "at": "bowl stays cold",
-     "params": {
-      "color": "#A8C8E8",
-      "strength": 2,
-      "hold": true
-     }
-    }
-   ],
-   "shots": [
-    {
-     "at": 0,
-     "type": "macro",
-     "target": "bowl",
-     "frame": [
-      "bowl_bowl",
-      "bowl_soup",
-      "waves"
-     ],
-     "azimuth": 0,
-     "elevation": 0,
-     "lens": 70,
-     "blend": 0.7
-    }
-   ]
-  },
-  {
-   "id": "conclusion",
-   "narration": "The oven does not cook the food. It forces the water inside to boil itself.",
-   "background": "dark",
-   "keywords": [
-    "does not cook the food",
-    "boil itself"
-   ],
-   "objects": [
-    {
-     "id": "oven_final",
-     "kind": "asset",
-     "params": {
-      "asset_id": "vintage_microwave",
-      "size": 2.6
+      "to": 1
      },
-     "position": [
-      0,
-      0.2,
-      0
-     ],
-     "rotation": [
-      0,
-      -10,
-      0
-     ],
-     "scale": 1.0
+     "duration": 0.5
     },
     {
-     "id": "final_bowl",
-     "kit": "bowl_of_soup",
-     "position": [
-      1.8,
-      -0.9,
-      0
-     ],
-     "scale": 0.55
-    }
-   ],
-   "actions": [
-    {
-     "target": "oven_final",
-     "do": "rotate",
-     "at": 0,
+     "target": "oven_shell_top",
+     "do": "fade",
      "params": {
-      "by": [
-       0,
-       -20,
-       0
-      ]
+      "to": 0.25
      },
-     "duration": 3.5
+     "duration": 0.5
     },
     {
-     "target": "final_bowl_bowl",
-     "do": "highlight",
-     "at": "does not cook the food",
+     "target": "oven_shell_right",
+     "do": "fade",
      "params": {
-      "color": "#A8C8E8",
-      "strength": 1.5
+      "to": 0.25
+     },
+     "duration": 0.5
+    },
+    {
+     "target": "oven_control_panel",
+     "do": "highlight",
+     "at": "doesn't cook your food",
+     "params": {
+      "color": "#F28C28",
+      "strength": 1.2
      }
     },
     {
-     "target": "final_bowl_soup",
+     "target": "mag",
+     "do": "highlight",
+     "at": "doesn't cook your food",
+     "params": {
+      "color": "#F28C28",
+      "strength": 1.8
+     }
+    },
+    {
+     "target": "energy_trail_1",
+     "do": "show",
+     "at": "doesn't cook your food"
+    },
+    {
+     "target": "energy_trail_1",
+     "do": "highlight",
+     "at": "forces the water inside",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2.5
+     }
+    },
+    {
+     "target": "energy_trail_2",
+     "do": "show",
+     "at": "forces the water inside"
+    },
+    {
+     "target": "energy_trail_2",
+     "do": "highlight",
+     "at": "forces the water inside",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2.5
+     }
+    },
+    {
+     "target": "energy_trail_3",
+     "do": "show",
+     "at": "forces the water inside"
+    },
+    {
+     "target": "energy_trail_3",
+     "do": "highlight",
+     "at": "forces the water inside",
+     "params": {
+      "color": "#00FFFF",
+      "strength": 2.5
+     }
+    },
+    {
+     "target": "soup_soup",
      "do": "highlight",
      "at": "boil itself",
      "params": {
-      "color": "#F28C28",
-      "strength": 2,
-      "hold": true
+      "color": "#FF8800",
+      "strength": 2.2
+     }
+    },
+    {
+     "target": "soup_steam",
+     "do": "show",
+     "at": "boil itself"
+    },
+    {
+     "target": "soup_steam",
+     "do": "highlight",
+     "at": "boil itself",
+     "params": {
+      "color": "#FFFFFF",
+      "strength": 1.8
      }
     }
    ],
    "shots": [
     {
-     "at": 0,
      "type": "pull_out",
-     "target": "oven_final",
+     "target": "oven",
      "frame": [
-      "oven_final",
-      "final_bowl_bowl",
-      "final_bowl_soup"
+      "oven",
+      "mag",
+      "energy_trail_1",
+      "energy_trail_2",
+      "energy_trail_3",
+      "soup",
+      "soup_steam"
      ],
      "azimuth": -30,
-     "elevation": 15,
+     "elevation": 22,
      "lens": 50,
-     "blend": 0.6
+     "distance": 2.5
+    },
+    {
+     "type": "orbit",
+     "at": "boil itself",
+     "target": "oven",
+     "frame": [
+      "oven",
+      "mag",
+      "energy_trail_1",
+      "energy_trail_2",
+      "energy_trail_3",
+      "soup"
+     ],
+     "azimuth": -35,
+     "elevation": 25,
+     "orbit": 20,
+     "lens": 55,
+     "blend": 1.5
     }
    ]
   }
