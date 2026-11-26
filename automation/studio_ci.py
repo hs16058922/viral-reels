@@ -20,6 +20,7 @@ import logging
 import os
 import shutil
 import sys
+import time
 import traceback
 from pathlib import Path
 from typing import Optional
@@ -36,6 +37,8 @@ log = logging.getLogger("viral_reels.studio_ci")
 SPECS = ROOT / "engine" / "studio" / "specs"
 GENERATED = SPECS / "generated"
 QUALITY = os.getenv("STUDIO_QUALITY", "realistic")
+MAX_DIRECT_TOPICS = 4  # topics the director may try per run (unsupported ones are rejected in ~1 min)
+DIRECT_BUDGET_S = 80 * 60  # no new topic after this; the prepare job has a 150-min limit (each try <= 40 min)
 MAX_SHARD_FRAMES = int(os.getenv("STUDIO_SHARD_FRAMES", "60"))
 
 
@@ -119,18 +122,23 @@ def cmd_prepare(build: Path, topic_id: str = "") -> None:
     except Exception as e:  # noqa: BLE001
         log.warning("replenish skipped: %s", e)
     topic, mode = pick(queue, topic_id)
-    if mode == "direct":
+    tries, t0 = 0, time.time()
+    while mode == "direct":  # a topic the director can't do is parked and the NEXT one gets this slot
         from engine.studio.director import GeminiUnavailable
+        tries += 1
         try:
-            spec = direct_spec(topic, build / "director")
+            spec = direct_spec(topic, build / "director" / topic["id"])
         except GeminiUnavailable:
-            topic, mode = None, "none"  # leave it pending; this slot just skips
-        else:
-            if not spec:
-                set_topic(topic["id"], status="needs_spec")
-                log.warning("topic %s parked as needs_spec (see %s)", topic["id"], GENERATED)
-                topic, mode = pick(queue, topic_id)
-                mode = "none" if mode == "direct" else mode
+            topic, mode = None, "none"  # every model down: leave it pending; this slot just skips
+            break
+        if spec:
+            mode = "render"
+            break
+        set_topic(topic["id"], status="needs_spec")
+        log.warning("topic %s parked as needs_spec (see %s)", topic["id"], GENERATED)
+        topic, mode = pick(queue, topic_id)
+        if mode == "direct" and (tries >= MAX_DIRECT_TOPICS or time.time() - t0 > DIRECT_BUDGET_S):
+            topic, mode = None, "none"
     meta = {"topic": topic["id"] if topic else "", "mode": mode, "quality": QUALITY, "shards": []}
     if mode == "render":
         spec_path = spec_for(topic)

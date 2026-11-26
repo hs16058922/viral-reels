@@ -208,6 +208,31 @@ class TestStudioCI(unittest.TestCase):
             self.assertEqual(q.load_topics()[0]["status"], "pending")
             self.assertEqual(json.loads((Path(tmp) / "build" / "ci.json").read_text())["mode"], "none")
 
+    def test_unsupported_topic_is_parked_and_next_topic_renders_in_same_run(self):
+        from unittest import mock
+        from automation import studio_ci
+        from automation.topic_queue import TopicQueue
+        with tempfile.TemporaryDirectory() as tmp:
+            q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
+            q.replenish_if_needed = lambda **k: None
+            q.save_topics([{"id": "airbag", "status": "pending"}, {"id": "microwave", "status": "pending"}])
+            spec = SPECS / "jet_engine.json"
+            made = []
+
+            def fake_direct(topic, work):
+                made.append(topic["id"])
+                return spec if topic["id"] == "microwave" else None
+            with mock.patch.object(studio_ci, "TopicQueue", lambda: q), \
+                 mock.patch.object(studio_ci, "direct_spec", side_effect=fake_direct), \
+                 mock.patch.object(studio_ci, "spec_for", lambda t: spec if t["id"] in made[1:] else None), \
+                 mock.patch.object(studio_ci.pipeline, "prepare", return_value=(None, {"scenes": [], "duration": 1}, [])), \
+                 mock.patch.object(studio_ci.pipeline, "shard_list", return_value=[]):
+                studio_ci.cmd_prepare(Path(tmp) / "build")
+            self.assertEqual(made, ["airbag", "microwave"])
+            self.assertEqual({t["id"]: t["status"] for t in q.load_topics()}["airbag"], "needs_spec")
+            meta = json.loads((Path(tmp) / "build" / "ci.json").read_text())
+            self.assertEqual((meta["topic"], meta["mode"]), ("microwave", "render"))
+
 
 class TestBranding(unittest.TestCase):
     def test_finalize_adds_cover_and_follow_outro(self):
