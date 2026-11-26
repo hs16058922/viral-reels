@@ -1,28 +1,141 @@
 {
  "passed": false,
- "drafter": "nemotron-3-ultra-550b-a55b",
+ "drafter": "nemotron-3.5-super-vl",
  "history": [
   {
    "round": 0,
    "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": [
-    6,
-    3,
-    2,
-    2,
-    4,
-    1
+   "scores": {
+    "hook": 7,
+    "magnetron_reveal": 4,
+    "magnetron_cutaway": 1,
+    "water_dipoles": 3,
+    "bowl_transparent": 8,
+    "final": 7
+   },
+   "avg": 5.0,
+   "feedback": {
+    "hook": "Problems: Shows a closed microwave clearly, but fails the second half of the objective to 'hint at the internal mechanism.' The odd tilt is slightly distracting for a premium explainer.. Fix: Keep the closed microwave but add a subtle wireframe or transparency hint on the side wall to suggest internals.",
+    "magnetron_reveal": "Problems: The magnetron is an unrecognizable blue blob, not mounted realistically on the waveguide. The 'waveguide' looks like stacked cardboard fins rather than a metal mechanism.. Fix: Model a realistic cylindrical magnetron attached to a rectangular metal waveguide with proper mechanical mounting.",
+    "magnetron_cutaway": "Problems: Completely wrong subject matter. Shows external cooling fins and control panel buttons, not the internal resonant vanes, cathode, or electron flow of a magnetron.. Fix: Replace with a cutaway cross-section of the magnetron showing copper vanes and a central cathode with electron paths.",
+    "water_dipoles": "Problems: Shows a single isolated water molecule model with charge indicators, but it is not inside soup and not oscillating. It fails the context of the scene objective.. Fix: Place multiple dipole molecules within a liquid volume with motion indicators to show violent twisting alignment.",
+    "bowl_transparent": "Problems: Clearly depicts the bowl, soup, and passing waves. The wave visualization is slightly abstract but readable.. Fix: Strengthen the visual contrast between waves passing through the glass and being absorbed by the liquid surface.",
+    "final": "Problems: Shows the whole microwave as requested, but the dark background shifts the mood away from an educational summary to a product render.. Fix: Use neutral lighting consistent with Scene 1 to maintain channel branding continuity."
+   }
+  },
+  {
+   "round": 0,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": {
+    "hook": 7,
+    "magnetron": 6,
+    "molecule": 5,
+    "field": 4,
+    "bowl": 8,
+    "conclusion": 7
+   },
+   "avg": 5.67,
+   "feedback": {
+    "hook": "Problems: Microwave is tilted at an unnatural angle rather than sitting flat on the surface.. Fix: Restore the microwave to a level, standard countertop position.",
+    "magnetron": "Problems: No distinct magnetron component is visible; only generic wave dots are shown without a source.. Fix: Add a visible magnetron box on the interior wall emitting the waves.",
+    "molecule": "Problems: Does not depict a water molecule structure; shows a red sphere in a bowl with floating charge signs instead.. Fix: Model a clear H2O molecule (one large oxygen, two hydrogens) with charge labels.",
+    "field": "Problems: Identical to the previous scene; no indication of field flipping or molecular twisting motion.. Fix: Show the molecule rotating or field arrows reversing to indicate oscillation.",
+    "bowl": "Problems: None significant; clearly shows waves penetrating the walls to reach the bowl.. Fix: None.",
+    "conclusion": "Problems: Microwave is tilted unnaturally again, repeating the framing error from scene 1.. Fix: Level the appliance for a professional product shot."
+   }
+  },
+  {
+   "round": 1,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": {
+    "hook": 7,
+    "magnetron": 6,
+    "molecule": 3,
+    "field": 3,
+    "bowl": 8,
+    "conclusion": 7
+   },
+   "avg": 5.67,
+   "rewrote": [
+    "molecule",
+    "field"
    ],
-   "avg": 3.0,
-   "feedback": "- scene hook: score 6/10. Problems: The microwave model is a decent vintage asset, but it is floating in a void with flat lighting. It fails to show the 'reveal' of the magnetron or waveguide as requested.. Fix: Use a technical X-ray shader or a 'shell-peel' animation to show the internal copper components while maintaining the outer casing's silhouette.\n- scene magnetron: score 3/10. Problems: The component on top is a generic mechanical block with fins, not a magnetron cutaway. There are no resonant vanes or spiraling electrons; the 'waves' are just a primitive dotted line.. Fix: Model the internal cylindrical anode block with its characteristic keyhole-shaped cavities. Use a particle system to show electrons spiraling in the magnetic field.\n- scene dipole: score 2/10. Problems: The water molecule is represented by two crude orange arrows. This is scientifically unrecognizable and looks like a placeholder asset.. Fix: Model a proper V-shaped H2O molecule with a large oxygen sphere and two smaller hydrogen spheres. Use color coding (red/white) and '+' / '-' signs to indicate the dipole.\n- scene friction: score 2/10. Problems: Fails to show molecular chaos or steam. The liquid is a static orange plane. The dotted line does not represent a flipping electromagnetic field.. Fix: Add a steam particle simulation and animate a cluster of water molecules rotating rapidly in opposite directions to visualize 'molecular friction.'\n- scene bowl_pass: score 4/10. Problems: The visual logic is understandable but the execution is crude. The dotted line passing through the bowl is a very weak representation of radiation.. Fix: Use a glowing sine-wave ripple effect that passes through the bowl geometry but terminates/glows intensely when hitting the water volume.\n- scene summary: score 1/10. Problems: The geometry is broken. The vintage microwave is clipping through a white box in a nonsensical way. It looks like a viewport error rather than a professional 3D explainer.. Fix: Create a clean 'exploded view' where the outer casing, the waveguide, the magnetron, and the food tray are all spaced out neatly with connecting lines.",
-   "stills": [
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/00_hook/still_0124.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/01_magnetron/still_0110.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/02_dipole/still_0090.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/03_friction/still_0117.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/04_bowl_pass/still_0111.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/05_summary/still_0121.png"
-   ]
+   "accepted": [
+    "molecule"
+   ],
+   "feedback": {
+    "molecule": "Problems: The H2O structure is not recognisable; a large white bowl dominates the frame and has no scientific basis, obscuring the molecular geometry. Chemical bonds between oxygen and hydrogen are missing. Charge markers are detached floating black squares rather than integrated labels.. Fix: Replace the bowl with a standard ball-and-stick model (red oxygen, two white hydrogens at ~104.5 degrees), add visible bonds, and place +/- symbols directly adjacent to the respective atoms.",
+    "field": "Problems: Fails to depict twisting or field reversal; the composition is nearly identical to the previous scene with no visible angular displacement. The field lines are ambiguous dots, and the crude bowl geometry remains.. Fix: Show a distinct angular orientation change (e.g., dipole flip), add curved arrows to indicate rotation, and clearly reverse the field vector direction to match the narration."
+   }
+  },
+  {
+   "round": 2,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": {
+    "hook": 7,
+    "magnetron": 6,
+    "molecule": 5,
+    "field": 4,
+    "bowl": 8,
+    "conclusion": 7
+   },
+   "avg": 6.17,
+   "rewrote": [
+    "molecule",
+    "field"
+   ],
+   "accepted": [
+    "molecule",
+    "field"
+   ],
+   "feedback": {
+    "molecule": "Problems: The bent triatomic geometry is roughly recognizable as water, but the electric dipole is depicted as two floating sign boxes rather than being anchored to the atoms. The negative sign hovers above the central sphere and the positive sign below, failing to clearly place negative on oxygen and positive on the hydrogen side as the narration requires. It reads as a vague arrangement of boxes and glowing spheres, not a professional explainer.. Fix: Anchor charge indicators directly to the respective atoms (negative on the central oxygen, positive on each hydrogen). Replace floating boxes with color-coded atom shading or subtle field vectors to show polarity clearly.",
+    "field": "Problems: The molecule is incorrectly built: a small red sphere on a stick appears where a hydrogen should be, breaking color consistency and bonding logic. The white spheres are unconnected or ambiguously placed. There is no visual representation of the field flipping or molecular twisting/rubbing described in the narration. It remains a static, confusing assembly.. Fix: Rebuild the water molecule with consistent atom colors and clear bonds. Add motion blur, rotation arrows, or a sequence of frames to convey the 2.45 GHz field flipping and molecular agitation."
+   }
+  },
+  {
+   "round": 3,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": {
+    "hook": 7,
+    "magnetron": 6,
+    "molecule": 5,
+    "field": 4,
+    "bowl": 8,
+    "conclusion": 7
+   },
+   "avg": 6.17,
+   "rewrote": [
+    "field"
+   ],
+   "accepted": [
+    "field"
+   ],
+   "feedback": {
+    "field": "Problems: The image is a static, toy-like arrangement of primitives that barely suggests a water molecule. It completely fails to depict the core objective: there is no indication of a 2.45 GHz flipping field, no molecular twisting or rotation, no rubbing/friction between molecules, and no visual cue for heat generation. The unexplained orange bars look like arbitrary axles rather than scientific apparatus, and the +/- signs imply a static field rather than an oscillating one. While the subject is framed clearly and centered, the execution is too crude and conceptually incomplete for a premium educational explainer.. Fix: Replace the static primitives with an accurate water molecule model showing proper bond angles. Animate the molecule twisting/rotating to simulate field flipping, add oscillating field vectors or wave indicators to communicate 2.45 GHz, show multiple molecules colliding or rubbing to imply friction, and add heat distortion or warm emissive glow to visualize heat generation. Remove the unexplained orange bars."
+   }
+  },
+  {
+   "round": 4,
+   "drafter": "nemotron-3.5-super-vl",
+   "scores": {
+    "hook": 7,
+    "magnetron": 6,
+    "molecule": 5,
+    "field": 4,
+    "bowl": 8,
+    "conclusion": 7
+   },
+   "avg": 6.17,
+   "rewrote": [
+    "field"
+   ],
+   "accepted": [
+    "field"
+   ],
+   "feedback": {
+    "field": "Problems: The image is a static, crude schematic that fails to depict the core objective. It shows floating +/- boxes and blobby spheres, but there is no indication of 2.45 GHz field flipping, molecular twisting, rubbing, or heat generation. The molecular geometry is distorted and unrecognizable as a clear water molecule, and the +/- signs look like vague placeholder boxes rather than a professional field visualization.. Fix: Animate the electric field vectors flipping rapidly to show frequency. Model accurate bent H2O geometry with distinct oxygen and hydrogen atoms. Show the molecules oscillating/rotating back and forth. Add visual cues for friction and heat (vibration, red thermal glow, motion blur). Replace the floating boxes with integrated field lines or arrows."
+   }
   }
  ]
 }
