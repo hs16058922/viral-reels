@@ -408,6 +408,9 @@ def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_st
             if best is None:
                 raise
             break
+        except Exception as e:  # noqa: BLE001 — a draft that fails to render is just a bad draft
+            log.warning("director: %s draft failed to render (%s)", name, str(e)[:200])
+            continue
         scores = {sid: v[0] for sid, v in res.items()}
         record(0, name, scores, {"feedback": {sid: v[1] for sid, v in res.items()}})
         if best is None or sum(scores.values()) / len(scores) > sum(best["scores"].values()) / len(best["scores"]):
@@ -439,6 +442,9 @@ def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_st
             except GeminiUnavailable:  # reviewers down or out of time: finish with what we have
                 rnd = visual_rounds
                 break
+            except Exception as e:  # noqa: BLE001 — a rewrite that fails to render is rejected, not fatal
+                log.warning("director: %s rewrite of %s failed to render (%s)", name, weak, str(e)[:200])
+                continue
             # Keep whichever version of each scene scored better; the mix must still pass whole-spec checks.
             take = [sid for sid in weak if sid in res and res[sid][0] >= best["scores"][sid]]
             new = {sc["id"]: sc for sc in src["scenes"]}

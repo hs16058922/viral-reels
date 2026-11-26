@@ -11,6 +11,7 @@ so any frame renders identically on its own (frame-addressable, resumable).
 import argparse
 import json
 import math
+import re
 import sys
 import time
 from pathlib import Path
@@ -55,7 +56,9 @@ AXIS = {"x": 0, "y": 1, "z": 2}
 
 
 def lin(hex_color, alpha=1.0):
-    h = hex_color.lstrip("#")
+    h = str(hex_color).lstrip("#")
+    if not re.fullmatch(r"[0-9a-fA-F]{6}", h):  # the AI sometimes writes a name ("#chrome"); don't crash the render
+        h = "E8452C"
     c = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
     return tuple(x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c) + (alpha,)
 

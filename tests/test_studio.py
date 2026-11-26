@@ -307,6 +307,35 @@ class TestSceneRevision(unittest.TestCase):
         self.assertFalse(res["passed"])
 
 
+    def test_rewrite_that_fails_to_render_is_rejected_not_fatal(self):
+        import copy
+        from unittest import mock
+        from engine.studio import director
+        base = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
+        for i in range(2):
+            sc = copy.deepcopy(base["scenes"][1])
+            sc["id"] = f"extra{i}"
+            base["scenes"].append(sc)
+        calls = []
+
+        def still(plan, out):  # round 0 renders fine; every rewrite crashes Blender
+            calls.append(out)
+            if len(calls) > 1:
+                raise RuntimeError("still render failed for scene motor")
+            return [Path(f"{sp['id']}.png") for sp in plan["scenes"]]
+
+        review = lambda scenes, stills, key: ([{"id": sc.id, "score": 3 if sc.id == "motor" else 8} for sc in scenes], "")
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(director, "_drafters", return_value=[("fake", None)]), \
+                mock.patch.object(director, "draft_spec", return_value=copy.deepcopy(base)), \
+                mock.patch.object(director, "revise_scenes", side_effect=lambda t, src, *a, **k: copy.deepcopy(src)), \
+                mock.patch.object(director, "_review", side_effect=review):
+            res = director._direct_rounds({"id": "t"}, Path(d) / "out.json", Path(d), 2, "k", [], still)
+            self.assertTrue((Path(d) / "out.json").exists())
+        self.assertEqual(len(calls), 3)  # both rounds attempted despite the crash
+        self.assertFalse(res["passed"])
+
+
     def test_revise_scenes_merges_only_requested_scenes(self):
         import copy
         from engine.studio import director
