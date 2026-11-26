@@ -462,7 +462,7 @@
     "cover_hook_2": "HOW 500 TONS FLOATS?!",
     "cover_tag": "SUPERCONDUCTIVITY",
     "cover_sticker": "ZERO WHEELS, 370 MPH",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -537,6 +537,32 @@
     "cover_hook_2": "ACTUALLY SPIN?!",
     "cover_tag": "TOOL PHYSICS",
     "cover_sticker": "1000x TORQUE",
+    "status": "pending",
+    "video_path": null
+  },
+  {
+    "id": "night_vision_optics",
+    "title": "How Night Vision Turns Total Darkness Into Bright Green",
+    "hook": "Night vision goggles don't shine invisible light into the dark. They multiply single photons of starlight into millions of electrons.",
+    "script": "Night vision goggles don't shine light into the dark. They turn single, invisible particles of starlight into millions of bright green pixels.\nIn deep night, microscopic ambient photons enter the front lens and strike a photocathode disc made of gallium arsenide.\nThis releases a shower of electrons through the photoelectric effect.\nThose electrons fly into a microchannel plate\u2014a glass disc thinner than a coin, honeycombed with millions of microscopic angled tunnels.\nAs each electron ricochets through a tunnel, it knocks free thousands more secondary electrons.\nA single starlight photon becomes an avalanche of over fifty thousand electrons.\nThis amplified electron beam slams into a phosphor screen, converting electrical energy back into visible green light.\nWhy green? Because the human eye is biologically tuned to differentiate more shades of green than any other color on Earth.\nHit follow on @CurioMotion for daily technical mysteries. What military technology should we dissect next?",
+    "bullets": [
+      "Gallium arsenide photocathode converts photons into photoelectrons",
+      "Microchannel plate with millions of microscopic dynode capillaries",
+      "Continuous secondary electron emission amplifies signal by over 50,000x",
+      "Phosphor screen converts accelerated electrons back into visible photons",
+      "Green phosphor chosen because human eye perceives most shades in green spectrum"
+    ],
+    "niche_tags": [
+      "#NightVision",
+      "#Optics",
+      "#PhotoelectricEffect",
+      "#MilitaryTech",
+      "#PhysicsInAction"
+    ],
+    "cover_hook_1": "NIGHT VISION SECRET",
+    "cover_hook_2": "WHY IS IT ALWAYS GREEN?!",
+    "cover_tag": "OPTICAL PHYSICS",
+    "cover_sticker": "50,000x ELECTRON POP",
     "status": "pending",
     "video_path": null
   }
