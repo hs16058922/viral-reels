@@ -250,12 +250,77 @@ class TestKit(unittest.TestCase):
         self.assertEqual(director._lint(VideoSpec.model_validate_json(text)), "")
         spec = VideoSpec.model_validate_json(text)
         director._lint(spec)  # must not leave render-only params behind
-        saved = spec.model_dump_json(indent=1, exclude_defaults=True)  # exactly what draft_spec writes
+        saved = spec.model_dump_json(indent=1, exclude_defaults=True)  # what a draft looks like after a save/load
         VideoSpec.model_validate_json(saved)  # what the director re-reads before rendering
 
     def test_unknown_kit_is_rejected(self):
         with self.assertRaises(ValidationError):
             self._spec({"id": "k", "kit": "flux_capacitor"})
+
+
+class TestSceneRevision(unittest.TestCase):
+    """Weak scenes are rewritten; good scenes are never touched; a worse rewrite is not accepted."""
+
+    def test_only_weak_scenes_are_rewritten_and_kept_only_if_better(self):
+        import copy
+        from unittest import mock
+        from engine.studio import director
+        base = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
+        extra = []
+        for i in range(2):  # pad the 3-scene example to a valid 5-scene spec
+            sc = copy.deepcopy(base["scenes"][1])
+            sc["id"] = f"extra{i}"
+            extra.append(sc)
+        base["scenes"] += extra
+        ids = [sc["id"] for sc in base["scenes"]]
+        rewrites = []
+
+        def fake_revise(topic, src, weak, notes, images, call=None):
+            rewrites.append(list(weak))
+            out = copy.deepcopy(src)
+            for sc in out["scenes"]:
+                if sc["id"] in weak:
+                    sc["objective"] = f"v{len(rewrites)}"
+            return out
+
+        def fake_review(scenes, stills, key):
+            # round 0: 'motor' weak (3), 'gears' weak (2); rewrite: motor improves to 8, gears gets worse (1)
+            score = {"hook": 9, "motor": 3, "gears": 2, "extra0": 8, "extra1": 8}
+            if rewrites:
+                score = {"motor": 8, "gears": 1}
+            return [{"id": sc.id, "score": score[sc.id], "problems": "p", "fix": "f"} for sc in scenes], ""
+
+        fake_still = lambda plan, out: [Path(f"{sp['id']}.png") for sp in plan["scenes"]]
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(director, "_drafters", return_value=[("fake", None)]), \
+                mock.patch.object(director, "draft_spec", return_value=copy.deepcopy(base)), \
+                mock.patch.object(director, "revise_scenes", side_effect=fake_revise), \
+                mock.patch.object(director, "_review", side_effect=fake_review):
+            res = director._direct_rounds({"id": "t"}, Path(d) / "out.json", Path(d), 1, "k", [], fake_still)
+            out = json.loads((Path(d) / "out.json").read_text())
+        self.assertEqual(rewrites, [["motor", "gears"]])
+        by_id = {sc["id"]: sc for sc in out["scenes"]}
+        self.assertEqual(by_id["motor"].get("objective"), "v1")  # better rewrite accepted
+        self.assertNotEqual(by_id["gears"].get("objective"), "v1")  # worse rewrite rejected
+        self.assertEqual([sc["id"] for sc in out["scenes"]], ids)
+        self.assertEqual(res["history"][-1]["scores"], {"hook": 9, "motor": 8, "gears": 2, "extra0": 8, "extra1": 8})
+        self.assertFalse(res["passed"])
+
+
+    def test_revise_scenes_merges_only_requested_scenes(self):
+        import copy
+        from engine.studio import director
+        src = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
+        for i in range(2):
+            sc = copy.deepcopy(src["scenes"][1])
+            sc["id"] = f"extra{i}"
+            src["scenes"].append(sc)
+        new_gears = copy.deepcopy(src["scenes"][2])
+        new_gears["background"] = "light"
+        reply = "Sure!\n```json\n" + json.dumps({"scenes": [new_gears, {"id": "hook", "narration": "hijack"}]}) + "\n```"
+        out = director.revise_scenes({"id": "t"}, src, ["gears"], {"gears": "too dark"}, [], call=lambda parts: reply)
+        self.assertEqual(out["scenes"][2]["background"], "light")
+        self.assertEqual(out["scenes"][0], src["scenes"][0])  # scenes not asked for are ignored
 
 
 class TestDirectorBudget(unittest.TestCase):

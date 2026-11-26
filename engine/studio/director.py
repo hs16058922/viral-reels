@@ -112,7 +112,10 @@ Hard rules:
 11. NO STAND-INS: never use a lone sphere/box/cylinder to stand for a complex thing (a person, a car, a circuit
     board, a bag, a cloud of gas). Model its recognisable silhouette from several shaped parts (lathe profiles,
     beveled boxes, tubes) or leave it out. Gas/liquid/electricity = `flow` particles inside a cutaway.
-12. FILL THE FRAME: parts sit close together the way they are really assembled (no floating gaps); each shot
+12. SHOW, DON'T DIAGRAM: every scene shows a physical object or mechanism. Abstract ideas (maths, frequencies,
+    fields, chemistry) are SPOKEN in the narration while the camera shows the part doing the work (use the
+    water_molecule / em_wave / bar_magnet kits for physics). Never invent a stand-in for an idea.
+12b. FILL THE FRAME: parts sit close together the way they are really assembled (no floating gaps); each shot
     frames only the parts being explained so they appear large; keep labels to 0-2 per scene.
 13. Output ONLY the JSON object. No markdown fences, no comments.
 """
@@ -231,12 +234,18 @@ def _drafters() -> list[tuple[str, callable]]:
     return out
 
 
-def _check(text: str) -> tuple[VideoSpec | None, str]:
-    """Validate a draft; returns (spec, "") or (None, error message for the repair round)."""
+def _clean(text: str) -> str:
+    """Strip reasoning blocks, code fences and chatty prose around the JSON object."""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.S)
     text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
-    if "{" in text:  # chatty models wrap the JSON in prose
+    if "{" in text:
         text = text[text.index("{"):text.rindex("}") + 1]
+    return text
+
+
+def _check(text: str) -> tuple[VideoSpec | None, str]:
+    """Validate a draft; returns (spec, "") or (None, error message for the repair round)."""
+    text = _clean(text)
     try:
         spec = VideoSpec.model_validate_json(text)
     except ValidationError as e:
@@ -289,7 +298,7 @@ def _img_parts(stills: list[Path]) -> list[dict]:
     return out
 
 
-def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], str]:
+def _review(scenes: list, stills: list[Path], key: str) -> tuple[list[dict], str]:
     """Free-tier Gemini vision review of one still per scene. Returns (scores, feedback)."""
     parts = [{"text": (
         "You are a strict art director for a premium 3D educational Reels channel. For each still (one per scene, "
@@ -298,7 +307,7 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
         "vague arrangement of boxes. Be harsh: 9-10 = looks like a professional 3D explainer, 5 = understandable "
         "but crude, 1-3 = unrecognisable or broken. Return JSON: {\"scenes\": [{\"id\": str, \"score\": int, "
         "\"problems\": str, \"fix\": str}]}. Scenes:\n" +
-        "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(spec.scenes)))}]
+        "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(scenes)))}]
     parts += _img_parts(stills)
     reviewers = [(m, lambda p, m=m: _call_gemini(p, m, key, temperature=0.2)) for m in MODELS if key]
     if os.getenv("OPENROUTER_API_KEY"):
@@ -319,10 +328,12 @@ def _review(spec: VideoSpec, stills: list[Path], key: str) -> tuple[list[dict], 
 
 
 def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budget_s: float = 90 * 60) -> dict:
-    """Draft -> validate -> render stills -> vision review -> revise (seeing its own renders).
+    """Draft -> validate -> render stills -> vision review -> fix only the weak scenes (seeing their renders).
 
-    Each revision starts from the best-scoring draft so far, so a bad round can't undo progress.
-    Stops early on a pass, or when the time budget (free-tier rate-limit waits included) runs out.
+    Round 0 drafts whole specs (every drafter once, best wins). Later rounds keep every scene that scored
+    >= PASS_MIN and send only the weak ones back with the reviewer's notes; a rewritten scene replaces the old
+    one only if it scores at least as well, so good scenes are never lost. Stops on a pass or when the time
+    budget (free-tier rate-limit waits included) runs out.
     """
     from engine.studio.pipeline import render_stills
 
@@ -335,86 +346,184 @@ def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 4, budg
         _DEADLINE[0] = float("inf")
 
 
+def _plan(spec: VideoSpec) -> dict:
+    spec = spec.model_copy(deep=True)
+    resolve_assets(spec)
+    toks = tokens(spec.script)
+    return resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
+
+
+def _passed(scores: dict) -> bool:
+    vals = list(scores.values())
+    return min(vals) >= PASS_MIN and sum(vals) / len(vals) >= PASS_AVG
+
+
+def _weak(scores: dict) -> list[str]:
+    """Scenes to rewrite: everything under PASS_MIN, or (all >= PASS_MIN but avg too low) the two lowest."""
+    weak = [sid for sid, v in scores.items() if v < PASS_MIN]
+    return weak or sorted(scores, key=scores.get)[:2]
+
+
 def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_stills) -> dict:
+    def time_left() -> bool:
+        return _DEADLINE[0] - time.time() >= 5 * 60  # enough to draft + render + review once more
+
+    def review(spec, ids, tag):
+        """Render + review the scenes `ids`; returns {id: (score, note, still)}."""
+        plan = _plan(spec)
+        plan["scenes"] = [sp for sp in plan["scenes"] if sp["id"] in ids]
+        stills = render_stills(plan, work / tag)
+        scenes = [sc for sc in spec.scenes if sc.id in ids]
+        res, _ = _review(scenes, stills, key)
+        out = {}
+        for sc, still, r in zip(scenes, stills, res + [{}] * len(scenes)):
+            note = f"Problems: {r.get('problems')}. Fix: {r.get('fix')}"
+            out[sc.id] = (int(r.get("score", 0) or 0), note, still)
+        return out
+
+    def record(rnd, name, scores, extra=None):
+        vals = list(scores.values())
+        avg = sum(vals) / len(vals)
+        history.append({"round": rnd, "drafter": name, "scores": scores, "avg": round(avg, 2), **(extra or {})})
+        log.info("director: round %d %s scores %s (avg %.1f)", rnd, name, vals, avg)
+
+    # Round 0: whole drafts, best-of-N.
     best = None
-    feedback, images = "", []
-    for rnd in range(visual_rounds + 1):
-        outage = True  # stays True only if every drafter failed for network/availability reasons
-        for name, call in _drafters():
-            if _DEADLINE[0] - time.time() < 5 * 60:  # not enough time left to draft + render + review
-                break
-            cand = out_path.with_name(f"{out_path.stem}.r{rnd}.{name}.json")
-            try:
-                draft_spec(topic, cand, attempts=3 if name == "gemini" else 2, feedback=feedback,
-                           images=images, call=call)
-            except Exception as e:  # noqa: BLE001 — one drafter failing must not stop the others
-                if not isinstance(e, (GeminiUnavailable, requests.RequestException)):
-                    outage = False
-                log.warning("director: %s produced no valid draft in round %d (%s)", name, rnd, str(e)[:200])
-                continue
-            outage = False
-            spec = VideoSpec.model_validate_json(cand.read_text())
-            resolve_assets(spec)
-            toks = tokens(spec.script)
-            plan = resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
-            stills = render_stills(plan, work / f"review_{rnd}_{name}")
-            try:
-                scores, fb = _review(spec, stills, key)
-            except GeminiUnavailable:  # reviewers down or out of time: keep what we already have
-                if best is None:
-                    raise
-                break
-            vals = [int(s.get("score", 0)) for s in scores] or [0]
-            avg = sum(vals) / len(vals)
-            history.append({"round": rnd, "drafter": name, "scores": vals, "avg": round(avg, 2),
-                            "feedback": fb, "stills": [str(p) for p in stills]})
-            log.info("director: round %d %s scores %s (avg %.1f)", rnd, name, vals, avg)
-            text = cand.read_text()
-            cand.unlink()
-            if min(vals) >= PASS_MIN and avg >= PASS_AVG:
-                out_path.write_text(text)
-                return {"spec": str(out_path), "passed": True, "drafter": name, "history": history}
-            if best is None or avg > best["avg"]:
-                best = {"avg": avg, "text": text, "fb": fb, "stills": stills, "drafter": name}
-        if best is None:
-            if outage:
-                raise GeminiUnavailable("every drafter was unavailable")
-            raise RuntimeError("no drafter produced a valid spec")
-        if _DEADLINE[0] - time.time() < 5 * 60:
-            log.info("director: time budget used after round %d", rnd)
+    outage = True  # stays True only if every drafter failed for network/availability reasons
+    for name, call in _drafters():
+        if not time_left():
             break
-        feedback = ("The attached images are renders of the best spec so far, one per scene, in order. LOOK at "
-                    "them: anything that does not read as the real object must be rebuilt. Keep scenes that scored "
-                    ">= 7 unchanged; rebuild the rest with more accurate, detailed, tightly framed parts.\n"
-                    f"Reviewer notes:\n{best['fb']}\nBEST SPEC SO FAR:\n{best['text']}")
-        images = best["stills"]
-    out_path.write_text(best["text"])
-    return {"spec": str(out_path), "passed": False, "drafter": best["drafter"], "history": history}
+        try:
+            src = draft_spec(topic, None, attempts=3 if name == "gemini" else 2, call=call)
+        except Exception as e:  # noqa: BLE001 — one drafter failing must not stop the others
+            if not isinstance(e, (GeminiUnavailable, requests.RequestException)):
+                outage = False
+            log.warning("director: %s produced no valid draft (%s)", name, str(e)[:200])
+            continue
+        outage = False
+        spec = VideoSpec.model_validate(src)
+        try:
+            res = review(spec, {sc.id for sc in spec.scenes}, f"review_0_{name}")
+        except GeminiUnavailable:  # reviewers down or out of time: keep what we already have
+            if best is None:
+                raise
+            break
+        scores = {sid: v[0] for sid, v in res.items()}
+        record(0, name, scores, {"feedback": {sid: v[1] for sid, v in res.items()}})
+        if best is None or sum(scores.values()) / len(scores) > sum(best["scores"].values()) / len(best["scores"]):
+            best = {"src": src, "scores": scores, "notes": {k: v[1] for k, v in res.items()},
+                    "stills": {k: v[2] for k, v in res.items()}, "drafter": name}
+        if _passed(scores):
+            break
+    if best is None:
+        if outage:
+            raise GeminiUnavailable("every drafter was unavailable")
+        raise RuntimeError("no drafter produced a valid spec")
+
+    # Later rounds: rewrite only the weak scenes.
+    rnd = 1
+    while rnd <= visual_rounds and not _passed(best["scores"]) and time_left():
+        weak = _weak(best["scores"])
+        drafters = sorted(_drafters(), key=lambda d: d[0] != best["drafter"])  # last winner first
+        for name, call in drafters:
+            if not time_left():
+                break
+            try:
+                src = revise_scenes(topic, best["src"], weak, best["notes"],
+                                    [best["stills"][w] for w in weak], call=call)
+            except Exception as e:  # noqa: BLE001
+                log.warning("director: %s could not revise %s (%s)", name, weak, str(e)[:200])
+                continue
+            try:
+                res = review(VideoSpec.model_validate(src), set(weak), f"review_{rnd}_{name}")
+            except GeminiUnavailable:  # reviewers down or out of time: finish with what we have
+                rnd = visual_rounds
+                break
+            # Keep whichever version of each scene scored better; the mix must still pass whole-spec checks.
+            take = [sid for sid in weak if sid in res and res[sid][0] >= best["scores"][sid]]
+            new = {sc["id"]: sc for sc in src["scenes"]}
+            merged = {**best["src"], "scenes": [new[sc["id"]] if sc["id"] in take else sc for sc in best["src"]["scenes"]]}
+            merged, err = _accept(json.dumps(merged))
+            if merged is None:
+                log.warning("director: merged spec invalid (%s); keeping the previous best", err[:200])
+                take = []
+            else:
+                best["src"] = merged
+                for sid in take:
+                    best["scores"][sid], best["notes"][sid], best["stills"][sid] = res[sid]
+            record(rnd, name, dict(best["scores"]), {"rewrote": weak, "accepted": take,
+                                                    "feedback": {sid: res[sid][1] for sid in res}})
+            break  # one revision per round; the next round re-picks the weak scenes
+        rnd += 1
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(best["src"], indent=1))
+    return {"spec": str(out_path), "passed": _passed(best["scores"]), "drafter": best["drafter"], "history": history}
 
 
-def draft_spec(topic: dict, out_path: Path, attempts: int = 3, feedback: str = "",
-               images: list[Path] | None = None, call=None) -> Path:
-    """Write a validated SceneSpec for `topic` to out_path, or raise RuntimeError."""
-    call = call or _gemini_any
-    examples = f"EXAMPLE SPEC (only 3 scenes shown; yours needs 5-7. Kits + asset; note part ids like motor_rotor):\n{(SPECS / 'examples' / 'cordless_drill.json').read_text()}"
+def _context() -> str:
+    examples = (f"EXAMPLE SPEC (only 3 scenes shown; yours needs 5-7. Kits + asset; note part ids like motor_rotor):\n"
+                f"{(SPECS / 'examples' / 'cordless_drill.json').read_text()}")
     schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
+    return (f"{RULES}\n{REFERENCE}\n{KITS}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
+            f"{json.dumps({k: sorted(v) for k, v in KIND_PARAMS.items()})}\n\n{examples}\n\n")
+
+
+def _accept(text: str) -> tuple[dict | None, str]:
+    """(source dict, "") if the full spec text validates and passes lint, else (None, error)."""
+    spec, err = _check(text)
+    if spec and (lint := _lint(spec)):
+        spec, err = None, "Quality rules failed:\n" + lint
+    return (json.loads(_clean(text)), "") if spec else (None, err)
+
+
+def draft_spec(topic: dict, out_path: Path | None, attempts: int = 3, call=None) -> dict:
+    """A validated SceneSpec source dict for `topic` (also written to out_path if given), or RuntimeError.
+    Stored unexpanded (kits by name), so later revisions can send it back compactly."""
+    call = call or _gemini_any
     brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
-    base = (f"{RULES}\n{REFERENCE}\n{KITS}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
-            f"{json.dumps({k: sorted(v) for k, v in KIND_PARAMS.items()})}\n\n{examples}\n\n"
-            f"TOPIC BRIEF (facts to cover; rewrite the narration for the scenes):\n{json.dumps(brief, indent=1)}\n"
-            + (f"\nREVIEW OF YOUR LAST VERSION:\n{feedback}\n" if feedback else ""))
+    base = _context() + f"TOPIC BRIEF (facts to cover; rewrite the narration for the scenes):\n{json.dumps(brief, indent=1)}\n"
     prompt, last_err = base, ""
     for i in range(attempts):
-        text = call([{"text": prompt}] + _img_parts(images or []))
-        spec, err = _check(text)
-        if spec and (lint := _lint(spec)):
-            spec, err = None, "Quality rules failed:\n" + lint
-        if spec:
-            out_path.parent.mkdir(parents=True, exist_ok=True)
-            out_path.write_text(spec.model_dump_json(indent=1, exclude_defaults=True))
-            log.info("director: spec for %r accepted on round %d", topic.get("id"), i + 1)
-            return out_path
+        text = call([{"text": prompt}])
+        src, err = _accept(text)
+        if src:
+            if out_path:
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+                out_path.write_text(json.dumps(src, indent=1))
+            log.info("director: spec for %r accepted on attempt %d", topic.get("id"), i + 1)
+            return src
         last_err = err
-        log.warning("director round %d rejected: %s", i + 1, err[:500])
+        log.warning("director attempt %d rejected: %s", i + 1, err[:500])
         prompt = f"{base}\nYOUR PREVIOUS DRAFT:\n{text[:60000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected full JSON."
     raise RuntimeError(f"AI director could not produce a valid spec for {topic.get('id')}: {last_err[:300]}")
+
+
+def revise_scenes(topic: dict, src: dict, weak: list[str], notes: dict, images: list[Path],
+                  attempts: int = 2, call=None) -> dict:
+    """Rewrite only the `weak` scenes of `src`; returns the merged, validated source dict."""
+    call = call or _gemini_any
+    base = (_context() + "CURRENT SPEC (approved scenes stay exactly as they are):\n" + json.dumps(src) +
+            f"\n\nREWRITE ONLY THESE SCENES: {', '.join(weak)}. The attached images are their current renders, in "
+            "that order. Reviewer notes:\n" + "\n".join(f"- {w}: {notes.get(w, '')}" for w in weak) +
+            "\nRebuild each so a viewer instantly recognises the real object (use kits/MODELS, tight framing). Keep the "
+            "same scene ids and roughly the same narration length; you may use the existing prefabs but not change "
+            'them. Return ONLY {"scenes": [<the rewritten scene objects>]}.')
+    prompt, last_err = base, ""
+    for i in range(attempts):
+        text = call([{"text": prompt}] + _img_parts(images))
+        try:
+            new = {sc["id"]: sc for sc in json.loads(_clean(text))["scenes"] if sc.get("id") in weak}
+        except Exception as e:  # noqa: BLE001
+            new, err = {}, f"Could not parse JSON: {e}"
+        else:
+            err = "" if new else f"No scenes with ids {weak} returned."
+        if new:
+            merged = {**src, "scenes": [new.get(sc["id"], sc) for sc in src["scenes"]]}
+            out, err = _accept(json.dumps(merged))
+            if out:
+                log.info("director: rewrote scenes %s for %r", sorted(new), topic.get("id"))
+                return out
+        last_err = err
+        log.warning("director: scene rewrite attempt %d rejected: %s", i + 1, err[:500])
+        prompt = f"{base}\n\nYOUR PREVIOUS ANSWER:\n{text[:30000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected JSON."
+    raise RuntimeError(f"scene rewrite failed: {last_err[:300]}")
