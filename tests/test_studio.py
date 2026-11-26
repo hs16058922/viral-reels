@@ -259,6 +259,20 @@ class TestKit(unittest.TestCase):
 
 
 class TestDirectorBudget(unittest.TestCase):
+    def test_rate_limited_model_is_skipped_for_the_rest_of_the_run(self):
+        from unittest import mock
+        import requests
+        from engine.studio import director
+        r429 = mock.Mock(status_code=429, text="quota")
+        r429.raise_for_status.side_effect = requests.HTTPError("429")
+        with mock.patch.object(director.requests, "post", return_value=r429) as post, \
+                mock.patch.object(director, "_backoff"):
+            for _ in range(2):
+                with self.assertRaises(requests.HTTPError):
+                    director._call_gemini("hi", "m-test", "k")
+        self.assertEqual(post.call_count, 2)  # one retry, then never called again this run
+        director._EXHAUSTED.discard("m-test")
+
     def test_calls_refuse_to_start_past_the_deadline(self):
         import time
         from engine.studio import director

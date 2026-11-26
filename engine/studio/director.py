@@ -151,21 +151,40 @@ def _backoff(seconds: float) -> None:
     time.sleep(max(0, min(seconds, _DEADLINE[0] - time.time() - 30)))
 
 
+_EXHAUSTED: set[str] = set()  # models that ran out of free quota in this process; skipped until the next run
+
+
+def _post(url: str, model: str, **kw) -> requests.Response:
+    """POST with free-tier etiquette: one short retry on 429, then the model is skipped for the rest of the run
+    (a daily quota won't come back in minutes, and waiting burned the whole budget); brief retries on 5xx."""
+    if model in _EXHAUSTED:
+        raise requests.HTTPError(f"{model}: free quota exhausted earlier this run")
+    for attempt in range(3):
+        r = requests.post(url, timeout=_timeout(), **kw)
+        if r.status_code == 429:
+            if attempt == 0:
+                log.warning("%s rate-limited: %s", model, r.text[:400].replace("\n", " "))
+                _backoff(20)
+                continue
+            _EXHAUSTED.add(model)
+            log.warning("%s still rate-limited; skipping it for the rest of this run", model)
+        elif r.status_code >= 500 and attempt < 2:
+            _backoff(20 * (attempt + 1))
+            continue
+        r.raise_for_status()
+        return r
+    raise RuntimeError("unreachable")
+
+
 def _call_gemini(prompt: str | list, model: str, key: str, temperature: float = 0.6) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     parts = [{"text": prompt}] if isinstance(prompt, str) else prompt
-    for attempt in range(5):  # free tier: back off on 429 (rate limit) and 5xx (overloaded)
-        r = requests.post(url, headers={"x-goog-api-key": key}, timeout=_timeout(), json={
-            "contents": [{"role": "user", "parts": parts}],
-            "generationConfig": {"response_mime_type": "application/json", "temperature": temperature,
-                                 "maxOutputTokens": 32768}})
-        if (r.status_code == 429 or r.status_code >= 500) and attempt < 4:
-            _backoff(30 * (attempt + 1))
-            continue
-        r.raise_for_status()
-        parts_out = r.json()["candidates"][0]["content"]["parts"]
-        return "".join(p.get("text", "") for p in parts_out)
-    raise RuntimeError("unreachable")
+    r = _post(url, model, headers={"x-goog-api-key": key}, json={
+        "contents": [{"role": "user", "parts": parts}],
+        "generationConfig": {"response_mime_type": "application/json", "temperature": temperature,
+                             "maxOutputTokens": 32768}})
+    parts_out = r.json()["candidates"][0]["content"]["parts"]
+    return "".join(p.get("text", "") for p in parts_out)
 
 
 def _call_openrouter(parts: list, model: str, key: str, temperature: float = 0.6) -> str:
@@ -175,20 +194,13 @@ def _call_openrouter(parts: list, model: str, key: str, temperature: float = 0.6
     content = [{"type": "text", "text": p["text"]} if "text" in p else
                {"type": "image_url", "image_url": {"url": f"data:{p['inline_data']['mime_type']};base64,"
                                                           f"{p['inline_data']['data']}"}} for p in parts]
-    for attempt in range(3):
-        r = requests.post("https://openrouter.ai/api/v1/chat/completions", timeout=_timeout(),
-                          headers={"Authorization": f"Bearer {key}"},
-                          json={"model": model, "messages": [{"role": "user", "content": content}],
-                                "temperature": temperature, "max_tokens": 32000})
-        if (r.status_code == 429 or r.status_code >= 500) and attempt < 2:
-            _backoff(20 * (attempt + 1))
-            continue
-        r.raise_for_status()
-        data = r.json()
-        if "choices" not in data:
-            raise requests.HTTPError(f"OpenRouter error: {str(data.get('error', data))[:300]}")
-        return data["choices"][0]["message"].get("content") or ""
-    raise RuntimeError("unreachable")
+    r = _post("https://openrouter.ai/api/v1/chat/completions", model, headers={"Authorization": f"Bearer {key}"},
+              json={"model": model, "messages": [{"role": "user", "content": content}],
+                    "temperature": temperature, "max_tokens": 32000})
+    data = r.json()
+    if "choices" not in data:
+        raise requests.HTTPError(f"OpenRouter error: {str(data.get('error', data))[:300]}")
+    return data["choices"][0]["message"].get("content") or ""
 
 
 def _gemini_any(parts: list, temperature: float = 0.6) -> str:
