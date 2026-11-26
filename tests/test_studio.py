@@ -244,112 +244,91 @@ class TestKit(unittest.TestCase):
         plate = objs["m_plate"]  # at y=0.25 in kit space: plane offset compensates so it cuts at y=0
         self.assertAlmostEqual(plate.cut_offset, 0.25)
 
-    def test_kit_example_passes_lint_and_round_trips_through_draft_spec(self):
-        from engine.studio import director
-        text = (Path(director.SPECS) / "examples" / "cordless_drill.json").read_text()
-        self.assertEqual(director._lint(VideoSpec.model_validate_json(text)), "")
-        spec = VideoSpec.model_validate_json(text)
-        director._lint(spec)  # must not leave render-only params behind
-        saved = spec.model_dump_json(indent=1, exclude_defaults=True)  # what a draft looks like after a save/load
-        VideoSpec.model_validate_json(saved)  # what the director re-reads before rendering
-
     def test_unknown_kit_is_rejected(self):
         with self.assertRaises(ValidationError):
             self._spec({"id": "k", "kit": "flux_capacitor"})
 
 
-class TestSceneRevision(unittest.TestCase):
-    """Weak scenes are rewritten; good scenes are never touched; a worse rewrite is not accepted."""
+BOARD = {"title": "How a Microwave Heats Soup", "scenes": [
+    {"id": "hook", "shot": "microwave_hero", "narration": "Your microwave never heats the plate first, it heats the "
+     "water hiding inside your food.", "keywords": ["water"]},
+    {"id": "mag", "shot": "magnetron_electrons", "narration": "Inside, a magnetron boils electrons off a hot "
+     "cathode and whips them past copper vanes.", "callouts": [{"part": "mag_cathode", "at": "a hot cathode"}]},
+    {"id": "path", "shot": "microwave_wave_path", "narration": "That makes microwaves, which travel down a "
+     "metal waveguide into the cooking box.", "callouts": [{"part": "oven_waveguide", "at": "metal waveguide"}]},
+    {"id": "inside", "shot": "microwave_inside", "narration": "They bounce off the metal walls while the "
+     "turntable spins the soup through the hot spots.", "label": "2.45 GHZ"},
+    {"id": "flip", "shot": "water_dipole_flip", "narration": "Each water molecule is lopsided, so it flips to follow "
+     "the field, billions of times a second."},
+    {"id": "heat", "shot": "water_molecules_jostle", "narration": "All that twisting rubs molecules together, and "
+     "the friction becomes heat right inside the food."}]}
 
-    def test_only_weak_scenes_are_rewritten_and_kept_only_if_better(self):
-        import copy
+
+class TestShots(unittest.TestCase):
+    def test_every_shot_builds_and_validates(self):
+        from engine.studio import shots
+        board = {"title": "t", "scenes": [{"id": n, "shot": n, "narration": "This part is working right now."}
+                                          for n in shots.SHOTS]}
+        spec = VideoSpec.model_validate(shots.build(board))
+        self.assertEqual(len(spec.scenes), len(shots.SHOTS))
+        for sc in spec.scenes:  # every advertised callout part exists in its scene
+            ids = {o.id for o in sc.objects}
+            self.assertLessEqual(set(shots.SHOTS[sc.id]["parts"]), ids, sc.id)
+
+    def test_storyboard_builds_and_survives_save_and_reload(self):
+        from engine.studio import director, shots
+        src = shots.build(BOARD)
+        spec, err = director._check(src)
+        self.assertEqual(err, "")
+        self.assertEqual(spec.scenes[1].actions[-1].target, "mag_cathode")
+        director._plan(spec)  # resolving assets must not leak render-only params into the saved spec
+        VideoSpec.model_validate_json(json.dumps(src))
+
+    def test_bad_shot_and_callout_are_reported_for_repair(self):
+        from engine.studio import shots
+        with self.assertRaisesRegex(ValueError, "unknown shot 'flux'"):
+            shots.build({"scenes": [{"id": "a", "shot": "flux", "narration": "x"}]})
+        with self.assertRaisesRegex(ValueError, "callout part 'oven_door'"):
+            shots.build({"scenes": [{"id": "a", "shot": "soup_heating", "narration": "hot soup",
+                                     "callouts": [{"part": "oven_door", "at": "hot"}]}]})
+
+
+class TestDirector(unittest.TestCase):
+    def _direct(self, replies, still=None):
         from unittest import mock
         from engine.studio import director
-        base = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
-        extra = []
-        for i in range(2):  # pad the 3-scene example to a valid 5-scene spec
-            sc = copy.deepcopy(base["scenes"][1])
-            sc["id"] = f"extra{i}"
-            extra.append(sc)
-        base["scenes"] += extra
-        ids = [sc["id"] for sc in base["scenes"]]
-        rewrites = []
-
-        def fake_revise(topic, src, weak, notes, images, call=None):
-            rewrites.append(list(weak))
-            out = copy.deepcopy(src)
-            for sc in out["scenes"]:
-                if sc["id"] in weak:
-                    sc["objective"] = f"v{len(rewrites)}"
-            return out
-
-        def fake_review(scenes, stills, key):
-            # round 0: 'motor' weak (3), 'gears' weak (2); rewrite: motor improves to 8, gears gets worse (1)
-            score = {"hook": 9, "motor": 3, "gears": 2, "extra0": 8, "extra1": 8}
-            if rewrites:
-                score = {"motor": 8, "gears": 1}
-            return [{"id": sc.id, "score": score[sc.id], "problems": "p", "fix": "f"} for sc in scenes], ""
-
-        fake_still = lambda plan, out: [Path(f"{sp['id']}.png") for sp in plan["scenes"]]
+        drafters = [(n, (lambda r: lambda parts: r.pop(0))(list(r))) for n, r in replies]
+        still = still or (lambda plan, out: [Path(f"{sp['id']}.png") for sp in plan["scenes"]])
         with tempfile.TemporaryDirectory() as d, \
-                mock.patch.object(director, "_drafters", return_value=[("fake", None)]), \
-                mock.patch.object(director, "draft_spec", return_value=copy.deepcopy(base)), \
-                mock.patch.object(director, "revise_scenes", side_effect=fake_revise), \
-                mock.patch.object(director, "_review", side_effect=fake_review):
-            res = director._direct_rounds({"id": "t"}, Path(d) / "out.json", Path(d), 1, "k", [], fake_still)
-            out = json.loads((Path(d) / "out.json").read_text())
-        self.assertEqual(rewrites, [["motor", "gears"]])
-        by_id = {sc["id"]: sc for sc in out["scenes"]}
-        self.assertEqual(by_id["motor"].get("objective"), "v1")  # better rewrite accepted
-        self.assertNotEqual(by_id["gears"].get("objective"), "v1")  # worse rewrite rejected
-        self.assertEqual([sc["id"] for sc in out["scenes"]], ids)
-        self.assertEqual(res["history"][-1]["scores"], {"hook": 9, "motor": 8, "gears": 2, "extra0": 8, "extra1": 8})
-        self.assertFalse(res["passed"])
+                mock.patch.object(director, "_drafters", return_value=drafters), \
+                mock.patch("engine.studio.pipeline.render_stills", side_effect=still), \
+                mock.patch.object(director, "_review", return_value=([], "")):
+            res = director.direct({"id": "t"}, Path(d) / "out.json", Path(d))
+            if res.get("passed"):
+                VideoSpec.model_validate_json((Path(d) / "out.json").read_text())
+        return res
 
+    def test_invalid_answer_is_repaired_then_accepted(self):
+        bad = dict(BOARD, scenes=[dict(BOARD["scenes"][0], shot="nope")] + BOARD["scenes"][1:])
+        res = self._direct([("gemini", ["chatter " + json.dumps(bad), json.dumps(BOARD)])])
+        self.assertTrue(res["passed"])
+        self.assertEqual(res["drafter"], "gemini")
 
-    def test_rewrite_that_fails_to_render_is_rejected_not_fatal(self):
-        import copy
-        from unittest import mock
-        from engine.studio import director
-        base = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
-        for i in range(2):
-            sc = copy.deepcopy(base["scenes"][1])
-            sc["id"] = f"extra{i}"
-            base["scenes"].append(sc)
+    def test_render_failure_falls_through_to_next_drafter(self):
         calls = []
 
-        def still(plan, out):  # round 0 renders fine; every rewrite crashes Blender
-            calls.append(out)
-            if len(calls) > 1:
-                raise RuntimeError("still render failed for scene motor")
-            return [Path(f"{sp['id']}.png") for sp in plan["scenes"]]
+        def still(plan, out):
+            calls.append(out.name)
+            if len(calls) == 1:
+                raise RuntimeError("still render failed")
+            return [Path("x.png")] * len(plan["scenes"])
+        res = self._direct([("a", [json.dumps(BOARD)]), ("b", [json.dumps(BOARD)])], still)
+        self.assertEqual((res["passed"], res["drafter"]), (True, "b"))
 
-        review = lambda scenes, stills, key: ([{"id": sc.id, "score": 3 if sc.id == "motor" else 8} for sc in scenes], "")
-        with tempfile.TemporaryDirectory() as d, \
-                mock.patch.object(director, "_drafters", return_value=[("fake", None)]), \
-                mock.patch.object(director, "draft_spec", return_value=copy.deepcopy(base)), \
-                mock.patch.object(director, "revise_scenes", side_effect=lambda t, src, *a, **k: copy.deepcopy(src)), \
-                mock.patch.object(director, "_review", side_effect=review):
-            res = director._direct_rounds({"id": "t"}, Path(d) / "out.json", Path(d), 2, "k", [], still)
-            self.assertTrue((Path(d) / "out.json").exists())
-        self.assertEqual(len(calls), 3)  # both rounds attempted despite the crash
+    def test_unsupported_topic_is_not_forced(self):
+        res = self._direct([("gemini", ['{"unsupported": "needs an airbag inflator shot"}'])])
         self.assertFalse(res["passed"])
-
-
-    def test_revise_scenes_merges_only_requested_scenes(self):
-        import copy
-        from engine.studio import director
-        src = json.loads((Path(director.SPECS) / "examples" / "cordless_drill.json").read_text())
-        for i in range(2):
-            sc = copy.deepcopy(src["scenes"][1])
-            sc["id"] = f"extra{i}"
-            src["scenes"].append(sc)
-        new_gears = copy.deepcopy(src["scenes"][2])
-        new_gears["background"] = "light"
-        reply = "Sure!\n```json\n" + json.dumps({"scenes": [new_gears, {"id": "hook", "narration": "hijack"}]}) + "\n```"
-        out = director.revise_scenes({"id": "t"}, src, ["gears"], {"gears": "too dark"}, [], call=lambda parts: reply)
-        self.assertEqual(out["scenes"][2]["background"], "light")
-        self.assertEqual(out["scenes"][0], src["scenes"][0])  # scenes not asked for are ignored
+        self.assertIn("airbag", res["unsupported"])
 
 
 class TestDirectorBudget(unittest.TestCase):

@@ -1,10 +1,8 @@
-"""AI Scene Director: topic → validated SceneSpec JSON via a free-tier LLM.
+"""AI Scene Director: topic -> storyboard over the shot library (engine/studio/shots.py) -> SceneSpec.
 
-Uses the Gemini API free tier (GEMINI_API_KEY; keep billing disabled on that
-Google project so it can never charge). Output is never trusted: every draft
-is validated against the strict SceneSpec schema and timing-resolved; errors
-are sent back for repair, up to `attempts` rounds. Specs are data only — the
-Blender interpreter executes no code from them.
+Free models (Gemini free tier first, then OpenRouter ":free") write the narration and pick a pre-built, visually
+checked shot for each scene; they never lay out 3D geometry. Output is never trusted: the storyboard must name
+real shots and parts, and the built spec is schema-validated and timing-resolved; errors go back for repair.
 """
 
 from __future__ import annotations
@@ -19,9 +17,9 @@ from pathlib import Path
 import requests
 from pydantic import ValidationError
 
-from engine.studio import kit
+from engine.studio import shots
 from engine.studio.pipeline import resolve_assets
-from engine.studio.spec import KIND_PARAMS, VideoSpec, resolve, tokens
+from engine.studio.spec import VideoSpec, resolve, tokens
 
 log = logging.getLogger("viral_reels.director")
 SPECS = Path(__file__).parent / "specs"
@@ -33,105 +31,34 @@ OPENROUTER_MODELS = [m.strip() for m in os.getenv(
 OPENROUTER_REVIEWER = os.getenv("OPENROUTER_REVIEWER", "nvidia/nemotron-3.5-super-vl:free")
 MODELS = [m.strip() for m in os.getenv("GEMINI_DIRECTOR_MODELS", "gemini-3.8-flash,gemini-3.5-flash,gemini-flash-latest,gemini-3-flash-preview").split(",") if m.strip()]
 
-REFERENCE = """
-OBJECT KINDS (params) — units are scene units (~1 = a large part), angles in degrees:
-- gear: teeth, module (tooth size, e.g. 0.06), thickness, bore, pinion_teeth (+ pinion_length) for a compound
-  wheel, arms (spokes, 0 = solid disc), jewel (true = ruby bearing). mesh_with: <gear id>, angle: <deg> places this
-  gear so it truly meshes the parent and drives it at the exact tooth ratio (only spin the root gear!). Meshing
-  gears must share `module`. Gears lie in the XY plane, axis Z.
-- rotor: blades, r_in, r_out, chord, twist, pitch, hub_length, thickness, axis ("x"|"y"|"z"), nose (true = spinner).
-  Fans, propellers, turbines, impellers, compressor stages.
-- lathe: profile [[radius, axial], ...] revolved around axis; sweep < 360 makes a CUTAWAY shell (start_angle picks
-  which part is open), thickness, cut_material (colour of the cut rim). Housings, casings, pipes, nozzles, pots,
-  bottles, chambers, cylinders of engines, bulbs.
-- spring: coils, radius, wire, height; flat: true (+ inner_radius) makes a flat spiral (hairspring/mainspring).
-- tube: points [[x,y,z],...] (smooth curve), radius. Pipes, wires, vessels, hoses.
-- flow: points path, count, radius, speed (units/s), radial_copies + axis. Moving particles showing air, fluid,
-  blood, electrons, heat. They loop forever along the path.
-- box: size [x,y,z], bevel, pivot [x,y,z] (rotation origin offset, e.g. hinge at an edge).
-- cylinder: radius, depth, axis, segments, bevel, pivot. sphere: radius, segments. torus: major, minor, axis.
-- blob: elements [[x,y,z,radius],...] merged organic shape (organs, cells, droplets, dough). resolution.
-- label: text, size (3D tag that always faces camera; use few, short, UPPERCASE or numbers).
-- arrow: to [x,y,z] (from = position), radius.
-- stage: nx, ny, tile, gap, height (tiled display floor). empty: group/pivot for children.
-- asset: asset_id, size (longest side in units). A photoreal CC0 3D model (see MODELS). Great for the hook and the
-  final shot (the real-world object), not for internals.
-Every object: id, kind, params, material, position, rotation, scale, parent (children move/rotate with parent),
-cut [nx,ny,nz] = SECTION CUT (removes the half of the object the normal points into, showing the inside with
-a coloured cut face; e.g. [0,-1,0] removes the half facing the default camera), cut_offset, cut_material.
-MATERIALS: clay, clay_dark, accent, accent2, blue, brass, steel, chrome, dark_steel, ruby, glass, tissue,
-tissue_glass, blood_red, blood_blue, flame, air, ink, white.
-
-ACTIONS (target can be a list; stagger = seconds between list items). at = seconds OR an exact phrase copied from
-THAT scene's narration (the action starts when the narrator says it). duration null = continuous actions run to
-scene end, others use a short default. ease: linear|smooth|back|bounce|elastic|expo. sfx: pop|click|swoosh|impact.
-- spin: rate (deg/s, negative = clockwise), ramp (s), axis. Keep visible speeds <= 150 deg/s.
-- tick: rate (steps/s), step (deg), axis. Stepping motion (escapements, counters).
-- oscillate: amplitude, hz, axis. pulse: amount (negative = contract), hz, duty, axis ("all").
-- cycle: prop ("rotation"|"location"|"scale"), axis, hz, phase, keys [[u 0..1, value], ...] first u=0 last u=1.
-  Values are degrees / units added to the rest pose, or scale multipliers. Valves, pistons, pumps, cams.
-- move: to [x,y,z] or by [dx,dy,dz]. rotate: to/by [deg x,y,z]. scale: to (number or [x,y,z]).
-- explode: by [dx,dy,dz] — list item i moves (i+1)*by (exploded assembly views; reverse sign to assemble).
-- pop_in / pop_out (appear/disappear with overshoot), show / hide (instant), fade (to alpha 0..1),
-  highlight (color "#RRGGBB", strength, hold true = stay lit).
-
-SHOTS (camera): at, type orbit|push_in|pull_out|top_down|static|macro, target (object id or [x,y,z]),
-frame [ids that must stay fully visible — the camera auto-fits them in the 9:16 safe area], azimuth (0 = camera
-on -Y), elevation, orbit (deg swept), lens (mm, 50-85), blend (s).
-
-SCENE: id, narration (1-3 sentences), objective, background light|blue|dark (alternate them), keywords (exact
-phrases from the narration to highlight in captions), note (on-screen disclaimer like "Illustrative - slowed 4x"
-whenever speed/scale/simplification is not literal), use [prefab names], objects, actions, shots.
-"""
-
 RULES = """
-You are the scene director of a premium 3D educational Reels channel. Write ONE SceneSpec JSON for the topic.
-Hard rules:
-1. 5-7 scenes, 100-135 narration words total (about 40-50 s). Scene 1 is a strong 3-second hook.
-   Plain spoken English, no emojis, no hashtags, no "follow us".
-2. SHOW THE REAL MECHANISM, DISSECTED: build the actual internal parts at realistic relative proportions and
-   positions; open housings with lathe sweep < 360 or `cut` section planes; use exploded views to reveal layers;
-   make the parts the narration mentions move exactly as they do in reality (correct directions, sequence,
-   couplings). Prefer many simple accurate parts over one vague blob. No flat diagrams, no text-heavy scenes.
-3. Every scene needs visible motion from its first second, and each important phrase triggers an action.
-4. Anchors (`at`) and keywords must be phrases copied verbatim from that scene's narration.
-5. Reuse parts across scenes with `prefabs` + `use`; ids are unique per scene, letters/digits/underscore only.
-6. Keep the main subject within roughly a 4 x 7 unit volume, taller than wide when possible (vertical video).
-7. Physically faithful directions and ratios; when you exaggerate speed or simplify, add a scene `note`.
-8. KITS FIRST: if the KIT CATALOG has the device or its parts, use kit instances; build custom parts from
-   primitives only for what no kit covers, and use `asset` MODELS for the everyday object in hook/final shots.
-   Otherwise build every recognisable object from several parts, the way a 3D artist would block it out: e.g. an
-   aircraft = lathe fuselage with tapered nose/tail + box wings + fin; a valve = lathe housing + cylinder disc +
-   stem + handle; a phone = beveled box body + glass screen + camera bump. 6-20 solid parts per scene.
-9. Every shot lists the ids it must keep visible in `frame`. Never put the camera inside a large object;
-   use cutaways (lathe sweep / `cut`) to look inside things.
-10. ONE HERO ASSEMBLY: build the device once in `prefabs` (kits + custom parts) at realistic proportions with its real internal parts
-    (housing, shafts, bearings, coils, chambers, seals, fasteners...) and `use` it in most scenes. Each scene
-    reveals a different part of the SAME object (cutaway, explode, highlight, push_in/macro shots on that part).
-    Do not invent unrelated props per scene.
-11. NO STAND-INS: never use a lone sphere/box/cylinder to stand for a complex thing (a person, a car, a circuit
-    board, a bag, a cloud of gas). Model its recognisable silhouette from several shaped parts (lathe profiles,
-    beveled boxes, tubes) or leave it out. Gas/liquid/electricity = `flow` particles inside a cutaway.
-12. SHOW, DON'T DIAGRAM: every scene shows a physical object or mechanism. Abstract ideas (maths, frequencies,
-    fields, chemistry) are SPOKEN in the narration while the camera shows the part doing the work (use the
-    water_molecule / em_wave / bar_magnet kits for physics). Never invent a stand-in for an idea.
-12b. FILL THE FRAME: parts sit close together the way they are really assembled (no floating gaps); each shot
-    frames only the parts being explained so they appear large; keep labels to 0-2 per scene.
-13. Output ONLY the JSON object. No markdown fences, no comments.
+You are the writer-director of a premium 3D educational Reels channel. The 3D scenes are already built: you
+write the narration and pick, for each scene, the SHOT from the SHOT LIBRARY that shows what the narration says.
+Return ONLY a JSON storyboard:
+{"title": str,
+ "scenes": [{"id": "hook", "shot": "<shot name>", "narration": "1-3 spoken sentences",
+             "keywords": ["exact phrase from this narration"],
+             "callouts": [{"part": "<one of that shot's callout parts>", "at": "exact phrase from this narration"}],
+             "label": "optional on-screen tag, max 18 chars, e.g. 2.45 GHZ"}]}
+Rules:
+1. 5-7 scenes, 100-135 narration words total (about 40-50 s). Scene 1 is a strong 3-second hook. Plain spoken
+   English, no emojis, no hashtags, no "follow us".
+2. The narration of each scene describes exactly what its shot shows; read the shot descriptions carefully.
+   Use each shot at most once unless the story returns to it (hook and outro may share one).
+3. Labels: at most 2 in the whole reel, only for a key number or term. 0-2 callouts per scene: highlight the part at the moment the narration names it. `at` and keywords must be
+   copied word for word from that scene's narration.
+4. Physically correct facts only; the shots are already marked "Illustrative" where they are slowed down.
+5. If the SHOT LIBRARY cannot show this topic's mechanism (most scenes would not match), return
+   {"unsupported": "<which shots would be needed>"} instead of a storyboard.
 """
 
-
-KITS = f"""
-KIT CATALOG — pre-built, art-directed assemblies. Place one as a scene/prefab object:
-  {{"id": "mag", "kit": "magnetron", "position": [x,y,z], "rotation": [deg], "scale": 1 or [x,y,z], "cut": [0,-1,0]}}
-It becomes an empty `mag` (move/rotate/scale/pop the whole kit) plus parts `mag_<part>` (animate/highlight a part).
-Optional "materials": {{"<part>": "<material>"}} recolours parts; "cut" slices the static shell for a cutaway.
-Kits are ~2-3 units tall and centred on their origin; combine several (e.g. a magnetron beside a microwave_cavity).
-{kit.catalog()}
-
-MODELS (kind "asset", params.asset_id):
-{chr(10).join(f"- {k}: {v['description']}" for k, v in json.loads((Path(__file__).resolve().parents[2] / "assets" / "models" / "manifest.json").read_text()).items())}
-"""
+EXAMPLE = {"title": "Why an Electric Toothbrush Hums", "scenes": [
+    {"id": "hook", "shot": "electric_motor_cutaway", "narration": "Your toothbrush hides a motor spinning thirty "
+     "thousand times a minute.", "keywords": ["thirty thousand"], "callouts": [{"part": "electric_motor_rotor",
+     "at": "a motor spinning"}]},
+    {"id": "gears", "shot": "gear_pair", "narration": "A tiny gear trades that speed for force, turning a big gear "
+     "that rocks the brush head.", "callouts": [{"part": "gear_pair_gear_small", "at": "A tiny gear"}],
+     "label": "5:1"}]}
 
 
 class GeminiUnavailable(RuntimeError):
@@ -243,46 +170,100 @@ def _clean(text: str) -> str:
     return text
 
 
-def _check(text: str) -> tuple[VideoSpec | None, str]:
-    """Validate a draft; returns (spec, "") or (None, error message for the repair round)."""
-    text = _clean(text)
+
+
+def _check(src: dict) -> tuple[VideoSpec | None, str]:
+    """Validate a built spec; returns (spec, "") or (None, error message for the repair round)."""
     try:
-        spec = VideoSpec.model_validate_json(text)
+        spec = VideoSpec.model_validate(src)
     except ValidationError as e:
         return None, "Schema validation errors:\n" + "\n".join(
             f"- {'.'.join(map(str, er['loc']))}: {er['msg']}" for er in e.errors()[:25])
     words = len(tokens(spec.script))
-    if not 70 <= words <= 170 or not 4 <= len(spec.scenes) <= 8:
+    if not 80 <= words <= 165 or not 4 <= len(spec.scenes) <= 8:
         return None, f"Need 5-7 scenes and 100-135 words; got {len(spec.scenes)} scenes, {words} words."
-    toks = tokens(spec.script)
     try:  # simulate narration at 2.6 words/s to catch too-short scenes / bad anchors
-        resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
+        _plan(spec)
     except ValueError as e:
         return None, f"Timing error: {e}"
     return spec, ""
 
 
-LINT_MIN_OBJECTS, LINT_MIN_ACTIONS = 6, 3
-PASS_MIN, PASS_AVG = 5, 6.5
+def draft_board(topic: dict, call=None, attempts: int = 3) -> dict:
+    """{"board", "spec"} (spec = SceneSpec source dict) or {"unsupported": reason}; RuntimeError if no valid draft."""
+    call = call or _gemini_any
+    brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
+    base = (f"{RULES}\nSHOT LIBRARY:\n{shots.catalog()}\n\nEXAMPLE (2 of the 5-7 scenes):\n{json.dumps(EXAMPLE)}\n\n"
+            f"TOPIC BRIEF (facts to cover; write your own narration):\n{json.dumps(brief, indent=1)}\n")
+    prompt, err = base, ""
+    for i in range(attempts):
+        text = call([{"text": prompt}])
+        try:
+            board = json.loads(_clean(text))
+        except ValueError as e:
+            board, err = None, f"Not valid JSON: {e}"
+        if isinstance(board, dict) and board.get("unsupported"):
+            return {"unsupported": str(board["unsupported"])[:300]}
+        if board is not None:
+            try:
+                src = shots.build(board)
+            except (ValueError, TypeError, AttributeError) as e:
+                err = str(e)
+            else:
+                spec, err = _check(src)
+                if spec:
+                    log.info("director: storyboard for %r accepted on attempt %d", topic.get("id"), i + 1)
+                    return {"board": board, "spec": src}
+        log.warning("director attempt %d rejected: %s", i + 1, err[:500])
+        prompt = f"{base}\nYOUR PREVIOUS ANSWER:\n{text[:20000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected JSON."
+    raise RuntimeError(f"no valid storyboard for {topic.get('id')}: {err[:300]}")
 
 
-def _lint(spec: VideoSpec) -> str:
-    """Density rules the schema can't express: thin scenes look like slideshows."""
-    probs = []
+def direct(topic: dict, out_path: Path, work: Path, budget_s: float = 40 * 60) -> dict:
+    """Topic -> storyboard over the shot library -> SceneSpec at out_path.
+
+    Drafters are tried in order (Gemini first); the first valid storyboard whose stills all render wins. The
+    vision review is advisory (logged for tuning shots), not a gate: the shots themselves are pre-checked.
+    """
+    from engine.studio.pipeline import render_stills
+
+    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    history, outage = [], True
+    _DEADLINE[0] = time.time() + budget_s
     try:
-        resolve_assets(spec.model_copy(deep=True))  # copy: resolving adds render-only `_path` params
-    except (LookupError, PermissionError) as e:
-        probs.append(f"{e}; use only asset_ids listed under MODELS")
-    for sc in spec.scenes:
-        solid = [o for o in sc.objects if o.kind not in ("label", "empty", "flow")]
-        if len(solid) < LINT_MIN_OBJECTS and not any(o.kind == "asset" for o in solid):
-            probs.append(f"scene {sc.id}: only {len(solid)} solid parts; build the real mechanism from >= {LINT_MIN_OBJECTS}")
-        if len(sc.actions) < LINT_MIN_ACTIONS:
-            probs.append(f"scene {sc.id}: only {len(sc.actions)} actions; animate what the narration describes")
-        for sh in sc.shots:
-            if not sh.frame:
-                probs.append(f"scene {sc.id}: every shot needs `frame` ids so the camera can fit the subject")
-    return "\n".join(probs)
+        for name, call in _drafters():
+            try:
+                res = draft_board(topic, call)
+            except Exception as e:  # noqa: BLE001 — one drafter failing must not stop the others
+                outage &= isinstance(e, (GeminiUnavailable, requests.RequestException))
+                log.warning("director: %s produced no storyboard (%s)", name, str(e)[:200])
+                history.append({"drafter": name, "error": str(e)[:300]})
+                continue
+            outage = False
+            if "unsupported" in res:
+                log.warning("director: %s says the shot library can't show %r: %s", name, topic.get("id"), res["unsupported"])
+                return {"passed": False, "unsupported": res["unsupported"], "drafter": name, "history": history}
+            spec = VideoSpec.model_validate(res["spec"])
+            try:
+                stills = render_stills(_plan(spec), work / f"stills_{name}")
+            except Exception as e:  # noqa: BLE001 — a scene that won't render: try the next drafter
+                log.warning("director: %s storyboard failed to render (%s)", name, str(e)[:200])
+                history.append({"drafter": name, "board": res["board"], "error": str(e)[:300]})
+                continue
+            entry = {"drafter": name, "board": res["board"]}
+            try:
+                entry["review"], _ = _review(spec.scenes, stills, key)
+            except Exception as e:  # noqa: BLE001 — advisory only
+                log.warning("director: advisory review skipped (%s)", str(e)[:200])
+            history.append(entry)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(json.dumps(res["spec"], indent=1))
+            return {"spec": str(out_path), "passed": True, "drafter": name, "history": history}
+    finally:
+        _DEADLINE[0] = float("inf")
+    if outage:
+        raise GeminiUnavailable("every drafter was unavailable")
+    return {"passed": False, "error": "no drafter produced a valid storyboard", "history": history}
 
 
 def _img_parts(stills: list[Path]) -> list[dict]:
@@ -299,13 +280,11 @@ def _img_parts(stills: list[Path]) -> list[dict]:
 
 
 def _review(scenes: list, stills: list[Path], key: str) -> tuple[list[dict], str]:
-    """Free-tier Gemini vision review of one still per scene. Returns (scores, feedback)."""
+    """Advisory vision check: does each scene's still match its narration? Returns (scores, feedback)."""
     parts = [{"text": (
-        "You are a strict art director for a premium 3D educational Reels channel. For each still (one per scene, "
-        "in order) score 1-10 how clearly and REALISTICALLY it depicts the scene's objective: recognisable, "
-        "correctly built objects/mechanism, well framed (subject fully visible, not cropped or tiny), not a "
-        "vague arrangement of boxes. Be harsh: 9-10 = looks like a professional 3D explainer, 5 = understandable "
-        "but crude, 1-3 = unrecognisable or broken. Return JSON: {\"scenes\": [{\"id\": str, \"score\": int, "
+        "You check a 3D educational Reel. For each still (one per scene, in order) score 1-10 how well the image "
+        "matches what the narration says at that moment (right object, right part visible, readable framing). "
+        "Return JSON: {\"scenes\": [{\"id\": str, \"score\": int, "
         "\"problems\": str, \"fix\": str}]}. Scenes:\n" +
         "\n".join(f"{i + 1}. {sc.id}: objective={sc.objective!r}; narration={sc.narration!r}" for i, sc in enumerate(scenes)))}]
     parts += _img_parts(stills)
@@ -327,24 +306,6 @@ def _review(scenes: list, stills: list[Path], key: str) -> tuple[list[dict], str
     return scores, feedback
 
 
-def direct(topic: dict, out_path: Path, work: Path, visual_rounds: int = 10, budget_s: float = 90 * 60) -> dict:
-    """Draft -> validate -> render stills -> vision review -> fix only the weak scenes (seeing their renders).
-
-    Round 0 drafts whole specs (every drafter once, best wins). Later rounds keep every scene that scored
-    >= PASS_MIN and send only the weak ones back with the reviewer's notes; a rewritten scene replaces the old
-    one only if it scores at least as well, so good scenes are never lost. Stops on a pass or when the time
-    budget (free-tier rate-limit waits included) runs out.
-    """
-    from engine.studio.pipeline import render_stills
-
-    key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    history = []
-    _DEADLINE[0] = time.time() + budget_s
-    try:
-        return _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_stills)
-    finally:
-        _DEADLINE[0] = float("inf")
-
 
 def _plan(spec: VideoSpec) -> dict:
     spec = spec.model_copy(deep=True)
@@ -353,183 +314,3 @@ def _plan(spec: VideoSpec) -> dict:
     return resolve(spec, [(t, i / 2.6, i / 2.6 + 0.3) for i, t in enumerate(toks)], len(toks) / 2.6)
 
 
-def _passed(scores: dict) -> bool:
-    vals = list(scores.values())
-    return min(vals) >= PASS_MIN and sum(vals) / len(vals) >= PASS_AVG
-
-
-def _weak(scores: dict) -> list[str]:
-    """Scenes to rewrite: everything under PASS_MIN, or (all >= PASS_MIN but avg too low) the two lowest."""
-    weak = [sid for sid, v in scores.items() if v < PASS_MIN]
-    return weak or sorted(scores, key=scores.get)[:2]
-
-
-def _direct_rounds(topic, out_path, work, visual_rounds, key, history, render_stills) -> dict:
-    def time_left() -> bool:
-        return _DEADLINE[0] - time.time() >= 5 * 60  # enough to draft + render + review once more
-
-    def review(spec, ids, tag):
-        """Render + review the scenes `ids`; returns {id: (score, note, still)}."""
-        plan = _plan(spec)
-        plan["scenes"] = [sp for sp in plan["scenes"] if sp["id"] in ids]
-        stills = render_stills(plan, work / tag)
-        scenes = [sc for sc in spec.scenes if sc.id in ids]
-        res, _ = _review(scenes, stills, key)
-        out = {}
-        for sc, still, r in zip(scenes, stills, res + [{}] * len(scenes)):
-            note = f"Problems: {r.get('problems')}. Fix: {r.get('fix')}"
-            out[sc.id] = (int(r.get("score", 0) or 0), note, still)
-        return out
-
-    def record(rnd, name, scores, extra=None):
-        vals = list(scores.values())
-        avg = sum(vals) / len(vals)
-        history.append({"round": rnd, "drafter": name, "scores": scores, "avg": round(avg, 2), **(extra or {})})
-        log.info("director: round %d %s scores %s (avg %.1f)", rnd, name, vals, avg)
-
-    # Round 0: whole drafts, best-of-N.
-    best = None
-    outage = True  # stays True only if every drafter failed for network/availability reasons
-    for name, call in _drafters():
-        if not time_left():
-            break
-        try:
-            src = draft_spec(topic, None, attempts=3 if name == "gemini" else 2, call=call)
-        except Exception as e:  # noqa: BLE001 — one drafter failing must not stop the others
-            if not isinstance(e, (GeminiUnavailable, requests.RequestException)):
-                outage = False
-            log.warning("director: %s produced no valid draft (%s)", name, str(e)[:200])
-            continue
-        outage = False
-        spec = VideoSpec.model_validate(src)
-        try:
-            res = review(spec, {sc.id for sc in spec.scenes}, f"review_0_{name}")
-        except GeminiUnavailable:  # reviewers down or out of time: keep what we already have
-            if best is None:
-                raise
-            break
-        except Exception as e:  # noqa: BLE001 — a draft that fails to render is just a bad draft
-            log.warning("director: %s draft failed to render (%s)", name, str(e)[:200])
-            continue
-        scores = {sid: v[0] for sid, v in res.items()}
-        record(0, name, scores, {"feedback": {sid: v[1] for sid, v in res.items()}})
-        if best is None or sum(scores.values()) / len(scores) > sum(best["scores"].values()) / len(best["scores"]):
-            best = {"src": src, "scores": scores, "notes": {k: v[1] for k, v in res.items()},
-                    "stills": {k: v[2] for k, v in res.items()}, "drafter": name}
-        if _passed(scores):
-            break
-    if best is None:
-        if outage:
-            raise GeminiUnavailable("every drafter was unavailable")
-        raise RuntimeError("no drafter produced a valid spec")
-
-    # Later rounds: rewrite only the weak scenes.
-    rnd = 1
-    while rnd <= visual_rounds and not _passed(best["scores"]) and time_left():
-        weak = _weak(best["scores"])
-        drafters = sorted(_drafters(), key=lambda d: d[0] != best["drafter"])  # last winner first
-        for name, call in drafters:
-            if not time_left():
-                break
-            try:
-                src = revise_scenes(topic, best["src"], weak, best["notes"],
-                                    [best["stills"][w] for w in weak], call=call)
-            except Exception as e:  # noqa: BLE001
-                log.warning("director: %s could not revise %s (%s)", name, weak, str(e)[:200])
-                continue
-            try:
-                res = review(VideoSpec.model_validate(src), set(weak), f"review_{rnd}_{name}")
-            except GeminiUnavailable:  # reviewers down or out of time: finish with what we have
-                rnd = visual_rounds
-                break
-            except Exception as e:  # noqa: BLE001 — a rewrite that fails to render is rejected, not fatal
-                log.warning("director: %s rewrite of %s failed to render (%s)", name, weak, str(e)[:200])
-                continue
-            # Keep whichever version of each scene scored better; the mix must still pass whole-spec checks.
-            take = [sid for sid in weak if sid in res and res[sid][0] >= best["scores"][sid]]
-            new = {sc["id"]: sc for sc in src["scenes"]}
-            merged = {**best["src"], "scenes": [new[sc["id"]] if sc["id"] in take else sc for sc in best["src"]["scenes"]]}
-            merged, err = _accept(json.dumps(merged))
-            if merged is None:
-                log.warning("director: merged spec invalid (%s); keeping the previous best", err[:200])
-                take = []
-            else:
-                best["src"] = merged
-                for sid in take:
-                    best["scores"][sid], best["notes"][sid], best["stills"][sid] = res[sid]
-            record(rnd, name, dict(best["scores"]), {"rewrote": weak, "accepted": take,
-                                                    "feedback": {sid: res[sid][1] for sid in res}})
-            break  # one revision per round; the next round re-picks the weak scenes
-        rnd += 1
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(best["src"], indent=1))
-    return {"spec": str(out_path), "passed": _passed(best["scores"]), "drafter": best["drafter"], "history": history}
-
-
-def _context() -> str:
-    examples = (f"EXAMPLE SPEC (only 3 scenes shown; yours needs 5-7. Kits + asset; note part ids like motor_rotor):\n"
-                f"{(SPECS / 'examples' / 'cordless_drill.json').read_text()}")
-    schema = json.dumps(VideoSpec.model_json_schema(), separators=(",", ":"))
-    return (f"{RULES}\n{REFERENCE}\n{KITS}\nJSON SCHEMA:\n{schema}\nAllowed params per kind: "
-            f"{json.dumps({k: sorted(v) for k, v in KIND_PARAMS.items()})}\n\n{examples}\n\n")
-
-
-def _accept(text: str) -> tuple[dict | None, str]:
-    """(source dict, "") if the full spec text validates and passes lint, else (None, error)."""
-    spec, err = _check(text)
-    if spec and (lint := _lint(spec)):
-        spec, err = None, "Quality rules failed:\n" + lint
-    return (json.loads(_clean(text)), "") if spec else (None, err)
-
-
-def draft_spec(topic: dict, out_path: Path | None, attempts: int = 3, call=None) -> dict:
-    """A validated SceneSpec source dict for `topic` (also written to out_path if given), or RuntimeError.
-    Stored unexpanded (kits by name), so later revisions can send it back compactly."""
-    call = call or _gemini_any
-    brief = {k: topic.get(k) for k in ("title", "hook", "script", "bullets") if topic.get(k)}
-    base = _context() + f"TOPIC BRIEF (facts to cover; rewrite the narration for the scenes):\n{json.dumps(brief, indent=1)}\n"
-    prompt, last_err = base, ""
-    for i in range(attempts):
-        text = call([{"text": prompt}])
-        src, err = _accept(text)
-        if src:
-            if out_path:
-                out_path.parent.mkdir(parents=True, exist_ok=True)
-                out_path.write_text(json.dumps(src, indent=1))
-            log.info("director: spec for %r accepted on attempt %d", topic.get("id"), i + 1)
-            return src
-        last_err = err
-        log.warning("director attempt %d rejected: %s", i + 1, err[:500])
-        prompt = f"{base}\nYOUR PREVIOUS DRAFT:\n{text[:60000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected full JSON."
-    raise RuntimeError(f"AI director could not produce a valid spec for {topic.get('id')}: {last_err[:300]}")
-
-
-def revise_scenes(topic: dict, src: dict, weak: list[str], notes: dict, images: list[Path],
-                  attempts: int = 2, call=None) -> dict:
-    """Rewrite only the `weak` scenes of `src`; returns the merged, validated source dict."""
-    call = call or _gemini_any
-    base = (_context() + "CURRENT SPEC (approved scenes stay exactly as they are):\n" + json.dumps(src) +
-            f"\n\nREWRITE ONLY THESE SCENES: {', '.join(weak)}. The attached images are their current renders, in "
-            "that order. Reviewer notes:\n" + "\n".join(f"- {w}: {notes.get(w, '')}" for w in weak) +
-            "\nRebuild each so a viewer instantly recognises the real object (use kits/MODELS, tight framing). Keep the "
-            "same scene ids and roughly the same narration length; you may use the existing prefabs but not change "
-            'them. Return ONLY {"scenes": [<the rewritten scene objects>]}.')
-    prompt, last_err = base, ""
-    for i in range(attempts):
-        text = call([{"text": prompt}] + _img_parts(images))
-        try:
-            new = {sc["id"]: sc for sc in json.loads(_clean(text))["scenes"] if sc.get("id") in weak}
-        except Exception as e:  # noqa: BLE001
-            new, err = {}, f"Could not parse JSON: {e}"
-        else:
-            err = "" if new else f"No scenes with ids {weak} returned."
-        if new:
-            merged = {**src, "scenes": [new.get(sc["id"], sc) for sc in src["scenes"]]}
-            out, err = _accept(json.dumps(merged))
-            if out:
-                log.info("director: rewrote scenes %s for %r", sorted(new), topic.get("id"))
-                return out
-        last_err = err
-        log.warning("director: scene rewrite attempt %d rejected: %s", i + 1, err[:500])
-        prompt = f"{base}\n\nYOUR PREVIOUS ANSWER:\n{text[:30000]}\n\nIT WAS REJECTED:\n{err}\nReturn the corrected JSON."
-    raise RuntimeError(f"scene rewrite failed: {last_err[:300]}")

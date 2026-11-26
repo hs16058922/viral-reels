@@ -297,6 +297,8 @@ class ViralTopicGenerator:
             return []
 
         logger.info("Generating %d new viral topics via Gemini API...", count)
+        from engine.studio import shots
+        shot_list = "\n".join(f"   - {n}: {v['desc']}" for n, v in shots.SHOTS.items())
         prompt = f"""You are the head science writer for @CurioMotion, a viral 3D animation Instagram page explaining everyday engineering and physics mysteries.
 Generate {count} unique, high-retention topics.
 Requirements:
@@ -304,6 +306,8 @@ Requirements:
    gears, rotors, fans, pistons, valves, pumps, springs, coils, magnets, bearings, lenses, chambers, pipes
    (e.g. a lock cylinder, a car differential, a toilet flush valve, a hard drive, a bicycle hub).
    Avoid subjects that are mostly fabric, chemistry, software, electronics on circuit boards, or people.
+   It MUST be explainable with the existing 3D shots below (most of its 5-7 scenes need a matching shot):
+{shot_list}
 2. Hook must be counterintuitive ("X doesn't do Y, it actually does Z").
 3. Script must be 120-150 words, descriptive with real physics/engineering terms, and end with: "Tap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?"
 4. Provide 4 technical bullet points.
