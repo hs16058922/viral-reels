@@ -1,26 +1,27 @@
 # 📊 CurioMotion Reel Analytics Intelligence Report
-**Audit Timestamp:** 2026-11-27T14:32:48.560715  
-**Channel:** `@curio__motion` | **Total Published Reels:** 14
+**Audit Timestamp:** 2026-11-27T19:17:22.372795  
+**Channel:** `@curio__motion` | **Total Published Reels:** 15
 
 ---
 ## 📈 Published Reels Performance Matrix
 
 | Topic | Tier | Likes | Comments | Saves | Shares | Virality Score | Link |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **How Does a Thermal Water Bottle ** | `B-Tier` | 4 | 1 | 1 | 0 | **50.6/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
+| **How Does a Thermal Water Bottle ** | `A-Tier` | 5 | 1 | 1 | 0 | **56.4/100** | [Watch Reel](https://www.instagram.com/reel/DgCzcZykX8l/) |
 | **How Does a Bladeless Fan Actuall** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDcEkvlRTw/) |
-| **Why Your Washing Machine Hides a** | `B-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
+| **Why Your Washing Machine Hides a** | `A-Tier` | 2 | 0 | 0 | 0 | **20.0/100** | [Watch Reel](https://www.instagram.com/reel/DgDe6Eokty-/) |
 | **How Noise-Cancelling Headphones ** | `S-Tier` | 1 | 0 | 0 | 0 | **10.0/100** | [Watch Reel](https://www.instagram.com/reel/DgE3kNRDw4E/) |
-| **Why Induction Stoves Cook Withou** | `B-Tier` | 2 | 0 | 0 | 1 | **42.7/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
+| **Why Induction Stoves Cook Withou** | `B-Tier` | 2 | 0 | 0 | 1 | **42.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFDp_8DxuX/) |
 | **How a Mechanical Watch Works Wit** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFUj7_DA6R/) |
 | **The Microscopic Engineering Insi** | `C-Tier` | 9 | 0 | 2 | 1 | **29.5/100** | [Watch Reel](https://www.instagram.com/reel/DgFbykXgDQt/) |
 | **How Jet Engines Produce 100,000 ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgFg3yYAN8Y/) |
 | **How the Human Heart Pumps 2,000 ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgHGHAcAiiS/) |
-| **How Airplane Cabins Breathe at 3** | `B-Tier` | 4 | 0 | 1 | 0 | **43.9/100** | [Watch Reel](https://www.instagram.com/reel/DgHT2L5lyjO/) |
-| **Inside a Mechanical Watch: The 3** | `B-Tier` | 4 | 1 | 0 | 0 | **51.3/100** | [Watch Reel](https://www.instagram.com/reel/DgIJV1nofr3/) |
-| **Inside a Jet Engine: Fan, Fire a** | `B-Tier` | 6 | 0 | 0 | 0 | **35.7/100** | [Watch Reel](https://www.instagram.com/reel/DgILF-tDI4W/) |
-| **Why Microwaves Heat Soup But Nev** | `B-Tier` | 2 | 2 | 0 | 0 | **40.6/100** | [Watch Reel](https://www.instagram.com/reel/DgPbb17oAYi/) |
-| **Why Stomping Your Brakes Used to** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgP5rbUyUjD/) |
+| **How Airplane Cabins Breathe at 3** | `B-Tier` | 4 | 0 | 1 | 0 | **42.8/100** | [Watch Reel](https://www.instagram.com/reel/DgHT2L5lyjO/) |
+| **Inside a Mechanical Watch: The 3** | `B-Tier` | 4 | 1 | 0 | 0 | **49.6/100** | [Watch Reel](https://www.instagram.com/reel/DgIJV1nofr3/) |
+| **Inside a Jet Engine: Fan, Fire a** | `B-Tier` | 7 | 0 | 0 | 0 | **40.5/100** | [Watch Reel](https://www.instagram.com/reel/DgILF-tDI4W/) |
+| **Why Microwaves Heat Soup But Nev** | `B-Tier` | 2 | 2 | 0 | 0 | **38.6/100** | [Watch Reel](https://www.instagram.com/reel/DgPbb17oAYi/) |
+| **Why Stomping Your Brakes Used to** | `C-Tier` | 2 | 0 | 0 | 0 | **11.5/100** | [Watch Reel](https://www.instagram.com/reel/DgP5rbUyUjD/) |
+| **The Vibrating Crystal Inside Eve** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgQaQfrz4a_/) |
 
 ---
 ## 💡 Strategic Intelligence & Optimization Recommendations

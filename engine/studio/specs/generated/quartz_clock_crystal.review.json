@@ -1,51 +1,129 @@
 {
- "passed": false,
- "drafter": "nemotron-3-ultra-550b-a55b",
+ "passed": true,
+ "drafter": "gemini",
  "history": [
   {
-   "round": 0,
    "drafter": "gemini",
-   "scores": [
-    4,
-    2,
-    3,
-    5,
-    3,
-    2
-   ],
-   "avg": 3.17,
-   "feedback": "- scene hook: score 4/10. Problems: The quartz tuning fork, which is the 'secret,' is not visible. The orange object in the foreground looks like a generic battery, and the clock face is a flat, low-detail texture.. Fix: Remove the orange cylinder. Create a high-detail, translucent quartz tuning fork model and place it at the center of the frame inside a partially disassembled watch movement.\n- scene piezo_effect: score 2/10. Problems: The object is unrecognizable as quartz; it looks like a dark plastic shell. There is no visual indication of bending, voltage, or a 'pulse.'. Fix: Change material to a crystalline, refractive shader. Use a glowing 'plus/minus' icon to represent voltage and animate the tines of the fork physically flexing.\n- scene frequency_precision: score 3/10. Problems: The text on the white block is completely blown out by bloom and illegible. The framing is awkward, and the object lacks any sense of 'vibration.'. Fix: Reduce emission on the text so '32,768 Hz' is crisp. Add a high-frequency vibration animation to the fork using motion blur to convey speed.\n- scene binary_division: score 5/10. Problems: The math is clear, but the 'electronic dividers' are represented by a single, crude black notched bar that doesn't look like circuitry.. Fix: Model a sequence of 15 distinct micro-components or 'gates' that the signal passes through to visually represent the 15 stages of division.\n- scene one_hz_pulse: score 3/10. Problems: The 'pulse' is represented by falling red spheres, which is confusing. The orange object does not look like a magnetic motor coil.. Fix: Represent the pulse as a single traveling light spark along a wire. Replace the orange cylinder with a realistic copper-wire-wrapped electromagnetic coil.\n- scene mechanical_tick: score 2/10. Problems: The scene fails the objective entirely. There is no watch hand, no tick, and the blue glow is abstract and meaningless in this context.. Fix: Show a close-up of a physical watch hand over a dial. Animate it jumping precisely one second in sync with a flash from the motor coil.",
-   "stills": [
-    "build/director/review_0_gemini/00_hook/still_0131.png",
-    "build/director/review_0_gemini/01_piezo_effect/still_0131.png",
-    "build/director/review_0_gemini/02_frequency_precision/still_0152.png",
-    "build/director/review_0_gemini/03_binary_division/still_0159.png",
-    "build/director/review_0_gemini/04_one_hz_pulse/still_0117.png",
-    "build/director/review_0_gemini/05_mechanical_tick/still_0142.png"
-   ]
-  },
-  {
-   "round": 0,
-   "drafter": "nemotron-3-ultra-550b-a55b",
-   "scores": [
-    9,
-    3,
-    3,
-    2,
-    5,
-    4,
-    7
-   ],
-   "avg": 4.71,
-   "feedback": "- scene 1: score 9/10. Problems: None significant; high-quality render of a timepiece.. Fix: None needed.\n- scene 2: score 3/10. Problems: Depicts a capacitor-like component, not a quartz crystal. No visible bending or voltage pulse.. Fix: Model a microscopic quartz tuning fork vibrating with visual indicators for voltage input and electric pulse output.\n- scene 3: score 3/10. Problems: Reuses the abstract capacitor/gear asset. No battery connection or frequency visualization present.. Fix: Show the quartz crystal resonating with a battery symbol connected and a frequency counter overlay.\n- scene 4: score 2/10. Problems: Abstract side view of a component; completely fails to depict binary math or powers of two.. Fix: Visualize binary digits or 15 distinct division stages to represent 2^15.\n- scene 5: score 5/10. Problems: Shows only two gears, not a cascade of 15 dividers. Does not clearly show frequency reduction.. Fix: Create a chain of multiple gear stages or flip-flop symbols to illustrate the division cascade.\n- scene 6: score 4/10. Problems: Missing the stepper motor distinction and the second hand output entirely.. Fix: Connect the gear train to a watch hand moving in discrete ticks.\n- scene 7: score 7/10. Problems: Composition is cluttered with ghosted background elements from previous scenes; not a clean pull-out.. Fix: Use a clean background with the watch centered and a subtle vibration indicator.",
-   "stills": [
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/00_hook/still_0145.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/01_piezo/still_0124.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/02_frequency/still_0172.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/03_binary/still_0118.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/04_division/still_0103.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/05_tick/still_0062.png",
-    "build/director/review_0_nemotron-3-ultra-550b-a55b/06_summary/still_0128.png"
+   "board": {
+    "title": "The Vibrating Crystal Inside Every Wristwatch",
+    "scenes": [
+     {
+      "id": "hook",
+      "shot": "clock_movement",
+      "narration": "Your wristwatch does not keep accurate time using complex mechanical springs. It relies on a microscopic tuning fork hidden inside the movement.",
+      "keywords": [
+       "microscopic tuning fork"
+      ],
+      "callouts": [
+       {
+        "part": "clock_movement_plate",
+        "at": "inside the movement"
+       }
+      ]
+     },
+     {
+      "id": "resonator_can",
+      "shot": "quartz_resonator",
+      "narration": "Protected inside a sealed metal can, the quartz resonator isolates the delicate crystal from outside moisture and dust.",
+      "keywords": [
+       "quartz resonator"
+      ],
+      "callouts": [
+       {
+        "part": "quartz_resonator_can",
+        "at": "metal can"
+       }
+      ]
+     },
+     {
+      "id": "piezoelectric_vibration",
+      "shot": "quartz_resonator_cutaway",
+      "narration": "Inside, metal electrodes pass electric signals through the crystal. The piezoelectric effect makes the prongs vibrate thirty-two thousand seven hundred and sixty-eight times a second.",
+      "keywords": [
+       "piezoelectric effect"
+      ],
+      "callouts": [
+       {
+        "part": "quartz_resonator_electrode_l",
+        "at": "metal electrodes"
+       },
+       {
+        "part": "quartz_resonator_prong_l",
+        "at": "prongs"
+       }
+      ],
+      "label": "32,768 HZ"
+     },
+     {
+      "id": "gear_reduction",
+      "shot": "gear_pair",
+      "narration": "Micro-electronic circuits divide that high frequency fifteen times, outputting one pulse per second to turn a small gear meshed with a larger gear.",
+      "keywords": [
+       "one pulse per second"
+      ],
+      "callouts": [
+       {
+        "part": "gear_pair_gear_small",
+        "at": "small gear"
+       },
+       {
+        "part": "gear_pair_gear_big",
+        "at": "larger gear"
+       }
+      ],
+      "label": "2^15 DIVIDER"
+     },
+     {
+      "id": "outro",
+      "shot": "clock_movement",
+      "narration": "A tiny battery supplies continuous energy, allowing the motor coil to advance the clock hand precisely once every second.",
+      "keywords": [
+       "clock hand"
+      ],
+      "callouts": [
+       {
+        "part": "clock_movement_battery",
+        "at": "battery"
+       },
+       {
+        "part": "clock_movement_hand",
+        "at": "clock hand"
+       }
+      ]
+     }
+    ]
+   },
+   "review": [
+    {
+     "id": "hook",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "resonator_can",
+     "score": 5,
+     "problems": "The scene objective specifies showing the whole sealed metal can, but the image shows a cross-section cutaway canister.",
+     "fix": "Show the intact, fully sealed cylindrical metal can to properly contrast with the sliced open view in the next scene."
+    },
+    {
+     "id": "piezoelectric_vibration",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "gear_reduction",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "outro",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    }
    ]
   }
  ]

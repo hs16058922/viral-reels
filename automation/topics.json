@@ -440,8 +440,10 @@
     "cover_hook_2": "THE 32,768 Hz CRYSTAL?!",
     "cover_tag": "PRECISION PHYSICS",
     "cover_sticker": "PIEZOELECTRIC EFFECT",
-    "status": "pending",
-    "video_path": null
+    "status": "published",
+    "video_path": "export/quartz_clock_crystal_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgQaQfrz4a_/",
+    "published_at": "2026-11-27T19:17:16.841043"
   },
   {
     "id": "maglev_train_levitation",
