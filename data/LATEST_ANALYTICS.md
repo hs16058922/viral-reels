@@ -1,6 +1,6 @@
 # 📊 CurioMotion Reel Analytics Intelligence Report
-**Audit Timestamp:** 2026-11-27T19:17:22.372795  
-**Channel:** `@curio__motion` | **Total Published Reels:** 15
+**Audit Timestamp:** 2026-11-27T23:28:54.563082  
+**Channel:** `@curio__motion` | **Total Published Reels:** 16
 
 ---
 ## 📈 Published Reels Performance Matrix
@@ -20,8 +20,9 @@
 | **Inside a Mechanical Watch: The 3** | `B-Tier` | 4 | 1 | 0 | 0 | **49.6/100** | [Watch Reel](https://www.instagram.com/reel/DgIJV1nofr3/) |
 | **Inside a Jet Engine: Fan, Fire a** | `B-Tier` | 7 | 0 | 0 | 0 | **40.5/100** | [Watch Reel](https://www.instagram.com/reel/DgILF-tDI4W/) |
 | **Why Microwaves Heat Soup But Nev** | `B-Tier` | 2 | 2 | 0 | 0 | **38.6/100** | [Watch Reel](https://www.instagram.com/reel/DgPbb17oAYi/) |
-| **Why Stomping Your Brakes Used to** | `C-Tier` | 2 | 0 | 0 | 0 | **11.5/100** | [Watch Reel](https://www.instagram.com/reel/DgP5rbUyUjD/) |
-| **The Vibrating Crystal Inside Eve** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgQaQfrz4a_/) |
+| **Why Stomping Your Brakes Used to** | `C-Tier` | 2 | 0 | 0 | 0 | **10.4/100** | [Watch Reel](https://www.instagram.com/reel/DgP5rbUyUjD/) |
+| **The Vibrating Crystal Inside Eve** | `C-Tier` | 1 | 0 | 0 | 0 | **4.5/100** | [Watch Reel](https://www.instagram.com/reel/DgQaQfrz4a_/) |
+| **How Maglev Trains Float on Thin ** | `C-Tier` | 0 | 0 | 0 | 0 | **0.0/100** | [Watch Reel](https://www.instagram.com/reel/DgQ3ChmB4Z5/) |
 
 ---
 ## 💡 Strategic Intelligence & Optimization Recommendations

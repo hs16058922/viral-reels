@@ -1,2900 +1,319 @@
 {
- "title": "How Maglev Trains Float on Thin Air at 370 MPH",
- "prefabs": {
-  "maglev_train": [
-   {
-    "id": "maglev",
-    "kind": "empty",
-    "position": [
-     0,
-     0,
-     0
-    ],
-    "rotation": [
-     0,
-     0,
-     90
-    ],
-    "scale": 1.1
-   },
-   {
-    "id": "maglev_beam",
-    "kind": "box",
-    "material": "clay_dark",
-    "position": [
-     0,
-     0,
-     -0.9
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      6.0,
-      1.0,
-      0.8
-     ],
-     "bevel": 0.03
-    },
-    "scale": 1.0,
-    "parent": "maglev"
-   },
-   {
-    "id": "maglev_beam_top",
-    "kind": "box",
-    "material": "clay_dark",
-    "position": [
-     0,
-     0,
-     -0.4
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      6.0,
-      2.0,
-      0.3
-     ],
-     "bevel": 0.03
-    },
-    "scale": 1.0,
-    "parent": "maglev"
-   },
-   {
-    "id": "maglev_rail_l",
-    "kind": "box",
-    "material": "dark_steel",
-    "position": [
-     0,
-     -0.95,
-     -0.6
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      6.0,
-      0.12,
-      0.12
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev"
-   },
-   {
-    "id": "maglev_rail_r",
-    "kind": "box",
-    "material": "dark_steel",
-    "position": [
-     0,
-     0.95,
-     -0.6
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      6.0,
-      0.12,
-      0.12
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev"
-   },
-   {
-    "id": "maglev_car",
-    "kind": "empty",
-    "material": "clay",
-    "position": [
-     0,
-     0,
-     0
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {},
-    "scale": 1.0,
-    "parent": "maglev"
-   },
-   {
-    "id": "maglev_body",
-    "kind": "box",
-    "material": "white",
-    "position": [
-     0,
-     0,
-     0.55
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.6,
-      2.4,
-      1.3
-     ],
-     "bevel": 0.25
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_nose",
-    "kind": "lathe",
-    "material": "white",
-    "position": [
-     1.79,
-     0,
-     0.5
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "axis": "x",
-     "profile": [
-      [
-       1.0,
-       0
-      ],
-      [
-       0.95,
-       0.4
-      ],
-      [
-       0.75,
-       0.9
-      ],
-      [
-       0.4,
-       1.3
-      ],
-      [
-       0.0,
-       1.45
-      ]
-     ],
-     "thickness": 0.03,
-     "cut_material": "white"
-    },
-    "scale": [
-     1.0,
-     1.2,
-     0.65
-    ],
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_nose_window",
-    "kind": "box",
-    "material": "glass",
-    "position": [
-     2.4,
-     0,
-     0.85
-    ],
-    "rotation": [
-     0,
-     25,
-     0
-    ],
-    "params": {
-     "size": [
-      0.7,
-      1.7,
-      0.03
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_window_band",
-    "kind": "box",
-    "material": "glass",
-    "position": [
-     0.1,
-     -1.21,
-     0.8
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.2,
-      0.02,
-      0.3
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_stripe",
-    "kind": "box",
-    "material": "accent",
-    "position": [
-     0,
-     -1.21,
-     0.35
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.6,
-      0.02,
-      0.12
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_skirt_l",
-    "kind": "box",
-    "material": "white",
-    "position": [
-     0,
-     -1.15,
-     -0.45
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.4,
-      0.1,
-      0.8
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_skirt_r",
-    "kind": "box",
-    "material": "white",
-    "position": [
-     0,
-     1.15,
-     -0.45
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.4,
-      0.1,
-      0.8
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_lift_magnet_l",
-    "kind": "box",
-    "material": "accent",
-    "position": [
-     0,
-     -0.85,
-     -0.67
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.0,
-      0.28,
-      0.12
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_lift_magnet_r",
-    "kind": "box",
-    "material": "accent",
-    "position": [
-     0,
-     0.85,
-     -0.67
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.0,
-      0.28,
-      0.12
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_guide_magnet_l",
-    "kind": "box",
-    "material": "blue",
-    "position": [
-     0,
-     -1.07,
-     -0.55
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.0,
-      0.06,
-      0.25
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   },
-   {
-    "id": "maglev_guide_magnet_r",
-    "kind": "box",
-    "material": "blue",
-    "position": [
-     0,
-     1.07,
-     -0.55
-    ],
-    "rotation": [
-     0,
-     0,
-     0
-    ],
-    "params": {
-     "size": [
-      3.0,
-      0.06,
-      0.25
-     ]
-    },
-    "scale": 1.0,
-    "parent": "maglev_car"
-   }
-  ]
- },
+ "title": "How Maglev Trains Float on Thin Air",
  "scenes": [
   {
    "id": "hook",
-   "narration": "A five hundred ton bullet train floats two inches above the track with no wheels at all.",
-   "objective": "Show the full maglev vehicle levitating beside its guideway with a visible gap.",
+   "narration": "A five-hundred-ton bullet train can float two inches above its guideway with zero wheels touching the track. How does it defeat gravity?",
+   "objective": "maglev train section over its guideway: the whole part, slowly orbiting, moving as it does in reality",
+   "background": "light",
    "keywords": [
-    "five hundred ton",
-    "no wheels"
-   ],
-   "use": [
-    "maglev_train"
+    "bullet train"
    ],
    "objects": [
     {
      "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
-    },
-    {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "gap_tag",
-     "kind": "label",
-     "params": {
-      "text": "2 IN",
-      "size": 0.2
-     },
-     "position": [
-      0.45,
-      0.0,
-      0.0
-     ]
+     "kit": "maglev"
     }
    ],
    "actions": [
     {
      "target": "maglev_car",
      "do": "oscillate",
+     "at": 0.0,
      "params": {
-      "amplitude": 0.05,
-      "hz": 2,
-      "axis": "x"
+      "amplitude": 0.03,
+      "hz": 0.7,
+      "axis": "z",
+      "prop": "location"
      }
     },
     {
-     "target": "maglev_car",
-     "do": "move",
-     "at": "floats",
-     "duration": 4.0,
-     "params": {
-      "by": [
-       0,
-       1.6,
-       0
-      ]
-     }
-    },
-    {
-     "target": "gap_tag",
-     "do": "pop_in",
-     "at": "no wheels",
-     "sfx": "pop"
-    }
-   ],
-   "shots": [
-    {
-     "target": "maglev_car",
-     "frame": [
-      "maglev_car",
-      "maglev_beam"
-     ],
-     "elevation": 20.0,
-     "orbit": 15.0
-    }
-   ]
-  },
-  {
-   "id": "magnets",
-   "narration": "Instead of ordinary magnets it uses superconducting electromagnets cooled by liquid helium to minus four hundred fifty degrees.",
-   "objective": "Reveal the superconducting lift magnets inside the train and mark them as cryogenic.",
-   "background": "blue",
-   "keywords": [
-    "superconducting electromagnets",
-    "liquid helium"
-   ],
-   "use": [
-    "maglev_train"
-   ],
-   "objects": [
-    {
-     "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
-    },
-    {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "super_tag",
-     "kind": "label",
-     "params": {
-      "text": "SUPERCONDUCTING",
-      "size": 0.2
-     },
-     "position": [
-      0.0,
-      0.0,
-      0.6
-     ]
-    }
-   ],
-   "actions": [
-    {
-     "target": "maglev_car",
-     "do": "oscillate",
-     "params": {
-      "amplitude": 0.05,
-      "hz": 2,
-      "axis": "x"
-     }
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "do": "explode",
-     "at": "superconducting electromagnets",
-     "params": {
-      "by": [
-       0,
-       0,
-       0.35
-      ]
-     }
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
+     "target": "maglev_body",
      "do": "highlight",
-     "at": "superconducting electromagnets",
-     "params": {
-      "color": "#4FA3FF",
-      "strength": 2,
-      "hold": true
-     }
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "do": "pulse",
-     "at": "liquid helium",
-     "params": {
-      "amount": 0.08,
-      "hz": 3,
-      "axis": "all"
-     }
-    },
-    {
-     "target": "super_tag",
-     "do": "pop_in",
-     "at": "liquid helium",
-     "sfx": "pop"
-    }
-   ],
-   "shots": [
-    {
-     "type": "macro",
-     "target": "maglev_lift_magnet_l",
-     "frame": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r",
-      "maglev_car"
-     ],
-     "azimuth": -10.0,
-     "elevation": 10.0,
-     "lens": 70.0
-    }
-   ]
-  },
-  {
-   "id": "currents",
-   "narration": "At that temperature resistance vanishes, so huge currents build magnetic fields far stronger than Earth's.",
-   "objective": "Show the magnets energizing to represent massive persistent current and field strength.",
-   "background": "dark",
-   "keywords": [
-    "resistance vanishes",
-    "huge currents"
-   ],
-   "note": "Illustrative - magnetic fields shown as pulses",
-   "use": [
-    "maglev_train"
-   ],
-   "objects": [
-    {
-     "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
-    },
-    {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "field_tag",
-     "kind": "label",
-     "params": {
-      "text": "FIELD",
-      "size": 0.2
-     },
-     "position": [
-      0.0,
-      0.0,
-      0.6
-     ]
-    }
-   ],
-   "actions": [
-    {
-     "target": "maglev_car",
-     "do": "oscillate",
-     "params": {
-      "amplitude": 0.05,
-      "hz": 2,
-      "axis": "x"
-     }
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "do": "highlight",
-     "at": "resistance vanishes",
-     "params": {
-      "color": "#FFD700",
-      "strength": 2,
-      "hold": true
-     }
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "do": "pulse",
-     "at": "huge currents",
-     "params": {
-      "amount": 0.12,
-      "hz": 5,
-      "axis": "all"
-     }
-    },
-    {
-     "target": "field_tag",
-     "do": "pop_in",
-     "at": "huge currents",
-     "sfx": "pop"
-    }
-   ],
-   "shots": [
-    {
-     "type": "macro",
-     "target": "maglev_lift_magnet_l",
-     "frame": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "azimuth": -10.0,
-     "elevation": 10.0,
-     "lens": 70.0
-    }
-   ]
-  },
-  {
-   "id": "guideway",
-   "narration": "As the train moves, its magnets sweep past aluminum coils in the guideway walls and induce a mirror field.",
-   "objective": "Highlight the aluminum guideway coils and visualize the induced mirror field flowing along them.",
-   "keywords": [
-    "aluminum coils",
-    "mirror field"
-   ],
-   "use": [
-    "maglev_train"
-   ],
-   "objects": [
-    {
-     "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
-    },
-    {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "induced_flow",
-     "kind": "flow",
-     "params": {
-      "points": [
-       [
-        0,
-        -1.2,
-        0.15
-       ],
-       [
-        0,
-        0,
-        0.15
-       ],
-       [
-        0,
-        1.2,
-        0.15
-       ]
-      ],
-      "count": 10,
-      "radius": 0.03,
-      "speed": 1.2
-     },
-     "material": "air"
-    }
-   ],
-   "actions": [
-    {
-     "target": "maglev_car",
-     "do": "oscillate",
-     "params": {
-      "amplitude": 0.05,
-      "hz": 2,
-      "axis": "x"
-     }
-    },
-    {
-     "target": "induced_flow",
-     "do": "hide"
-    },
-    {
-     "target": "maglev_rail_l",
-     "do": "highlight",
-     "at": "aluminum coils",
-     "params": {
-      "color": "#E8452C",
-      "strength": 2
-     }
-    },
-    {
-     "target": "maglev_rail_r",
-     "do": "highlight",
-     "at": "aluminum coils",
-     "params": {
-      "color": "#E8452C",
-      "strength": 2
-     }
-    },
-    {
-     "target": "induced_flow",
-     "do": "show",
-     "at": "induce a mirror field"
-    },
-    {
-     "target": "maglev_lift_magnet_l",
-     "do": "highlight",
-     "at": "induce a mirror field",
-     "params": {
-      "color": "#4FA3FF",
-      "strength": 2
-     }
-    }
-   ],
-   "shots": [
-    {
-     "type": "macro",
-     "target": "maglev_rail_l",
-     "frame": [
-      "maglev_rail_l",
-      "maglev_rail_r",
-      "maglev_lift_magnet_l"
-     ],
-     "azimuth": 35.0,
-     "elevation": 20.0,
-     "lens": 70.0
-    }
-   ]
-  },
-  {
-   "id": "levitate",
-   "narration": "Like poles repel, pushing the train upward on pure magnetic flux and lifting five hundred tons off the rails.",
-   "objective": "Demonstrate repulsive levitation by moving the car away from the guideway and showing flux between them.",
-   "background": "blue",
-   "keywords": [
-    "Like poles repel",
-    "pure magnetic flux"
-   ],
-   "note": "Levitation gap exaggerated for clarity",
-   "use": [
-    "maglev_train"
-   ],
-   "objects": [
-    {
-     "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
-    },
-    {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "flux_flow",
-     "kind": "flow",
-     "params": {
-      "points": [
-       [
-        0.35,
-        -0.4,
-        0
-       ],
-       [
-        0.35,
-        0.4,
-        0
-       ]
-      ],
-      "count": 8,
-      "radius": 0.03,
-      "speed": 1.0
-     },
-     "material": "air"
-    },
-    {
-     "id": "ton_tag",
-     "kind": "label",
-     "params": {
-      "text": "500 T",
-      "size": 0.2
-     },
-     "position": [
-      0.6,
-      0.0,
-      0.0
-     ]
-    }
-   ],
-   "actions": [
-    {
-     "target": "maglev_car",
-     "do": "oscillate",
-     "params": {
-      "amplitude": 0.05,
-      "hz": 2,
-      "axis": "x"
-     }
-    },
-    {
-     "target": "flux_flow",
-     "do": "hide"
-    },
-    {
-     "target": "ton_tag",
-     "do": "hide"
-    },
-    {
-     "target": [
-      "maglev_lift_magnet_l",
-      "maglev_lift_magnet_r"
-     ],
-     "do": "highlight",
-     "at": "Like poles repel",
-     "params": {
-      "color": "#4FA3FF",
-      "strength": 2
-     }
-    },
-    {
-     "target": [
-      "maglev_rail_l",
-      "maglev_rail_r"
-     ],
-     "do": "highlight",
-     "at": "Like poles repel",
-     "params": {
-      "color": "#E8452C",
-      "strength": 2
-     }
-    },
-    {
-     "target": "maglev_car",
-     "do": "move",
-     "at": "Like poles repel",
+     "at": "bullet train",
      "duration": 2.0,
      "params": {
-      "by": [
-       0.5,
-       0,
-       0
-      ]
-     }
-    },
-    {
-     "target": "flux_flow",
-     "do": "show",
-     "at": "pure magnetic flux"
-    },
-    {
-     "target": "ton_tag",
-     "do": "pop_in",
-     "at": "lifting five hundred tons",
+      "color": "#FFD24A",
+      "strength": 1.2
+     },
      "sfx": "pop"
     }
    ],
    "shots": [
     {
-     "type": "push_in",
-     "target": "maglev_car",
+     "type": "orbit",
+     "target": "maglev",
      "frame": [
-      "maglev_car",
-      "maglev_lift_magnet_l",
-      "maglev_rail_l"
+      "maglev"
      ],
-     "elevation": 30.0
+     "azimuth": -32,
+     "elevation": 20,
+     "orbit": 24
     }
    ]
   },
   {
-   "id": "speed",
-   "narration": "With no rolling friction the train glides at three hundred seventy miles per hour in silent flight.",
-   "objective": "Show the train accelerating along the guideway with zero contact, ending on the full vehicle.",
+   "id": "superconductors",
+   "narration": "The secret lies in liquid-helium-cooled electromagnets. Chilled to negative four hundred and fifty degrees Fahrenheit, their electrical resistance vanishes completely.",
+   "objective": "electromagnet: sliced open (front half removed) to show the internal parts working",
    "background": "dark",
    "keywords": [
-    "no rolling friction",
-    "three hundred seventy miles per hour"
+    "four hundred and fifty degrees"
    ],
-   "note": "Illustrative - sped up",
-   "use": [
-    "maglev_train"
+   "objects": [
+    {
+     "id": "electromagnet",
+     "kit": "electromagnet",
+     "cut": [
+      0,
+      -1,
+      0
+     ]
+    },
+    {
+     "id": "callout_label",
+     "kind": "label",
+     "material": "ink",
+     "position": [
+      0.0,
+      -1.0,
+      1.9
+     ],
+     "params": {
+      "text": "-450 F",
+      "size": 0.32
+     }
+    }
+   ],
+   "actions": [
+    {
+     "target": "electromagnet_coil",
+     "do": "highlight",
+     "at": 0.4,
+     "params": {
+      "color": "#FF7A1A",
+      "strength": 1.5,
+      "hold": true
+     }
+    },
+    {
+     "target": "electromagnet",
+     "do": "spin",
+     "at": 0.0,
+     "params": {
+      "rate": 12,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "electromagnet_coil",
+     "do": "highlight",
+     "at": "electromagnets",
+     "duration": 2.0,
+     "params": {
+      "color": "#FFD24A",
+      "strength": 1.2
+     },
+     "sfx": "pop"
+    },
+    {
+     "target": "callout_label",
+     "do": "pop_in",
+     "at": 0.6,
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "orbit",
+     "target": "electromagnet",
+     "frame": [
+      "electromagnet",
+      "callout_label"
+     ],
+     "azimuth": -22,
+     "elevation": 18,
+     "orbit": 24
+    }
+   ]
+  },
+  {
+   "id": "magnetic_strength",
+   "narration": "Without resistance, massive persistent currents circulate endlessly, generating magnetic fields tens of thousands of times stronger than Earth's magnetic field.",
+   "objective": "electromagnet: the whole part, slowly orbiting, moving as it does in reality",
+   "background": "blue",
+   "keywords": [
+    "tens of thousands"
+   ],
+   "objects": [
+    {
+     "id": "electromagnet",
+     "kit": "electromagnet"
+    }
+   ],
+   "actions": [
+    {
+     "target": "electromagnet_coil",
+     "do": "highlight",
+     "at": 0.4,
+     "params": {
+      "color": "#FF7A1A",
+      "strength": 1.5,
+      "hold": true
+     }
+    },
+    {
+     "target": "electromagnet",
+     "do": "spin",
+     "at": 0.0,
+     "params": {
+      "rate": 12,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "electromagnet_core",
+     "do": "highlight",
+     "at": "magnetic fields",
+     "duration": 2.0,
+     "params": {
+      "color": "#FFD24A",
+      "strength": 1.2
+     },
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "orbit",
+     "target": "electromagnet",
+     "frame": [
+      "electromagnet"
+     ],
+     "azimuth": -32,
+     "elevation": 20,
+     "orbit": 24
+    }
+   ]
+  },
+  {
+   "id": "repulsion",
+   "narration": "As the train glides along, these fields induce mirror magnetic poles in the track wall. Because identical poles repel, the upward push levitates the heavy chassis.",
+   "objective": "bar magnet with red north and blue south poles: the whole part, slowly orbiting, moving as it does in reality",
+   "background": "light",
+   "keywords": [
+    "identical poles repel"
+   ],
+   "objects": [
+    {
+     "id": "bar_magnet",
+     "kit": "bar_magnet"
+    }
+   ],
+   "actions": [
+    {
+     "target": "bar_magnet",
+     "do": "spin",
+     "at": 0.0,
+     "params": {
+      "rate": 5,
+      "axis": "z"
+     }
+    },
+    {
+     "target": "bar_magnet_north",
+     "do": "highlight",
+     "at": "identical poles",
+     "duration": 2.0,
+     "params": {
+      "color": "#FFD24A",
+      "strength": 1.2
+     },
+     "sfx": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "type": "orbit",
+     "target": "bar_magnet",
+     "frame": [
+      "bar_magnet"
+     ],
+     "azimuth": -32,
+     "elevation": 20,
+     "orbit": 24
+    }
+   ]
+  },
+  {
+   "id": "high_speed",
+   "narration": "Floating entirely on a cushion of pure magnetic flux eliminates all rolling friction, pushing the train to three hundred and seventy miles per hour.",
+   "objective": "maglev train section over its guideway: the whole part, slowly orbiting, moving as it does in reality",
+   "background": "dark",
+   "keywords": [
+    "three hundred and seventy miles per hour"
    ],
    "objects": [
     {
      "id": "maglev",
-     "kind": "empty",
-     "rotation": [
-      0.0,
-      0.0,
-      90.0
-     ],
-     "scale": 1.1
+     "kit": "maglev"
     },
     {
-     "id": "maglev_beam",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       1.0,
-       0.8
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.9
-     ]
-    },
-    {
-     "id": "maglev_beam_top",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       2.0,
-       0.3
-      ],
-      "bevel": 0.03
-     },
-     "material": "clay_dark",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.0,
-      -0.4
-     ]
-    },
-    {
-     "id": "maglev_rail_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      -0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_rail_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       6.0,
-       0.12,
-       0.12
-      ]
-     },
-     "material": "dark_steel",
-     "parent": "maglev",
-     "position": [
-      0.0,
-      0.95,
-      -0.6
-     ]
-    },
-    {
-     "id": "maglev_car",
-     "kind": "empty",
-     "parent": "maglev"
-    },
-    {
-     "id": "maglev_body",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       2.4,
-       1.3
-      ],
-      "bevel": 0.25
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.0,
-      0.55
-     ]
-    },
-    {
-     "id": "maglev_nose",
-     "kind": "lathe",
-     "params": {
-      "axis": "x",
-      "profile": [
-       [
-        1.0,
-        0
-       ],
-       [
-        0.95,
-        0.4
-       ],
-       [
-        0.75,
-        0.9
-       ],
-       [
-        0.4,
-        1.3
-       ],
-       [
-        0.0,
-        1.45
-       ]
-      ],
-      "thickness": 0.03,
-      "cut_material": "white"
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      1.79,
-      0.0,
-      0.5
-     ],
-     "scale": [
-      1.0,
-      1.2,
-      0.65
-     ]
-    },
-    {
-     "id": "maglev_nose_window",
-     "kind": "box",
-     "params": {
-      "size": [
-       0.7,
-       1.7,
-       0.03
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      2.4,
-      0.0,
-      0.85
-     ],
-     "rotation": [
-      0.0,
-      25.0,
-      0.0
-     ]
-    },
-    {
-     "id": "maglev_window_band",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.2,
-       0.02,
-       0.3
-      ]
-     },
-     "material": "glass",
-     "parent": "maglev_car",
-     "position": [
-      0.1,
-      -1.21,
-      0.8
-     ]
-    },
-    {
-     "id": "maglev_stripe",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.6,
-       0.02,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.21,
-      0.35
-     ]
-    },
-    {
-     "id": "maglev_skirt_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_skirt_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.4,
-       0.1,
-       0.8
-      ]
-     },
-     "material": "white",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.15,
-      -0.45
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_lift_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.28,
-       0.12
-      ]
-     },
-     "material": "accent",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      0.85,
-      -0.67
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_l",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      -1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "maglev_guide_magnet_r",
-     "kind": "box",
-     "params": {
-      "size": [
-       3.0,
-       0.06,
-       0.25
-      ]
-     },
-     "material": "blue",
-     "parent": "maglev_car",
-     "position": [
-      0.0,
-      1.07,
-      -0.55
-     ]
-    },
-    {
-     "id": "speed_tag",
+     "id": "callout_label",
      "kind": "label",
+     "material": "ink",
+     "position": [
+      0.0,
+      -1.0,
+      1.9
+     ],
      "params": {
       "text": "370 MPH",
-      "size": 0.25
-     },
-     "position": [
-      0.0,
-      1.8,
-      0.0
-     ]
+      "size": 0.32
+     }
     }
    ],
    "actions": [
     {
      "target": "maglev_car",
      "do": "oscillate",
+     "at": 0.0,
      "params": {
-      "amplitude": 0.02,
-      "hz": 1,
-      "axis": "x"
+      "amplitude": 0.03,
+      "hz": 0.7,
+      "axis": "z",
+      "prop": "location"
      }
     },
     {
-     "target": "maglev_car",
-     "do": "move",
-     "at": "no rolling friction",
-     "duration": 3.0,
+     "target": "maglev_skirt_l",
+     "do": "highlight",
+     "at": "pure magnetic flux",
+     "duration": 2.0,
      "params": {
-      "by": [
-       0,
-       3.5,
-       0
-      ]
-     }
-    },
-    {
-     "target": "speed_tag",
-     "do": "pop_in",
-     "at": "three hundred seventy miles per hour",
+      "color": "#FFD24A",
+      "strength": 1.2
+     },
      "sfx": "pop"
     },
     {
-     "target": "maglev_car",
-     "do": "highlight",
-     "at": "three hundred seventy miles per hour",
-     "params": {
-      "color": "#FFFFFF",
-      "strength": 1.5
-     }
+     "target": "callout_label",
+     "do": "pop_in",
+     "at": 0.6,
+     "sfx": "pop"
     }
    ],
    "shots": [
     {
-     "type": "pull_out",
-     "target": "maglev_car",
+     "type": "orbit",
+     "target": "maglev",
      "frame": [
-      "maglev_car",
-      "maglev_beam"
+      "maglev",
+      "callout_label"
      ],
-     "azimuth": -25.0,
-     "elevation": 15.0
+     "azimuth": -32,
+     "elevation": 20,
+     "orbit": 24
     }
    ]
   }

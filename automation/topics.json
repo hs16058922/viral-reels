@@ -468,8 +468,10 @@
     "cover_hook_2": "HOW 500 TONS FLOATS?!",
     "cover_tag": "SUPERCONDUCTIVITY",
     "cover_sticker": "ZERO WHEELS, 370 MPH",
-    "status": "pending",
-    "video_path": null
+    "status": "published",
+    "video_path": "export/maglev_train_levitation_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgQ3ChmB4Z5/",
+    "published_at": "2026-11-27T23:28:50.405949"
   },
   {
     "id": "pressure_washer_swashplate_pump",

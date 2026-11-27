@@ -1,27 +1,117 @@
 {
- "passed": false,
- "drafter": "nemotron-3.5-super-vl",
+ "passed": true,
+ "drafter": "gemini",
  "history": [
   {
-   "round": 0,
-   "drafter": "nemotron-3.5-super-vl",
-   "scores": [
-    2,
-    1,
-    1,
-    2,
-    2,
-    3
-   ],
-   "avg": 1.83,
-   "feedback": "- scene 1: score 2/10. Problems: Objects are vague untextured primitives (white blob and grey block). No recognisable bullet train or guideway structure. The levitation gap is barely visible or non-existent. Framing is okay but the subject is not identifiable.. Fix: Replace with detailed 3D models of a streamlined maglev car and a concrete/steel guideway. Ensure a clear, visible air gap between the vehicle underside and the track.\n- scene 2: score 1/10. Problems: Fails completely to show internal superconducting magnets or cryogenic markings. It is the same generic white block as Scene 1 with no cutaway or internal detail.. Fix: Create a cutaway or transparent view of the train undercarriage. Show blocky magnet assemblies with blue frost or liquid helium indicators and labels.\n- scene 3: score 1/10. Problems: No visualization of energizing, persistent current, or magnetic field strength. Just the same abstract blocks on a black background.. Fix: Add glowing electromagnetic field lines, flux arrows, or energy pulses around the magnet areas to indicate high current and field strength.\n- scene 4: score 2/10. Problems: Red lines are slapped onto vague boxes without representing aluminum coils or a mirror field. No guideway wall structure is visible. Not realistic.. Fix: Model the guideway with visible coil windings or slots. Animate induced field lines flowing along the guideway surface in sync with the train position.\n- scene 5: score 2/10. Problems: No repulsive force or flux visualization. The vehicle is not clearly moving away. It remains a vague white shape hovering near a grey block.. Fix: Show the train clearly separated from the guideway with magnetic flux lines arcing between them. Use arrows to indicate upward repulsive force.\n- scene 6: score 3/10. Problems: Shows a gap between vehicle and track, but both are still crude untextured blocks. No sense of speed, acceleration, or a recognisable full vehicle.. Fix: Use a detailed train model with motion blur or speed lines. Show the full vehicle traveling along a long, textured guideway with zero contact.",
-   "stills": [
-    "build/director/review_0_nemotron-3.5-super-vl/00_hook/still_0117.png",
-    "build/director/review_0_nemotron-3.5-super-vl/01_magnets/still_0124.png",
-    "build/director/review_0_nemotron-3.5-super-vl/02_currents/still_0103.png",
-    "build/director/review_0_nemotron-3.5-super-vl/03_guideway/still_0131.png",
-    "build/director/review_0_nemotron-3.5-super-vl/04_levitate/still_0131.png",
-    "build/director/review_0_nemotron-3.5-super-vl/05_speed/still_0129.png"
+   "drafter": "gemini",
+   "board": {
+    "title": "How Maglev Trains Float on Thin Air",
+    "scenes": [
+     {
+      "id": "hook",
+      "shot": "maglev",
+      "narration": "A five-hundred-ton bullet train can float two inches above its guideway with zero wheels touching the track. How does it defeat gravity?",
+      "keywords": [
+       "bullet train"
+      ],
+      "callouts": [
+       {
+        "part": "maglev_body",
+        "at": "bullet train"
+       }
+      ]
+     },
+     {
+      "id": "superconductors",
+      "shot": "electromagnet_cutaway",
+      "narration": "The secret lies in liquid-helium-cooled electromagnets. Chilled to negative four hundred and fifty degrees Fahrenheit, their electrical resistance vanishes completely.",
+      "keywords": [
+       "four hundred and fifty degrees"
+      ],
+      "callouts": [
+       {
+        "part": "electromagnet_coil",
+        "at": "electromagnets"
+       }
+      ],
+      "label": "-450 F"
+     },
+     {
+      "id": "magnetic_strength",
+      "shot": "electromagnet",
+      "narration": "Without resistance, massive persistent currents circulate endlessly, generating magnetic fields tens of thousands of times stronger than Earth's magnetic field.",
+      "keywords": [
+       "tens of thousands"
+      ],
+      "callouts": [
+       {
+        "part": "electromagnet_core",
+        "at": "magnetic fields"
+       }
+      ]
+     },
+     {
+      "id": "repulsion",
+      "shot": "bar_magnet",
+      "narration": "As the train glides along, these fields induce mirror magnetic poles in the track wall. Because identical poles repel, the upward push levitates the heavy chassis.",
+      "keywords": [
+       "identical poles repel"
+      ],
+      "callouts": [
+       {
+        "part": "bar_magnet_north",
+        "at": "identical poles"
+       }
+      ]
+     },
+     {
+      "id": "high_speed",
+      "shot": "maglev",
+      "narration": "Floating entirely on a cushion of pure magnetic flux eliminates all rolling friction, pushing the train to three hundred and seventy miles per hour.",
+      "keywords": [
+       "three hundred and seventy miles per hour"
+      ],
+      "callouts": [
+       {
+        "part": "maglev_skirt_l",
+        "at": "pure magnetic flux"
+       }
+      ],
+      "label": "370 MPH"
+     }
+    ]
+   },
+   "review": [
+    {
+     "id": "hook",
+     "score": 5,
+     "problems": "The maglev train chassis is severely overexposed and rendered as a solid blown-out white shape, losing texture and detail.",
+     "fix": "Reduce emission/lighting intensity on the train model so details and materials are properly visible."
+    },
+    {
+     "id": "superconductors",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "magnetic_strength",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "repulsion",
+     "score": 9,
+     "problems": "none",
+     "fix": "none"
+    },
+    {
+     "id": "high_speed",
+     "score": 5,
+     "problems": "The train model suffers from heavy overexposure/emissive glow, washing out visual detail of the train chassis.",
+     "fix": "Fix train material shaders and scene lighting to eliminate pure white exposure blowout."
+    }
    ]
   }
  ]
