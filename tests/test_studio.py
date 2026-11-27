@@ -300,6 +300,16 @@ class TestShots(unittest.TestCase):
             ids = {o.id for o in sc.objects}
             self.assertLessEqual(set(shots.SHOTS[sc.id]["parts"]), ids, sc.id)
 
+    def test_every_shot_keeps_moving_for_the_whole_scene(self):
+        # QC fails a reel if any render segment is frozen; a shot must move until its last frame.
+        from engine.studio import shots
+        for name, s in shots.SHOTS.items():
+            # camera moves ease to a stop at scene end, so the subject itself must keep moving
+            moving = any(a["do"] in shots.CONTINUOUS and "duration" not in a for a in s["actions"]) or \
+                any(o.get("kind") == "flow" for o in VideoSpec.model_validate(
+                    shots.build({"scenes": [{"id": "x", "shot": name, "narration": "x"}]})).scenes[0].model_dump()["objects"])
+            self.assertTrue(moving, f"{name}: needs a continuous action (spin/oscillate/cycle...) or flow particles")
+
     def test_storyboard_builds_and_survives_save_and_reload(self):
         from engine.studio import director, shots
         src = shots.build(BOARD)

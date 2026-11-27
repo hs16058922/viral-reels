@@ -59,8 +59,8 @@ MOTION: dict[str, list[dict]] = {
                            A("sensor_tip", "highlight", 0.3, color="#3DA5FF", strength=2, hold=True)],
     "electric_motor": [A("rotor", "spin", rate=120, axis="z"),
                        A([f"winding_{i}" for i in range(6)], "highlight", 0.2, stagger=0.25, color=WARM, strength=1.5)],
-    "electromagnet": [A("coil", "highlight", 0.4, color=WARM, strength=1.5, hold=True)],
-    "bar_magnet": [A("", "rotate", by=[0, 0, 25], duration=6)],
+    "electromagnet": [A("coil", "highlight", 0.4, color=WARM, strength=1.5, hold=True), A("", "spin", rate=12, axis="z")],
+    "bar_magnet": [A("", "spin", rate=5, axis="z")],
     "quartz_resonator": [A("prong_l", "oscillate", amplitude=-0.04, hz=3, axis="x", prop="location"),
                          A("prong_r", "oscillate", amplitude=0.04, hz=3, axis="x", prop="location")],
     "clock_movement": [A("gear_drive", "spin", rate=-120, axis="z")],
@@ -75,13 +75,16 @@ MOTION: dict[str, list[dict]] = {
     "ball_bearing": [A("inner_race", "spin", rate=100, axis="z"), A("balls_cage", "spin", rate=40, axis="z")],
     "battery_cell": [A("cap", "highlight", 0.3, color="#3DA5FF", strength=1.5, hold=True)],
     "em_wave": [],
-    "heating_coil": [A("coil", "highlight", 0.3, color=WARM, strength=2, hold=True)],
+    "heating_coil": [A("coil", "highlight", 0.3, color=WARM, strength=2, hold=True), A("", "spin", rate=12, axis="z")],
     "spring_damper": [A("rod", "cycle", prop="location", axis="z", hz=0.8, keys=[[0, 0], [0.5, -0.3], [1, 0]]),
                       A("spring", "cycle", prop="scale", axis="z", hz=0.8, keys=[[0, 1], [0.5, 0.86], [1, 1]])],
     "gear_pair": [A("gear_big", "spin", rate=45, axis="z")],
     "housing_cutaway": [],
 }
 # kits whose casing hides the interesting parts: also get a `<kit>_cutaway` shot
+# Every shot must keep its subject moving for the WHOLE scene (QC rejects frozen segments, and camera moves ease to a
+# stop at scene end): one of these actions with no fixed duration, or flow particles.
+CONTINUOUS = {"spin", "oscillate", "cycle", "tick", "pulse"}
 CUTAWAY = {"magnetron", "electric_motor", "abs_modulator", "piston_engine", "centrifugal_pump", "battery_cell",
            "spring_damper", "electromagnet", "quartz_resonator"}
 
@@ -109,7 +112,7 @@ for _k, _v in kit.KIT.items():
          parts=_part_ids(_k, _k))
     if _k in CUTAWAY:
         shot(f"{_k}_cutaway", f"{_first}: sliced open (front half removed) to show the internal parts working",
-             [{"id": _k, "kit": _k, "cut": [0, -1, 0]}], motion(_k, _k), [cam("push_in", _k, [_k], -22, 18)],
+             [{"id": _k, "kit": _k, "cut": [0, -1, 0]}], motion(_k, _k), [cam("orbit", _k, [_k], -22, 18, orbit=24)],
              parts=_part_ids(_k, _k))
 
 
@@ -120,7 +123,7 @@ HIDE_PANEL = ["oven_door", "oven_control_panel", "oven_shell_right"] + [f"oven_b
 
 shot("microwave_hero", "a real countertop microwave oven, camera slowly pushing in (hook / outro)",
      [{"id": "oven", "kind": "asset", "params": {"asset_id": "vintage_microwave", "size": 3.0}}],
-     [A("oven", "rotate", by=[0, 0, 18], duration=7, ease="smooth")],
+     [A("oven", "spin", rate=3, axis="z")],
      [cam("push_in", "oven", ["oven"], -38, 18, lens=50)], background="light", label_at=(0, -0.6, 1.4))
 
 _wave_in = [[1.45, 0.2, 0.45], [0.9, 0.1, 0.5], [0.4, 0.3, 0.1], [-0.3, -0.2, 0.55], [-0.9, 0.3, 0.0],
@@ -152,7 +155,7 @@ shot("microwave_wave_path", "energy path inside a microwave: the magnetron on th
 shot("magnetron_electrons", "top view into a cut-open magnetron: electrons spiral out from the glowing cathode "
      "past the copper vanes (this is what makes the microwaves)",
      [{"id": "mag", "kit": "magnetron", "cut": [0, 0, 1], "cut_offset": 0.05}],
-     motion("magnetron", "mag") + [A("mag", "rotate", by=[0, 0, 30], duration=8),
+     motion("magnetron", "mag") + [A("mag", "spin", rate=4, axis="z"),
                                    A([f"mag_fin_{i}" for i in range(5)] + ["mag_filament_leads"], "hide")],
      [cam("static", "mag_anode", ["mag_anode"], -10, 70, lens=60)],
      parts=["mag_cathode", "mag_anode", "mag_electrons"] + [f"mag_vane_{i}" for i in range(8)],
@@ -178,9 +181,13 @@ shot("water_dipole_flip", "one water molecule (a tiny magnet-like dipole) flippi
      parts=["w_oxygen", "w_hydrogen_0", "w_charge_neg", "w_charge_pos", "field"], background="dark", note=ILLUS)
 
 shot("soup_heating", "close-up of a bowl of soup heating up, steam rising",
-     [{"id": "soup", "kit": "bowl_of_soup", "scale": 1.3}], motion("bowl_of_soup", "soup"),
-     [cam("macro", "soup", ["soup_bowl"], -15, 30, lens=60)],
-     parts=["soup_soup", "soup_bowl", "soup_steam"], background="light")
+     [{"id": "soup", "kit": "bowl_of_soup", "scale": 1.3},
+      {"id": "steam", "kind": "flow", "material": "air", "params": {
+          "points": [[0.45, 0, 0.35], [0.7, 0, 0.9], [0.4, 0, 1.5], [0.75, 0, 2.1]], "count": 10, "radius": 0.05,
+          "speed": 0.6, "radial_copies": 5, "axis": "z"}}],
+     motion("bowl_of_soup", "soup"),
+     [cam("orbit", "soup", ["soup_bowl"], -15, 30, orbit=40, lens=60)],
+     parts=["soup_soup", "soup_bowl", "soup_steam"], background="dark")  # dark: the white steam must read
 
 
 # ── Storyboard -> SceneSpec ──
