@@ -38,6 +38,7 @@ SPECS = ROOT / "engine" / "studio" / "specs"
 GENERATED = SPECS / "generated"
 QUALITY = os.getenv("STUDIO_QUALITY", "realistic")
 MAX_DIRECT_TOPICS = 4  # topics the director may try per run (unsupported ones are rejected in ~1 min)
+HOLD_HOURS = 6  # a topic held for a resume (render failed mid-run) is retried from scratch after this
 DIRECT_BUDGET_S = 80 * 60  # no new topic after this; the prepare job has a 150-min limit (each try <= 40 min)
 MAX_SHARD_FRAMES = int(os.getenv("STUDIO_SHARD_FRAMES", "60"))
 
@@ -78,6 +79,9 @@ def pick(queue: TopicQueue, topic_id: str = "") -> tuple[Optional[dict], str]:
     topics = queue.load_topics()
     published = queue.get_published_ids()
     live = [t for t in topics if t.get("id", "").lower() not in published and t.get("status") != "published"]
+    for t in live:  # a held topic whose resume gave up (or never came) is free again
+        if t.get("status") == "rendering" and time.time() - float(t.get("held_at", 0)) > HOLD_HOURS * 3600:
+            t["status"] = "pending"
     if topic_id:
         live = [t for t in live if t["id"] == topic_id]
     for t in live:
@@ -192,6 +196,14 @@ def cmd_assemble(build: Path) -> bool:
     return True
 
 
+def cmd_hold(build: Path) -> None:
+    """A render shard failed: keep the topic (and its saved spec) for the automatic resume of this run, so
+    other runs don't start it from scratch meanwhile. pick() frees it after HOLD_HOURS."""
+    tid = json.loads((build / "ci.json").read_text())["topic"]
+    set_topic(tid, status="rendering", held_at=time.time())
+    log.warning("render incomplete for %s: held for resume", tid)
+
+
 def build_local(topic: dict) -> Path:
     """Single-machine build used by AutonomousReelBuilder / scheduler --now."""
     spec = spec_for(topic) or direct_spec(topic, ROOT / "tmp" / "director" / topic["id"])
@@ -209,7 +221,7 @@ def build_local(topic: dict) -> Path:
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=["prepare", "render", "assemble"])
+    ap.add_argument("stage", choices=["prepare", "render", "assemble", "hold"])
     ap.add_argument("--build", type=Path, default=ROOT / "build")
     ap.add_argument("--index", type=int, default=0)
     ap.add_argument("--topic", default="")
@@ -222,6 +234,8 @@ def main() -> None:
             _out(topic="", mode="none", matrix=[{"index": -1, "key": "none"}])
     elif a.stage == "render":
         cmd_render(a.build, a.index)
+    elif a.stage == "hold":
+        cmd_hold(a.build)
     else:
         cmd_assemble(a.build)
 

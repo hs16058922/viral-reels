@@ -126,8 +126,8 @@ jobs:
   publish:
     needs: [prepare, render]
     if: >-
-      always() && needs.prepare.result == 'success' && needs.prepare.outputs.mode != '' &&
-      (needs.render.result == 'success' || needs.render.result == 'skipped')
+      always() && needs.prepare.result == 'success' && needs.prepare.outputs.mode != ''
+    # runs even when a shard failed: it then only saves the spec and holds the topic for the automatic resume
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -152,17 +152,22 @@ jobs:
           name: queue-state
           path: .
       - uses: actions/download-artifact@v4
-        if: needs.prepare.outputs.mode == 'render'
+        if: needs.prepare.outputs.mode == 'render' && needs.render.result == 'success'
         with:
           pattern: seg-*
           path: build
           merge-multiple: true
       - name: Assemble reel + QC
         id: asm
-        if: needs.prepare.outputs.mode == 'render'
+        if: needs.prepare.outputs.mode == 'render' && needs.render.result == 'success'
         run: python -m automation.studio_ci assemble --build build
+      - name: Hold topic for the automatic resume (a render shard failed)
+        if: needs.prepare.outputs.mode == 'render' && needs.render.result != 'success'
+        run: python -m automation.studio_ci hold --build build
+      - name: Latest publish history (a resumed run checks out an older commit)
+        run: git fetch -q origin main && git show origin/main:automation/published_history.json > automation/published_history.json || true
       - uses: actions/upload-artifact@v4
-        if: always() && needs.prepare.outputs.mode == 'render'
+        if: always() && needs.prepare.outputs.mode == 'render' && needs.render.result == 'success'
         with:
           name: reel-${{ needs.prepare.outputs.topic }}
           path: |
@@ -188,4 +193,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
           for p in automation/topics.json automation/published_history.json data engine/studio/specs/generated; do if [ -e "$p" ]; then git add "$p"; fi; done
-          git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git pull --rebase && git push)
+          git diff --staged --quiet || (git commit -m "chore(automation): sync topics, history, and analytics [skip ci]" && git pull --rebase -X theirs && git push)

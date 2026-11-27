@@ -56,7 +56,7 @@ def post_next_reel(dry_run: bool = False, topic_id: str = "") -> bool:
 
     # 1. Deduplication Safety Check: Has this topic ID already been posted?
     published_ids = queue.get_published_ids()
-    if topic["id"].lower() in published_ids and topic.get("status") == "published":
+    if topic["id"].lower() in published_ids:  # history is the truth; a stale queue copy may still say "ready"
         logger.critical("🛑 DUPLICATE BLOCKED: Topic ID '%s' has already been published. Aborting.", topic["id"])
         return False
 

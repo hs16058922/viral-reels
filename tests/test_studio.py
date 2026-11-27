@@ -233,6 +233,34 @@ class TestStudioCI(unittest.TestCase):
             meta = json.loads((Path(tmp) / "build" / "ci.json").read_text())
             self.assertEqual((meta["topic"], meta["mode"]), ("microwave", "render"))
 
+    def test_held_topic_is_skipped_until_its_hold_expires(self):
+        import time
+        from unittest import mock
+        from automation import studio_ci
+        from automation.topic_queue import TopicQueue
+        with tempfile.TemporaryDirectory() as tmp:
+            q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
+            q.save_topics([{"id": "abs", "status": "rendering", "held_at": time.time()}, {"id": "maglev", "status": "pending"}])
+            with mock.patch.object(studio_ci, "spec_for", lambda t: None):
+                self.assertEqual(studio_ci.pick(q)[0]["id"], "maglev")  # resume in flight: leave abs alone
+                q.save_topics([{"id": "abs", "status": "rendering", "held_at": time.time() - 7 * 3600},
+                               {"id": "maglev", "status": "pending"}])
+                self.assertEqual(studio_ci.pick(q), (q.load_topics()[0] | {"status": "pending"}, "direct"))
+
+    def test_published_topic_is_never_posted_again_even_if_queue_says_ready(self):
+        from unittest import mock
+        from automation import scheduler
+        from automation.topic_queue import TopicQueue
+        with tempfile.TemporaryDirectory() as tmp:
+            q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
+            q.save_topics([{"id": "abs", "title": "ABS", "status": "ready"}])
+            q.save_history([{"id": "abs", "permalink": "https://instagram.com/p/x"}])
+            with mock.patch.object(scheduler, "TopicQueue", lambda: q), \
+                 mock.patch.object(scheduler, "InstagramPublisher") as ig, mock.patch.object(scheduler, "DirectInstagramPublisher") as dig:
+                self.assertFalse(scheduler.post_next_reel(topic_id="abs"))
+            ig.assert_not_called()
+            dig.assert_not_called()
+
 
 class TestBranding(unittest.TestCase):
     def test_finalize_adds_cover_and_follow_outro(self):
