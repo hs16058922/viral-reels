@@ -1,0 +1,23 @@
+name: Resume a failed reel run
+
+# If any job of a reel run fails (e.g. one render shard hit a runner/network hiccup), re-run ONLY the failed
+# jobs of that same run. GitHub reuses the run's storyboard, plan and finished shards, renders the missing
+# shard(s), then assembles and publishes. At most 2 automatic resumes per run.
+on:
+  workflow_run:
+    workflows: ["3D Reels Studio — render & publish"]
+    types: [completed]
+
+permissions:
+  actions: write
+
+jobs:
+  resume:
+    if: github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Re-run failed jobs of run ${{ github.event.workflow_run.id }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run rerun ${{ github.event.workflow_run.id }} --failed --repo ${{ github.repository }}

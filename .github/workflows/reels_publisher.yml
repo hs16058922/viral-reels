@@ -49,7 +49,8 @@ jobs:
           python-version: '3.10'
           cache: pip
       - name: System packages
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+        run: |  # Ubuntu mirrors flake (exit 100); retry instead of failing the whole shard
+          for i in 1 2 3 4; do sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null && exit 0; sleep 20; done; exit 1
       - name: Python packages (CPU-only torch for Whisper)
         run: |
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
@@ -70,6 +71,7 @@ jobs:
           name: build
           path: build
           retention-days: 7
+          overwrite: true  # re-runs of failed jobs upload under the same name
       - uses: actions/upload-artifact@v4
         with:
           name: queue-state
@@ -77,6 +79,7 @@ jobs:
             automation/topics.json
             engine/studio/specs/generated
           retention-days: 7
+          overwrite: true  # re-runs of failed jobs upload under the same name
 
   render:
     needs: prepare
@@ -96,7 +99,8 @@ jobs:
       - name: Light Python deps (no Whisper/torch on render runners)
         run: pip install -q pydantic pydantic-settings numpy pillow rich python-dotenv requests
       - name: System packages
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+        run: |  # Ubuntu mirrors flake (exit 100); retry instead of failing the whole shard
+          for i in 1 2 3 4; do sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null && exit 0; sleep 20; done; exit 1
       - uses: ./.github/actions/setup-blender
       - uses: actions/download-artifact@v4
         with:
@@ -117,6 +121,7 @@ jobs:
             build/segments
             build/logs
           retention-days: 7
+          overwrite: true  # re-runs of failed jobs upload under the same name
 
   publish:
     needs: [prepare, render]
@@ -132,7 +137,8 @@ jobs:
           python-version: '3.10'
           cache: pip
       - name: System packages
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null
+        run: |  # Ubuntu mirrors flake (exit 100); retry instead of failing the whole shard
+          for i in 1 2 3 4; do sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core >/dev/null && exit 0; sleep 20; done; exit 1
       - name: Python packages
         run: |
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
@@ -166,6 +172,7 @@ jobs:
             build/contact_sheet.jpg
             build/plan.json
           retention-days: 30
+          overwrite: true  # re-runs of failed jobs upload under the same name
       - name: Publish to Instagram (existing scheduler route)
         if: >-
           (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publish)) &&
