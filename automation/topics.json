@@ -328,8 +328,10 @@
     "cover_hook_2": "WHY LOCKED TIRES SKID?!",
     "cover_tag": "MECHANICAL PHYSICS",
     "cover_sticker": "20 PULSES PER SECOND",
-    "status": "pending",
-    "video_path": null
+    "status": "published",
+    "video_path": "export/abs_braking_system_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgP5rbUyUjD/",
+    "published_at": "2026-11-27T14:32:43.369698"
   },
   {
     "id": "mechanical_watch",
