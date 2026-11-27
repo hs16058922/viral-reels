@@ -300,8 +300,10 @@
     "cover_hook_2": "WHY THE BOWL STAYS COLD?!",
     "cover_tag": "ELECTROMAGNETISM",
     "cover_sticker": "2.45 BILLION CYCLES/SEC",
-    "status": "pending",
-    "video_path": null
+    "status": "published",
+    "video_path": "export/microwave_magnetron_reel.mp4",
+    "permalink": "https://www.instagram.com/reel/DgPbb17oAYi/",
+    "published_at": "2026-11-27T10:08:34.123597"
   },
   {
     "id": "abs_braking_system",

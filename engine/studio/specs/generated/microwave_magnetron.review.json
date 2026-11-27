@@ -1,0 +1,144 @@
+{
+ "passed": true,
+ "drafter": "gemini",
+ "history": [
+  {
+   "drafter": "gemini",
+   "board": {
+    "title": "Why Microwaves Heat Soup But Never the Bowl",
+    "scenes": [
+     {
+      "id": "hook",
+      "shot": "microwave_hero",
+      "narration": "Your microwave does not heat food from the outside in. It targets the molecular inside directly.",
+      "keywords": [
+       "molecular inside"
+      ],
+      "callouts": []
+     },
+     {
+      "id": "wave_path",
+      "shot": "microwave_wave_path",
+      "narration": "Deep inside the wall, a magnetron tube fires invisible waves across the chamber at over two billion cycles per second.",
+      "keywords": [
+       "magnetron tube"
+      ],
+      "callouts": [
+       {
+        "part": "mag",
+        "at": "magnetron tube"
+       },
+       {
+        "part": "waves",
+        "at": "invisible waves"
+       }
+      ],
+      "label": "2.45 GHZ"
+     },
+     {
+      "id": "dipole",
+      "shot": "water_dipole_flip",
+      "narration": "Every water molecule in your soup is a tiny dipole, with a positive hydrogen side and a negative oxygen side.",
+      "keywords": [
+       "tiny dipole"
+      ],
+      "callouts": [
+       {
+        "part": "w_hydrogen_0",
+        "at": "positive hydrogen side"
+       },
+       {
+        "part": "w_oxygen",
+        "at": "negative oxygen side"
+       }
+      ]
+     },
+     {
+      "id": "friction",
+      "shot": "water_molecules_jostle",
+      "narration": "As the electric field flips polarity back and forth, the water molecules violently twist to align themselves. This friction creates rapid heat.",
+      "keywords": [
+       "violently twist"
+      ],
+      "callouts": [
+       {
+        "part": "w4_oxygen",
+        "at": "water molecules"
+       }
+      ]
+     },
+     {
+      "id": "bowl_effect",
+      "shot": "soup_heating",
+      "narration": "Ceramic bowls lack these polar molecules, so the radiation passes right through them while the liquid steams.",
+      "keywords": [
+       "Ceramic bowls"
+      ],
+      "callouts": [
+       {
+        "part": "soup_bowl",
+        "at": "Ceramic bowls"
+       },
+       {
+        "part": "soup_steam",
+        "at": "liquid steams"
+       }
+      ]
+     },
+     {
+      "id": "conclusion",
+      "shot": "bowl_of_soup",
+      "narration": "The microwave never actually heats your dinner. It forces the water inside to heat itself.",
+      "keywords": [
+       "water inside"
+      ],
+      "callouts": [
+       {
+        "part": "bowl_of_soup_soup",
+        "at": "water inside"
+       }
+      ]
+     }
+    ]
+   },
+   "review": [
+    {
+     "id": "hook",
+     "score": 9,
+     "problems": "None visual match is good; the model style is slightly vintage compared to modern appliances, but clearly recognisable.",
+     "fix": "Ensure smooth camera push-in motion in the final render."
+    },
+    {
+     "id": "wave_path",
+     "score": 9,
+     "problems": "None. Clear cutaway section showing magnetron, chamber, bowl, and frequency label (2.45 GHz).",
+     "fix": "Maintain clear visual separation between the magnetron and the wave animation entering the cavity."
+    },
+    {
+     "id": "dipole",
+     "score": 10,
+     "problems": "None. Excellent clarity depicting the H2O dipole, wave visual, and positive/negative polarity signs.",
+     "fix": "None needed."
+    },
+    {
+     "id": "friction",
+     "score": 8,
+     "problems": "The molecules are arranged in a rigid 3x3 grid rather than a natural fluid crowd of liquid water.",
+     "fix": "Scatter the molecules slightly more dynamically to represent a bulk liquid soup environment."
+    },
+    {
+     "id": "bowl_effect",
+     "score": 9,
+     "problems": "None. Steaming effect and radiation pass-through are visually legible.",
+     "fix": "Slightly enhance steam particle visibility against the dark backdrop."
+    },
+    {
+     "id": "conclusion",
+     "score": 8,
+     "problems": "Visual setup is very similar to scene 5, creating minor redundancy.",
+     "fix": "Add subtle orbital camera movement and ensure warmth visual cues highlight the soup inside."
+    }
+   ]
+  }
+ ]
+}
