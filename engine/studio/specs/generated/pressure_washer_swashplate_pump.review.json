@@ -1,0 +1,6 @@
+{
+ "passed": false,
+ "unsupported": "axial_cam_swashplate_pump, swashplate_pump_cutaway, check_valves, pressure_washer_nozzle",
+ "drafter": "gemini",
+ "history": []
+}

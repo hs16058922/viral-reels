@@ -1,0 +1,6 @@
+{
+ "passed": false,
+ "unsupported": "scroll_compressor, scroll_compressor_cutaway, orbiting_scroll, oldham_coupling",
+ "drafter": "gemini",
+ "history": []
+}

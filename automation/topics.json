@@ -495,7 +495,7 @@
     "cover_hook_2": "USE FANS?!",
     "cover_tag": "FLUID DYNAMICS",
     "cover_sticker": "3,000 PSI MECHANISM",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -520,7 +520,7 @@
     "cover_hook_2": "HOW AC SPIRALS WORK",
     "cover_tag": "MECHANICAL PHYSICS",
     "cover_sticker": "3D CUTAWAY",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -545,7 +545,7 @@
     "cover_hook_2": "ACTUALLY SPIN?!",
     "cover_tag": "TOOL PHYSICS",
     "cover_sticker": "1000x TORQUE",
-    "status": "pending",
+    "status": "needs_spec",
     "video_path": null
   },
   {
@@ -571,6 +571,31 @@
     "cover_hook_2": "WHY IS IT ALWAYS GREEN?!",
     "cover_tag": "OPTICAL PHYSICS",
     "cover_sticker": "50,000x ELECTRON POP",
+    "status": "needs_spec",
+    "video_path": null
+  },
+  {
+    "id": "how_microwaves_work",
+    "title": "How Microwave Ovens Work",
+    "hook": "Your microwave doesn't actually generate heat. Instead, it forces your food to violently attack itself.",
+    "script": "Inside a microwave oven, high-voltage electricity feeds into a magnetron tube. Here, a central glowing cathode releases electrons, while powerful magnets force them into spiraling orbits across resonant copper cavities. This rotational movement generates intense electromagnetic radiation at precisely 2.45 gigahertz. These radio waves travel down a metallic waveguide directly into the sealed cooking chamber, bouncing relentlessly off the stainless steel walls. Water molecules inside your food act as tiny electric dipoles, possessing positive and negative ends. As the oscillating electric field reverses direction 2.45 billion times every single second, these water molecules violently flip back and forth to align with the field. This extreme kinetic agitation causes neighboring molecules to crash and rub against each other. The resulting microscopic molecular friction rapidly converts kinetic energy into thermal heat, boiling your meal. Tap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?",
+    "bullets": [
+      "Magnetron spirals electrons through resonant copper cavities using magnetic fields.",
+      "Generates 2.45 GHz radio waves guided directly into metallic cooking chamber.",
+      "Asymmetric water molecules act as polar electric dipoles inside the food.",
+      "Flipping electric fields cause 2.45 billion rotations per second, creating heat via friction."
+    ],
+    "niche_tags": [
+      "#engineering",
+      "#physics",
+      "#3danimation",
+      "#microwave",
+      "#mechanicalengineering"
+    ],
+    "cover_hook_1": "MICROWAVE OVEN",
+    "cover_hook_2": "2.45 BILLION FLIPS A SECOND?!",
+    "cover_tag": "PHYSICS EXPLAINED",
+    "cover_sticker": "3D MECHANISM",
     "status": "pending",
     "video_path": null
   }
