@@ -104,7 +104,12 @@ def _post(url: str, model: str, **kw) -> requests.Response:
     if model in _EXHAUSTED:
         raise requests.HTTPError(f"{model}: free quota exhausted earlier this run")
     for attempt in range(3):
-        r = requests.post(url, timeout=_timeout(), **kw)
+        try:
+            r = requests.post(url, timeout=_timeout(), **kw)
+        except requests.Timeout:
+            _EXHAUSTED.add(model)
+            log.warning("%s timed out; skipping it for the rest of this run", model)
+            raise
         if r.status_code == 429:
             if attempt == 0:
                 log.warning("%s rate-limited: %s", model, r.text[:400].replace("\n", " "))

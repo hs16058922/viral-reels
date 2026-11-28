@@ -214,8 +214,12 @@ class TestStudioCI(unittest.TestCase):
         from automation.topic_queue import TopicQueue
         with tempfile.TemporaryDirectory() as tmp:
             q = TopicQueue(Path(tmp) / "topics.json", Path(tmp) / "history.json")
-            q.replenish_if_needed = lambda **k: None
-            q.save_topics([{"id": "airbag", "status": "pending"}, {"id": "microwave", "status": "pending"}])
+            def refill(**k):  # the queue only gets a renderable topic once the unsupported one is parked
+                ts = q.load_topics()
+                if not any(t["status"] == "pending" for t in ts):
+                    q.save_topics(ts + [{"id": "microwave", "status": "pending"}])
+            q.replenish_if_needed = refill
+            q.save_topics([{"id": "airbag", "status": "pending"}])
             spec = SPECS / "jet_engine.json"
             made = []
 

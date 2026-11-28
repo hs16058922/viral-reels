@@ -37,7 +37,7 @@ log = logging.getLogger("viral_reels.studio_ci")
 SPECS = ROOT / "engine" / "studio" / "specs"
 GENERATED = SPECS / "generated"
 QUALITY = os.getenv("STUDIO_QUALITY", "realistic")
-MAX_DIRECT_TOPICS = 4  # topics the director may try per run (unsupported ones are rejected in ~1 min)
+MAX_DIRECT_TOPICS = 6  # topics the director may try per run (unsupported ones are rejected in ~1-3 min)
 HOLD_HOURS = 6  # a topic held for a resume (render failed mid-run) is retried from scratch after this
 DIRECT_BUDGET_S = 80 * 60  # no new topic after this; the prepare job has a 150-min limit (each try <= 40 min)
 MAX_SHARD_FRAMES = int(os.getenv("STUDIO_SHARD_FRAMES", "60"))
@@ -140,6 +140,11 @@ def cmd_prepare(build: Path, topic_id: str = "") -> None:
             break
         set_topic(topic["id"], status="needs_spec")
         log.warning("topic %s parked as needs_spec (see %s)", topic["id"], GENERATED)
+        if not topic_id:  # refill with fresh, shot-compatible topics so the slot isn't wasted
+            try:
+                queue.replenish_if_needed(min_pending=5)
+            except Exception as e:  # noqa: BLE001
+                log.warning("replenish skipped: %s", e)
         topic, mode = pick(queue, topic_id)
         if mode == "direct" and (tries >= MAX_DIRECT_TOPICS or time.time() - t0 > DIRECT_BUDGET_S):
             topic, mode = None, "none"

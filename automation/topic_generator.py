@@ -279,6 +279,18 @@ class ViralTopicGenerator:
         return existing_ids, existing_titles
 
     @staticmethod
+    def get_existing_ids_and_titles_raw() -> tuple[list[str], str]:
+        """Human-readable list of every queued or posted title, for the generator prompt."""
+        titles = []
+        for f in (TOPICS_FILE, HISTORY_FILE):
+            try:
+                titles += [t.get("title") or t.get("id", "") for t in json.loads(f.read_text(encoding="utf-8"))]
+            except Exception:  # noqa: BLE001 — missing/corrupt file just means less to avoid
+                pass
+        titles = list(dict.fromkeys(t for t in titles if t))
+        return titles, "\n".join(f"   - {t}" for t in titles) or "   (none)"
+
+    @staticmethod
     def is_duplicate(candidate: Dict[str, Any], existing_ids: Set[str], existing_titles: Set[str]) -> bool:
         """Verify candidate topic has never been added or posted."""
         c_id = candidate.get("id", "").lower()
@@ -298,9 +310,12 @@ class ViralTopicGenerator:
 
         logger.info("Generating %d new viral topics via Gemini API...", count)
         from engine.studio import shots
+        _, done = cls.get_existing_ids_and_titles_raw()
         shot_list = "\n".join(f"   - {n}: {v['desc']}" for n, v in shots.SHOTS.items())
         prompt = f"""You are the head science writer for @CurioMotion, a viral 3D animation Instagram page explaining everyday engineering and physics mysteries.
 Generate {count} unique, high-retention topics.
+These subjects are ALREADY covered; do not pick them or the same device/mechanism under another name:
+{done}
 Requirements:
 1. Subject must be an everyday device whose INSIDE is a rigid mechanism that a 3D cutaway can show clearly:
    gears, rotors, fans, pistons, valves, pumps, springs, coils, magnets, bearings, lenses, chambers, pipes
