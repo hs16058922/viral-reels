@@ -232,9 +232,13 @@ def build(board: dict) -> dict:
                        "background": s["background"] or BACKGROUNDS[i % len(BACKGROUNDS)],
                        "keywords": sb.get("keywords") or [], **({"note": s["note"]} if s["note"] else {}),
                        "objects": objs, "actions": acts, "shots": s["shots"]})
+    used = [sb.get("shot") for sb in board.get("scenes") or []]
+    errs += [f"shot {n!r} is used {used.count(n)} times; max 2 (repeats look like a frozen reel), pick other shots"
+             for n in dict.fromkeys(used) if used.count(n) > 2]
     if errs:
         raise ValueError("\n".join(errs))
-    return {"title": board.get("title") or "Untitled", "scenes": scenes}
+    hook = " ".join(str(board.get("hook_text") or "").upper().split()[:6])[:40]
+    return {"title": board.get("title") or "Untitled", **({"hook_text": hook} if hook else {}), "scenes": scenes}
 
 
 if __name__ == "__main__":  # render one still per shot into a contact sheet

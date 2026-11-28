@@ -36,13 +36,27 @@ You are the writer-director of a premium 3D educational Reels channel. The 3D sc
 write the narration and pick, for each scene, the SHOT from the SHOT LIBRARY that shows what the narration says.
 Return ONLY a JSON storyboard:
 {"title": str,
+ "hook_text": "2-5 WORD on-screen hook shown huge over scene 1, e.g. IT'S A BOMB",
  "scenes": [{"id": "hook", "shot": "<shot name>", "narration": "1-3 spoken sentences",
              "keywords": ["exact phrase from this narration"],
              "callouts": [{"part": "<one of that shot's callout parts>", "at": "exact phrase from this narration"}],
              "label": "optional on-screen tag, max 18 chars, e.g. 2.45 GHZ"}]}
+RETENTION (the viewer swipes away in under 2 seconds unless you give them a reason to stay):
+A. HOOK = scene 1, max 2 sentences, first sentence max 10 words. Open a curiosity gap: a shocking claim, a
+   danger, an impossible-sounding number, or a "why" question about something the viewer uses daily. Do NOT
+   give the answer away: the hook asks, the last scene answers. Never open with "Did you know", "Have you ever",
+   "In this video", "Here's how", "Let's", or the topic's name. Pick the most dramatic, moving shot for it.
+   Think of 3 hooks silently and use the one that makes the viewer most need the answer.
+B. RE-HOOK every middle scene: end it with a short teaser that pulls into the next scene, e.g. "But that
+   creates a problem.", "And this part is insane.", "So why doesn't it melt?". Never repeat a teaser.
+C. ESCALATE: every scene must be more surprising than the last; save the most mind-blowing fact or number for
+   the second-to-last scene.
+D. PAYOFF: the last scene answers the hook's question in one punchy line that echoes the hook's words, so the
+   loop closes and replaying feels natural. No summary, no "and that's how".
+E. Talk to "you", short sentences (max 14 words), concrete numbers, vivid verbs. No textbook tone.
 Rules:
-1. 5-7 scenes, 100-135 narration words total (about 40-50 s). Scene 1 is a strong 3-second hook. Plain spoken
-   English, no emojis, no hashtags, no "follow us".
+1. 5-7 scenes, 85-120 narration words total (about 32-42 s). Plain spoken English, no emojis, no hashtags,
+   no "follow us".
 2. The narration of each scene describes exactly what its shot shows; read the shot descriptions carefully.
    Use each shot at most once unless the story returns to it (hook and outro may share one).
 3. Labels: at most 2 in the whole reel, only for a key number or term. 0-2 callouts per scene: highlight the part at the moment the narration names it. `at` and keywords must be
@@ -52,13 +66,13 @@ Rules:
    {"unsupported": "<which shots would be needed>"} instead of a storyboard.
 """
 
-EXAMPLE = {"title": "Why an Electric Toothbrush Hums", "scenes": [
-    {"id": "hook", "shot": "electric_motor_cutaway", "narration": "Your toothbrush hides a motor spinning thirty "
-     "thousand times a minute.", "keywords": ["thirty thousand"], "callouts": [{"part": "electric_motor_rotor",
-     "at": "a motor spinning"}]},
-    {"id": "gears", "shot": "gear_pair", "narration": "A tiny gear trades that speed for force, turning a big gear "
-     "that rocks the brush head.", "callouts": [{"part": "gear_pair_gear_small", "at": "A tiny gear"}],
-     "label": "5:1"}]}
+EXAMPLE = {"title": "Why an Electric Toothbrush Hums", "hook_text": "30,000 RPM. IN YOUR MOUTH.", "scenes": [
+    {"id": "hook", "shot": "electric_motor_cutaway", "narration": "There's a motor in your mouth spinning thirty "
+     "thousand times a minute. So why doesn't it rip your gums apart?", "keywords": ["thirty thousand"],
+     "callouts": [{"part": "electric_motor_rotor", "at": "a motor in your mouth"}]},
+    {"id": "gears", "shot": "gear_pair", "narration": "A tiny gear trades that speed for force, rocking the brush "
+     "head instead of spinning it. But that's not the clever part.",
+     "callouts": [{"part": "gear_pair_gear_small", "at": "A tiny gear"}], "label": "5:1"}]}
 
 
 class GeminiUnavailable(RuntimeError):
@@ -172,6 +186,19 @@ def _clean(text: str) -> str:
 
 
 
+BANNED_OPENERS = ("did you know", "have you ever", "in this video", "here's how", "here is how", "let's", "today")
+
+
+def _hook_problem(text: str) -> str:
+    """Why scene 1 won't stop the scroll, or "" if it is fine."""
+    first = re.split(r"(?<=[.?!])\s+", text.strip())[0]
+    if text.strip().lower().startswith(BANNED_OPENERS):
+        return f"it opens with a banned phrase ({text.split()[0]!r}...)"
+    if len(first.split()) > 12:
+        return f"its first sentence has {len(first.split())} words; max 10 so it lands in under 3 seconds"
+    return ""
+
+
 def _check(src: dict) -> tuple[VideoSpec | None, str]:
     """Validate a built spec; returns (spec, "") or (None, error message for the repair round)."""
     try:
@@ -181,7 +208,10 @@ def _check(src: dict) -> tuple[VideoSpec | None, str]:
             f"- {'.'.join(map(str, er['loc']))}: {er['msg']}" for er in e.errors()[:25])
     words = len(tokens(spec.script))
     if not 80 <= words <= 165 or not 4 <= len(spec.scenes) <= 8:
-        return None, f"Need 5-7 scenes and 100-135 words; got {len(spec.scenes)} scenes, {words} words."
+        return None, f"Need 5-7 scenes and 85-120 words; got {len(spec.scenes)} scenes, {words} words."
+    hook = _hook_problem(spec.scenes[0].narration)
+    if hook:
+        return None, f"Weak hook (scene 1): {hook}. Rewrite it following RETENTION rule A."
     try:  # simulate narration at 2.6 words/s to catch too-short scenes / bad anchors
         _plan(spec)
     except ValueError as e:

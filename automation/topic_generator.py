@@ -308,11 +308,14 @@ Requirements:
    Avoid subjects that are mostly fabric, chemistry, software, electronics on circuit boards, or people.
    It MUST be explainable with the existing 3D shots below (most of its 5-7 scenes need a matching shot):
 {shot_list}
-2. Hook must be counterintuitive ("X doesn't do Y, it actually does Z").
+2. Hook (max 2 short sentences, first under 10 words) opens a curiosity gap WITHOUT giving the answer: a
+   shocking claim, a danger, an impossible number, or a "why" about something people use daily, e.g. "Your car
+   brakes are lying to you." / "This tiny crystal vibrates 32,768 times a second. Why?" Never "Did you know".
 3. Script must be 120-150 words, descriptive with real physics/engineering terms, and end with: "Tap follow on @CurioMotion for daily 3D mechanical breakdowns. What should we cut open next?"
 4. Provide 4 technical bullet points.
 5. Provide 5 niche hashtags.
-6. Provide high-CTR cover hooks (dual-tone title).
+6. Provide high-CTR cover hooks (dual-tone title): line 1 names the object, line 2 is the unanswered question
+   or the shocking number (e.g. "QUARTZ WATCH" / "32,768 VIBRATIONS A SECOND?!"). Never the word "SECRET".
 
 Return strictly JSON array:
 [

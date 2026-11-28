@@ -161,6 +161,7 @@ class VideoSpec(Strict):
     title: str
     style: Literal["cinematic_3d_educational"] = "cinematic_3d_educational"
     voice: str = "en-US-ChristopherNeural"
+    hook_text: Optional[str] = Field(None, max_length=40)  # huge on-screen hook over scene 1
     fps: int = 30
     prefabs: dict[str, list[dict[str, Any]]] = {}
     scenes: list[Scene] = Field(min_length=1)

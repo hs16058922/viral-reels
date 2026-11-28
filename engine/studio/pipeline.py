@@ -43,6 +43,7 @@ FONTS = ["/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf",
          "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"]
 OPEN_LICENSES = {"CC0-1.0", "CC-BY-4.0", "MIT", "Apache-2.0", "self-made"}
 ACCENT = (232, 69, 44)
+VOICE_RATE = "+10%"  # brisker delivery holds attention better than the default narration pace
 STOP = {"how", "does", "do", "a", "an", "the", "work", "works", "of", "what", "is", "why"}
 
 
@@ -242,10 +243,34 @@ def _font(size: int) -> ImageFont.ImageFont:
     return ImageFont.truetype(path, size) if path else ImageFont.load_default()
 
 
+def draw_hook(d: ImageDraw.ImageDraw, text: str, W: int, H: int) -> None:
+    """The scroll-stopper: big white-on-red block text in the lower-middle, over the hook scene."""
+    for fs in (int(H * 0.05), int(H * 0.043), int(H * 0.037)):
+        font, lines, line = _font(fs), [], ""
+        for w in text.split():
+            if line and font.getlength(f"{line} {w}") > W * 0.8:
+                lines.append(line)
+                line = w
+            else:
+                line = f"{line} {w}".strip()
+        lines.append(line)
+        if len(lines) <= 2:
+            break
+    y, pad = H * 0.64, fs * 0.22
+    for ln in lines:
+        lw = font.getlength(ln)
+        x = (W - lw) / 2
+        d.rounded_rectangle([x - pad * 1.6, y - pad, x + lw + pad * 1.6, y + fs * 1.12], radius=pad, fill=ACCENT + (240,))
+        d.text((x, y), ln, font=font, fill=(255, 255, 255, 255))
+        y += fs * 1.55
+
+
 def draw_caption(words: list[dict], group: list[int], spoken: int, bg: str, note: Optional[str],
-                 W: int, H: int) -> tuple[Image.Image, bool]:
+                 W: int, H: int, hook: Optional[str] = None) -> tuple[Image.Image, bool]:
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
+    if hook:
+        draw_hook(d, hook, W, H)
     ink = (27, 29, 34) if bg == "light" else (255, 255, 255)
     overflow = False
     if group:
@@ -316,7 +341,8 @@ def render_captions(plan: dict, spec: VideoSpec, W: int, H: int, out: Path) -> t
         state = (si, g, spoken)
         if state not in cache:
             img, ov = draw_caption(words, groups[g] if g is not None else [], spoken,
-                                   plan["scenes"][si]["background"], spec.scenes[si].note, W, H)
+                                   plan["scenes"][si]["background"], spec.scenes[si].note, W, H,
+                                   spec.hook_text if si == 0 else None)
             name = f"cap_{len(cache):04d}.png"
             img.save(out / name)
             cache[state] = name
@@ -422,10 +448,10 @@ def prepare(spec_file: Path, job: Path, duration_seconds: float = 45) -> tuple[V
     assets = resolve_assets(spec)
     (job / "scenespec.json").write_text(spec.model_dump_json(indent=2))
     (job / "narration.txt").write_text(spec.script + "\n")
-    akey = _sha(spec.script, spec.voice)
+    akey = _sha(spec.script, spec.voice, VOICE_RATE)
     voice, words_json = job / "voice.mp3", job / "words.json"
     if not (words_json.exists() and json.loads(words_json.read_text()).get("key") == akey and voice.exists()):
-        VoiceEngine(voice=spec.voice).synthesize(text=spec.script, output_path=voice)
+        VoiceEngine(voice=spec.voice, rate=VOICE_RATE).synthesize(text=spec.script, output_path=voice)
         txn = CaptionGenerator(model_size="base").transcribe(voice)
         words_json.write_text(json.dumps({"key": akey, "words": [[w.word, w.start, w.end] for w in txn.words]}))
     heard = [tuple(w) for w in json.loads(words_json.read_text())["words"]]

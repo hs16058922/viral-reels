@@ -33,8 +33,9 @@ class VoiceEngine:
         )
     """
 
-    def __init__(self, voice: Optional[str] = None) -> None:
+    def __init__(self, voice: Optional[str] = None, rate: str = "+0%") -> None:
         self.voice = voice or settings.EDGE_TTS_VOICE
+        self.rate = rate
 
     # ── Voice listing ───────────────────────────────────────────────
 
@@ -75,7 +76,7 @@ class VoiceEngine:
         else:
             output_path = Path(output_path)
 
-        asyncio.run(self._synthesize_async(text, voice, output_path))
+        asyncio.run(self._synthesize_async(text, voice, output_path, self.rate))
         logger.info("Synthesized %d chars → %s (voice=%s)", len(text), output_path.name, voice)
         return output_path
 
@@ -188,11 +189,11 @@ class VoiceEngine:
         return filtered
 
     @staticmethod
-    async def _synthesize_async(text: str, voice: str, output_path: Path) -> None:
+    async def _synthesize_async(text: str, voice: str, output_path: Path, rate: str = "+0%") -> None:
         """Async helper: basic synthesis."""
         import edge_tts
 
-        communicate = edge_tts.Communicate(text, voice)
+        communicate = edge_tts.Communicate(text, voice, rate=rate)
         await communicate.save(str(output_path))
 
     @staticmethod

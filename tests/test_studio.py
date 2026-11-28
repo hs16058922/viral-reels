@@ -302,9 +302,9 @@ class TestKit(unittest.TestCase):
             self._spec({"id": "k", "kit": "flux_capacitor"})
 
 
-BOARD = {"title": "How a Microwave Heats Soup", "scenes": [
-    {"id": "hook", "shot": "microwave_hero", "narration": "Your microwave never heats the plate first, it heats the "
-     "water hiding inside your food.", "keywords": ["water"]},
+BOARD = {"title": "How a Microwave Heats Soup", "hook_text": "IT NEVER HEATS THE PLATE", "scenes": [
+    {"id": "hook", "shot": "microwave_hero", "narration": "Your microwave never heats the plate first. "
+     "It heats the water hiding inside your food.", "keywords": ["water"]},
     {"id": "mag", "shot": "magnetron_electrons", "narration": "Inside, a magnetron boils electrons off a hot "
      "cathode and whips them past copper vanes.", "callouts": [{"part": "mag_cathode", "at": "a hot cathode"}]},
     {"id": "path", "shot": "microwave_wave_path", "narration": "That makes microwaves, which travel down a "
@@ -392,6 +392,22 @@ class TestDirector(unittest.TestCase):
         res = self._direct([("gemini", ['{"unsupported": "needs an airbag inflator shot"}'])])
         self.assertFalse(res["passed"])
         self.assertIn("airbag", res["unsupported"])
+
+
+class TestHook(unittest.TestCase):
+    def test_weak_hooks_are_sent_back_and_the_hook_text_reaches_the_screen(self):
+        from PIL import Image, ImageDraw
+        from engine.studio import shots
+        from engine.studio.director import _check, _hook_problem
+        self.assertIn("banned", _hook_problem("Did you know microwaves heat water?"))
+        self.assertIn("words", _hook_problem("A microwave oven works by sending electromagnetic waves through the "
+                                             "food you put inside it."))
+        self.assertEqual(_hook_problem("Your microwave is lying to you. Here's why."), "")
+        spec, err = _check(shots.build(BOARD))
+        self.assertEqual((err, spec.hook_text), ("", "IT NEVER HEATS THE PLATE"))
+        img = Image.new("RGBA", (540, 960), (0, 0, 0, 0))
+        pipeline.draw_hook(ImageDraw.Draw(img), spec.hook_text, 540, 960)
+        self.assertIsNotNone(img.getbbox())  # something was drawn
 
 
 class TestDirectorBudget(unittest.TestCase):
